@@ -24,7 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
-    "lint:fix": "eslint \"**/*.{ts,tsx,js,jsx}\" --quiet --fix"
+    "lint:fix": "eslint \"**/*.{ts,tsx,js,jsx}\" --quiet --fix",
+    "prepare": "cd ../ && husky install frontend/.husky && cd frontend/ && husky add .husky/pre-commit \"cd frontend/ && yarn lint\""
   },
   "eslintConfig": {
     "extends": [
