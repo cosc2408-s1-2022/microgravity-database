@@ -1,5 +1,6 @@
 package com.rmit.mgdb.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,16 +20,24 @@ import java.util.Date;
 public class User {
 
     @Id
+    // Automatically generate ids.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    // Do not serialise if value is null.
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long id;
+
     @Column(unique = true)
     @NotBlank(message = "Username cannot be blank.")
     private String username;
+
     @NotBlank(message = "Password cannot be blank.")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
+
     @NotBlank(message = "User needs to have a role defined.")
     @Pattern(regexp = "(^ROLE_USER|ROLE_ADMIN)", message = "Not a valid role.")
     private String role;
+
     // The following fields are for debugging purposes only.
     private Date createdAt;
     private Date updatedAt;

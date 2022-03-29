@@ -2,6 +2,7 @@ package com.rmit.mgdb.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.rmit.mgdb.security.SecurityConstants.*;
+import static com.rmit.mgdb.security.SecurityConstants.JWT_EXPIRATION_TIME_MILLIS;
+import static com.rmit.mgdb.security.SecurityConstants.JWT_SECRET_KEY;
 
 /**
  * Utility class to handle JWT token related operations.
@@ -46,7 +48,8 @@ public class JWTTokenProvider {
      * Method to extract all claims from the token.
      */
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(JWT_SECRET_KEY).build().parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
+                   .build().parseClaimsJws(token).getBody();
     }
 
     /**
@@ -59,25 +62,25 @@ public class JWTTokenProvider {
     /**
      * Create a new token with user details.
      */
-    private String createToken(UserDetails userDetails) {
+    public String createToken(UserDetails userDetails) {
         String username = userDetails.getUsername();
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", username);
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuer(JWT_ISSUER)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_TIME_MILLIS))
-                /*
-                 * TODO
-                 *  Can opt for a stronger key in the future.
-                 *  SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-                 *  And save the String representation in a file.
-                 *  String secretString = Encoders.BASE64.encode(key.getEncoded());
-                 */
-                .signWith(Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
-                .compact();
+                   .setClaims(claims)
+                   .setSubject(username)
+                   .setIssuedAt(new Date())
+                   .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_TIME_MILLIS))
+                   /*
+                    * TODO
+                    *  Can opt for a stronger key in the future.
+                    *  SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+                    *  And save the String representation in a file.
+                    *  String secretString = Encoders.BASE64.encode(key.getEncoded());
+                    */
+                   .signWith(Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8)),
+                             SignatureAlgorithm.HS512)
+                   .compact();
     }
 
     /**

@@ -76,7 +76,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity security) throws Exception {
-        security.httpBasic().and().cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+        security.httpBasic().and().cors().and().csrf().disable().exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().sameOrigin()
                 .and().authorizeRequests()
