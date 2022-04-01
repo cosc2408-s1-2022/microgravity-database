@@ -1,14 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { Counter } from './features/counter/Counter'; //Counter inside {} is a component
 import './App.css';
 
+//It is recommended to split your components into separate files. To do that, create a new file with a .tsx file extension and put the code inside it
+//for ex, this is the separate file for App components. *** Note that the filename must start with an uppercase character.***
+//This is called function component
 function App() {
   return (
     <div className='App'>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
-        <Counter />
+        <Counter /> {/*this is how u call a function*/}
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
