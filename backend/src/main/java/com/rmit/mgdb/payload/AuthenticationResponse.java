@@ -1,10 +1,14 @@
 package com.rmit.mgdb.payload;
 
 import com.rmit.mgdb.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The response payload to send when authentication succeeds.
  */
+@Getter
+@Setter
 public class AuthenticationResponse {
 
     private User user;
@@ -21,22 +25,6 @@ public class AuthenticationResponse {
         // Prevent serialisation of unnecessary fields.
         user.setId(null);
         user.setPassword(null);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
     }
 
 }

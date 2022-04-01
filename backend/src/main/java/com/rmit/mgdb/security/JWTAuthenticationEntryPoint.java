@@ -25,6 +25,7 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException exception) throws IOException {
 
+
         // Convert the response payload into JSON.
         InvalidLoginResponse loginResponse = new InvalidLoginResponse();
         String jsonLoginResponse = new Gson().toJson(loginResponse);

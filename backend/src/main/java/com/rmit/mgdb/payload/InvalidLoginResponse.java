@@ -1,8 +1,13 @@
 package com.rmit.mgdb.payload;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The response payload to send when authentication fails.
  */
+@Getter
+@Setter
 public class InvalidLoginResponse {
 
     private String username;
@@ -11,22 +16,6 @@ public class InvalidLoginResponse {
     public InvalidLoginResponse() {
         this.username = "Invalid username.";
         this.password = "Invalid password.";
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 }

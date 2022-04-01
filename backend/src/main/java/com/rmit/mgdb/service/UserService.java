@@ -30,11 +30,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Get a user by their id.
+     */
     public User getUserById(long id) {
-        return userRepository.findById(id)
-                             .orElseThrow(
-                                     () -> new UserNotFoundException(String.format("User by id %d not found.", id)));
+        return userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException(String.format("User by id %d not found.", id)));
+    }
 
+    /**
+     * Get a user by their username.
+     */
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new UserNotFoundException(String.format("User by username %s not found\n", username)));
     }
 
 }
