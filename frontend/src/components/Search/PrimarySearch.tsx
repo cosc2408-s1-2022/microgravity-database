@@ -11,7 +11,7 @@ class PrimarySearch extends Component<{ className: string }, never> {
           id='outlined-basic'
           label='Keyword(s)'
           variant='outlined'
-          className='col-8'
+          className='col-6'
           sx={{ color: 'primary.light' }}
           size='small'
         />

@@ -3,6 +3,7 @@ import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import PrimarySearch from './Search/PrimarySearch';
 import { Typography } from '@mui/material';
+import Header from './Layout/Header';
 
 class FacilityElement extends Component<{ facility: string }, never> {
   render() {
@@ -24,24 +25,27 @@ class FacilityElement extends Component<{ facility: string }, never> {
 class Homepage extends Component {
   render() {
     return (
-      <div className='d-flex align-items-center h-100'>
-        <div className='container mx-auto'>
-          <div className='row'>
-            <div className='col-4 mx-auto'>
-              <img src={logo} className='img-fluid' alt='RMIT Logo' />
+      <div className='container-fluid d-flex flex-column min-vh-100 overflow-hidden px-0'>
+        <Header />
+        <div className='row justify-content-center flex-grow-1'>
+          <div className='my-auto mx-auto flex-grow-1'>
+            <div className='row'>
+              <div className='col-4 mx-auto'>
+                <img src={logo} className='img-fluid' alt='RMIT Logo' />
+              </div>
             </div>
-          </div>
-          <div className='row mt-5'>
-            <PrimarySearch className='justify-content-center d-flex' />
-          </div>
-          <div className='row mt-3'>
-            <div className='col-md-10 mx-auto'>
-              <FacilityElement facility={'Space Stations'} />
-              <FacilityElement facility={'Space Shuttles'} />
-              <FacilityElement facility={'Retrievable Capsules'} />
-              <FacilityElement facility={'Sounding Rockets'} />
-              <FacilityElement facility={'Parabolic Flights'} />
-              <FacilityElement facility={'Ground Facilities'} />
+            <div className='row mt-5'>
+              <PrimarySearch className='justify-content-center d-flex' />
+            </div>
+            <div className='row mt-3'>
+              <div className='col-md-10 mx-auto'>
+                <FacilityElement facility={'Space Stations'} />
+                <FacilityElement facility={'Space Shuttles'} />
+                <FacilityElement facility={'Retrievable Capsules'} />
+                <FacilityElement facility={'Sounding Rockets'} />
+                <FacilityElement facility={'Parabolic Flights'} />
+                <FacilityElement facility={'Ground Facilities'} />
+              </div>
             </div>
           </div>
         </div>
