@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
+import * as serviceWorker from './serviceWorker';
+import Login from './pages/Login';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
-import Login from './Login';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Login />
-      {/* this is how u call a function, use < /> */}
+      <BrowserRouter>
+        <Routes>
+          // TODO home page and 404
+          <Route path='login' element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
