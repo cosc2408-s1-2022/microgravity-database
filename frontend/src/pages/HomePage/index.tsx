@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { Link } from 'react-router-dom';
-import PrimarySearch from './Search/PrimarySearch';
+import PrimarySearch from '../../components/PrimarySearch';
 import { Typography } from '@mui/material';
-import Header from './Layout/Header';
+import Header from '../../components/Header';
 
 class FacilityElement extends Component<{ facility: string }, never> {
   render() {
@@ -22,7 +22,7 @@ class FacilityElement extends Component<{ facility: string }, never> {
   }
 }
 
-class Homepage extends Component {
+class HomePage extends Component {
   render() {
     return (
       <div className='container-fluid d-flex flex-column min-vh-100 overflow-hidden px-0'>
@@ -54,4 +54,4 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+export default HomePage;
