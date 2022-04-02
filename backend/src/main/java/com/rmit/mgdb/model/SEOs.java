@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
-import java.util.List;
+import java.util.Integer;
 
 /*
  * FIXME Delete these comments.
@@ -18,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Mission {
+public class SEOs {
 
     /*
      * FIXME Delete these comments.
@@ -26,20 +25,17 @@ public class Mission {
      * Can also auto-generate it with, @GeneratedValue(strategy = GenerationType.{AUTO/IDENTITY})
      */
     @Id
-    private String id;
+    private int code;
 
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-    private String spaceStation;
-    private String spaceShuttle;
-    private String retrievableCapsule;
-    private String soundingRocket;
-    private String parabolicFlight;
-    private String dropTower;
-    private Date launchDate;
-    private Date endDate;
+
+    private String name;
 
     //Relationship with experiement
-    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seos", cascade = CascadeType.ALL)
     private List<Experiment> experiments = new ArrayList<>();
+
+
+
 
 }

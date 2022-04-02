@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
-import java.util.List;
+import java.util.Integer;
 
 /*
  * FIXME Delete these comments.
@@ -18,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Mission {
+public class Experiment {
 
     /*
      * FIXME Delete these comments.
@@ -29,17 +28,34 @@ public class Mission {
     private String id;
 
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-    private String spaceStation;
-    private String spaceShuttle;
-    private String retrievableCapsule;
-    private String soundingRocket;
-    private String parabolicFlight;
-    private String dropTower;
-    private Date launchDate;
-    private Date endDate;
 
-    //Relationship with experiement
-    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
-    private List<Experiment> experiments = new ArrayList<>();
+    private String name;
+    private String Platform;
+    private String TOA;
+    //Foreign key
+    private int FOR_CODE;
+    //Foreign key
+    private int SEO_CODE;
+    private String Lead_Institution;
+    private String Principal_Investigator;
+    private String Researcher;
+    private String Researcher_2;
+    private String Researcher_3;
+    //Foreign key
+
+    //Relationships
+    @ManyToOne
+    @JoinColumn(name = "mission_id", nullable = false)
+    private Mission mission;
+
+    @ManyToOne
+    @JoinColumn(name = "FORs_code", nullable = false)
+    private FORs for;
+
+    @ManyToOne
+    @JoinColumn(name = "SEOs_code", nullable = false)
+    private SEOs seo;
+
+
 
 }
