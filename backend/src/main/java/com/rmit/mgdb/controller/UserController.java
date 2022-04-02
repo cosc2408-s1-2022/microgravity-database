@@ -1,6 +1,5 @@
 package com.rmit.mgdb.controller;
 
-import com.rmit.mgdb.exception.UsernameAlreadyExistsException;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.payload.AuthenticationRequest;
 import com.rmit.mgdb.payload.AuthenticationResponse;
@@ -61,18 +60,7 @@ public class UserController {
         if (errorMap != null)
             return errorMap;
 
-        try {
-            user = userService.saveUser(user);
-        } catch (Exception exception) {
-            // FIXME Dodgy way to determine unique constraint violation.
-            if (exception.getMessage().contains("UK"))
-                throw new UsernameAlreadyExistsException(
-                        String.format("User by username %s already exists.", user.getUsername()));
-            else
-                // Rethrow to let Spring handle the exception.
-                throw exception;
-        }
-
+        user = userService.saveUser(user);
         String jwt = jwtTokenProvider.createToken(userDetailsService.loadUserByUsername(user.getUsername()));
         return new ResponseEntity<>(new AuthenticationResponse(user, jwt), HttpStatus.CREATED);
     }
