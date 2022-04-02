@@ -1,16 +1,17 @@
 import React from 'react';
-import * as ReactDOMClient from 'react-dom/client';
 import './index.css';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import Login from './pages/Login';
+import * as ReactDOMClient from 'react-dom/client';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -26,8 +27,10 @@ root.render(
             <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Navigate to='/register' />} />
+                <Route path='login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/home' element={<Home />} />
+                // TODO page not found
               </Routes>
             </BrowserRouter>
           </CssBaseline>
