@@ -3,41 +3,28 @@ package com.rmit.mgdb.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Integer;
+import javax.persistence.*;
+import java.util.List;
 
-/*
- * FIXME Delete these comments.
- * Entity = A model/table in the database. Spring would create the schema based on the field's data types.
- * https://www.baeldung.com/jpa-entities
- * https://docs.oracle.com/javaee/7/api/javax/persistence/Entity.html
- * @Getter/@Setter are Lombok annotations to autogenerate getters/setters.
- */
 @Entity
 @Getter
 @Setter
 public class People {
 
-    /*
-     * FIXME Delete these comments.
-     * @Id marks it as the primary key.
-     * Can also auto-generate it with, @GeneratedValue(strategy = GenerationType.{AUTO/IDENTITY})
-     */
-    @Id
-    private String id;
-
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-
-    private String first_name;
-    private String family_name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String firstName;
+    private String familyName;
     private String affiliation;
     private String city;
     private String state;
     private String country;
-
-
-
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "people_role",
+               joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "people_id", referencedColumnName = "id"))
+    private List<Role> role;
 
 }
