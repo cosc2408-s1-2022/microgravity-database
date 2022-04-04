@@ -26,7 +26,7 @@ public class SearchController {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam Map<String, String> params, @RequestParam(required = false)
             Optional<Integer> page, @RequestParam(required = false) Optional<Integer> size) {
-        return new ResponseEntity<>(searchService.searchExperiments(params, page, size), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.search(params, page, size), HttpStatus.OK);
     }
 
 }

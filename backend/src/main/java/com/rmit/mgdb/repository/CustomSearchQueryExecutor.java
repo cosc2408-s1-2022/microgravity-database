@@ -62,9 +62,9 @@ public class CustomSearchQueryExecutor {
 
 
         List<T> results = resultQuery.getResultList();
-
-        return new SearchResponse<>(count, (long) Math.ceil((double) count / size.orElse(DEFAULT_PAGE_SIZE)),
-                                    page.orElse(0), results);
+        long sizeLong = size.orElse(DEFAULT_PAGE_SIZE);
+        return new SearchResponse<>(
+                count, (long) ((double) count / sizeLong), page.orElse(0), sizeLong, results);
     }
 
 }
