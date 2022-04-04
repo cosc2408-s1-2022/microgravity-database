@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../../assets/RMIT-LOGO-WHITE.png';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,28 +53,80 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
-        <Toolbar>
-          <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            <Box sx={{ fontWeight: 'bold' }}>
-              <a href={'/home'}>
-                <img src={logo} alt='RMIT LOGO' height={'40vmin'} />
-              </a>
-            </Box>
-          </Typography>
-          <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-            Microgravity Database
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
-          </Search>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+  if (window.location.pathname === '/login') {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position='static'>
+          <Toolbar>
+            <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <Box sx={{ fontWeight: 'bold' }}>
+                <a href={'/home'}>
+                  <img src={logo} alt='RMIT LOGO' height={'40vmin'} />
+                </a>
+              </Box>
+            </Typography>
+            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              Microgravity Database
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
+            </Search>
+            <Button component={Link} to='/register' color='inherit'>
+              Register
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  } else if (window.location.pathname === '/register') {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position='static'>
+          <Toolbar>
+            <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <Box sx={{ fontWeight: 'bold' }}>
+                <a href={'/home'}>
+                  <img src={logo} alt='RMIT LOGO' height={'40vmin'} />
+                </a>
+              </Box>
+            </Typography>
+            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              Microgravity Database
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  } else {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position='static'>
+          <Toolbar>
+            <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <Box sx={{ fontWeight: 'bold' }}>
+                <a href={'/home'}>
+                  <img src={logo} alt='RMIT LOGO' height={'40vmin'} />
+                </a>
+              </Box>
+            </Typography>
+            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              Microgravity Database
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
+            </Search>
+            <Button component={Link} to='/login' color='inherit'>
+              Login
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }
 }
