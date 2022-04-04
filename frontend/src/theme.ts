@@ -10,6 +10,20 @@ const theme = createTheme({
     secondary: {
       main: '#00B4D8',
     },
+    error: {
+      main: '#FF0000',
+    },
+    warning: {
+      main: '#FFA500',
+    },
+    success: {
+      main: '#008000',
+    },
+    text: {
+      primary: '#03045E',
+      secondary: '#00B4D8',
+      disabled: '#C0C0C0',
+    },
   },
 });
 export default theme;

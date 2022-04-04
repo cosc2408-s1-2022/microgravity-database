@@ -8,7 +8,7 @@ describe('PrimarySearch matches snapshot', () => {
   test('render PrimarySearch', () => {
     const { container } = render(
       <Router>
-        <PrimarySearch className='justify-content-center d-flex' />
+        <PrimarySearch />
       </Router>,
     );
     expect(container).toMatchSnapshot();

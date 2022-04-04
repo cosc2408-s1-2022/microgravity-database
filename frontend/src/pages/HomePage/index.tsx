@@ -1,3 +1,4 @@
+/*
 import { Component } from 'react';
 import logo from '../../assets/RMIT-LOGO-BLACK.png';
 import { Link } from 'react-router-dom';
@@ -53,3 +54,45 @@ class HomePage extends Component {
 }
 
 export default HomePage;
+*/
+import * as React from 'react';
+import Box, { BoxProps } from '@mui/material/Box';
+import Header from '../../components/Header';
+import logo from '../../assets/RMIT-LOGO-BLACK.png';
+import PrimarySearch from '../../components/PrimarySearch';
+
+function Item(props: BoxProps) {
+  const { sx, ...other } = props;
+  return (
+    <Box
+      sx={{
+        p: 1,
+        m: 1,
+        ...sx,
+      }}
+      {...other}
+    />
+  );
+}
+
+export default function HomePage() {
+  return (
+    <>
+      <Header />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        <img src={logo} className='img-fluid' alt='RMIT Logo' height={'300vmin'} />
+        <Item>
+          <PrimarySearch />
+        </Item>
+      </Box>
+    </>
+  );
+}
