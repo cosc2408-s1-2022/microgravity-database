@@ -13,13 +13,13 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
 const root = ReactDOMClient.createRoot(rootElement);
 const queryClient = new QueryClient();
 root.render(
   // TODO For testing navigates to register page by default.
-  <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -38,8 +38,6 @@ root.render(
       </Provider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </React.StrictMode>,
-);
 
 // TODO Might be a good option in production.
 // If you want your app to work offline and load faster, you can change
