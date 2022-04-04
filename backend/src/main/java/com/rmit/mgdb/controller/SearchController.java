@@ -29,4 +29,10 @@ public class SearchController {
         return new ResponseEntity<>(searchService.search(params, page, size), HttpStatus.OK);
     }
 
+    @GetMapping("/search/advanced")
+    public ResponseEntity<?> advancedSearch(@RequestParam Map<String, String> params, @RequestParam(required = false)
+            Optional<Integer> page, @RequestParam(required = false) Optional<Integer> size) {
+        return new ResponseEntity<>(searchService.advancedSearch(params, page, size), HttpStatus.OK);
+    }
+
 }

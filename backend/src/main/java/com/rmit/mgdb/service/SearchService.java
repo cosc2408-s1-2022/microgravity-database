@@ -5,8 +5,11 @@ import com.rmit.mgdb.exception.InvalidSearchParamException;
 import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.SearchResponse;
 import com.rmit.mgdb.repository.CustomSearchQueryExecutor;
+import com.rmit.mgdb.repository.ExperimentRepository;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
@@ -19,17 +22,47 @@ import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 @Service
 public class SearchService {
 
+    private final ExperimentRepository experimentRepository;
     private final CustomSearchQueryExecutor queryExecutor;
 
     @Autowired
-    public SearchService(CustomSearchQueryExecutor queryExecutor) {
+    public SearchService(ExperimentRepository experimentRepository,
+                         CustomSearchQueryExecutor queryExecutor) {
+        this.experimentRepository = experimentRepository;
         this.queryExecutor = queryExecutor;
     }
 
+    public Object search(Map<String, String> params, Optional<Integer> page, Optional<Integer> size) {
+        // Validate search params.
+        for (String param : params.keySet())
+            if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param))
+                throw new InvalidSearchParamException(String.format("Unknown search param %s.", param));
+
+        // Decode the search string param.
+        String stringParam = URLDecoder.decode(
+                // Safety guard in case frontend does not check for empty string.
+                Optional.ofNullable(params.get(SearchParam.STRING.string)).orElseThrow(
+                        () -> new InvalidSearchParamException("Empty search string provided.")),
+                StandardCharsets.UTF_8);
+
+        int pageInt = page.orElse(0);
+        int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
+        // JPA pagination uses zero-based index.
+        if (pageInt != 0)
+            pageInt--;
+
+        Page<Experiment> resultsPage =
+                experimentRepository.searchByString(stringParam, PageRequest.of(pageInt, sizeInt));
+        return new SearchResponse<>(resultsPage.getTotalElements(), resultsPage.getTotalPages(), pageInt + 1, sizeInt,
+                                    resultsPage.getContent());
+    }
+
     /**
+     * FIXME This method is a work in progress. Do not use.
      * Perform search based on the query params and return a paginated {@link SearchResponse}.
      */
-    public SearchResponse<?> search(Map<String, String> params, Optional<Integer> page, Optional<Integer> size) {
+    public SearchResponse<?> advancedSearch(Map<String, String> params, Optional<Integer> page,
+                                            Optional<Integer> size) {
         // Validate search params.
         for (String param : params.keySet())
             if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param))
@@ -103,7 +136,7 @@ public class SearchService {
                 queryExecutor.search(c, stringParam, Optional.empty(), Optional.empty());
 
         // Append to the search response.
-        searchResponse.totalItems += categorySearchResponse.totalItems;
+        searchResponse.totalElements += categorySearchResponse.totalElements;
         searchResponse.totalPages += categorySearchResponse.totalPages;
         searchResponse.results.addAll(categorySearchResponse.results);
         return searchResponse;

@@ -18,12 +18,7 @@ public class Mission {
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
     @Id
     private String id;
-    private String spaceStation;
-    private String spaceShuttle;
-    private String retrievableCapsule;
-    private String soundingRocket;
-    private String parabolicFlight;
-    private String dropTower;
+    private String platform;
     private Date launchDate;
     private Date startDate;
     private Date endDate;

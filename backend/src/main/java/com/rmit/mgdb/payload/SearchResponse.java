@@ -4,14 +4,14 @@ import java.util.List;
 
 public class SearchResponse<T> {
 
-    public long totalItems;
+    public long totalElements;
     public long totalPages;
     public long page;
     public long size;
     public List<T> results;
 
-    public SearchResponse(long totalItems, long totalPages, long page, long size, List<T> results) {
-        this.totalItems = totalItems;
+    public SearchResponse(long totalElements, long totalPages, long page, long size, List<T> results) {
+        this.totalElements = totalElements;
         this.totalPages = totalPages;
         this.page = page;
         this.size = size;
