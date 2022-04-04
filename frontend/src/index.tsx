@@ -10,9 +10,8 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
 import Register from './pages/Register';
-import Home from './pages/Home';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
+import HomePage from './pages/HomePage';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -20,24 +19,25 @@ const root = ReactDOMClient.createRoot(rootElement);
 const queryClient = new QueryClient();
 root.render(
   // TODO For testing navigates to register page by default.
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline>
-            <BrowserRouter>
-              <Routes>
-                <Route path='/' element={<Navigate to='/register' />} />
-                <Route path='login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/home' element={<Home />} />
-                // TODO page not found
-              </Routes>
-            </BrowserRouter>
-          </CssBaseline>
-        </ThemeProvider>
-      </Provider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Navigate to='/register' />} />
+              <Route path='login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/home' element={<HomePage />} />
+              // TODO page not found
+            </Routes>
+          </BrowserRouter>
+        </CssBaseline>
+      </ThemeProvider>
+    </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
+);
 
 // TODO Might be a good option in production.
 // If you want your app to work offline and load faster, you can change
