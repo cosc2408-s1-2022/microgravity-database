@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/RMIT-LOGO-BLACK.png';
 import { Link } from 'react-router-dom';
 import PrimarySearch from '../../components/PrimarySearch';
 import { Typography } from '@mui/material';
