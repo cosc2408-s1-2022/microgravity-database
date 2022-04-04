@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Typography,
-  AppBar,
   CssBaseline,
   Container,
   Box,
@@ -9,28 +8,19 @@ import {
   FormControlLabel,
   Button,
   Checkbox,
-  Toolbar,
   Grid,
   Link,
 } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
-import { Search, SearchIconWrapper, StyledInputBase } from './styling';
 import { useMutation } from 'react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../types';
 import { Navigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
+import theme from '../../theme';
+import Header from '../../components/Header';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-  },
-});
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -60,17 +50,7 @@ export default function Login() {
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <AppBar position='relative' style={{ paddingLeft: 20, padding: 10 }}>
-          <Toolbar>
-            <Box sx={{ flexGrow: 10 }}>
-              <Avatar src='/rmit.png' sx={{ width: 170, height: 60 }} variant='square' />
-            </Box>
-            <Search>
-              <SearchIconWrapper />
-              <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
-            </Search>
-          </Toolbar>
-        </AppBar>
+        <Header />
       </ThemeProvider>
       <main>
         <div

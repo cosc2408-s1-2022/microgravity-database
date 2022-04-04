@@ -12,6 +12,7 @@ import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
+import Header from '../../components/Header';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -43,64 +44,67 @@ export default function Register() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <AccountCircleIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Register
-        </Typography>
-        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormField
-                name='username'
-                label='Username'
-                autoComplete='username'
-                errors={error?.response?.data}
-                onChange={setUsername}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormField
-                name='password'
-                label='Password'
-                type='password'
-                autoComplete='new-password'
-                errors={error?.response?.data}
-                onChange={setPassword}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormField
-                name='confirmPassword'
-                label='Confirm Password'
-                type='password'
-                autoComplete='confirm-password'
-                errors={
-                  passwordsMatchingError
-                    ? {
-                        confirmPassword: passwordsMatchingError,
-                      }
-                    : undefined
-                }
-                onChange={setConfirmPassword}
-              />
-            </Grid>
-          </Grid>
-          <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+    <>
+      <Header />
+      <Container component='main' maxWidth='xs'>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <AccountCircleIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
             Register
-          </Button>
+          </Typography>
+          <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormField
+                  name='username'
+                  label='Username'
+                  autoComplete='username'
+                  errors={error?.response?.data}
+                  onChange={setUsername}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormField
+                  name='password'
+                  label='Password'
+                  type='password'
+                  autoComplete='new-password'
+                  errors={error?.response?.data}
+                  onChange={setPassword}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormField
+                  name='confirmPassword'
+                  label='Confirm Password'
+                  type='password'
+                  autoComplete='confirm-password'
+                  errors={
+                    passwordsMatchingError
+                      ? {
+                          confirmPassword: passwordsMatchingError,
+                        }
+                      : undefined
+                  }
+                  onChange={setConfirmPassword}
+                />
+              </Grid>
+            </Grid>
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+              Register
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 }
