@@ -90,7 +90,7 @@ export default function HomePage() {
       >
         <Item>
           <LogoBlack style={{ transform: 'scale(0.3)' }} />
-          <PrimarySearch />
+          <PrimarySearch searchString='' />
         </Item>
       </Box>
     </>

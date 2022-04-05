@@ -2,8 +2,9 @@ import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import FormField from '../FormField';
+import { SearchState } from '../../pages/SearchResults';
 
-export default function PrimarySearch() {
+export default function PrimarySearch(props: SearchState) {
   const [searchString, setSearchString] = useState('');
   const [hasSubmit, setHasSubmit] = useState(false);
 
@@ -20,11 +21,11 @@ export default function PrimarySearch() {
     <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
       <FormField
         margin='normal'
-        required
         fullWidth
         label='Search'
         name='searchString'
         autoComplete='text'
+        value={searchString ? searchString : props.searchString}
         onChange={setSearchString}
       />
     </Box>

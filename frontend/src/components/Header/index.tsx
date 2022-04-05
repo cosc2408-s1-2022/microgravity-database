@@ -5,7 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import LogoWhite from '../../logo_no_text.svg';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 export default function SearchAppBar() {
   if (window.location.pathname === '/login') {
@@ -14,16 +15,18 @@ export default function SearchAppBar() {
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-              <Box sx={{ fontWeight: 'bold' }}>
-                <a href={'/home'}>
-                  <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
-                </a>
-              </Box>
+              <Link
+                component={RouterLink}
+                to='/home'
+                sx={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              >
+                <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
+              </Link>
             </Typography>
             <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
               Microgravity Database
             </Typography>
-            <Button component={Link} to='/register' color='inherit'>
+            <Button component={RouterLink} to='/register' color='inherit'>
               Register
             </Button>
           </Toolbar>
@@ -36,11 +39,13 @@ export default function SearchAppBar() {
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-              <Box sx={{ fontWeight: 'bold' }}>
-                <a href={'/home'}>
-                  <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
-                </a>
-              </Box>
+              <Link
+                component={RouterLink}
+                to='/home'
+                sx={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              >
+                <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
+              </Link>
             </Typography>
             <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
               Microgravity Database
@@ -55,19 +60,21 @@ export default function SearchAppBar() {
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-              <Box sx={{ fontWeight: 'bold' }}>
-                <a href={'/home'}>
-                  <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
-                </a>
-              </Box>
+              <Link
+                component={RouterLink}
+                to='/home'
+                sx={{ fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              >
+                <img src={LogoWhite} alt='RMIT LOGO' height={'40vmin'} />
+              </Link>
             </Typography>
             <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
               Microgravity Database
             </Typography>
-            <Button component={Link} to='/login' color='inherit'>
+            <Button component={RouterLink} to='/login' color='inherit'>
               Login
             </Button>
-            <Button component={Link} to='/register' color='inherit'>
+            <Button component={RouterLink} to='/register' color='inherit'>
               Register
             </Button>
           </Toolbar>

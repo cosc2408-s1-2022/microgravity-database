@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { Router } from '@mui/icons-material';
 import PrimarySearch from '../PrimarySearch';
 
@@ -8,7 +8,7 @@ describe('PrimarySearch matches snapshot', () => {
   test('render PrimarySearch', () => {
     const { container } = render(
       <Router>
-        <PrimarySearch />
+        <PrimarySearch searchString='' />
       </Router>,
     );
     expect(container).toMatchSnapshot();

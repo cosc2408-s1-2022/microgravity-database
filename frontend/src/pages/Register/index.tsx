@@ -7,14 +7,13 @@ import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
 import Header from '../../components/Header';
-
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+import api from '../../util/api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -25,7 +24,7 @@ export default function Register() {
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
     () => {
-      return axios.post(`${backendUrl}/api/users/register`, {
+      return api.post(`/users/register`, {
         username: username,
         password: password,
         role: Role.ROLE_USER,
