@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
+import SearchResults from './pages/SearchResults';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -19,6 +20,8 @@ const root = ReactDOMClient.createRoot(rootElement);
 const queryClient = new QueryClient();
 root.render(
   // TODO For testing navigates to register page by default.
+  // TODO Page not found.
+  // TODO Prevent access to search results.
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -29,7 +32,7 @@ root.render(
               <Route path='/home' element={<HomePage />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              // TODO page not found
+              <Route path='/searchResults' element={<SearchResults />} />
             </Routes>
           </BrowserRouter>
         </CssBaseline>

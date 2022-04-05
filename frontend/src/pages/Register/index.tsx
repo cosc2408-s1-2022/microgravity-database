@@ -68,8 +68,11 @@ export default function Register() {
                   name='username'
                   label='Username'
                   autoComplete='username'
-                  errors={error?.response?.data}
                   onChange={setUsername}
+                  errors={error?.response?.data}
+                  margin='normal'
+                  fullWidth
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
@@ -78,8 +81,10 @@ export default function Register() {
                   label='Password'
                   type='password'
                   autoComplete='new-password'
-                  errors={error?.response?.data}
                   onChange={setPassword}
+                  errors={error?.response?.data}
+                  margin='normal'
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={12}>

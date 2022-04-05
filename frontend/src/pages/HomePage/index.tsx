@@ -58,8 +58,8 @@ export default HomePage;
 import * as React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import Header from '../../components/Header';
-import logo from '../../assets/RMIT-LOGO-BLACK.png';
 import PrimarySearch from '../../components/PrimarySearch';
+import { ReactComponent as LogoBlack } from '../../logo_black.svg';
 
 function Item(props: BoxProps) {
   const { sx, ...other } = props;
@@ -85,11 +85,11 @@ export default function HomePage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100vh',
+          height: '80vh',
         }}
       >
-        <img src={logo} className='img-fluid' alt='RMIT Logo' height={'300vmin'} />
         <Item>
+          <LogoBlack style={{ transform: 'scale(0.3)' }} />
           <PrimarySearch />
         </Item>
       </Box>

@@ -5,25 +5,24 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#03045E',
+      main: '#1a237e',
     },
     secondary: {
-      main: '#00B4D8',
+      main: '#f50057',
+    },
+    info: {
+      main: '#81c784',
     },
     error: {
-      main: '#FF0000',
+      main: '#f44336',
     },
-    warning: {
-      main: '#FFA500',
+  },
+  typography: {
+    fontSize: 18,
+    body2: {
+      fontWeight: 300,
     },
-    success: {
-      main: '#008000',
-    },
-    text: {
-      primary: '#03045E',
-      secondary: '#00B4D8',
-      disabled: '#C0C0C0',
-    },
+    fontFamily: 'Roboto Slab',
   },
 });
 export default theme;

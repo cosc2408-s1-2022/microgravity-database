@@ -65,7 +65,6 @@ public class UserController {
         return new ResponseEntity<>(new AuthenticationResponse(user, jwt), HttpStatus.CREATED);
     }
 
-
     /**
      * Login an existing user.
      */
