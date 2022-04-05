@@ -46,7 +46,17 @@ export default function Register() {
   return (
     <>
       <Header />
-      <Container component='main' maxWidth='xs'>
+      <Container
+        component='main'
+        maxWidth='xs'
+        sx={{
+          minHeight: '70vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
         <Box
           sx={{
             marginTop: 8,
@@ -65,6 +75,7 @@ export default function Register() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormField
+                  required
                   name='username'
                   label='Username'
                   autoComplete='username'
@@ -74,6 +85,7 @@ export default function Register() {
               </Grid>
               <Grid item xs={12}>
                 <FormField
+                  required
                   name='password'
                   label='Password'
                   type='password'
@@ -84,6 +96,7 @@ export default function Register() {
               </Grid>
               <Grid item xs={12}>
                 <FormField
+                  required
                   name='confirmPassword'
                   label='Confirm Password'
                   type='password'

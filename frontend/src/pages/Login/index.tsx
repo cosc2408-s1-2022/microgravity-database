@@ -64,7 +64,17 @@ export default function Login() {
     <>
       <Header />
       <ThemeProvider theme={theme}>
-        <Container component='main' maxWidth='xs'>
+        <Container
+          component='main'
+          maxWidth='xs'
+          sx={{
+            minHeight: '70vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
           <CssBaseline />
           <Box
             sx={{
