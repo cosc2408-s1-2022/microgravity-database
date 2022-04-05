@@ -1,20 +1,29 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Typography, AppBar, Grid, CssBaseline, Container, Box, Avatar, Button, Toolbar, Link } from '@mui/material';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material/styles';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#fffff',
+    },
+  },
+});
+const innerTheme = createTheme({
+  typography: {
+    fontFamily: 'Roboto',
+  },
+});
 export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -43,64 +52,113 @@ export default function Register() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <AccountCircleIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Register
-        </Typography>
-        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormField
-                name='username'
-                label='Username'
-                autoComplete='username'
-                errors={error?.response?.data}
-                onChange={setUsername}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormField
-                name='password'
-                label='Password'
-                type='password'
-                autoComplete='new-password'
-                errors={error?.response?.data}
-                onChange={setPassword}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormField
-                name='confirmPassword'
-                label='Confirm Password'
-                type='password'
-                autoComplete='confirm-password'
-                errors={
-                  passwordsMatchingError
-                    ? {
-                        confirmPassword: passwordsMatchingError,
-                      }
-                    : undefined
-                }
-                onChange={setConfirmPassword}
-              />
-            </Grid>
-          </Grid>
-          <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-            Register
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+    <>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <AppBar position='relative' style={{ paddingLeft: 20, padding: 10 }}>
+          <Toolbar>
+            <Box sx={{ flexGrow: 10 }}>
+              <Avatar src='/rmit.svg' sx={{ width: 170, height: 60 }} variant='square' />
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </ThemeProvider>
+      <main>
+        <video
+          autoPlay
+          loop
+          muted
+          style={{
+            position: 'absolute',
+            width: '100%',
+            left: '50%',
+            top: '50%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'translate(-50%, -50%)',
+            zIndex: '-1',
+          }}
+        >
+          <source src='/space.mp4' type='video/mp4' />
+        </video>
+        <div>
+          <br></br>
+          <br></br>
+          <ThemeProvider theme={innerTheme}>
+            <Container component='main' maxWidth='xs'>
+              <Box
+                sx={{
+                  marginTop: 5,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  height: 'auto',
+                  width: 'auto',
+                  bgcolor: '#FAEBEFFF',
+                  p: 5,
+                  borderRadius: '16px',
+                }}
+              >
+                <Typography component='h1' variant='h4'>
+                  Register
+                </Typography>
+                <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <FormField
+                        name='username'
+                        label='Username'
+                        autoComplete='username'
+                        errors={error?.response?.data}
+                        onChange={setUsername}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormField
+                        name='password'
+                        label='Password'
+                        type='password'
+                        autoComplete='new-password'
+                        errors={error?.response?.data}
+                        onChange={setPassword}
+                      />
+                      <Grid item>
+                        <Typography variant='body2'>
+                          Password at least 8 characters with one special character eg. !@#$%*
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormField
+                        name='confirmPassword'
+                        label='Confirm Password'
+                        type='password'
+                        autoComplete='confirm-password'
+                        errors={
+                          passwordsMatchingError
+                            ? {
+                                confirmPassword: passwordsMatchingError,
+                              }
+                            : undefined
+                        }
+                        onChange={setConfirmPassword}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button color='error' type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+                    Register
+                  </Button>
+                  <Grid item>
+                    <Link href={'/login'} variant='body2'>
+                      {'Already have an account? Login'}
+                    </Link>
+                  </Grid>
+                </Box>
+              </Box>
+            </Container>
+          </ThemeProvider>
+        </div>
+      </main>
+    </>
   );
 }
