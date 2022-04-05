@@ -1,6 +1,7 @@
 package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.UserNotFoundException;
+import com.rmit.mgdb.exception.UsernameAlreadyExistsException;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class UserService {
      * Saves a new user into the database.
      */
     public User saveUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername()))
+            throw new UsernameAlreadyExistsException(
+                    String.format("User by username %s already exists.", user.getUsername()));
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import {
-  Typography,
-  AppBar,
-  CssBaseline,
-  Container,
-  Box,
-  Avatar,
   FormControlLabel,
-  Button,
   Checkbox,
+  AppBar,
   Toolbar,
+  Avatar,
+  CssBaseline,
+  Box,
+  Button,
+  Container,
   Grid,
   Link,
+  Typography,
 } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
-import { Search, SearchIconWrapper, StyledInputBase } from './styling';
 import { useMutation } from 'react-query';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../types';
 import { Navigate } from 'react-router-dom';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Header from '../../components/Header';
 import FormField from '../../components/FormField';
-
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+import api from '../../util/api';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
 
 const theme = createTheme({
   palette: {
@@ -36,6 +36,7 @@ const innerTheme = createTheme({
     fontFamily: 'Roboto',
   },
 });
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -43,7 +44,7 @@ export default function Login() {
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'login',
     () => {
-      return axios.post(`${backendUrl}/api/users/login`, {
+      return api.post('/users/login', {
         username: username,
         password: password,
       });
@@ -69,10 +70,6 @@ export default function Login() {
             <Box sx={{ flexGrow: 10 }}>
               <Avatar src='/rmit.svg' sx={{ width: 170, height: 60 }} variant='square' />
             </Box>
-            <Search>
-              <SearchIconWrapper />
-              <StyledInputBase text-color='white' placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
-            </Search>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
@@ -95,20 +92,18 @@ export default function Login() {
           <source src='/space.mp4' type='video/mp4' />
         </video>
         <div>
-          <br></br>
-          <br></br>
           <ThemeProvider theme={innerTheme}>
             <Container maxWidth='sm'>
               <Box
                 sx={{
-                  marginTop: 5,
+                  marginTop: 4,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   height: 'auto',
                   width: 'auto',
                   bgcolor: '#FAEBEFFF',
-                  p: 4,
+                  p: 3,
                   borderRadius: '16px',
                 }}
               >
@@ -120,14 +115,14 @@ export default function Login() {
               <CssBaseline />
               <Box
                 sx={{
-                  marginTop: 5,
+                  marginTop: 4,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   height: 'auto',
                   width: 'auto',
                   bgcolor: '#FAEBEFFF',
-                  p: 5,
+                  p: 4,
                   borderRadius: '16px',
                 }}
               >

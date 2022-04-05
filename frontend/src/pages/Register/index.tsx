@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from 'react';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Typography, AppBar, Grid, CssBaseline, Container, Box, Avatar, Button, Toolbar, Link } from '@mui/material';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
@@ -9,8 +8,7 @@ import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
-
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+import api from '../../util/api';
 
 const theme = createTheme({
   palette: {
@@ -24,6 +22,7 @@ const innerTheme = createTheme({
     fontFamily: 'Roboto',
   },
 });
+
 export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +32,7 @@ export default function Register() {
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
     () => {
-      return axios.post(`${backendUrl}/api/users/register`, {
+      return api.post(`/users/register`, {
         username: username,
         password: password,
         role: Role.ROLE_USER,
@@ -82,20 +81,20 @@ export default function Register() {
           <source src='/space.mp4' type='video/mp4' />
         </video>
         <div>
-          <br></br>
-          <br></br>
+          <br />
+          <br />
           <ThemeProvider theme={innerTheme}>
             <Container component='main' maxWidth='xs'>
               <Box
                 sx={{
-                  marginTop: 5,
+                  marginTop: 4,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   height: 'auto',
                   width: 'auto',
                   bgcolor: '#FAEBEFFF',
-                  p: 5,
+                  p: 3,
                   borderRadius: '16px',
                 }}
               >
