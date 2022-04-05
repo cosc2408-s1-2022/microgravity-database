@@ -1,27 +1,19 @@
-import { Box, Button, Card, CardActions, CardContent, Container, Divider, Pagination, Typography } from '@mui/material';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Box, Card, CardActions, CardContent, Container, Divider, Link, Pagination, Typography } from '@mui/material';
+import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import React, { useEffect, useState } from 'react';
 import FormField from '../../components/FormField';
-import { SearchResponse } from '../../types';
+import { SearchResponse, SearchState } from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 
-export type SearchState = {
-  searchString: string;
-};
-
 export default function SearchResults() {
   const { state } = useLocation() as { state: SearchState };
   const [searchString, setSearchString] = useState(state.searchString);
   const [page, setPage] = useState(1);
-
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
 
   const params = new URLSearchParams();
   params.append('string', searchString);
@@ -34,7 +26,9 @@ export default function SearchResults() {
   });
 
   useEffect(() => mutate(), [mutate]);
-
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutate();
@@ -80,7 +74,9 @@ export default function SearchResults() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size='small'>Learn More</Button>
+                  <Link component={RouterLink} to={`/experiment/${experiment.id}`} state={{ experiment: experiment }}>
+                    Learn More
+                  </Link>
                 </CardActions>
               </Card>
             ))}

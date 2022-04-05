@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import FormField from '../FormField';
-import { SearchState } from '../../pages/SearchResults';
+import { SearchState } from '../../types';
 
 export default function PrimarySearch(props: SearchState) {
   const [searchString, setSearchString] = useState('');

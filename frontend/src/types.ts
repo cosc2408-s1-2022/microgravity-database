@@ -75,3 +75,7 @@ export type SearchResponse = {
   size: number;
   results: Experiment[];
 };
+
+export type SearchState = {
+  searchString: string;
+};

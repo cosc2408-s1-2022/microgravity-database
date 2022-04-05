@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
 import SearchResults from './pages/SearchResults';
+import ViewExperiment from './pages/ViewExperiment';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -33,6 +34,7 @@ root.render(
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/searchResults' element={<SearchResults />} />
+              <Route path='/experiment/:id' element={<ViewExperiment />} />
             </Routes>
           </BrowserRouter>
         </CssBaseline>
