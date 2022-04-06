@@ -21,13 +21,12 @@ public interface ExperimentRepository extends JpaRepository<Experiment, Long> {
                                "    mission_id LIKE CONCAT('%',:s,'%') " +
                                ") " +
                                "ORDER BY " +
-                               "    INSTR(lead_institution, :s)," +
-                               "    INSTR(platform, :s)," +
-                               "    INSTR(principal_investigator, :s)," +
-                               "    INSTR(title, :s)," +
-                               "    INSTR(toa, :s), " +
-                               "    INSTR(mission_id, :s) " +
-                               "COLLATE utf8mb4_unicode_ci";
+                               "    LEVENSHTEIN(lead_institution, :s)," +
+                               "    LEVENSHTEIN(platform, :s)," +
+                               "    LEVENSHTEIN(principal_investigator, :s)," +
+                               "    LEVENSHTEIN(title, :s)," +
+                               "    LEVENSHTEIN(toa, :s), " +
+                               "    LEVENSHTEIN(mission_id, :s) ";
 
     @Query(value = "SELECT * FROM experiment " + SEARCH_QUERY_PART,
            countQuery = "SELECT COUNT(*) FROM experiment " + SEARCH_QUERY_PART,
