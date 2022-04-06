@@ -58,7 +58,7 @@ export default HomePage;
 import * as React from 'react';
 import Header from '../../components/Header';
 import PrimarySearch from '../../components/PrimarySearch';
-import { ReactComponent as LogoBlack } from '../../logo_black.svg';
+import { ReactComponent as Logo } from '../../logo_black.svg';
 import { Grid } from '@mui/material';
 
 export default function HomePage() {
@@ -67,7 +67,7 @@ export default function HomePage() {
       <Header />
       <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
         <Grid item md={4}>
-          <LogoBlack />
+          <Logo />
         </Grid>
         <PrimarySearch searchString='' />
       </Grid>

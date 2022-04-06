@@ -43,7 +43,7 @@ export default function PrimarySearch(props: SearchState) {
         />
       </Grid>
       <Grid item>
-        <Button variant='contained' color='primary' style={{ marginLeft: '15px' }}>
+        <Button type='submit' variant='contained' color='primary' style={{ padding: '8px', marginLeft: '15px' }}>
           <SearchIcon />
         </Button>
       </Grid>

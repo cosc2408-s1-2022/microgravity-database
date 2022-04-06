@@ -1,4 +1,16 @@
-import { Box, Card, CardActions, CardContent, Container, Divider, Link, Pagination, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
+  Link,
+  Pagination,
+  Typography,
+} from '@mui/material';
 import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +21,7 @@ import { useMutation } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchResults() {
   const { state } = useLocation() as { state: SearchState };
@@ -42,17 +55,35 @@ export default function SearchResults() {
     <>
       <Header />
       <Container>
-        <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <FormField
-            margin='normal'
-            fullWidth
-            label='Search'
-            name='searchString'
-            autoComplete='text'
-            value={searchString}
-            onChange={setSearchString}
-          />
-        </Box>
+        <Grid
+          container
+          item
+          component='form'
+          onSubmit={handleSubmit}
+          direction='row'
+          justifyContent='center'
+          alignItems='center'
+          mt='35px'
+        >
+          <Grid item md={6}>
+            <FormField
+              id='search'
+              label='Search'
+              type='search'
+              variant='outlined'
+              size='small'
+              sx={{ width: '100%' }}
+              name='searchString'
+              value={searchString}
+              onChange={setSearchString}
+            />
+          </Grid>
+          <Grid item>
+            <Button type='submit' variant='contained' color='primary' style={{ padding: '8px', marginLeft: '15px' }}>
+              <SearchIcon />
+            </Button>
+          </Grid>
+        </Grid>
         <Divider sx={{ mt: '2rem', mb: '1.5rem' }} variant='middle' />
         {isLoading ? (
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>

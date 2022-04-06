@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import {
-  FormControlLabel,
-  Checkbox,
   AppBar,
-  Toolbar,
   Avatar,
-  CssBaseline,
   Box,
   Button,
+  Checkbox,
   Container,
+  CssBaseline,
+  FormControlLabel,
   Grid,
   Link,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../types';
 import { Navigate } from 'react-router-dom';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Header from '../../components/Header';
 import FormField from '../../components/FormField';
 import api from '../../util/api';
 import { createTheme } from '@mui/material/styles';

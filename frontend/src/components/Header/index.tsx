@@ -3,9 +3,9 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import logo from '../../assets/RMIT-LOGO-WHITE.png';
+import Logo from '../../logo_no_text.svg';
 import { Button, Grid } from '@mui/material';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // TODO: Create search component to include in bar props (i.e. search=true)
 
@@ -29,9 +29,9 @@ export default function Header() {
   };
 
   const authElement = (
-      <Button color='inherit' onClick={authElementProps.onClick}>
-        {authElementProps.text}
-      </Button>
+    <Button color='inherit' onClick={authElementProps.onClick}>
+      {authElementProps.text}
+    </Button>
   );
 
   const registerElement = authToken ? null : (
@@ -45,11 +45,10 @@ export default function Header() {
       <AppBar position='static'>
         <Toolbar>
           <Grid container wrap='nowrap' direction='row'>
-
             <Grid container item direction='row' wrap='nowrap' alignItems='center'>
               <Grid item>
                 <a href={'/home'}>
-                  <img src={logo} alt='RMIT LOGO' height={'40vmin'} />
+                  <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
                 </a>
               </Grid>
 
@@ -62,7 +61,6 @@ export default function Header() {
               {authElement}
               {registerElement}
             </Grid>
-
           </Grid>
         </Toolbar>
       </AppBar>
