@@ -1,4 +1,5 @@
-import { Box } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import FormField from '../FormField';
@@ -18,16 +19,34 @@ export default function PrimarySearch(props: SearchState) {
   }
 
   return (
-    <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-      <FormField
-        margin='normal'
-        fullWidth
-        label='Search'
-        name='searchString'
-        autoComplete='text'
-        value={searchString ? searchString : props.searchString}
-        onChange={setSearchString}
-      />
-    </Box>
+    <Grid
+      container
+      item
+      component='form'
+      onSubmit={handleSubmit}
+      direction='row'
+      justifyContent='center'
+      alignItems='center'
+      mt='35px'
+    >
+      <Grid item md={6}>
+        <FormField
+          id='search'
+          label='Search'
+          type='search'
+          variant='outlined'
+          size='small'
+          sx={{ width: '100%' }}
+          name='searchString'
+          value={searchString ? searchString : props.searchString}
+          onChange={setSearchString}
+        />
+      </Grid>
+      <Grid item>
+        <Button variant='contained' color='primary' style={{ marginLeft: '15px' }}>
+          <SearchIcon />
+        </Button>
+      </Grid>
+    </Grid>
   );
 }

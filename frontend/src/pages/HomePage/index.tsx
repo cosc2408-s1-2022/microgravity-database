@@ -56,43 +56,21 @@ class HomePage extends Component {
 export default HomePage;
 */
 import * as React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
 import Header from '../../components/Header';
 import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as LogoBlack } from '../../logo_black.svg';
-
-function Item(props: BoxProps) {
-  const { sx, ...other } = props;
-  return (
-    <Box
-      sx={{
-        p: 1,
-        m: 1,
-        ...sx,
-      }}
-      {...other}
-    />
-  );
-}
+import { Grid } from '@mui/material';
 
 export default function HomePage() {
   return (
-    <>
+    <Grid container direction='column' height='100vh'>
       <Header />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '80vh',
-        }}
-      >
-        <Item>
-          <LogoBlack style={{ transform: 'scale(0.3)' }} />
-          <PrimarySearch searchString='' />
-        </Item>
-      </Box>
-    </>
+      <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
+        <Grid item md={4}>
+          <LogoBlack />
+        </Grid>
+        <PrimarySearch searchString='' />
+      </Grid>
+    </Grid>
   );
 }
