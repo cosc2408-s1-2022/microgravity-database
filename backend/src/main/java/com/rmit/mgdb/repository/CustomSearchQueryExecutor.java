@@ -26,7 +26,8 @@ public class CustomSearchQueryExecutor {
     /**
      * Generic method to search all string properties of an entity using custom JPQL queries.
      */
-    public <T> SearchResponse<T> search(Class<T> c, String string, String platform, Optional<Integer> page, Optional<Integer> size) {
+    public <T> SearchResponse<T> search(Class<T> c, String string, String platform, Optional<Integer> page,
+                                        Optional<Integer> size) {
         List<String> fields = new ArrayList<>();
         for (Field field : c.getDeclaredFields()) {
             field.setAccessible(true);

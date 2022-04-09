@@ -33,7 +33,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         UserNotFoundResponse exceptionResponse = new UserNotFoundResponse(exception.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
-      
+
     @ExceptionHandler
     public final ResponseEntity<?> handleInvalidSearchCategory(InvalidResultTypeException exception) {
         InvalidResultTypeResponse exceptionResponse = new InvalidResultTypeResponse(exception.getMessage());
