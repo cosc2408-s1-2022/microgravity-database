@@ -19,5 +19,7 @@ public class SeoCode {
     private String name;
     @OneToMany(mappedBy = "seoCode", cascade = CascadeType.ALL)
     private List<Experiment> experiments;
+    @ManyToMany(mappedBy = "seoCodes", cascade = CascadeType.ALL)
+    private List<Platform> platform;
 
 }

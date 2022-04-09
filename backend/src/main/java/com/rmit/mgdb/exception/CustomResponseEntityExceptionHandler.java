@@ -1,6 +1,6 @@
 package com.rmit.mgdb.exception;
 
-import com.rmit.mgdb.payload.InvalidSearchCategoryResponse;
+import com.rmit.mgdb.payload.InvalidResultTypeResponse;
 import com.rmit.mgdb.payload.InvalidSearchParamResponse;
 import com.rmit.mgdb.payload.UserNotFoundResponse;
 import com.rmit.mgdb.payload.UsernameAlreadyExistsResponse;
@@ -35,8 +35,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
       
     @ExceptionHandler
-    public final ResponseEntity<?> handleInvalidSearchCategory(InvalidSearchCategoryException exception) {
-        InvalidSearchCategoryResponse exceptionResponse = new InvalidSearchCategoryResponse(exception.getMessage());
+    public final ResponseEntity<?> handleInvalidSearchCategory(InvalidResultTypeException exception) {
+        InvalidResultTypeResponse exceptionResponse = new InvalidResultTypeResponse(exception.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 

@@ -19,5 +19,7 @@ public class ForCode {
     private String name;
     @OneToMany(mappedBy = "forCode", cascade = CascadeType.ALL)
     private List<Experiment> experiments;
+    @ManyToMany(mappedBy = "forCodes", cascade = CascadeType.ALL)
+    private List<Platform> platform;
 
 }

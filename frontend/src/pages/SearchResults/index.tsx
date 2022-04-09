@@ -11,7 +11,7 @@ import {
   Pagination,
   Typography,
 } from '@mui/material';
-import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import React, { useEffect, useState } from 'react';
 import FormField from '../../components/FormField';
@@ -38,7 +38,10 @@ export default function SearchResults() {
     });
   });
 
-  useEffect(() => mutate(), [mutate]);
+  useEffect(() => {
+    mutate();
+  }, [mutate]);
+
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -46,10 +49,6 @@ export default function SearchResults() {
     event.preventDefault();
     mutate();
   };
-
-  if (!searchString) {
-    return <Navigate to='/home' />;
-  }
 
   return (
     <>

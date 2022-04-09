@@ -1,10 +1,8 @@
 package com.rmit.mgdb.service;
 
-import com.rmit.mgdb.exception.InvalidSearchCategoryException;
 import com.rmit.mgdb.exception.InvalidSearchParamException;
 import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.SearchResponse;
-import com.rmit.mgdb.repository.CustomSearchQueryExecutor;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
+import java.util.Optional;
 
 import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 
@@ -23,123 +25,114 @@ import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 public class SearchService {
 
     private final ExperimentRepository experimentRepository;
-    private final CustomSearchQueryExecutor queryExecutor;
 
     @Autowired
-    public SearchService(ExperimentRepository experimentRepository,
-                         CustomSearchQueryExecutor queryExecutor) {
+    public SearchService(ExperimentRepository experimentRepository) {
         this.experimentRepository = experimentRepository;
-        this.queryExecutor = queryExecutor;
     }
 
-    public Object search(Map<String, String> params, Optional<Integer> page, Optional<Integer> size) {
-        // Validate search params.
-        for (String param : params.keySet())
-            if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param))
-                throw new InvalidSearchParamException(String.format("Unknown search param %s.", param));
+    /**
+     * Perform search based on the query params and return a paginated {@link SearchResponse}.
+     * This is the simpler search method which only searches across experiments.
+     */
+    public Object search(Map<String, String> params) {
+        validateParams(params);
 
-        // Decode the search string param.
-        String stringParam = URLDecoder.decode(
-                // Safety guard in case frontend does not check for empty string.
-                Optional.ofNullable(params.get(SearchParam.STRING.string)).orElseThrow(
-                        () -> new InvalidSearchParamException("Empty search string provided.")),
-                StandardCharsets.UTF_8);
+        // Extract necessary params.
+        String stringParam = extractStringParam(params, SearchParam.STRING.string);
+        int page = extractIntegerParam(params, SearchParam.PAGE.string, 0);
+        int size = extractIntegerParam(params, SearchParam.PAGE.string, DEFAULT_PAGE_SIZE);
 
-        int pageInt = page.orElse(0);
-        int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
         // JPA pagination uses zero-based index.
-        if (pageInt != 0)
-            pageInt--;
+        if (page != 0)
+            page--;
 
-        Page<Experiment> resultsPage =
-                experimentRepository.searchByString(stringParam, PageRequest.of(pageInt, sizeInt));
-        return new SearchResponse<>(resultsPage.getTotalElements(), resultsPage.getTotalPages(), pageInt + 1, sizeInt,
+        Page<Experiment> resultsPage = experimentRepository.searchByString(stringParam, PageRequest.of(page, size));
+        return new SearchResponse<>(resultsPage.getTotalElements(), resultsPage.getTotalPages(), page + 1, size,
                                     resultsPage.getContent());
     }
 
     /**
-     * FIXME This method is a work in progress. Do not use.
      * Perform search based on the query params and return a paginated {@link SearchResponse}.
+     * This is the advanced search method which allows complex queries.
      */
-    public SearchResponse<?> advancedSearch(Map<String, String> params, Optional<Integer> page,
-                                            Optional<Integer> size) {
-        // Validate search params.
-        for (String param : params.keySet())
-            if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param))
-                throw new InvalidSearchParamException(String.format("Unknown search param %s.", param));
-
-        // Decode the search string param.
-        String stringParam = URLDecoder.decode(
-                // Safety guard in case frontend does not check for empty string.
-                Optional.ofNullable(params.get(SearchParam.STRING.string)).orElseThrow(
-                        () -> new InvalidSearchParamException("Empty search string provided.")),
-                StandardCharsets.UTF_8);
+    public SearchResponse<?> advancedSearch(Map<String, String> params) {
+        validateParams(params);
 
         SearchResponse<Object> searchResponse = new SearchResponse<>(0, 0, 0, DEFAULT_PAGE_SIZE, new ArrayList<>());
-        String categoriesParam = params.get(SearchParam.CATEGORIES.string);
-        if (categoriesParam != null) {
-            // Decode the categories param.
-            String[] categories = URLDecoder.decode(categoriesParam, StandardCharsets.UTF_8).split("\\s");
 
-            // Search for each category and append to the search response.
-            for (String category : categories) {
-                try {
-                    searchResponse = searchByCategory(searchResponse, category, stringParam);
-                } catch (Exception exception) {
-                    throw new InvalidSearchCategoryException(String.format("Unknown search category %s.", category));
-                }
-            }
-        } else {
-            // If no category param specified, search across all categories.
-            for (SearchCategory searchCategory : SearchCategory.values()) {
-                try {
-                    searchResponse = searchByCategory(searchResponse, searchCategory.string, stringParam);
-                } catch (Exception ignore) {
-                    // Never thrown.
-                }
-            }
-        }
+        // Extract necessary params.
+        String stringParam = extractStringParam(params, SearchParam.STRING.string, "");
+        int page = extractIntegerParam(params, SearchParam.PAGE.string, 0);
+        int size = extractIntegerParam(params, SearchParam.PAGE.string, DEFAULT_PAGE_SIZE);
+        PlatformType platformParam = PlatformType.valueOf(
+                extractStringParam(params, SearchParam.PLATFORM.string, PlatformType.SPACE_STATION.string));
+        ResultType resultTypeParam = ResultType.valueOf(
+                extractStringParam(params, SearchParam.RESULT_TYPE.string, ResultType.MISSION.string));
 
-        // TODO Filter by date.
+        // TODO Actual search logic to be implemented.
 
-        // Paginate all the results.
-        searchResponse.page = (long) (page.orElse(0));
-        searchResponse.size = (long) (size.orElse(DEFAULT_PAGE_SIZE));
-
-        // Negate one to get "programmer" index.
-        if (searchResponse.page != 0)
-            searchResponse.page -= 1;
-        searchResponse.results = searchResponse.results.stream()
-                                                       .skip(searchResponse.page * searchResponse.size)
-                                                       .limit(searchResponse.size)
-                                                       .collect(Collectors.toList());
-
-        // Prevent "programmer" index.
-        searchResponse.page += 1;
-        searchResponse.totalPages += 1;
         return searchResponse;
     }
 
     /**
-     * Search across categories and append to an existing {@link SearchResponse}.
+     * Utility method to validate search params.
      */
-    public SearchResponse<Object> searchByCategory(SearchResponse<Object> searchResponse, String category,
-                                                   String stringParam) throws ClassNotFoundException {
-        // Get the category enum for the string value of the category.
-        SearchCategory categoryEnum = Arrays.stream(SearchCategory.values())
-                                            .filter(c -> c.string.equals(category.toLowerCase(Locale.ROOT))).findAny()
-                                            .orElseThrow();
+    private void validateParams(Map<String, String> params) {
+        for (String param : params.keySet())
+            if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param))
+                throw new InvalidSearchParamException(String.format("Unknown search param \"%s\".", param));
+    }
 
-        // Get the associated entity class with the category.
-        Class<?> c = Class.forName(categoryEnum.associatedClassName);
-        SearchResponse<?> categorySearchResponse =
-                queryExecutor.search(c, stringParam, Optional.empty(), Optional.empty());
+    /**
+     * Utility method to extract a string type search param.
+     */
+    private String extractStringParam(Map<String, String> params, String paramKey) {
+        String paramValue = Optional.ofNullable(params.get(paramKey)).orElseThrow(() -> new InvalidSearchParamException(
+                String.format("Required search param \"%s\" cannot be empty.", paramKey)));
+        return URLDecoder.decode(paramValue, StandardCharsets.UTF_8);
+    }
 
-        // Append to the search response.
-        searchResponse.totalElements += categorySearchResponse.totalElements;
-        searchResponse.totalPages += categorySearchResponse.totalPages;
-        searchResponse.results.addAll(categorySearchResponse.results);
-        return searchResponse;
+    /**
+     * Utility method to extract a string type search param. Overload to support a default value.
+     */
+    private String extractStringParam(Map<String, String> params, String paramKey, String defaultValue) {
+        String paramValue = Optional.ofNullable(params.get(paramKey)).orElse(defaultValue);
+        return URLDecoder.decode(paramValue, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Utility method to extract an integer type search param.
+     */
+    private int extractIntegerParam(Map<String, String> params, String paramKey, int defaultValue) {
+        String paramValue = params.get(paramKey);
+        if (paramValue.isEmpty()) {
+            return defaultValue;
+        } else {
+            try {
+                return Integer.parseInt(paramValue);
+            } catch (NumberFormatException exception) {
+                throw new InvalidSearchParamException(
+                        String.format("Non-numeric value received for search param \"%s\"", paramValue));
+            }
+        }
+    }
+
+    /**
+     * Utility method to extract an integer type search param.
+     */
+    private Optional<Date> extractDateParam(Map<String, String> params, String paramKey) {
+        String paramValue = params.get(paramKey);
+        if (paramValue.isEmpty()) {
+            return Optional.empty();
+        } else {
+            try {
+                return Optional.of(new SimpleDateFormat("yyyy").parse(paramValue));
+            } catch (ParseException e) {
+                throw new InvalidSearchParamException(
+                        String.format("Invalid value for date param \"%s\"", paramValue));
+            }
+        }
     }
 
     /**
@@ -147,7 +140,8 @@ public class SearchService {
      */
     public enum SearchParam {
         STRING("string"),
-        CATEGORIES("categories"),
+        PLATFORM("platform"),
+        RESULT_TYPE("resultType"),
         PAGE("page"),
         SIZE("size"),
         START_DATE("startDate"),
@@ -162,23 +156,43 @@ public class SearchService {
     }
 
     /**
-     * Possible search categories.
+     * Possible search result types.
      */
-    public enum SearchCategory {
+    public enum ResultType {
         EXPERIMENT("experiment", Experiment.class.getName()),
         MISSION("mission", Mission.class.getName()),
         FOR_CODE("forCode", ForCode.class.getName()),
         SEO_CODE("seoCode", SeoCode.class.getName()),
-        PEOPLE("people", People.class.getName()),
+
+        // FIXME The following categories might be unnecessary.
+        PEOPLE("people", Person.class.getName()),
         ROLE("role", Role.class.getName());
         // TODO Additional search categories as necessary.
 
         public final String string;
         public final String associatedClassName;
 
-        SearchCategory(String string, String associatedClassName) {
+        ResultType(String string, String associatedClassName) {
             this.string = string;
             this.associatedClassName = associatedClassName;
+        }
+    }
+
+    /**
+     * Types of platforms/facilities.
+     */
+    public enum PlatformType {
+        SPACE_STATION("spaceStation"),
+        SPACE_SHUTTLE("spaceShuttle"),
+        RETRIEVABLE_CAPSULE("retrievableCapsule"),
+        SOUNDING_ROCKET("soundingRocket"),
+        PARABOLIC_FLIGHT("parabolicFlight"),
+        GROUND_BASED_FACILITY("groundBasedFacility");
+
+        public final String string;
+
+        PlatformType(String string) {
+            this.string = string;
         }
     }
 

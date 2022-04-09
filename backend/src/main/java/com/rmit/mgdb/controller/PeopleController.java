@@ -1,6 +1,6 @@
 package com.rmit.mgdb.controller;
 
-import com.rmit.mgdb.model.People;
+import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class PeopleController {
     }
 
     @GetMapping("/all")
-    public List<People> getAll() {
+    public List<Person> getAll() {
         return peopleService.getAllPeople();
     }
 

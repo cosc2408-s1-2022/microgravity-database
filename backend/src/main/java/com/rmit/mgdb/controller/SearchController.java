@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -24,15 +23,13 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam Map<String, String> params, @RequestParam(required = false)
-            Optional<Integer> page, @RequestParam(required = false) Optional<Integer> size) {
-        return new ResponseEntity<>(searchService.search(params, page, size), HttpStatus.OK);
+    public ResponseEntity<?> search(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(searchService.search(params), HttpStatus.OK);
     }
 
     @GetMapping("/search/advanced")
-    public ResponseEntity<?> advancedSearch(@RequestParam Map<String, String> params, @RequestParam(required = false)
-            Optional<Integer> page, @RequestParam(required = false) Optional<Integer> size) {
-        return new ResponseEntity<>(searchService.advancedSearch(params, page, size), HttpStatus.OK);
+    public ResponseEntity<?> advancedSearch(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(searchService.advancedSearch(params), HttpStatus.OK);
     }
 
 }

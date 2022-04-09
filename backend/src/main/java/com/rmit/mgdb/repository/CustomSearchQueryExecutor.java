@@ -26,7 +26,7 @@ public class CustomSearchQueryExecutor {
     /**
      * Generic method to search all string properties of an entity using custom JPQL queries.
      */
-    public <T> SearchResponse<T> search(Class<T> c, String string, Optional<Integer> page, Optional<Integer> size) {
+    public <T> SearchResponse<T> search(Class<T> c, String string, String platform, Optional<Integer> page, Optional<Integer> size) {
         List<String> fields = new ArrayList<>();
         for (Field field : c.getDeclaredFields()) {
             field.setAccessible(true);
@@ -38,23 +38,23 @@ public class CustomSearchQueryExecutor {
         String className = c.getSimpleName();
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < fields.size(); i++) {
-            builder.append(String.format("lower(c.%s) like :regex %s ", fields.get(i),
-                                         i == fields.size() - 1 ? "" : "or"));
+            builder.append(String.format("c.%s LIKE :regex %s", fields.get(i),
+                                         i == fields.size() - 1 ? "" : "or "));
         }
         TypedQuery<Long> countQuery =
-                entityManager.createQuery(String.format("select count(c) from %s c where %s", className, builder),
+                entityManager.createQuery(String.format("SELECT COUNT(c) FROM %s c WHERE %s", className, builder),
                                           Long.class);
         countQuery.setParameter("regex", String.format("%%%s%%", string));
         long count = countQuery.getSingleResult();
 
-        builder.append("order by ");
+        builder.append(" ORDER BY ");
         for (int i = 0; i < fields.size(); i++) {
-            builder.append(String.format("locate(:string, lower(c.%s))%s", fields.get(i),
+            builder.append(String.format("LEVENSHTEIN(c.%s, :string)%s", fields.get(i),
                                          i == fields.size() - 1 ? "" : ", "));
         }
 
         TypedQuery<T> resultQuery =
-                entityManager.createQuery(String.format("select c from %s c where %s", className, builder), c);
+                entityManager.createQuery(String.format("SELECT c FROM %s c WHERE %s", className, builder), c);
         resultQuery.setParameter("regex", String.format("%%%s%%", string));
         resultQuery.setParameter("string", string);
         resultQuery.setFirstResult(page.orElse(0));

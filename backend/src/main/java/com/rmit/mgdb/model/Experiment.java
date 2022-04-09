@@ -16,7 +16,6 @@ public class Experiment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String platform;
     private String toa;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "for_code_id")
@@ -25,12 +24,16 @@ public class Experiment {
     @JoinColumn(name = "seo_code_id")
     private SeoCode seoCode;
     private String leadInstitution;
-    private String principalInvestigator;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "experiment_researcher",
-               joinColumns = @JoinColumn(name = "researcher_id", referencedColumnName = "id"),
+    @JoinTable(name = "experiment_person",
+               joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "experiment_id", referencedColumnName = "id"))
-    private List<Researcher> researchers;
+    private List<Person> people;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "platform_id")
+    private Platform platform;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mission_id")
     private Mission mission;

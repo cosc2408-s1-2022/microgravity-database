@@ -33,5 +33,4 @@ public interface ExperimentRepository extends JpaRepository<Experiment, Long> {
            nativeQuery = true
     )
     Page<Experiment> searchByString(@Param("s") String string, Pageable page);
-
 }

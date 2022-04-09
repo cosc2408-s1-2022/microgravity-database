@@ -1,6 +1,6 @@
 package com.rmit.mgdb.service;
 
-import com.rmit.mgdb.model.People;
+import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
-    public List<People> getAllPeople() {
+    public List<Person> getAllPeople() {
         return peopleRepository.findAll();
     }
 
