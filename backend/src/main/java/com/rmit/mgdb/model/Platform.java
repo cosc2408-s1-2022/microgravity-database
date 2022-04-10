@@ -34,8 +34,8 @@ public class Platform {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "platform_for_code",
-               joinColumns = @JoinColumn(name = "for_code_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name = "platform_id"),
+               inverseJoinColumns = @JoinColumn(name = "for_code_id"))
     private List<ForCode> forCodes;
 
     @ManyToMany(cascade = CascadeType.ALL)

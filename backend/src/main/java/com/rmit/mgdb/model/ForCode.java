@@ -32,6 +32,6 @@ public class ForCode {
 
     @ManyToMany(mappedBy = "forCodes", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Platform> platform;
+    private List<Platform> platforms;
 
 }

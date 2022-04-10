@@ -32,6 +32,6 @@ public class SeoCode {
 
     @ManyToMany(mappedBy = "seoCodes", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Platform> platform;
+    private List<Platform> platforms;
 
 }
