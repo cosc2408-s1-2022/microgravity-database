@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -51,6 +52,7 @@ public class Mission {
     private Long experimentCount;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @IndexedEmbedded
     @JsonIgnore
     private Platform platform;
 

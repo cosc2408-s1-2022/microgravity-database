@@ -6,7 +6,7 @@ import com.rmit.mgdb.model.ForCode;
 import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.model.SeoCode;
 import com.rmit.mgdb.payload.SearchResponse;
-import org.apache.commons.lang3.EnumUtils;
+import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -19,6 +19,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public class SearchService {
         page--;
 
         SearchResult<Experiment> result = searchSession.search(Experiment.class)
-                                                       .where(f -> f.match()
+                                                       .where(s -> s.match()
                                                                     .fields(SIMPLE_SEARCH_FIELDS)
                                                                     .matching(stringParam)
 
@@ -78,117 +79,59 @@ public class SearchService {
         String stringParam = extractStringParam(params, SearchParam.STRING.string, "");
         int page = extractIntegerParam(params, SearchParam.PAGE.string, 0);
         int size = extractIntegerParam(params, SearchParam.SIZE.string, DEFAULT_PAGE_SIZE);
-        PlatformType platformParam = PlatformType.valueOf(
-                extractStringParam(params, SearchParam.PLATFORM.string, PlatformType.SPACE_STATION.string));
-        ResultType resultTypeParam = ResultType.valueOf(
-                extractStringParam(params, SearchParam.RESULT_TYPE.string, ResultType.MISSION.string));
+        String platformParam =
+                extractStringParam(params, SearchParam.PLATFORM.string, PlatformType.SPACE_STATION.string);
+        ResultType resultTypeParam = Arrays.stream(ResultType.values())
+                                           .filter(v -> v.string.equals(extractStringParam(params,
+                                                                                           SearchParam.RESULT_TYPE.string,
+                                                                                           ResultType.MISSION.string)))
+                                           .findFirst()
+                                           .orElse(ResultType.MISSION);
         Optional<Date> startDate = extractDateParam(params, SearchParam.START_DATE.string);
         Optional<Date> endDate = extractDateParam(params, SearchParam.END_DATE.string);
 
-        return stringParam.isEmpty()
-               ? advancedSearch(platformParam, resultTypeParam, page, size, startDate, endDate)
-               : advancedSearch(stringParam, platformParam, resultTypeParam, page, size, startDate, endDate);
-    }
+        // Hibernate Search predicate creation.
+        SearchPredicate searchPredicate = searchSession.scope(resultTypeParam.associatedClass)
+                                                       .predicate()
+                                                       .bool(b -> {
+                                                           // Must match platform type.
+                                                           b.must(s -> s.match()
+                                                                        .field(resultTypeParam.platformSearchField)
+                                                                        .matching(platformParam));
 
-    private SearchResponse<?> advancedSearch(PlatformType platformType, ResultType resultType, int page, int size,
-                                             Optional<Date> startDate, Optional<Date> endDate) {
-        SearchResult<?> result;
-        if (startDate.isPresent() && endDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.range().fields(DATE_RANGE_FIELDS)
-                                                      .between(startDate.get(), endDate.get())))
-                                  .fetch(page * size, size);
-        } else if (startDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.range()
-                                                      .fields(DATE_RANGE_FIELDS)
-                                                      .atLeast(startDate.get())))
-                                  .fetch(page * size, size);
-        } else if (endDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.range().fields(DATE_RANGE_FIELDS)
-                                                      .atMost(endDate.get())))
-                                  .fetch(page * size, size);
-        } else {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string)))
-                                  .fetch(page * size, size);
-        }
+                                                           // Must match string if present.
+                                                           if (!stringParam.isEmpty()) {
+                                                               b.must(s -> s.match()
+                                                                            .fields(resultTypeParam.searchFields)
+                                                                            .matching(stringParam));
+                                                           }
 
+                                                           // Date range filters.
+                                                           // Only allow missions to be filtered.
+                                                           if (resultTypeParam == ResultType.MISSION) {
+                                                               if (startDate.isPresent() && endDate.isPresent()) {
+                                                                   b.must(s -> s.range()
+                                                                                .fields(DATE_RANGE_FIELDS)
+                                                                                .between(startDate.get(),
+                                                                                         endDate.get()));
+                                                               } else if (startDate.isPresent()) {
+                                                                   b.must(s -> s.range()
+                                                                                .fields(DATE_RANGE_FIELDS)
+                                                                                .atLeast(startDate.get()));
+                                                               } else {
+                                                                   endDate.ifPresent(date -> b.must(
+                                                                           s -> s.range()
+                                                                                 .fields(DATE_RANGE_FIELDS)
+                                                                                 .atMost(date)));
+                                                               }
+                                                           }
+                                                       })
+                                                       .toPredicate();
 
-        long totalHitCount = result.total().hitCount();
-        return new SearchResponse<>(
-                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page, size, result.hits());
-    }
-
-    private SearchResponse<?> advancedSearch(String string, PlatformType platformType, ResultType resultType, int page,
-                                             int size, Optional<Date> startDate, Optional<Date> endDate) {
-        SearchResult<?> result;
-        if (startDate.isPresent() && endDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.match()
-                                                      .fields(MISSION_SEARCH_FIELDS)
-                                                      .matching(string))
-                                               .must(f.range().fields(DATE_RANGE_FIELDS)
-                                                      .between(startDate.get(), endDate.get())))
-                                  .fetch(page * size, size);
-
-
-        } else if (startDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.match()
-                                                      .fields(MISSION_SEARCH_FIELDS)
-                                                      .matching(string))
-                                               .must(f.range().fields(DATE_RANGE_FIELDS)
-                                                      .atLeast(startDate.get())))
-                                  .fetch(page * size, size);
-        } else if (endDate.isPresent()) {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.match()
-                                                      .fields(MISSION_SEARCH_FIELDS)
-                                                      .matching(string))
-                                               .must(f.range().fields(DATE_RANGE_FIELDS)
-                                                      .atMost(endDate.get())))
-                                  .fetch(page * size, size);
-        } else {
-            result = searchSession.search(resultType.associatedClass)
-                                  .where(f -> f.bool()
-                                               .must(f.match()
-                                                      .field(resultType.platformSearchField)
-                                                      .matching(platformType.string))
-                                               .must(f.match()
-                                                      .fields(resultType.searchFields)
-                                                      .matching(string)))
-                                  .fetch(page * size, size);
-        }
-
+        // Perform search.
+        SearchResult<?> result = searchSession.search(resultTypeParam.associatedClass)
+                                              .where(searchPredicate)
+                                              .fetch(page * size, size);
 
         long totalHitCount = result.total().hitCount();
         return new SearchResponse<>(
@@ -199,15 +142,17 @@ public class SearchService {
      * Utility method to validate search params.
      */
     private void validateParams(Map<String, String> params) {
-        for (String param : params.keySet()) {
-            if (!EnumUtils.isValidEnumIgnoreCase(SearchParam.class, param)) {
-                throw new InvalidSearchParamException(String.format("Unknown search param \"%s\".", param));
-            } else if (param.equals(SearchParam.RESULT_TYPE.string)) {
-                if (!EnumUtils.isValidEnumIgnoreCase(ResultType.class, param))
-                    throw new InvalidSearchParamException(String.format("Unknown result type \"%s\".", param));
-            } else if (param.equals(SearchParam.PLATFORM.string)) {
-                if (!EnumUtils.isValidEnumIgnoreCase(PlatformType.class, param))
-                    throw new InvalidSearchParamException(String.format("Unknown platform type \"%s\".", param));
+        for (String paramKey : params.keySet()) {
+            if (!SearchParam.isValidSearchParam(paramKey)) {
+                throw new InvalidSearchParamException(String.format("Unknown search param %s.", paramKey));
+            } else if (paramKey.equals(SearchParam.RESULT_TYPE.string)) {
+                String paramValue = params.get(paramKey);
+                if (!ResultType.isValidResultType(paramValue))
+                    throw new InvalidSearchParamException(String.format("Unknown result type %s.", paramValue));
+            } else if (paramKey.equals(SearchParam.PLATFORM.string)) {
+                String paramValue = params.get(paramKey);
+                if (!PlatformType.isValidPlatformType(paramValue))
+                    throw new InvalidSearchParamException(String.format("Unknown platform type %s.", paramValue));
             }
         }
     }
@@ -281,6 +226,10 @@ public class SearchService {
         SearchParam(String string) {
             this.string = string;
         }
+
+        public static boolean isValidSearchParam(String param) {
+            return Arrays.stream(SearchParam.values()).anyMatch(v -> v.string.equals(param));
+        }
     }
 
     /**
@@ -304,6 +253,10 @@ public class SearchService {
             this.searchFields = searchFields;
             this.platformSearchField = platformSearchField;
         }
+
+        public static boolean isValidResultType(String type) {
+            return Arrays.stream(ResultType.values()).anyMatch(v -> v.string.equals(type));
+        }
     }
 
     /**
@@ -321,6 +274,10 @@ public class SearchService {
 
         PlatformType(String string) {
             this.string = string;
+        }
+
+        public static boolean isValidPlatformType(String type) {
+            return Arrays.stream(PlatformType.values()).anyMatch(v -> v.string.equals(type));
         }
     }
 

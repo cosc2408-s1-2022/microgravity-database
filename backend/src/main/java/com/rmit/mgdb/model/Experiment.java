@@ -29,6 +29,19 @@ public class Experiment {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String leadInstitution;
 
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    private String experimentAim;
+
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    private String experimentObjective;
+
+    // TODO Fields "experimentModuleDrawing" and "experimentPublications" might be collection types.
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    private String experimentModuleDrawing;
+
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    private String experimentPublications;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded

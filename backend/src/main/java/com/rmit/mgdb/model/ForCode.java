@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,6 +32,7 @@ public class ForCode {
     private List<Experiment> experiments;
 
     @ManyToMany(mappedBy = "forCodes", cascade = CascadeType.ALL)
+    @IndexedEmbedded
     @JsonIgnore
     private List<Platform> platforms;
 

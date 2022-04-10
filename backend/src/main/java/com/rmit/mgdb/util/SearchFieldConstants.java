@@ -30,7 +30,7 @@ public class SearchFieldConstants {
             "leadInstitution"
     };
 
-    public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform";
+    public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform.name";
 
     public static final String[] MISSION_SEARCH_FIELDS = new String[]{
             "name",
@@ -39,21 +39,21 @@ public class SearchFieldConstants {
             "endDateString"
     };
 
-    public static final String MISSION_PLATFORM_SEARCH_FIELD = "platform";
+    public static final String MISSION_PLATFORM_SEARCH_FIELD = "platform.name";
 
     public static final String[] FOR_CODE_SEARCH_FIELDS = new String[]{
             "code",
             "name"
     };
 
-    public static final String FOR_CODE_PLATFORM_SEARCH_FIELD = "platforms";
+    public static final String FOR_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
+
     public static final String[] SEO_CODE_SEARCH_FIELDS = new String[]{
             "code",
             "name"
     };
 
-    public static final String SEO_CODE_PLATFORM_SEARCH_FIELD = "platforms";
-
+    public static final String SEO_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
 
     public static final String[] DATE_RANGE_FIELDS = new String[]{
             "launchDate"
