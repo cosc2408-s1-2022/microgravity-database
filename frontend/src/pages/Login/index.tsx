@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  AppBar,
-  Avatar,
   Box,
   Button,
   Checkbox,
@@ -10,7 +8,6 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  Toolbar,
   Typography,
 } from '@mui/material';
 import { useMutation } from 'react-query';
@@ -19,21 +16,7 @@ import { AuthenticationResponse } from '../../types';
 import { Navigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import api from '../../util/api';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fffff',
-    },
-  },
-});
-const innerTheme = createTheme({
-  typography: {
-    fontFamily: 'Roboto',
-  },
-});
+import Header from "../../components/Header";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -64,15 +47,7 @@ export default function Login() {
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <AppBar position='relative' style={{ paddingLeft: 20, padding: 10 }}>
-          <Toolbar>
-            <Box sx={{ flexGrow: 10 }}>
-              <Avatar src='/rmit.svg' sx={{ width: 170, height: 60 }} variant='square' />
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+      <Header />
       <main>
         <video
           autoPlay
@@ -92,7 +67,6 @@ export default function Login() {
           <source src='/space.mp4' type='video/mp4' />
         </video>
         <div>
-          <ThemeProvider theme={innerTheme}>
             <Container maxWidth='sm'>
               <Box
                 sx={{
@@ -181,7 +155,6 @@ export default function Login() {
                 </Box>
               </Box>
             </Container>
-          </ThemeProvider>
         </div>
       </main>
     </>

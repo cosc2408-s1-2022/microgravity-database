@@ -29,23 +29,23 @@ export default function Header() {
   };
 
   const authElement = (
-    <Button color='inherit' onClick={authElementProps.onClick}>
+    <Button variant='contained' color='secondary' onClick={authElementProps.onClick}>
       {authElementProps.text}
     </Button>
   );
 
   const registerElement = authToken ? null : (
-    <Button component={Link} color='inherit' to='/register'>
+    <Button variant='contained' color='secondary' component={Link} to='/register'>
       Register
     </Button>
   );
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
-      <AppBar position='static'>
-        <Toolbar>
-          <Grid container wrap='nowrap' direction='row'>
-            <Grid container item direction='row' wrap='nowrap' alignItems='center'>
+    <Box>
+      <AppBar position='static' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
+        <Toolbar >
+          <Grid container wrap='nowrap' justifyContent='space-between'>
+            <Grid container item wrap='nowrap' alignItems='center'>
               <Grid item>
                 <a href={'/home'}>
                   <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
@@ -57,9 +57,13 @@ export default function Header() {
               </Typography>
             </Grid>
 
-            <Grid container item direction='row' justifyContent='end'>
-              {authElement}
+            <Grid
+              container item
+              direction='row-reverse' md={1} columnSpacing={10}
+              wrap='nowrap' justifyContent='space-between'
+            >
               {registerElement}
+              {authElement}
             </Grid>
           </Grid>
         </Toolbar>

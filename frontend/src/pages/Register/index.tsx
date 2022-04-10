@@ -1,27 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { AppBar, Avatar, Box, Button, Container, CssBaseline, Grid, Link, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material/styles';
 import api from '../../util/api';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fffff',
-    },
-  },
-});
-const innerTheme = createTheme({
-  typography: {
-    fontFamily: 'Roboto',
-  },
-});
+import Header from "../../components/Header";
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -46,22 +32,13 @@ export default function Register() {
   };
 
   if (isSuccess && data) {
-    console.log(data?.data.jwt);
-    return <Navigate to='/home' />;
+    return <Navigate to='/login' />;
   }
 
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <AppBar position='relative' style={{ paddingLeft: 20, padding: 10 }}>
-          <Toolbar>
-            <Box sx={{ flexGrow: 10 }}>
-              <Avatar src='/rmit.svg' sx={{ width: 170, height: 60 }} variant='square' />
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+      <Header />
       <main>
         <video
           autoPlay
@@ -83,7 +60,6 @@ export default function Register() {
         <div>
           <br />
           <br />
-          <ThemeProvider theme={innerTheme}>
             <Container component='main' maxWidth='xs'>
               <Box
                 sx={{
@@ -155,7 +131,6 @@ export default function Register() {
                 </Box>
               </Box>
             </Container>
-          </ThemeProvider>
         </div>
       </main>
     </>

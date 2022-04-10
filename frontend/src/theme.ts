@@ -5,7 +5,9 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1a237e',
+      main: '#F7F5F8',
+      light: '#FAFAFA',
+      dark: '#F0F0F0',
     },
     secondary: {
       main: '#f50057',
@@ -19,10 +21,7 @@ const theme = createTheme({
   },
   typography: {
     fontSize: 18,
-    body2: {
-      fontWeight: 300,
-    },
-    fontFamily: 'Roboto Slab',
+    fontFamily: 'Roboto',
   },
 });
 export default theme;
