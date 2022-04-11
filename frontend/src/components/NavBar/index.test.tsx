@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
-import Header from '../Header';
+import Header from './';
 import { Router } from '@mui/icons-material';
 
 afterEach(cleanup);

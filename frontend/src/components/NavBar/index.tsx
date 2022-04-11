@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // TODO: Create search component to include in bar props (i.e. search=true)
 
-export default function Header() {
+export default function NavBar() {
   const authToken: string | null = localStorage.getItem('authToken');
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,13 +29,13 @@ export default function Header() {
   };
 
   const authElement = (
-    <Button color='inherit' onClick={authElementProps.onClick}>
+    <Button variant={'contained'} color={'secondary'} size='small' onClick={authElementProps.onClick} sx={{ m: '2px' }}>
       {authElementProps.text}
     </Button>
   );
 
   const registerElement = authToken ? null : (
-    <Button component={Link} color='inherit' to='/register'>
+    <Button variant={'contained'} color={'secondary'} size='small' component={Link} to='/register' sx={{ m: '2px' }}>
       Register
     </Button>
   );
@@ -51,13 +51,11 @@ export default function Header() {
                   <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
                 </a>
               </Grid>
-
               <Typography variant='h6' noWrap component='div' ml='15px'>
                 Microgravity Database
               </Typography>
             </Grid>
-
-            <Grid container item direction='row' justifyContent='end'>
+            <Grid container item direction='row' justifyContent='end' maxWidth={'100%'} sx={{ padding: '4px' }}>
               {authElement}
               {registerElement}
             </Grid>
