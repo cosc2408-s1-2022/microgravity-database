@@ -1,4 +1,4 @@
-import Header from '../../components/Header';
+import NavBar from '../../components/NavBar';
 import React from 'react';
 import { Experiment } from '../../types';
 import { Container, Paper, Typography } from '@mui/material';
@@ -9,7 +9,7 @@ export default function ViewExperiment() {
   const experiment = state.experiment;
   return (
     <>
-      <Header />
+      <NavBar />
       <Container>
         <Paper>
           <Typography variant='h4'>{experiment.title}</Typography>

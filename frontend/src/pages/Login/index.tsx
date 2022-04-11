@@ -1,18 +1,5 @@
 import React, { useState } from 'react';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  Link,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../types';
@@ -21,8 +8,9 @@ import FormField from '../../components/FormField';
 import api from '../../util/api';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
+import NavBar from '../../components/NavBar';
 
-const theme = createTheme({
+createTheme({
   palette: {
     primary: {
       main: '#fffff',
@@ -64,15 +52,7 @@ export default function Login() {
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <AppBar position='relative' style={{ paddingLeft: 20, padding: 10 }}>
-          <Toolbar>
-            <Box sx={{ flexGrow: 10 }}>
-              <Avatar src='/rmit.svg' sx={{ width: 170, height: 60 }} variant='square' />
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+      <NavBar />
       <main>
         <video
           autoPlay
