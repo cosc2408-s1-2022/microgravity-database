@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import DoneIcon from '@mui/icons-material/Done';
 import Grid from '@mui/material/Grid';
 
-export default function AdvancedSearchChips() {
+export default function PlatformChips() {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const [variantSpaceStation, setVariantSpaceStation] = useState<any>('outlined');
   const [variantSpaceShuttle, setVariantSpaceShuttle] = useState<any>('outlined');
@@ -108,7 +108,7 @@ export default function AdvancedSearchChips() {
           color={colorSpaceStation}
           onClick={handleSpaceStation}
           icon={iconSpaceStation}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
         <Chip
@@ -117,7 +117,7 @@ export default function AdvancedSearchChips() {
           color={colorSpaceShuttle}
           onClick={handleSpaceShuttle}
           icon={iconSpaceShuttle}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
         <Chip
@@ -126,7 +126,7 @@ export default function AdvancedSearchChips() {
           color={colorRetrievableCapsules}
           onClick={handleRetrievableCapsules}
           icon={iconRetrievableCapsules}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
         <Chip
@@ -135,7 +135,7 @@ export default function AdvancedSearchChips() {
           color={colorSoundingRockets}
           onClick={handleSoundingRockets}
           icon={iconSoundingRockets}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
         <Chip
@@ -144,7 +144,7 @@ export default function AdvancedSearchChips() {
           color={colorParabolicFlights}
           onClick={handleParabolicFlights}
           icon={iconParabolicFlights}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
         <Chip
@@ -153,7 +153,7 @@ export default function AdvancedSearchChips() {
           color={colorGroundBasedSystems}
           onClick={handleGroundBasedSystems}
           icon={iconGroundBasedSystems}
-          sx={{ borderRadius: 1 }}
+          sx={{ borderRadius: 1, fontSize: 15, fontWeight: 'bold' }}
           size='small'
         />
       </Stack>
