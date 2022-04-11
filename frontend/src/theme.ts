@@ -20,6 +20,10 @@ const theme = createTheme({
     text: {
       primary: '#f44336',
     },
+    success: {
+      // TODO Change Color ???
+      main: '#4B878BFF',
+    },
   },
 
   typography: {
