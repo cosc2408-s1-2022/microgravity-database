@@ -51,7 +51,7 @@ public class Mission {
 
     private Long experimentCount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @IndexedEmbedded
     @JsonIgnore
     private Platform platform;

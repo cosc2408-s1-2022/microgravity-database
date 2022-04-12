@@ -27,11 +27,11 @@ public class SeoCode {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String name;
 
-    @OneToMany(mappedBy = "seoCode", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seoCode")
     @JsonIgnore
     private List<Experiment> experiments;
 
-    @ManyToMany(mappedBy = "seoCodes", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "seoCodes")
     @IndexedEmbedded
     @JsonIgnore
     private List<Platform> platforms;

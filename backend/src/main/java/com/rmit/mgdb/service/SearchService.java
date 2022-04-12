@@ -65,7 +65,7 @@ public class SearchService {
 
         long totalHitCount = result.total().hitCount();
         return new SearchResponse<>(
-                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page, size, result.hits());
+                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 
     /**
@@ -77,7 +77,7 @@ public class SearchService {
 
         // Extract necessary params.
         String stringParam = extractStringParam(params, SearchParam.STRING.string, "");
-        int page = extractIntegerParam(params, SearchParam.PAGE.string, 0);
+        int page = extractIntegerParam(params, SearchParam.PAGE.string, 1);
         int size = extractIntegerParam(params, SearchParam.SIZE.string, DEFAULT_PAGE_SIZE);
         String platformParam =
                 extractStringParam(params, SearchParam.PLATFORM.string, PlatformType.SPACE_STATION.string);
@@ -89,6 +89,9 @@ public class SearchService {
                                            .orElse(ResultType.MISSION);
         Optional<Date> startDate = extractDateParam(params, SearchParam.START_DATE.string);
         Optional<Date> endDate = extractDateParam(params, SearchParam.END_DATE.string);
+
+        // Hibernate Search uses zero-based index.
+        page--;
 
         // Hibernate Search predicate creation.
         SearchPredicate searchPredicate = searchSession.scope(resultTypeParam.associatedClass)
@@ -135,7 +138,7 @@ public class SearchService {
 
         long totalHitCount = result.total().hitCount();
         return new SearchResponse<>(
-                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page, size, result.hits());
+                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 
     /**

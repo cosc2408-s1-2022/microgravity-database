@@ -38,7 +38,7 @@ public class Person {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String country;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     @JsonIgnore
     private List<ExperimentPerson> experiments;
 

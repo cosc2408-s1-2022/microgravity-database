@@ -1,0 +1,2 @@
+id,created_at,password,role,updated_at,username
+1,2022-04-12 14:52:21,password,ROLE_USER,,username
