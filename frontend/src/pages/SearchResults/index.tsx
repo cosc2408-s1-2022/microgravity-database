@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
+import NavBar from '../../components/NavBar';
 import React, { useEffect, useState } from 'react';
 import FormField from '../../components/FormField';
 import { SearchResponse, SearchState } from '../../types';
@@ -52,7 +52,7 @@ export default function SearchResults() {
 
   return (
     <>
-      <Header />
+      <NavBar />
       <Container>
         <Grid
           container

@@ -1,14 +1,15 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles'; // TODO Create a custom theme to use application wide.
 
 // TODO Create a custom theme to use application wide.
 // https://colorhunt.co/palettes/space  ???
+// This is where you change the colours for the whole project
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1a237e',
+      main: '#FFFFFF',
     },
     secondary: {
-      main: '#f50057',
+      main: '#f44336',
     },
     info: {
       main: '#81c784',
@@ -16,7 +17,15 @@ const theme = createTheme({
     error: {
       main: '#f44336',
     },
+    text: {
+      primary: '#f44336',
+    },
+    success: {
+      // TODO Change Color ???
+      main: '#4B878BFF',
+    },
   },
+
   typography: {
     fontSize: 18,
     body2: {
