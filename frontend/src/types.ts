@@ -91,4 +91,9 @@ export type SearchState = {
   [key: string]: string | undefined;
 };
 
+export enum DateBound {
+  START_DATE,
+  END_DATE,
+}
+
 export const SearchStateKeys = ['string', 'platform', 'resultType', 'startDate', 'endDate'];

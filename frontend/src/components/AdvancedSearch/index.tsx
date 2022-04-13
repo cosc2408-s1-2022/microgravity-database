@@ -1,15 +1,10 @@
 import { Button, Grid, GridProps, MenuItem, TextField } from '@mui/material';
-import { Platform, SearchState } from '../../types';
+import { DateBound, Platform, SearchState } from '../../types';
 import React, { useState } from 'react';
 import FormField from '../FormField';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment, { Moment } from 'moment';
 import { useNavigate } from 'react-router-dom';
-
-enum DateBound {
-  START_DATE,
-  END_DATE,
-}
 
 export default function AdvancedSearch(props: SearchState | GridProps) {
   const searchProps = props as SearchState;
@@ -24,9 +19,9 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
   const state = {
     string: string,
     resultType: resultType,
+    platform: platform,
     startDate: startDate,
     endDate: endDate,
-    platform: platform,
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +45,14 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     setDateFunc(newDate);
   };
 
-  // TODO: Add clear button to search fields
+  const handleClear = () => {
+    handleSearchStringChange('');
+    handleResultTypeChange('');
+    handlePlatformChange('');
+    setStartDate('2022');
+    setEndDate('2022');
+  };
+
   return (
     <Grid {...props} bgcolor='primary.light'>
       <Grid component='form' onSubmit={handleSubmit} container item direction='column' padding={5} spacing={3}>
@@ -70,6 +72,9 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         <Grid item>
           <FormField select name='resultType' label='Result Type' value={resultType} onChange={handleResultTypeChange}>
             <MenuItem value={'Experiment'}>Experiment</MenuItem>
+            <MenuItem value={'Mission'}>Mission</MenuItem>
+            <MenuItem value={'FOR'}>FOR</MenuItem>
+            <MenuItem value={'SEO'}>SEO</MenuItem>
           </FormField>
         </Grid>
         <Grid item>
@@ -94,8 +99,11 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
           />
         </Grid>
         <Grid item>
-          <Button type='submit' variant='contained' color='secondary' fullWidth>
+          <Button type='submit' variant='contained' color='secondary'>
             Refine Search
+          </Button>
+          <Button onClick={handleClear} color='secondary'>
+            Clear
           </Button>
         </Grid>
       </Grid>
