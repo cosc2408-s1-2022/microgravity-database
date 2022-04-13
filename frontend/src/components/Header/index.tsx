@@ -1,13 +1,10 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Logo from '../../logo_no_text.svg';
-import { Button, Grid } from '@mui/material';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-// TODO: Create search component to include in bar props (i.e. search=true)
+import { Button, Grid, Link } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const authToken: string | null = localStorage.getItem('authToken');
@@ -35,39 +32,36 @@ export default function Header() {
   );
 
   const registerElement = authToken ? null : (
-    <Button variant='contained' color='secondary' component={Link} to='/register'>
+    <Button variant='contained' color='secondary' component={Link} href='/register'>
       Register
     </Button>
   );
 
   return (
-    <Box>
-      <AppBar position='static' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
-        <Toolbar >
-          <Grid container wrap='nowrap' justifyContent='space-between'>
-            <Grid container item wrap='nowrap' alignItems='center'>
-              <Grid item>
-                <a href={'/home'}>
-                  <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
-                </a>
-              </Grid>
-
-              <Typography variant='h6' noWrap component='div' ml='15px'>
-                Microgravity Database
-              </Typography>
-            </Grid>
-
-            <Grid
-              container item
-              direction='row-reverse' md={1} columnSpacing={10}
-              wrap='nowrap' justifyContent='space-between'
-            >
-              {registerElement}
-              {authElement}
-            </Grid>
+    <AppBar position='sticky' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
+      <Toolbar>
+        <Grid container wrap='nowrap' justifyContent='space-between'>
+          <Grid container item component={Link} href='/home' alignItems='center'>
+            <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
+            <Typography variant='h6' color='primary.dark' ml='15px'>
+              Microgravity Database
+            </Typography>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </Box>
+
+          <Grid
+            container
+            item
+            direction='row-reverse'
+            md={1}
+            columnSpacing={10}
+            wrap='nowrap'
+            justifyContent='space-between'
+          >
+            {registerElement}
+            {authElement}
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }
