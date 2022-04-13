@@ -71,10 +71,10 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         </Grid>
         <Grid item>
           <FormField select name='resultType' label='Result Type' value={resultType} onChange={handleResultTypeChange}>
-            <MenuItem value={'Experiment'}>Experiment</MenuItem>
-            <MenuItem value={'Mission'}>Mission</MenuItem>
-            <MenuItem value={'FOR'}>FOR</MenuItem>
-            <MenuItem value={'SEO'}>SEO</MenuItem>
+            <MenuItem value={'experiment'}>Experiment</MenuItem>
+            <MenuItem value={'mission'}>Mission</MenuItem>
+            <MenuItem value={'for'}>FOR</MenuItem>
+            <MenuItem value={'seo'}>SEO</MenuItem>
           </FormField>
         </Grid>
         <Grid item>
