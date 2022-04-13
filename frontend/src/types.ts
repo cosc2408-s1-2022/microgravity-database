@@ -12,6 +12,17 @@ export enum Role {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
+export enum Platform {
+  SPACE_STATION = 'spaceStation',
+  SPACE_SHUTTLE = 'spaceShuttle',
+  RETRIEVABLE_CAPSULE = 'retrievableCapsule',
+  SOUNDING_ROCKET = 'soundingRocket',
+  PARABOLIC_FLIGHT = 'parabolicFlight',
+  GROUND_BASED_FACILITY = 'groundBasedFacility',
+}
+
+export const isPlatform = (platform: string) => (Object.values(Platform) as string[]).includes(platform);
+
 export type AuthenticationResponse = {
   // On success.
   jwt: string;
@@ -77,5 +88,7 @@ export type SearchResponse = {
 };
 
 export type SearchState = {
-  searchString: string;
+  [key: string]: string | undefined;
 };
+
+export const SearchStateKeys = ['string', 'platform', 'resultType', 'startDate', 'endDate'];

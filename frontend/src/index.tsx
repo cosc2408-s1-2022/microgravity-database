@@ -14,6 +14,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
 import SearchResults from './pages/SearchResults';
 import ViewExperiment from './pages/ViewExperiment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -28,14 +30,16 @@ root.render(
       <ThemeProvider theme={theme}>
         <CssBaseline>
           <BrowserRouter>
-            <Routes>
-              <Route path='/' element={<Navigate to='/home' />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/searchResults' element={<SearchResults />} />
-              <Route path='/experiment/:id' element={<ViewExperiment />} />
-            </Routes>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <Routes>
+                <Route path='/' element={<Navigate to='/home' />} />
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/search' element={<SearchResults />} />
+                <Route path='/experiment/:id' element={<ViewExperiment />} />
+              </Routes>
+            </LocalizationProvider>
           </BrowserRouter>
         </CssBaseline>
       </ThemeProvider>

@@ -1,13 +1,13 @@
 import { Button, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../FormField';
-import { SearchState } from '../../types';
 
-export default function PrimarySearch(props: SearchState) {
-  const [searchString, setSearchString] = useState('');
+export default function PrimarySearch() {
+  const [string, setString] = useState('');
   const [hasSubmit, setHasSubmit] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +15,10 @@ export default function PrimarySearch(props: SearchState) {
   };
 
   if (hasSubmit) {
-    return <Navigate to='/searchResults' state={{ searchString: searchString }} />;
+    const params = new URLSearchParams();
+    params.append('string', string);
+    params.append('page', '1');
+    navigate(`/search?${params.toString()}`);
   }
 
   return (
@@ -32,14 +35,14 @@ export default function PrimarySearch(props: SearchState) {
       <Grid item md={6}>
         <FormField
           id='search'
-          label='Search'
+          label='Keyword(s)'
           type='search'
           variant='outlined'
           size='small'
           sx={{ width: '100%' }}
           name='searchString'
-          value={searchString ? searchString : props.searchString}
-          onChange={setSearchString}
+          value={string ? string : ''}
+          onChange={setString}
         />
       </Grid>
       <Grid item>

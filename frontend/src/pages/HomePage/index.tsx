@@ -1,65 +1,22 @@
-/*
-import { Component } from 'react';
-import logo from '../../assets/RMIT-LOGO-BLACK.png';
-import { Link } from 'react-router-dom';
-import PrimarySearch from '../../components/PrimarySearch';
-import { Typography } from '@mui/material';
-import Header from '../../components/Header';
-
-class FacilityElement extends Component<{ facility: string }, never> {
-  render() {
-    const facility = this.props.facility;
-    return (
-      <Link to='/search' state={facility} className='link'>
-        <Typography sx={{ color: 'gray' }} variant='body1' className='mx-4 d-inline'>
-          {facility}
-        </Typography>
-      </Link>
-    );
-  }
-}
-
-class HomePage extends Component {
-  render() {
-    return (
-      <div>
-        <div className='container-fluid d-flex flex-column min-vh-100 overflow-hidden px-0'>
-          <Header />
-          <div className='row justify-content-center flex-grow-1'>
-            <div className='my-auto mx-auto flex-grow-1'>
-              <div className='row'>
-                <div className='col-4 mx-auto'>
-                  <img src={logo} className='img-fluid' alt='RMIT Logo' height={'40vmin'} />
-                </div>
-              </div>
-              <div className='row mt-5'>
-                <PrimarySearch className='justify-content-center d-flex' />
-              </div>
-              <div className='row mt-3'>
-                <div className='col-md-10 mx-auto'>
-                  <FacilityElement facility={'Space Stations'} />
-                  <FacilityElement facility={'Space Shuttles'} />
-                  <FacilityElement facility={'Retrievable Capsules'} />
-                  <FacilityElement facility={'Sounding Rockets'} />
-                  <FacilityElement facility={'Parabolic Flights'} />
-                  <FacilityElement facility={'Ground Facilities'} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default HomePage;
-*/
 import * as React from 'react';
 import Header from '../../components/Header';
 import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Platform } from '../../types';
+
+function PlatformElement(props: { platform: Platform; text: string }) {
+  return (
+    <Grid item>
+      <Link to={`/search?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
+        <Typography sx={{ color: 'gray' }} variant='body1' display='inline'>
+          {props.text}
+        </Typography>
+      </Link>
+    </Grid>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -69,7 +26,15 @@ export default function HomePage() {
         <Grid item md={4}>
           <Logo />
         </Grid>
-        <PrimarySearch searchString='' />
+        <PrimarySearch />
+        <Grid container item justifyContent='center' spacing={2}>
+          <PlatformElement platform={Platform.SPACE_STATION} text='Space Station' />
+          <PlatformElement platform={Platform.SPACE_SHUTTLE} text='Space Shuttle' />
+          <PlatformElement platform={Platform.RETRIEVABLE_CAPSULE} text='Retrievable Capsule' />
+          <PlatformElement platform={Platform.SOUNDING_ROCKET} text='Sounding Rocket' />
+          <PlatformElement platform={Platform.PARABOLIC_FLIGHT} text='Parabolic Flight' />
+          <PlatformElement platform={Platform.GROUND_BASED_FACILITY} text='Ground Based Facility' />
+        </Grid>
       </Grid>
     </Grid>
   );
