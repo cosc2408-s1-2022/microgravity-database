@@ -1,7 +1,8 @@
 package com.rmit.mgdb.service;
 
-import com.rmit.mgdb.exception.UserNotFoundException;
+import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.exception.UsernameAlreadyExistsException;
+import com.rmit.mgdb.exception.UsernameNotFoundException;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,17 @@ public class UserService {
     /**
      * Get a user by their id.
      */
-    public User getUserById(long id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException(String.format("User by id %d not found.", id)));
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                             .orElseThrow(() -> new NotFoundException("User could not be found.", id));
     }
 
     /**
      * Get a user by their username.
      */
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(
-                () -> new UserNotFoundException(String.format("User by username %s not found\n", username)));
+        return userRepository.findByUsername(username)
+                             .orElseThrow(() -> new UsernameNotFoundException("User could not be found.", username));
     }
 
 }

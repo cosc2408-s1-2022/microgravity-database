@@ -22,7 +22,7 @@ public class ForCodeController {
 
     @GetMapping("/all")
     public List<ForCode> getAll() {
-        return forCodeService.getAllForCode();
+        return forCodeService.getAllForCodes();
     }
 
 }

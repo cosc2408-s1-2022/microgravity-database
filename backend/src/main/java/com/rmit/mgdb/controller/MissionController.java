@@ -22,7 +22,7 @@ public class MissionController {
 
     @GetMapping("/all")
     public List<Mission> getAll() {
-        return missionService.getAllMission();
+        return missionService.getAllMissions();
     }
 
 }

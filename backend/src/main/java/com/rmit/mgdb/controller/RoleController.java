@@ -22,7 +22,7 @@ public class RoleController {
 
     @GetMapping("/all")
     public List<Role> getAll() {
-        return roleService.getAllRole();
+        return roleService.getAllRoles();
     }
 
 }
