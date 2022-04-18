@@ -36,7 +36,15 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     navigate(`/search?${params.toString()}`);
   };
 
-  // TODO: Add clear button to search fields
+
+  const handleClear = () => {
+    handleSearchStringChange('');
+    handleResultTypeChange('');
+    handlePlatformChange('');
+    setStartDate('2022');
+    setEndDate('2022');
+  };
+
   return (
     <Grid {...props} bgcolor='primary.light'>
       <Grid component='form' onSubmit={handleSubmit} container item direction='column' padding={5} spacing={3}>
@@ -69,8 +77,11 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
           ) : null}
 
         <Grid item>
-          <Button type='submit' variant='contained' color='secondary' fullWidth>
+          <Button type='submit' variant='contained' color='secondary'>
             Refine Search
+          </Button>
+          <Button onClick={handleClear} color='secondary'>
+            Clear
           </Button>
         </Grid>
       </Grid>
