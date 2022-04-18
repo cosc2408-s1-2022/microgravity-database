@@ -1,15 +1,9 @@
-import { Button, Grid, GridProps, MenuItem, TextField } from '@mui/material';
-import { Platform, SearchState } from '../../types';
+import { Button, Grid, GridProps, MenuItem } from '@mui/material';
+import { Platform, ResultType, SearchState } from '../../types';
 import React, { useState } from 'react';
 import FormField from '../FormField';
-import { DatePicker } from '@mui/x-date-pickers';
-import moment, { Moment } from 'moment';
 import { useNavigate } from 'react-router-dom';
-
-enum DateBound {
-  START_DATE,
-  END_DATE,
-}
+import DateElement from './DateElement';
 
 export default function AdvancedSearch(props: SearchState | GridProps) {
   const searchProps = props as SearchState;
@@ -29,6 +23,8 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     platform: platform,
   };
 
+  console.log(state);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const params = new URLSearchParams();
@@ -38,16 +34,6 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
       }
     });
     navigate(`/search?${params.toString()}`);
-  };
-
-  const handleDateChange = (date: Moment | null, dateBound: DateBound) => {
-    let newDate: string | undefined = undefined;
-    if (date) {
-      newDate = date.year().toString();
-    }
-
-    const setDateFunc = dateBound === DateBound.START_DATE ? setStartDate : setEndDate;
-    setDateFunc(newDate);
   };
 
   // TODO: Add clear button to search fields
@@ -69,30 +55,16 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         </Grid>
         <Grid item>
           <FormField select name='resultType' label='Result Type' value={resultType} onChange={handleResultTypeChange}>
-            <MenuItem value={'Experiment'}>Experiment</MenuItem>
+            <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
+            <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
           </FormField>
         </Grid>
-        <Grid item>
-          <DatePicker
-            views={['year']}
-            label='Start Date'
-            value={startDate}
-            maxDate={moment()}
-            onChange={(e: Moment | null) => handleDateChange(e, DateBound.START_DATE)}
-            renderInput={(params) => <TextField size='small' {...params} />}
-          />
-        </Grid>
-        <Grid item>
-          <DatePicker
-            views={['year']}
-            label='End Date'
-            value={endDate}
-            onChange={(e: Moment | null) => handleDateChange(e, DateBound.END_DATE)}
-            minDate={moment(startDate)}
-            maxDate={moment()}
-            renderInput={(params) => <TextField size='small' {...params} />}
-          />
-        </Grid>
+        {resultType === ResultType.MISSION ? (
+          <DateElement label='Start Date' value={startDate} callback={setStartDate} />
+        ) : null}
+        {resultType === ResultType.MISSION ? (
+          <DateElement label='End Date' value={endDate} callback={setEndDate} />
+        ) : null}
         <Grid item>
           <Button type='submit' variant='contained' color='secondary' fullWidth>
             Refine Search

@@ -21,6 +21,11 @@ export enum Platform {
   GROUND_BASED_FACILITY = 'groundBasedFacility',
 }
 
+export enum ResultType {
+  EXPERIMENT = 'Experiment',
+  MISSION = 'Mission',
+}
+
 export const isPlatform = (platform: string) => (Object.values(Platform) as string[]).includes(platform);
 
 export type AuthenticationResponse = {
@@ -87,8 +92,11 @@ export type SearchResponse = {
   results: Experiment[];
 };
 
+export type SearchField = string | undefined;
+
 export type SearchState = {
-  [key: string]: string | undefined;
+  [key: string]: SearchField;
 };
+
 
 export const SearchStateKeys = ['string', 'platform', 'resultType', 'startDate', 'endDate'];
