@@ -39,17 +39,17 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
 
   const handleClear = () => {
     handleSearchStringChange('');
-    handleResultTypeChange('');
-    handlePlatformChange('');
-    setStartDate('2022');
-    setEndDate('2022');
+    handleResultTypeChange(ResultType.EXPERIMENT);
+    handlePlatformChange(undefined);
+    setStartDate(undefined);
+    setEndDate(undefined);
   };
 
   return (
     <Grid {...props} bgcolor='primary.light'>
       <Grid component='form' onSubmit={handleSubmit} container item direction='column' padding={5} spacing={3}>
         <Grid item>
-          <FormField defaultValue={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
+          <FormField value={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
         </Grid>
 
         <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
@@ -76,7 +76,7 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
             <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
           ) : null}
 
-        <Grid item>
+        <Grid container item justifyContent='space-between'>
           <Button type='submit' variant='contained' color='secondary'>
             Refine Search
           </Button>
