@@ -5,9 +5,14 @@ import moment, { Moment } from 'moment';
 import { DatePicker } from '@mui/x-date-pickers';
 
 export default function DateElement(
-  props: GridProps & { label: string; value: SearchField; callback: React.Dispatch<React.SetStateAction<SearchField>> },
+  props: GridProps & {
+    label: string;
+    value: SearchField;
+    min?: Moment | undefined;
+    max?: Moment | undefined;
+    callback: React.Dispatch<React.SetStateAction<SearchField>>;
+  },
 ) {
-
   const handleDateChange = (date: Moment | null) => {
     let newDate: string | undefined = undefined;
     if (date) {
@@ -29,7 +34,8 @@ export default function DateElement(
         views={['year']}
         label={props.label}
         value={props.value}
-        maxDate={moment()}
+        minDate={props.min}
+        maxDate={props.max || moment()}
         onChange={(e: Moment | null) => handleDateChange(e)}
         renderInput={(params) => <TextField size='small' {...params} />}
       />

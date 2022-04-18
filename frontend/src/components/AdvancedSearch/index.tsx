@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import FormField from '../FormField';
 import { useNavigate } from 'react-router-dom';
 import DateElement from './DateElement';
+import moment from 'moment';
+import SelectElement from './SelectElement';
 
 export default function AdvancedSearch(props: SearchState | GridProps) {
   const searchProps = props as SearchState;
@@ -44,26 +46,26 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
           <FormField defaultValue={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
         </Grid>
         <Grid item>
-          <FormField select name='platform' label='Platform' value={platform} onChange={handlePlatformChange}>
-            <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
-            <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
-            <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
-            <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
-            <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
-            <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
-          </FormField>
-        </Grid>
-        <Grid item>
           <FormField select name='resultType' label='Result Type' value={resultType} onChange={handleResultTypeChange}>
             <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
             <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
           </FormField>
         </Grid>
         {resultType === ResultType.MISSION ? (
+          <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
+            <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
+            <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
+            <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
+            <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
+            <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
+            <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
+          </SelectElement>
+        ) : null}
+        {resultType === ResultType.MISSION ? (
           <DateElement label='Start Date' value={startDate} callback={setStartDate} />
         ) : null}
         {resultType === ResultType.MISSION ? (
-          <DateElement label='End Date' value={endDate} callback={setEndDate} />
+          <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
         ) : null}
         <Grid item>
           <Button type='submit' variant='contained' color='secondary' fullWidth>

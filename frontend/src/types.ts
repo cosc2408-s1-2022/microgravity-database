@@ -98,5 +98,4 @@ export type SearchState = {
   [key: string]: SearchField;
 };
 
-
 export const SearchStateKeys = ['string', 'platform', 'resultType', 'startDate', 'endDate'];
