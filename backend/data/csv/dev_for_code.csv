@@ -1,0 +1,69 @@
+id,code,name
+1,1,Mathematical Sciences
+2,2,Physical Sciences
+3,3,Chemical Sciences
+4,4,Earth Sciences
+5,5,Environmental Sciences
+6,6,Biological Sciences
+7,7,Agricutural and Veterinary Sciences
+8,8,Information and Computing Sciences
+9,9,Engineering
+10,10,Technology
+11,11,Medical and Health Sciences
+12,12,Built Environment and Design
+13,13,Education
+14,14,Economics
+15,15,"Commerce, Management, Tourism and Services"
+16,16,Studies in Human Society
+17,17,Psychology and Cognitive Sciences
+18,18,Law and Legal Studies
+19,19,Studies in Creative Arts and Writing
+20,20,"Language, Communication and Culture"
+21,21,History and Archaeology
+22,22,Philosophy and Religious Studies
+23,50201,Aboriginal and Torres Strait Islander Environmental Knowledge
+24,80601,Aboriginal and Torres Strait Islander Information and Knowledge Systems
+25,80701,Aboriginal and Torres Strait Islander Knowledge Management
+26,110403,Traditional Aboriginal and Torres Strait
+27,111701,Aboriginal and Torres Strait Islander Health
+28,130301,Aboriginal and Torres Strait Islander Education
+29,160501,Aboriginal and Torres Strait Islander Policy
+30,169902,Studies of Aboriginal and Torres Strait Islander Society
+31,190401,Aboriginal and Torres Strait Islander Performing Arts
+32,200201,Aboriginal and Torres Strait Islander Cultural Studies
+33,200319,Aboriginal and Torres Strait Islander Languages
+34,200501,Aboriginal and Torres Strait Islander Literature
+35,210101,Aboriginal and Torres Strait Islander Archaeology
+36,210301,Aboriginal and Torres Strait Islander History
+37,50208,Maori Environmental Knowledge
+38,80613,Maori Information and Knowledge Systems
+39,110405,Traditional Maori Medicine and Treatments
+40,111713,Maori Health
+41,130104,Kura Kaupapa Maori (Maori Primary Education)
+42,130107,Te Whariki (Maori Early Childhood Education)
+43,130206,Kohanga Reo (Maori Language Curriculum and Pedagogy)
+44,130310,Maori Education (excl. Early Childhood and Primary Education)
+45,169904,Studies of Maori Society
+46,170108,Kaupapa Maori Psychology
+47,180201,Nga Tikanga Maori (Maori Customary Law)
+48,180202,Te Maori Whakahaere Rauemi (Maori Resource Law)
+49,180203,Te Tiriti o Waitangi (The Treaty of Waitangi)
+50,180204,Te Ture Whenua (Maori Land Law)
+51,180299,Maori Law not elsewhere classified
+52,190405,Maori Performing Arts
+53,200207,Maori Cultural Studies
+54,200321,Te Reo Maori (Maori Language)
+55,200504,Maori Literature
+56,210109,Maori Archaeology
+57,210309,Maori History
+58,50210,Pacific Peoples Environmental Knowledge
+59,80614,Pacific Peoples Information and Knowledge Systems
+60,111715,Pacific Peoples Health
+61,130311,Pacific Peoples Education
+62,169905,Studies of Pacific Peoples' Societies
+63,190410,Pacific Peoples Performing Arts
+64,200210,Pacific Cultural Studies
+65,200320,Pacific Languages
+66,200507,Pacific Literature
+67,210106,Archaeology of New Guinea and Pacific Islands (excl. New Zealand)
+68,210313,Pacific History (excl. New Zealand and Maori)
