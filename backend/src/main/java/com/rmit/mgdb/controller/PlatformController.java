@@ -20,7 +20,7 @@ public class PlatformController {
         this.platformService = platformService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Platform> getAll() {
         return platformService.getAllPlatforms();
     }

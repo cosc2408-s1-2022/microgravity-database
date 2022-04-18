@@ -97,7 +97,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/login").permitAll()
                 .antMatchers("/api/search/**").permitAll()
                 .antMatchers("/api/users/**").authenticated()
-                .anyRequest().authenticated();
+                // TODO Turn off before commit.
+                .anyRequest().permitAll();
 
         // Configure the JWT authentication filter to run before processing every HTTP request.
         security.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

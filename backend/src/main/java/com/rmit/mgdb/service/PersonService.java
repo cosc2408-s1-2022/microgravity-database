@@ -27,4 +27,8 @@ public class PersonService {
                                .orElseThrow(() -> new NotFoundException("Person could not be found.", id));
     }
 
+    public Person addPerson(Person person) {
+        return personRepository.save(person);
+    }
+
 }

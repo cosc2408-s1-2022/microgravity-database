@@ -24,8 +24,7 @@ public class PlatformService {
 
     public Platform getPlatformById(Long id) {
         return platformRepository.findById(id)
-                                 .orElseThrow(() -> new NotFoundException(
-                                         String.format("Platform by id %d could not be found.", id), id));
+                                 .orElseThrow(() -> new NotFoundException("Platform could not be found.", id));
     }
 
 }
