@@ -1,8 +1,8 @@
-import { Box, Card, CardActions, CardContent, Grid, Link, Pagination, Typography } from '@mui/material';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Box, Grid, Typography } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import React, { useEffect, useState } from 'react';
-import { isPlatform, SearchResponse, SearchState, SearchStateKeys } from '../../types';
+import { Experiment, isPlatform, isResultType, ResultType, SearchResponse, SearchState } from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -10,20 +10,22 @@ import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
 import { platform } from 'os';
+import ExperimentResult from '../../components/Results/ExperimentResult';
 
 export default function SearchResults() {
   const location = useLocation();
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { string: '' };
+  const searchState: SearchState = { string: '', resultType: ResultType.EXPERIMENT };
   const params = new URLSearchParams(location.search);
+  let results;
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
-    // Set value in state if key, value pair is valid
-    const isValidPlatform = key == 'platform' && value && isPlatform(value);
-    if (isValidPlatform && SearchStateKeys.includes(key)) {
+    const isValidPlatform = key === 'platform' && isPlatform(value) && searchState.resultType === ResultType.MISSION;
+    const isValidResultType = key === 'resultType' && isResultType(value);
+    if (key === 'string' || isValidResultType || isValidPlatform) {
       searchState[key] = value;
     }
   });
@@ -38,12 +40,16 @@ export default function SearchResults() {
     mutate();
   }, [location, mutate]);
 
+  if (data && data?.data.results.length != 0) {
+    results = data.data.results;
+  }
+
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   return (
-    <Grid container direction='column' height='100vh'>
+    <Grid container direction='column' height='100vh' wrap='nowrap'>
       <Header />
       <Grid container direction='row' wrap='nowrap' flexGrow={1}>
         <AdvancedSearch {...searchState} container item md={3} />
@@ -53,34 +59,18 @@ export default function SearchResults() {
               <CircularProgress />
             </Box>
           ) : data && data?.data.results.length != 0 ? (
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              {data?.data.results.map((experiment) => (
-                <Card key={experiment.id} sx={{ width: '100%', my: '1rem' }}>
-                  <CardContent>
-                    <Typography color='text.secondary' gutterBottom>
-                      {experiment.platform}
-                    </Typography>
-                    <Typography variant='h5' component='div'>
-                      {experiment.title}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                      {experiment.mission}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Link component={RouterLink} to={`/experiment/${experiment.id}`} state={{ experiment: experiment }}>
-                      Learn More
-                    </Link>
-                  </CardActions>
-                </Card>
-              ))}
-              <Pagination
-                sx={{ mb: '2rem' }}
-                count={data?.data.totalPages}
-                shape='rounded'
-                onChange={handlePageChange}
-              />
-            </Box>
+            results?.map((item: Experiment, index) => {
+              return (
+                <ExperimentResult
+                  key={item.id}
+                  id={item.id}
+                  objective={item.experimentObjective}
+                  people={item.people}
+                  mission={item.mission}
+                  bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+                />
+              );
+            })
           ) : (
             <Grid container direction='column' justifyContent='center' alignItems='center' flexGrow={1}>
               <SentimentVeryDissatisfiedIcon />

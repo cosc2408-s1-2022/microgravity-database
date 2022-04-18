@@ -7,7 +7,7 @@ const theme = createTheme({
     primary: {
       main: '#F7F5F8',
       light: '#FAFAFA',
-      dark: '#F0F0F0',
+      dark: '#000000',
     },
     secondary: {
       main: '#f50057',
@@ -22,6 +22,15 @@ const theme = createTheme({
   typography: {
     fontSize: 18,
     fontFamily: 'Roboto',
+  },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: 'none',
+        },
+      },
+    },
   },
 });
 export default theme;

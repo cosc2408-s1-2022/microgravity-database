@@ -11,7 +11,6 @@ export default function SelectElement(
     callback: React.Dispatch<React.SetStateAction<SearchField>>;
   },
 ) {
-
   // Reset selection to undefined when component is unmounted
   useEffect(() => {
     return function cleanup() {
@@ -21,7 +20,7 @@ export default function SelectElement(
 
   return (
     <Grid item>
-      <FormField select name='platform' label='Platform' value={props.value} onChange={props.callback}>
+      <FormField select name={props.name} label={props.label} value={props.value} onChange={props.callback}>
         {props.children}
       </FormField>
     </Grid>

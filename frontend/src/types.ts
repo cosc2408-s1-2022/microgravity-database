@@ -22,11 +22,17 @@ export enum Platform {
 }
 
 export enum ResultType {
-  EXPERIMENT = 'Experiment',
-  MISSION = 'Mission',
+  EXPERIMENT = 'experiment',
+  MISSION = 'mission',
 }
 
-export const isPlatform = (platform: string) => (Object.values(Platform) as string[]).includes(platform);
+export const isResultType = (resultType: string | undefined) => {
+  return resultType ? (Object.values(ResultType) as string[]).includes(resultType) : false;
+};
+
+export const isPlatform = (platform: string | undefined) => {
+  return platform ? (Object.values(Platform) as string[]).includes(platform) : false;
+};
 
 export type AuthenticationResponse = {
   // On success.
@@ -40,23 +46,27 @@ export type AuthenticationResponse = {
 };
 
 export type Experiment = {
-  id: number;
+  id: string;
   title: string;
+  experimentAim: string;
+  experimentObjective: string;
   platform: string;
   leadInstitution: string;
   principalInvestigator: string;
   toa: string;
   forCode?: ForCode;
   seoCode?: SeoCode;
-  mission?: Mission;
+  mission: Mission;
+  people: Person[];
 };
 
 export type Mission = {
   id: string;
   platform: string;
+  name: string;
   launchDate: Date;
   startDate: Date;
-  endDate: Date;
+  endDateString: string;
 };
 
 export type Code = {
@@ -69,12 +79,13 @@ export type ForCode = Code;
 
 export type SeoCode = Code;
 
-export type Researcher = {
+export type Person = {
   id: number;
-  name: string;
+  person: Researcher;
+  role: string;
 };
 
-export type People = {
+export type Researcher = {
   id: number;
   firstName: string;
   familyName: string;
@@ -95,7 +106,9 @@ export type SearchResponse = {
 export type SearchField = string | undefined;
 
 export type SearchState = {
-  [key: string]: SearchField;
+  string: SearchField;
+  resultType: SearchField;
+  platform?: SearchField;
+  startDate?: SearchField;
+  endDate?: SearchField;
 };
-
-export const SearchStateKeys = ['string', 'platform', 'resultType', 'startDate', 'endDate'];

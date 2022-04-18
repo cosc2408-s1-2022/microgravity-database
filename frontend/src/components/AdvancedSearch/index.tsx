@@ -25,8 +25,6 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     platform: platform,
   };
 
-  console.log(state);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const params = new URLSearchParams();
@@ -45,28 +43,31 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         <Grid item>
           <FormField defaultValue={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
         </Grid>
-        <Grid item>
-          <FormField select name='resultType' label='Result Type' value={resultType} onChange={handleResultTypeChange}>
-            <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
-            <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
-          </FormField>
-        </Grid>
+
+        <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
+          <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
+          <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
+        </SelectElement>
+
         {resultType === ResultType.MISSION ? (
-          <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
-            <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
-            <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
-            <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
-            <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
-            <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
-            <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
-          </SelectElement>
-        ) : null}
+            <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
+              <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
+              <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
+              <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
+              <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
+              <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
+              <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
+            </SelectElement>
+          ) : null}
+
         {resultType === ResultType.MISSION ? (
-          <DateElement label='Start Date' value={startDate} callback={setStartDate} />
-        ) : null}
+            <DateElement label='Start Date' value={startDate} callback={setStartDate} />
+          ) : null}
+
         {resultType === ResultType.MISSION ? (
-          <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
-        ) : null}
+            <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
+          ) : null}
+
         <Grid item>
           <Button type='submit' variant='contained' color='secondary' fullWidth>
             Refine Search
