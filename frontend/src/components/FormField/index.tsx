@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField, TextFieldProps } from '@mui/material';
 
 /**
- * A wrapper around {@link TextField} to automatically enter an errored state if an error is present
+ * A wrapper around {@link TextField} to automatically enter an errored state if an error is present.
  */
 function FormField({ onChange, name, errors, ...rest }: FormFieldProps) {
   return (
@@ -12,7 +12,7 @@ function FormField({ onChange, name, errors, ...rest }: FormFieldProps) {
       error={!!errors?.[name]}
       helperText={errors?.[name]}
       variant='outlined'
-      required
+      margin='normal'
       fullWidth
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
         onChange && onChange(event.target.value)

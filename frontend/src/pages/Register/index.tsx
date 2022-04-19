@@ -72,7 +72,7 @@ export default function Register() {
             zIndex: '-1',
           }}
         >
-          <source src='/space.mp4' type='video/mp4' />
+          <source src={'/space.mp4'} type='video/mp4' />
         </video>
         <div>
           <br />
@@ -99,6 +99,7 @@ export default function Register() {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <FormField
+                        required
                         name='username'
                         label='Username'
                         autoComplete='username'
@@ -129,7 +130,7 @@ export default function Register() {
                         name='confirmPassword'
                         label='Confirm Password'
                         type='password'
-                        autoComplete='confirm-password'
+                        autoComplete='new-password'
                         errors={
                           passwordsMatchingError
                             ? {

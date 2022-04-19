@@ -6,7 +6,7 @@ import { createTheme } from '@mui/material/styles'; // TODO Create a custom them
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FFFFFF',
+      main: '#000000',
     },
     secondary: {
       main: '#f44336',
@@ -18,7 +18,7 @@ const theme = createTheme({
       main: '#f44336',
     },
     text: {
-      primary: '#f44336',
+      primary: '#000000',
     },
     success: {
       // TODO Change Color ???
@@ -27,7 +27,7 @@ const theme = createTheme({
   },
 
   typography: {
-    fontSize: 18,
+    fontSize: 16,
     body2: {
       fontWeight: 300,
     },

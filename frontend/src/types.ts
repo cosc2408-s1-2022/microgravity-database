@@ -37,10 +37,10 @@ export type Experiment = {
 
 export type Mission = {
   id: string;
-  platform: string;
   launchDate: Date;
   startDate: Date;
   endDate: Date;
+  platform: Platform;
 };
 
 export type Code = {
@@ -58,7 +58,7 @@ export type Researcher = {
   name: string;
 };
 
-export type People = {
+export type Person = {
   id: number;
   firstName: string;
   familyName: string;
@@ -66,6 +66,11 @@ export type People = {
   state: string;
   country: string;
   affiliation: string;
+};
+
+export type Platform = {
+  id: number;
+  name: string;
 };
 
 export type SearchResponse = {
