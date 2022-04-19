@@ -20,7 +20,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Role> getAll() {
         return roleService.getAllRoles();
     }

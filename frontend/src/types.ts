@@ -2,12 +2,12 @@
 
 export type User = {
   username: string;
-  role: Role;
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date | null;
 };
 
-export enum Role {
+export enum UserRole {
   ROLE_USER = 'ROLE_USER',
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
@@ -26,13 +26,18 @@ export type AuthenticationResponse = {
 export type Experiment = {
   id: number;
   title: string;
-  platform: string;
+  toa: string;
   leadInstitution: string;
   principalInvestigator: string;
-  toa: string;
-  forCode?: ForCode;
-  seoCode?: SeoCode;
-  mission?: Mission;
+  experimentAim: string;
+  experimentObjective: string;
+  experimentModuleDrawing: string;
+  experimentPublications: string;
+  mission: Mission;
+  platform: Platform;
+  forCode: ForCode;
+  seoCode: SeoCode;
+  people: ExperimentPerson[];
 };
 
 export type Mission = {
@@ -57,11 +62,6 @@ export type ForCode = Code;
 
 export type SeoCode = Code;
 
-export type Researcher = {
-  id: number;
-  name: string;
-};
-
 export type Person = {
   id: number;
   firstName: string;
@@ -72,9 +72,29 @@ export type Person = {
   affiliation: string;
 };
 
+export type Role = {
+  id: number;
+  name: string;
+};
+
+export type ExperimentPerson = {
+  id: {
+    experimentId: number;
+    personId: number;
+  };
+  experiment: Experiment;
+  person: Person;
+  role: Role;
+};
+
 export type Platform = {
   id: number;
   name: string;
+};
+
+export type ExperimentPersonRequest = {
+  personId: number;
+  roleId: number;
 };
 
 export type SearchResponse = {

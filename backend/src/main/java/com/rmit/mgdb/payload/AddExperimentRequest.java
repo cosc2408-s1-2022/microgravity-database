@@ -32,10 +32,10 @@ public class AddExperimentRequest {
     @NotNull(message = "Experiments must be on a platform.")
     private Long platformId;
 
-    @NotNull(message = "Experiments must have an FOR Code specified.")
+    @NotNull(message = "Experiments must have an FOR code specified.")
     private Long forCodeId;
 
-    @NotNull(message = "Experiments must have an SEO Code specified.")
+    @NotNull(message = "Experiments must have an SEO code specified.")
     private Long seoCodeId;
 
     private AddExperimentPersonRequest[] experimentPersonRequests;

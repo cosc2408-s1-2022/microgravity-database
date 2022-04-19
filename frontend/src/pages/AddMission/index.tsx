@@ -12,6 +12,7 @@ import api from '../../util/api';
 import moment from 'moment';
 import lodash from 'lodash';
 
+// TODO Handle edge cases.
 export default function AddMission() {
   const [platforms, setPlatforms] = useState<Platform[]>();
   const { data: platformsData, isSuccess: isPlatformsSuccess } = useQuery<AxiosResponse<Platform[]>, AxiosError>(
@@ -45,13 +46,6 @@ export default function AddMission() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({
-      name,
-      launchDate: moment(launchDate).year().toString(),
-      startDate: moment(startDate).year().toString(),
-      endDate: moment(endDate).year().toString(),
-      platformId: parseInt(platformId, 10),
-    });
     mutateMission();
   };
 

@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mu
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
-import { AuthenticationResponse, Role } from '../../types';
+import { AuthenticationResponse, UserRole } from '../../types';
 import { Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
@@ -37,7 +37,7 @@ export default function Register() {
       return api.post(`/users/register`, {
         username: username,
         password: password,
-        role: Role.ROLE_USER,
+        role: UserRole.ROLE_USER,
       });
     },
   );
