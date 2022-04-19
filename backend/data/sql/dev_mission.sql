@@ -1,11 +1,21 @@
-insert into dev.mission (id, end_date, end_date_string, experiment_count, launch_date, launch_date_string, name, start_date, start_date_string, platform_id)
-values  (1, null, '2021', 1, null, '2021', 'ISS Increment 65', null, '2021', 1),
-        (2, null, '1995', 1, null, '1995', 'MIR Euromir 95', null, '1995', 1),
-        (3, null, '1998', 1, null, '1998', 'STS-95', null, '1998', 2),
-        (4, null, '1997', 1, null, '1997', 'STS-84', null, '1997', 2),
-        (5, null, '2007', 1, null, '2007', 'Foton-M3', null, '2007', 3),
-        (6, null, '2005', 1, null, '2005', 'Foton-M2', null, '2005', 3),
-        (7, null, '2015', 1, null, '2015', 'MASER 13', null, '2015', 4),
-        (8, null, '2009', 1, null, '2009', 'TEXUS 46', null, '2009', 4),
-        (9, null, '2020', 1, null, '2020', '73rd ESA Parabolic Flight Campaign', null, '2020', 5),
-        (10, null, '2007', 1, null, '2007', 'Drop Tower Bremen', null, '2007', 6);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (1, '2021-01-01', 1, '2021-01-01', 'ISS Increment 65', '2021-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (2, '1995-01-01', 1, '1995-01-01', 'MIR Euromir 95', '1995-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (3, '1998-01-01', 1, '1998-01-01', 'STS-95', '1998-01-01', 2, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (4, '1997-01-01', 1, '1997-01-01', 'STS-84', '1997-01-01', 2, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (5, '2007-01-01', 1, '2007-01-01', 'Foton-M3', '2007-01-01', 3, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (6, '2005-01-01', 1, '2005-01-01', 'Foton-M2', '2005-01-01', 3, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (7, '2015-01-01', 1, '2015-01-01', 'MASER 13', '2015-01-01', 4, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (8, '2009-01-01', 1, '2009-01-01', 'TEXUS 46', '2009-01-01', 4, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (9, '2020-01-01', 1, '2020-01-01', '73rd ESA Parabolic Flight Campaign', '2020-01-01', 5, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (10, '2007-01-01', 1, '2007-01-01', 'Drop Tower Bremen', '2007-01-01', 6, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (11, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (12, '2015-01-01', 1, '2015-01-01', 'ISS Increment 63', '2015-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (13, '2017-01-01', 1, '2017-01-01', 'ISS Increment 63', '2017-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (14, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (15, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (16, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (17, '2020-01-01', 1, '2020-01-01', 'ISS Increment 64', '2020-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (18, '2018-01-01', 1, '2018-01-01', 'ISS Increment 64', '2018-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (19, '2016-01-01', 1, '2016-01-01', 'ISS Increment 64', '2016-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (20, '2014-01-01', 1, '2014-01-01', 'ISS Increment 61', '2014-01-01', 1, null, null, null);
+INSERT INTO dev.mission (id, end_date, experiment_count, launch_date, name, start_date, platform_id, end_date_string, launch_date_string, start_date_string) VALUES (21, '2019-01-01', 1, '2019-01-01', 'ISS Increment 62', '2019-01-01', 1, null, null, null);

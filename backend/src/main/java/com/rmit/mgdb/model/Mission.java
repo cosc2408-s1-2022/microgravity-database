@@ -1,16 +1,12 @@
 package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rmit.mgdb.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,22 +24,13 @@ public class Mission {
     private String name;
 
     @GenericField
-    private Date launchDate;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    private String launchDateString;
+    private LocalDate launchDate;
 
     @GenericField
-    private Date startDate;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    private String startDateString;
+    private LocalDate startDate;
 
     @GenericField
-    private Date endDate;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    private String endDateString;
+    private LocalDate endDate;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -56,6 +43,34 @@ public class Mission {
     @JsonIgnore
     private Platform platform;
 
+    private String getLocalDateStringOrEmpty(LocalDate date) {
+        if (date == null)
+            return "";
+
+        return String.valueOf(date.getYear());
+    }
+
+    @Transient
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "launchDate")))
+    public String getLaunchDateString() {
+        return getLocalDateStringOrEmpty(launchDate);
+    }
+
+    @Transient
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "startDate")))
+    public String getStartDateString() {
+        return getLocalDateStringOrEmpty(startDate);
+    }
+
+    @Transient
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "endDate")))
+    public String getEndDateString() {
+        return getLocalDateStringOrEmpty(endDate);
+    }
+
     @PrePersist
     protected void onCreate() {
         synchroniseFields();
@@ -67,9 +82,9 @@ public class Mission {
     }
 
     private void synchroniseFields() {
-        launchDateString = launchDate == null ? null : DateUtil.format(launchDate);
-        startDateString = startDate == null ? null : DateUtil.format(startDate);
-        endDateString = endDate == null ? null : DateUtil.format(endDate);
+        //        launchDateString = launchDate == null ? null : DateUtil.format(launchDate);
+        //        startDateString = startDate == null ? null : DateUtil.format(startDate);
+        //        endDateString = endDate == null ? null : DateUtil.format(endDate);
         experimentCount = (long) (experiments == null ? 0 : experiments.size());
     }
 

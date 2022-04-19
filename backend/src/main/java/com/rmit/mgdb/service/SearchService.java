@@ -17,10 +17,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -84,11 +84,11 @@ public class SearchService {
         ResultType resultTypeParam = Arrays.stream(ResultType.values())
                                            .filter(v -> v.string.equals(extractStringParam(params,
                                                                                            SearchParam.RESULT_TYPE.string,
-                                                                                           ResultType.MISSION.string)))
+                                                                                           ResultType.EXPERIMENT.string)))
                                            .findFirst()
-                                           .orElse(ResultType.MISSION);
-        Optional<Date> startDate = extractDateParam(params, SearchParam.START_DATE.string);
-        Optional<Date> endDate = extractDateParam(params, SearchParam.END_DATE.string);
+                                           .orElse(ResultType.EXPERIMENT);
+        Optional<LocalDate> startDate = extractDateParam(params, SearchParam.START_DATE.string);
+        Optional<LocalDate> endDate = extractDateParam(params, SearchParam.END_DATE.string);
 
         // Hibernate Search uses zero-based index.
         page--;
@@ -197,14 +197,15 @@ public class SearchService {
     /**
      * Utility method to extract an integer type search param.
      */
-    private Optional<Date> extractDateParam(Map<String, String> params, String paramKey) {
+    private Optional<LocalDate> extractDateParam(Map<String, String> params, String paramKey) {
         String paramValue = params.get(paramKey);
         if (paramValue == null || paramValue.isEmpty()) {
             return Optional.empty();
         } else {
             try {
-                return Optional.of(new SimpleDateFormat("yyyy").parse(paramValue));
-            } catch (ParseException e) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+                return Optional.of(LocalDate.parse(paramValue, formatter));
+            } catch (DateTimeParseException e) {
                 throw new InvalidSearchParamException(
                         String.format("Invalid value for date param \"%s\"", paramValue));
             }
