@@ -3,6 +3,7 @@ package com.rmit.mgdb.service;
 import com.rmit.mgdb.model.Experiment;
 import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.model.Role;
+import com.rmit.mgdb.payload.AddExperimentPersonRequest;
 import com.rmit.mgdb.payload.AddExperimentRequest;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,14 @@ public class ExperimentService {
         experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
         experimentRepository.save(experiment);
 
-        experiment.setPeople(Arrays.stream(experimentRequest.getExperimentPersonRequests()).map(personRequest -> {
-            Person person = personService.getPersonById(personRequest.getPersonId());
-            Role role = roleService.getRoleById(personRequest.getRoleId());
-            return experimentPersonService.addExperimentPerson(experiment, person, role);
-        }).toList());
+        AddExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
+        if (personRequests != null && personRequests.length > 0) {
+            experiment.setPeople(Arrays.stream(personRequests).map(personRequest -> {
+                Person person = personService.getPersonById(personRequest.getPersonId());
+                Role role = roleService.getRoleById(personRequest.getRoleId());
+                return experimentPersonService.addExperimentPerson(experiment, person, role);
+            }).toList());
+        }
 
         return experiment;
     }

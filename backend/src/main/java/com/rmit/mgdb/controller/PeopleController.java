@@ -26,7 +26,7 @@ public class PeopleController {
         this.validationErrorService = validationErrorService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Person> getAll() {
         return personService.getAllPeople();
     }

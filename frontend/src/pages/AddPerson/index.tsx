@@ -124,7 +124,7 @@ export default function AddPerson() {
       </Box>
       <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
         <Alert severity='error' onClose={handleErrorSnackbarClose}>
-          Failed to add mission.
+          Failed to add person.
         </Alert>
       </Snackbar>
     </Container>

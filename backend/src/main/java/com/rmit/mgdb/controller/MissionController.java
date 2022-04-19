@@ -27,7 +27,7 @@ public class MissionController {
         this.validationErrorService = validationErrorService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Mission> getAll() {
         return missionService.getAllMissions();
     }

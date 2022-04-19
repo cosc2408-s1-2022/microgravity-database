@@ -37,9 +37,13 @@ export type Experiment = {
 
 export type Mission = {
   id: string;
+  name: string;
   launchDate: Date;
-  startDate: Date;
-  endDate: Date;
+  launchDateString: string;
+  startDate?: Date;
+  startDateString?: string;
+  endDate?: Date;
+  endDateString?: string;
   platform: Platform;
 };
 

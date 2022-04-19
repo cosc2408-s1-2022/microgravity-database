@@ -18,7 +18,6 @@ export default function AddMission() {
     'getAllPlatforms',
     () => api.get('/platforms'),
   );
-
   useEffect(() => {
     if (isPlatformsSuccess && platformsData) setPlatforms(platformsData.data);
   }, [isPlatformsSuccess, platformsData]);
@@ -70,8 +69,6 @@ export default function AddMission() {
     return <Navigate to='/home' />;
   }
 
-  console.log(`errorSnackbarOpen ${errorSnackbarOpen}`);
-
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Container maxWidth='xs'>
@@ -80,7 +77,7 @@ export default function AddMission() {
             Add Mission
           </Typography>
         </Box>
-        <Box component='form' noValidate onSubmit={handleSubmit} flexGrow={1}>
+        <Box component='form' noValidate onSubmit={handleSubmit}>
           <FormField label='Name' name='name' errors={missionError?.response?.data} onChange={setName} />
           <DatePicker
             label='Launch Date'
@@ -162,12 +159,12 @@ export default function AddMission() {
             Add Mission
           </LoadingButton>
         </Box>
+        <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
+          <Alert severity='error' onClose={handleErrorSnackbarClose}>
+            Failed to add mission.
+          </Alert>
+        </Snackbar>
       </Container>
-      <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
-        <Alert severity='error' onClose={handleErrorSnackbarClose}>
-          Failed to add mission.
-        </Alert>
-      </Snackbar>
     </LocalizationProvider>
   );
 }

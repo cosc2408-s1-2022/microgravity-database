@@ -54,7 +54,6 @@ public class Mission {
 
     @ManyToOne
     @IndexedEmbedded
-    @JsonIgnore
     @NotNull
     private Platform platform;
 
