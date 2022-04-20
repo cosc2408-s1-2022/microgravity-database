@@ -84,9 +84,9 @@ public class SearchService {
         ResultType resultTypeParam = Arrays.stream(ResultType.values())
                                            .filter(v -> v.string.equals(extractStringParam(params,
                                                                                            SearchParam.RESULT_TYPE.string,
-                                                                                           ResultType.MISSION.string)))
+                                                                                           ResultType.EXPERIMENT.string)))
                                            .findFirst()
-                                           .orElse(ResultType.MISSION);
+                                           .orElse(ResultType.EXPERIMENT);
         Optional<Date> startDate = extractDateParam(params, SearchParam.START_DATE.string);
         Optional<Date> endDate = extractDateParam(params, SearchParam.END_DATE.string);
 

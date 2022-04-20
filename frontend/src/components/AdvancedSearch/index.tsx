@@ -8,6 +8,7 @@ import moment from 'moment';
 import SelectElement from './SelectElement';
 
 export default function AdvancedSearch(props: SearchState | GridProps) {
+
   const searchProps = props as SearchState;
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     event.preventDefault();
     const params = new URLSearchParams();
     Object.entries(state).forEach((e) => {
-      if (typeof e[1] === 'string') {
+      if (typeof e[1] === 'string' && e[1] !== '') {
         params.append(e[0], e[1]);
       }
     });
@@ -38,9 +39,9 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
 
 
   const handleClear = () => {
-    handleSearchStringChange('');
-    handleResultTypeChange(ResultType.EXPERIMENT);
-    handlePlatformChange(undefined);
+    handleSearchStringChange(undefined);
+    handleResultTypeChange('');
+    handlePlatformChange('');
     setStartDate(undefined);
     setEndDate(undefined);
   };
@@ -84,6 +85,7 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
             Clear
           </Button>
         </Grid>
+
       </Grid>
     </Grid>
   );

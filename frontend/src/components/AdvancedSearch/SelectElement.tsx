@@ -11,10 +11,10 @@ export default function SelectElement(
     callback: React.Dispatch<React.SetStateAction<SearchField>>;
   },
 ) {
-  // Reset selection to undefined when component is unmounted
+  // Reset selection to empty string when component is unmounted
   useEffect(() => {
     return function cleanup() {
-      props.callback(undefined);
+      props.callback('');
     };
   }, []);
 

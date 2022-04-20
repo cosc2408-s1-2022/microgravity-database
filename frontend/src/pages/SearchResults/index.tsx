@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
-import React, { useEffect, useState } from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import { Experiment, isPlatform, isResultType, ResultType, SearchResponse, SearchState } from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation } from 'react-query';
@@ -16,7 +16,7 @@ export default function SearchResults() {
   const location = useLocation();
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { string: '', resultType: ResultType.EXPERIMENT };
+  const searchState: SearchState = { resultType: '', platform: '' };
   const params = new URLSearchParams(location.search);
   let results;
 
@@ -31,7 +31,7 @@ export default function SearchResults() {
   });
 
   const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
-    return api.get('/search', {
+    return api.get('/search/advanced', {
       params: params,
     });
   });
@@ -40,8 +40,38 @@ export default function SearchResults() {
     mutate();
   }, [location, mutate]);
 
-  if (data && data?.data.results.length != 0) {
+  let resultsElement: ReactNode = null;
+  if(isLoading) {
+    resultsElement = (
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <CircularProgress />
+        </Box>
+    );
+  }
+  else if (data && data?.data.results.length != 0) {
     results = data.data.results;
+    console.log(results);
+    if(searchState.resultType === ResultType.EXPERIMENT) {
+      resultsElement = results.map((item: Experiment, index) => {
+        return (
+            <ExperimentResult
+                key={item.id}
+                id={item.id}
+                objective={item.experimentObjective}
+                people={item.people}
+                mission={item.mission}
+                bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+            />
+        );
+      });
+    }
+  } else {
+    resultsElement = (
+        <Grid container direction='column' justifyContent='center' alignItems='center' flexGrow={1}>
+          <SentimentVeryDissatisfiedIcon />
+          <Typography variant='h6'>Sorry! Nothing found.</Typography>
+        </Grid>
+    );
   }
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -54,29 +84,7 @@ export default function SearchResults() {
       <Grid container direction='row' wrap='nowrap' flexGrow={1}>
         <AdvancedSearch {...searchState} container item md={3} />
         <Grid container item direction='column'>
-          {isLoading ? (
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              <CircularProgress />
-            </Box>
-          ) : data && data?.data.results.length != 0 ? (
-            results?.map((item: Experiment, index) => {
-              return (
-                <ExperimentResult
-                  key={item.id}
-                  id={item.id}
-                  objective={item.experimentObjective}
-                  people={item.people}
-                  mission={item.mission}
-                  bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
-                />
-              );
-            })
-          ) : (
-            <Grid container direction='column' justifyContent='center' alignItems='center' flexGrow={1}>
-              <SentimentVeryDissatisfiedIcon />
-              <Typography variant='h6'>Sorry! Nothing found.</Typography>
-            </Grid>
-          )}
+          {resultsElement}
         </Grid>
       </Grid>
     </Grid>

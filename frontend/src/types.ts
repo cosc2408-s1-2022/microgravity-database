@@ -106,8 +106,8 @@ export type SearchResponse = {
 export type SearchField = string | undefined;
 
 export type SearchState = {
-  string: SearchField;
-  resultType: SearchField;
+  string?: SearchField;
+  resultType?: SearchField;
   platform?: SearchField;
   startDate?: SearchField;
   endDate?: SearchField;
