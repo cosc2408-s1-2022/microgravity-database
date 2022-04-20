@@ -20,12 +20,26 @@ const theme = createTheme({
       main: '#f44336',
     },
   },
-
   typography: {
     fontSize: 18,
     fontFamily: 'Roboto',
+    allVariants: {
+      color: '#000000'
+    }
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#FFFFFF',
+          backgroundColor: '#f44336'
+        },
+        text: {
+          color: '#f44336',
+          background: 'transparent'
+        }
+      }
+    },
     MuiLink: {
       styleOverrides: {
         root: {

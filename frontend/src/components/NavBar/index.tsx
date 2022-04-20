@@ -26,13 +26,13 @@ export default function Header() {
   };
 
   const authElement = (
-    <Button variant='contained' color='secondary' onClick={authElementProps.onClick}>
+    <Button variant='contained' onClick={authElementProps.onClick}>
       {authElementProps.text}
     </Button>
   );
 
   const registerElement = authToken ? null : (
-    <Button variant='contained' color='secondary' component={Link} href='/register'>
+    <Button variant='contained' component={Link} href='/register'>
       Register
     </Button>
   );
@@ -40,14 +40,26 @@ export default function Header() {
   return (
     <AppBar position='sticky' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
       <Toolbar>
-        <Grid container wrap='nowrap' justifyContent='space-between'>
-          <Grid container item component={Link} href='/home' alignItems='center'>
-            <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
-            <Typography variant='h6' color='primary.dark' ml='15px'>
-              Microgravity Database
-            </Typography>
+        <Grid container wrap='nowrap'>
+          {/* Left nav elements */}
+          <Grid container item alignItems='center'>
+            {/*  Logo + text link*/}
+            <Grid item component={Link} href={'/home'}>
+              <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
+            </Grid>
+            <Grid item component={Link} href={'/home'} >
+              <Typography variant='h6' mx='15px' >
+                Microgravity Database
+              </Typography>
+            </Grid>
+            {/* Search elements*/}
+            <Grid item>
+              <Button component={Link} href='/search/advanced' sx={{padding: 0}}>
+                Advanced Search
+              </Button>
+            </Grid>
           </Grid>
-
+          {/* Right nav elements */}
           <Grid
             container
             item

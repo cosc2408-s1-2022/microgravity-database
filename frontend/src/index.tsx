@@ -12,10 +12,11 @@ import * as serviceWorker from './serviceWorker';
 import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
-import SearchResults from './pages/SearchResults';
+import BasicSearchPage from './pages/BasicSearch';
 import ViewExperiment from './pages/ViewExperiment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import AdvancedSearchPage from './pages/AdvancedSearch';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -36,7 +37,8 @@ root.render(
                 <Route path='/home' element={<HomePage />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/search' element={<SearchResults />} />
+                <Route path='/search' element={<BasicSearchPage />} />
+                <Route path='/search/advanced' element={<AdvancedSearchPage />} />
                 <Route path='/experiment/:id' element={<ViewExperiment />} />
               </Routes>
             </LocalizationProvider>

@@ -8,7 +8,6 @@ import moment from 'moment';
 import SelectElement from './SelectElement';
 
 export default function AdvancedSearch(props: SearchState | GridProps) {
-
   const searchProps = props as SearchState;
   const navigate = useNavigate();
 
@@ -34,9 +33,8 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         params.append(e[0], e[1]);
       }
     });
-    navigate(`/search?${params.toString()}`);
+    navigate(`/search/advanced?${params.toString()}`);
   };
-
 
   const handleClear = () => {
     handleSearchStringChange(undefined);
@@ -58,34 +56,31 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
           <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
         </SelectElement>
 
-        {resultType === ResultType.MISSION ? (
-            <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
-              <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
-              <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
-              <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
-              <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
-              <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
-              <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
-            </SelectElement>
-          ) : null}
+        <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
+          <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
+          <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
+          <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
+          <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
+          <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
+          <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
+        </SelectElement>
 
         {resultType === ResultType.MISSION ? (
-            <DateElement label='Start Date' value={startDate} callback={setStartDate} />
-          ) : null}
+          <DateElement label='Start Date' value={startDate} callback={setStartDate} />
+        ) : null}
 
         {resultType === ResultType.MISSION ? (
-            <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
-          ) : null}
+          <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
+        ) : null}
 
         <Grid container item justifyContent='space-between'>
-          <Button type='submit' variant='contained' color='secondary'>
+          <Button type='submit' variant='contained' >
             Refine Search
           </Button>
-          <Button onClick={handleClear} color='secondary'>
+          <Button onClick={handleClear} >
             Clear
           </Button>
         </Grid>
-
       </Grid>
     </Grid>
   );

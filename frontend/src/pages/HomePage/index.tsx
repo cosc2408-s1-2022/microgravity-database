@@ -9,7 +9,7 @@ import { Platform } from '../../types';
 function PlatformElement(props: { platform: Platform; text: string }) {
   return (
     <Grid item>
-      <Link to={`/search?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
+      <Link to={`/search/advanced?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
         <Typography sx={{ color: 'gray' }} variant='body1' display='inline'>
           {props.text}
         </Typography>
