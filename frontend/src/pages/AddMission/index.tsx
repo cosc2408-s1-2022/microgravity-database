@@ -1,4 +1,4 @@
-import { Alert, Box, Container, MenuItem, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Autocomplete, Box, Container, MenuItem, Snackbar, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -11,14 +11,17 @@ import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import moment from 'moment';
 import lodash from 'lodash';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
 
-// TODO Handle edge cases.
+// TODO Refactor into smaller sub-components.
 export default function AddMission() {
   const [platforms, setPlatforms] = useState<Platform[]>();
-  const { data: platformsData, isSuccess: isPlatformsSuccess } = useQuery<AxiosResponse<Platform[]>, AxiosError>(
-    'getAllPlatforms',
-    () => api.get('/platforms'),
-  );
+  const {
+    data: platformsData,
+    isSuccess: isPlatformsSuccess,
+    isLoading: isPlatformsLoading,
+  } = useQuery<AxiosResponse<Platform[]>, AxiosError>('getAllPlatforms', () => api.get('/platforms'));
   useEffect(() => {
     if (isPlatformsSuccess && platformsData) setPlatforms(platformsData.data);
   }, [isPlatformsSuccess, platformsData]);
@@ -27,7 +30,9 @@ export default function AddMission() {
   const [launchDate, setLaunchDate] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [platformId, setPlatformId] = useState<string>('');
+  const [platform, setPlatform] = useState<Platform | null>();
+  const startDateError = launchDate && startDate && launchDate < startDate;
+  const endDateError = startDate && endDate && endDate < startDate;
   const {
     error: missionError,
     isSuccess: isMissionSuccess,
@@ -40,13 +45,13 @@ export default function AddMission() {
       launchDate: launchDate && moment(launchDate).year().toString(),
       startDate: startDate && moment(startDate).year().toString(),
       endDate: endDate && moment(endDate).year().toString(),
-      platformId: parseInt(platformId),
+      platformId: platform?.id,
     }),
   );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    mutateMission();
+    !endDateError && mutateMission();
   };
 
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
@@ -78,6 +83,9 @@ export default function AddMission() {
             views={['year']}
             value={launchDate}
             onChange={(value) => {
+              if (missionError?.response?.data != undefined) {
+                missionError.response.data.launchDate = '';
+              }
               setLaunchDate(value);
             }}
             renderInput={(params) => (
@@ -95,6 +103,9 @@ export default function AddMission() {
             views={['year']}
             value={startDate}
             onChange={(value) => {
+              if (missionError?.response?.data != undefined) {
+                missionError.response.data.startDate = '';
+              }
               setStartDate(value);
             }}
             renderInput={(params) => (
@@ -102,8 +113,12 @@ export default function AddMission() {
                 {...params}
                 margin='normal'
                 fullWidth
-                error={isMissionError && !!missionError?.response?.data?.startDate}
-                helperText={missionError?.response?.data?.startDate}
+                error={startDateError || (isMissionError && !!missionError?.response?.data?.startDate)}
+                helperText={
+                  startDateError
+                    ? 'Start date cannot be before the launch date.'
+                    : missionError?.response?.data?.startDate
+                }
               />
             )}
           />
@@ -112,6 +127,9 @@ export default function AddMission() {
             views={['year']}
             value={endDate}
             onChange={(value) => {
+              if (missionError?.response?.data != undefined) {
+                missionError.response.data.endDate = '';
+              }
               setEndDate(value);
             }}
             renderInput={(params) => (
@@ -119,29 +137,59 @@ export default function AddMission() {
                 {...params}
                 margin='normal'
                 fullWidth
-                error={isMissionError && !!missionError?.response?.data?.endDate}
-                helperText={missionError?.response?.data?.endDate}
+                error={endDateError || (isMissionError && !!missionError?.response?.data?.endDate)}
+                helperText={
+                  endDateError ? 'End date cannot be before the start date.' : missionError?.response?.data?.endDate
+                }
               />
             )}
           />
-          <TextField
-            label='Select Platform'
-            value={platformId}
+          <Autocomplete
+            disablePortal
+            openText='Platform'
+            options={platforms || []}
+            getOptionLabel={(option) => lodash.startCase(option.name)}
             fullWidth
-            sx={{ marginTop: 2 }}
-            select
-            onChange={(event) => {
-              setPlatformId(event.target.value);
+            loading={isPlatformsLoading}
+            onChange={(_event, value) => {
+              if (missionError?.response?.data != undefined) {
+                missionError.response.data.platformId = '';
+              }
+              setPlatform(value);
             }}
-          >
-            {/* Hidden menu item to suppress warning as platforms are fetched. */}
-            <MenuItem value={''} style={{ display: 'none' }} />
-            {platforms?.map((platform) => (
-              <MenuItem key={platform.id} value={platform.id}>
-                {lodash.startCase(platform.name)}
-              </MenuItem>
-            ))}
-          </TextField>
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                margin='normal'
+                fullWidth
+                error={isMissionError && !!missionError?.response?.data?.platformId}
+                helperText={missionError?.response?.data?.platformId}
+                label='Platform'
+              />
+            )}
+            renderOption={(props, option, { inputValue }) => {
+              const startCaseValue = lodash.startCase(option.name);
+              const matches = match(startCaseValue, inputValue);
+              const parts = parse(startCaseValue, matches);
+              return (
+                <li {...props}>
+                  <div>
+                    {parts.map((part, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          fontWeight: part.highlight ? 700 : 400,
+                        }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              );
+            }}
+            noOptionsText='No such platforms found.'
+          />
           <LoadingButton
             loading={isMissionLoading}
             type='submit'

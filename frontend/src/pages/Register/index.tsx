@@ -33,13 +33,12 @@ export default function Register() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
-    () => {
-      return api.post(`/users/register`, {
+    () =>
+      api.post(`/users/register`, {
         username: username,
         password: password,
         role: UserRole.ROLE_USER,
-      });
-    },
+      }),
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

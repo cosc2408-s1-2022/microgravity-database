@@ -29,12 +29,11 @@ export default function Login() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'login',
-    () => {
-      return api.post('/users/login', {
+    () =>
+      api.post('/users/login', {
         username: username,
         password: password,
-      });
-    },
+      }),
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

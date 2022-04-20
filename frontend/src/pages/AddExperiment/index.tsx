@@ -25,7 +25,6 @@ import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 
 // TODO Refactor into smaller sub-components.
-// TODO Handle edge cases.
 export default function AddExperiment() {
   const navigate = useNavigate();
 
@@ -224,7 +223,12 @@ export default function AddExperiment() {
           getOptionLabel={(option) => option.name}
           loading={isMissionsLoading}
           fullWidth
-          onChange={(_event, value) => setMission(value)}
+          onChange={(_event, value) => {
+            if (experimentError?.response?.data != undefined) {
+              experimentError.response.data.missionId = '';
+            }
+            setMission(value);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -275,7 +279,12 @@ export default function AddExperiment() {
               getOptionLabel={(option) => option.name}
               fullWidth
               loading={isForCodesLoading}
-              onChange={(_event, value) => setForCode(value)}
+              onChange={(_event, value) => {
+                if (experimentError?.response?.data != undefined) {
+                  experimentError.response.data.forCodeId = '';
+                }
+                setForCode(value);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -307,7 +316,7 @@ export default function AddExperiment() {
                 );
               }}
               noOptionsText='No such FOR codes found.'
-            />{' '}
+            />
           </Grid>
           <Grid item xs={6}>
             <Autocomplete
@@ -317,7 +326,12 @@ export default function AddExperiment() {
               getOptionLabel={(option) => option.name}
               fullWidth
               loading={isSeoCodesLoading}
-              onChange={(_event, value) => setSeoCode(value)}
+              onChange={(_event, value) => {
+                if (experimentError?.response?.data != undefined) {
+                  experimentError.response.data.seoCodeId = '';
+                }
+                setSeoCode(value);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -410,6 +424,9 @@ export default function AddExperiment() {
                       </li>
                     );
                   }}
+                  filterOptions={(options) =>
+                    options.filter((option) => !peopleState.data.some((entry) => entry.data.personId === option.id))
+                  }
                   noOptionsText={
                     <Box display='flex' justifyContent='space-between' alignItems='center'>
                       <Typography variant='body1' flexGrow={1}>

@@ -116,11 +116,6 @@ export default function AddPerson() {
         >
           Add Person
         </LoadingButton>
-        {isError && (
-          <Typography variant='body2' color='error' sx={{ mt: 2 }}>
-            {error?.message}
-          </Typography>
-        )}
       </Box>
       <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
         <Alert severity='error' onClose={handleErrorSnackbarClose}>
