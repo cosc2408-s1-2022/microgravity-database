@@ -27,11 +27,11 @@ public class ForCode {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String name;
 
-    @OneToMany(mappedBy = "forCode", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "forCode")
     @JsonIgnore
     private List<Experiment> experiments;
 
-    @ManyToMany(mappedBy = "forCodes", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "forCodes")
     @IndexedEmbedded
     @JsonIgnore
     private List<Platform> platforms;

@@ -6,14 +6,30 @@ import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, Role } from '../../types';
 import { Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material/styles';
 import api from '../../util/api';
-import Header from "../../components/Header";
+import Header from '../../components/NavBar';
+
+const innerTheme = createTheme({
+  typography: {
+    fontFamily: 'Roboto',
+  },
+});
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordsMatchingError = password && password !== confirmPassword && 'Passwords must match.';
+  const passLengthValidation = (value: string) => {
+    const re = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$`);
+    return re.test(value);
+  };
+  const passwordRegex =
+    password &&
+    !passLengthValidation(password) &&
+    'Password has to have at least 8 characters with one special character eg. !@#$%*';
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
@@ -60,6 +76,7 @@ export default function Register() {
         <div>
           <br />
           <br />
+          <ThemeProvider theme={innerTheme}>
             <Container component='main' maxWidth='xs'>
               <Box
                 sx={{
@@ -90,21 +107,24 @@ export default function Register() {
                     </Grid>
                     <Grid item xs={12}>
                       <FormField
+                        required
                         name='password'
                         label='Password'
                         type='password'
                         autoComplete='new-password'
-                        errors={error?.response?.data}
+                        errors={
+                          passwordRegex
+                            ? {
+                                password: passwordRegex,
+                              }
+                            : undefined
+                        }
                         onChange={setPassword}
                       />
-                      <Grid item>
-                        <Typography variant='body2'>
-                          Password at least 8 characters with one special character eg. !@#$%*
-                        </Typography>
-                      </Grid>
                     </Grid>
                     <Grid item xs={12}>
                       <FormField
+                        required
                         name='confirmPassword'
                         label='Confirm Password'
                         type='password'
@@ -131,6 +151,7 @@ export default function Register() {
                 </Box>
               </Box>
             </Container>
+          </ThemeProvider>
         </div>
       </main>
     </>

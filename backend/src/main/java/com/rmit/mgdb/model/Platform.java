@@ -32,13 +32,13 @@ public class Platform {
     @JsonIgnore
     private List<Mission> missions;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "platform_for_code",
                joinColumns = @JoinColumn(name = "platform_id"),
                inverseJoinColumns = @JoinColumn(name = "for_code_id"))
     private List<ForCode> forCodes;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "platform_seo_code",
                joinColumns = @JoinColumn(name = "seo_code_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id"))

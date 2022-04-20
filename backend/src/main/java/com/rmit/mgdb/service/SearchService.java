@@ -17,10 +17,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,7 +65,7 @@ public class SearchService {
 
         long totalHitCount = result.total().hitCount();
         return new SearchResponse<>(
-                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page, size, result.hits());
+                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 
     /**
@@ -77,7 +77,7 @@ public class SearchService {
 
         // Extract necessary params.
         String stringParam = extractStringParam(params, SearchParam.STRING.string, "");
-        int page = extractIntegerParam(params, SearchParam.PAGE.string, 0);
+        int page = extractIntegerParam(params, SearchParam.PAGE.string, 1);
         int size = extractIntegerParam(params, SearchParam.SIZE.string, DEFAULT_PAGE_SIZE);
         String platformParam =
                 extractStringParam(params, SearchParam.PLATFORM.string, PlatformType.SPACE_STATION.string);
@@ -87,8 +87,11 @@ public class SearchService {
                                                                                            ResultType.EXPERIMENT.string)))
                                            .findFirst()
                                            .orElse(ResultType.EXPERIMENT);
-        Optional<Date> startDate = extractDateParam(params, SearchParam.START_DATE.string);
-        Optional<Date> endDate = extractDateParam(params, SearchParam.END_DATE.string);
+        Optional<LocalDate> startDate = extractDateParam(params, SearchParam.START_DATE.string);
+        Optional<LocalDate> endDate = extractDateParam(params, SearchParam.END_DATE.string);
+
+        // Hibernate Search uses zero-based index.
+        page--;
 
         // Hibernate Search predicate creation.
         SearchPredicate searchPredicate = searchSession.scope(resultTypeParam.associatedClass)
@@ -135,7 +138,7 @@ public class SearchService {
 
         long totalHitCount = result.total().hitCount();
         return new SearchResponse<>(
-                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page, size, result.hits());
+                totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 
     /**
@@ -194,14 +197,15 @@ public class SearchService {
     /**
      * Utility method to extract an integer type search param.
      */
-    private Optional<Date> extractDateParam(Map<String, String> params, String paramKey) {
+    private Optional<LocalDate> extractDateParam(Map<String, String> params, String paramKey) {
         String paramValue = params.get(paramKey);
         if (paramValue == null || paramValue.isEmpty()) {
             return Optional.empty();
         } else {
             try {
-                return Optional.of(new SimpleDateFormat("yyyy").parse(paramValue));
-            } catch (ParseException e) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+                return Optional.of(LocalDate.parse(paramValue, formatter));
+            } catch (DateTimeParseException e) {
                 throw new InvalidSearchParamException(
                         String.format("Invalid value for date param \"%s\"", paramValue));
             }

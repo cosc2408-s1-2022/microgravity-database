@@ -42,27 +42,27 @@ public class Experiment {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String experimentPublications;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded
     private Mission mission;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "platform_id")
     @IndexedEmbedded
     private Platform platform;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "for_code_id")
     @IndexedEmbedded
     private ForCode forCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "seo_code_id")
     @IndexedEmbedded
     private SeoCode seoCode;
 
-    @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "experiment")
     @IndexedEmbedded
     private List<ExperimentPerson> people;
 

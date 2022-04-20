@@ -20,18 +20,18 @@ public class ExperimentPerson {
     @DocumentId(identifierBridge = @IdentifierBridgeRef(type = ExperimentPersonKeyIdentifierBridge.class))
     private ExperimentPersonKey id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     @IndexedEmbedded
     private Role role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "experiment_id")
     @MapsId("experimentId")
     @JsonIgnore
     private Experiment experiment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "person_id")
     @MapsId("personId")
     @IndexedEmbedded
