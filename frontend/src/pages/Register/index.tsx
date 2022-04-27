@@ -47,7 +47,9 @@ export default function Register() {
   };
 
   if (isSuccess && data) {
-    console.log(data?.data.jwt);
+    // Add token to localstorage for persistence
+    const authToken: string = data?.data.jwt;
+    localStorage.setItem('authToken', authToken);
     return <Navigate to='/home' />;
   }
 

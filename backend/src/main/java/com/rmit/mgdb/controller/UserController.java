@@ -13,11 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -84,6 +83,15 @@ public class UserController {
                 userDetailsService.loadUserByUsername(authenticationRequest.getUsername()));
         return new ResponseEntity<>(new AuthenticationResponse(
                 userService.getUserByUsername(authenticationRequest.getUsername()), jwt), HttpStatus.OK);
+    }
+
+    /**
+     * Get the currently authenticated user or the user from the request's authentication token.
+     */
+    @GetMapping("/authenticated")
+    public ResponseEntity<?> getAuthenticated() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
     }
 
 }
