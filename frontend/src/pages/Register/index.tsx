@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mu
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
-import { AuthenticationResponse, UserRole } from '../../types';
+import { AuthenticationResponse, UserRole } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
@@ -33,12 +33,13 @@ export default function Register() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
-    () =>
-      api.post(`/users/register`, {
+    () => {
+      return api.post(`/users/register`, {
         username: username,
         password: password,
-        role: UserRole.ROLE_USER,
-      }),
+        role: Role.ROLE_USER,
+      });
+    },
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,10 +48,7 @@ export default function Register() {
   };
 
   if (isSuccess && data) {
-    // Add token to localstorage for persistence
-    const authToken: string = data?.data.jwt;
-    localStorage.setItem('authToken', authToken);
-    return <Navigate to='/home' />;
+    return <Navigate to='/login' />;
   }
 
   return (

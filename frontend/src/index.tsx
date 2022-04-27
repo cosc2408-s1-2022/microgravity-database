@@ -1,3 +1,4 @@
+import React from 'react';
 import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
@@ -10,8 +11,11 @@ import * as serviceWorker from './serviceWorker';
 import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
-import SearchResults from './pages/SearchResults';
+import BasicSearchPage from './pages/BasicSearch';
 import ViewExperiment from './pages/ViewExperiment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import AdvancedSearchPage from './pages/AdvancedSearch';
 import AdvancedSearch from './pages/AdvancedSearch';
 import AddPerson from './pages/AddPerson';
 import AddMission from './pages/AddMission';
@@ -30,18 +34,20 @@ root.render(
       <ThemeProvider theme={theme}>
         <CssBaseline>
           <BrowserRouter>
-            <Routes>
-              <Route path='/' element={<Navigate to='/home' />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/searchResults' element={<SearchResults />} />
-              <Route path='/experiment/:id' element={<ViewExperiment />} />
-              <Route path='/advancedSearch' element={<AdvancedSearch />} />
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <Routes>
+                <Route path='/' element={<Navigate to='/home' />} />
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/search' element={<BasicSearchPage />} />
+                <Route path='/search/advanced' element={<AdvancedSearchPage />} />
+                <Route path='/experiment/:id' element={<ViewExperiment />} />
               <Route path='/addPerson' element={<AddPerson />} />
               <Route path='/addMission' element={<AddMission />} />
               <Route path='/addExperiment' element={<AddExperiment />} />
             </Routes>
+            </LocalizationProvider>
           </BrowserRouter>
         </CssBaseline>
       </ThemeProvider>

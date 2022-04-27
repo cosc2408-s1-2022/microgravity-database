@@ -6,7 +6,9 @@ import { createTheme } from '@mui/material/styles'; // TODO Create a custom them
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000',
+      main: '#F7F5F8',
+      light: '#FAFAFA',
+      dark: '#000000',
     },
     secondary: {
       main: '#f44336',
@@ -21,17 +23,37 @@ const theme = createTheme({
       primary: '#000000',
     },
     success: {
-      // TODO Change Color ???
       main: '#4B878BFF',
     },
   },
-
   typography: {
     fontSize: 16,
+    fontFamily: 'Roboto',
     body2: {
       fontWeight: 300,
     },
-    fontFamily: 'Roboto Slab',
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#FFFFFF',
+          backgroundColor: '#f44336',
+        },
+        text: {
+          color: '#f44336',
+          background: 'transparent',
+          padding: 0,
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: 'none',
+        },
+      },
+    },
   },
 });
 export default theme;

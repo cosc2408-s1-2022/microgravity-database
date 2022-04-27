@@ -2,26 +2,11 @@ import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { AuthenticationResponse } from '../../types';
+import { AuthenticationResponse } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import api from '../../util/api';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
-import NavBar from '../../components/NavBar';
-
-createTheme({
-  palette: {
-    primary: {
-      main: '#fffff',
-    },
-  },
-});
-const innerTheme = createTheme({
-  typography: {
-    fontFamily: 'Roboto',
-  },
-});
+import Header from '../../components/NavBar';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -29,11 +14,12 @@ export default function Login() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'login',
-    () =>
-      api.post('/users/login', {
+    () => {
+      return api.post('/users/login', {
         username: username,
         password: password,
-      }),
+      });
+    },
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -51,7 +37,7 @@ export default function Login() {
   return (
     <>
       <CssBaseline />
-      <NavBar />
+      <Header />
       <main>
         <video
           autoPlay
@@ -71,25 +57,24 @@ export default function Login() {
           <source src={'/space.mp4'} type='video/mp4' />
         </video>
         <div>
-          <ThemeProvider theme={innerTheme}>
-            <Container maxWidth='sm'>
-              <Box
-                sx={{
-                  marginTop: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  height: 'auto',
-                  width: 'auto',
-                  bgcolor: '#FAEBEFFF',
-                  p: 3,
-                  borderRadius: '16px',
-                }}
-              >
-                <Typography variant='h3' align='center' color='Text-primary' gutterBottom>
-                  Welcome to RMIT Microgravity Database
-                </Typography>
-              </Box>
+          <Container maxWidth='sm'>
+            <Box
+              sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                height: 'auto',
+                width: 'auto',
+                bgcolor: '#FAEBEFFF',
+                p: 3,
+                borderRadius: '16px',
+              }}
+            >
+              <Typography variant='h3' align='center' color='Text-primary' gutterBottom>
+                Welcome to RMIT Microgravity Database
+              </Typography>
+            </Box>
 
               <CssBaseline />
               <Box
@@ -124,37 +109,36 @@ export default function Login() {
                     name='password'
                     label='Password'
                     type='password'
-                    autoComplete='current-password'
-                    errors={error?.response?.data}
-                    onChange={setPassword}
-                  />
-                  <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
-                  <Button
-                    color='error'
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    sx={{ mt: 3, mb: 2, '&.MuiButton-root': { color: 'white' } }}
-                  >
-                    Sign In
-                  </Button>
-                  <Grid container>
-                    <Grid item xs>
-                      {/*TODO forgot password ?*/}
-                      <Link href='#' variant='body2'>
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Link href={'/register'} variant='body2'>
-                        {"Don't have an account? Register Now"}
-                      </Link>
-                    </Grid>
+                  autoComplete='current-password'
+                  errors={error?.response?.data}
+                  onChange={setPassword}
+                />
+                <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+                <Button
+                  color='error'
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2, '&.MuiButton-root': { color: 'white' } }}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    {/*TODO forgot password ?*/}
+                    <Link href='#' variant='body2'>
+                      Forgot password?
+                    </Link>
                   </Grid>
-                </Box>
+                  <Grid item>
+                    <Link href={'/register'} variant='body2'>
+                      {"Don't have an account? Register Now"}
+                    </Link>
+                  </Grid>
+                </Grid>
               </Box>
-            </Container>
-          </ThemeProvider>
+            </Box>
+          </Container>
         </div>
       </main>
     </>

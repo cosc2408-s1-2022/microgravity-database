@@ -1,11 +1,10 @@
-insert into dev.platform_for_code (platform_id, for_code_id)
-values  (1, 2),
-        (1, 6),
-        (2, 2),
-        (2, 7),
-        (3, 5),
-        (3, 2),
-        (4, 2),
-        (4, 2),
-        (5, 6),
-        (6, 4);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (1, 2);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (1, 6);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (2, 2);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (2, 7);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (3, 5);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (3, 2);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (4, 2);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (4, 2);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (5, 6);
+INSERT INTO dev.platform_for_code (platform_id, for_code_id) VALUES (6, 4);
