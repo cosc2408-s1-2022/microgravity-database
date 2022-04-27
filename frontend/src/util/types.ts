@@ -56,6 +56,7 @@ export type Experiment = {
   title?: string;
   experimentAim: string;
   experimentObjective: string;
+  experimentPublications: string;
   platform: string;
   leadInstitution: string;
   principalInvestigator: string;
@@ -119,6 +120,7 @@ export type SearchState = {
   platform?: SearchField;
   startDate?: SearchField;
   endDate?: SearchField;
+  page?: number;
 };
 
 export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'onChange'> & {
