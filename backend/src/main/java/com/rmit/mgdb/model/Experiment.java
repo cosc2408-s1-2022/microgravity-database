@@ -48,6 +48,8 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentPublications;
 
+    private boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded

@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
+
 /**
  * Service layer for the {@link User} JPA entity.
  */
