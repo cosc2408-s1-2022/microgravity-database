@@ -10,17 +10,17 @@ import {
   Platform,
   ResultType,
   SearchResponse,
-  SearchState
+  SearchState,
 } from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
 import { platform } from 'os';
 import ExperimentResult from '../../components/Results/ExperimentResult';
-import MissionResult from "../../components/Results/MissionResult";
+import MissionResult from '../../components/Results/MissionResult';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
@@ -33,7 +33,6 @@ export default function AdvancedSearchPage() {
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
-
     const isValidKey = key === 'string' || key === 'startDate' || key === 'endDate';
     const isValidPlatform = key === 'platform' && isPlatform(value);
     const isValidResultType = key === 'resultType' && isResultType(value);
@@ -43,15 +42,20 @@ export default function AdvancedSearchPage() {
     }
   });
 
-  const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
-    return api.get('/search/advanced', {
-      params: searchState,
-    });
-  });
+  const { data, isLoading, refetch } = useQuery<AxiosResponse<SearchResponse>>(
+    ['search', searchState],
+    ({ queryKey }) => {
+      const [, searchState] = queryKey;
+      return api.get('/search/advanced', {
+        params: searchState,
+      });
+    },
+    { enabled: false },
+  );
 
   useEffect(() => {
-    mutate();
-  }, [location]);
+    refetch();
+  }, [refetch, location.search]);
 
   let resultsElement: ReactNode = null;
   if (isLoading) {
@@ -79,14 +83,14 @@ export default function AdvancedSearchPage() {
       results = data.data.results as Mission[];
       resultsElement = results.map((item: Mission, index) => {
         return (
-            <MissionResult
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                startDate={item.startDateString}
-                endDate={item.endDateString}
-                bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
-            />
+          <MissionResult
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            startDate={item.startDateString}
+            endDate={item.endDateString}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
         );
       });
     }
