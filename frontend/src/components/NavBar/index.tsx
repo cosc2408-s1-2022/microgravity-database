@@ -2,10 +2,9 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Logo from '../../assets/RMIT-LOGO-BLACK.png';
-import { Box, Button, Grid, Link } from '@mui/material';
+import Logo from '../../logo_no_text.svg';
+import { Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Theme from '../../theme';
 import PrimarySearch from '../PrimarySearch';
 import { UserAuth } from '../../util/types';
 
@@ -50,19 +49,19 @@ export default function NavBar(props: { hasSearch?: boolean }) {
             <Grid item component={Link} href={'/home'}>
               <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
             </Grid>
-            <Grid item component={Link} href={'/home'} >
-              <Typography variant='h6' mx='15px' >
+            <Grid item component={Link} href={'/home'}>
+              <Typography variant='h6' mx='15px'>
                 Microgravity Database
               </Typography>
             </Grid>
             {/* Search elements*/}
-            {(props.hasSearch?? true) ? (
-                <Grid item>
-                  <PrimarySearch />
-                </Grid>
+            {props.hasSearch ?? true ? (
+              <Grid item>
+                <PrimarySearch />
+              </Grid>
             ) : null}
             <Grid item>
-              <Button component={Link} href='/search/advanced' sx={{padding: 0}}>
+              <Button component={Link} href='/search/advanced' sx={{ padding: 0 }}>
                 Advanced Search
               </Button>
             </Grid>
@@ -73,7 +72,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
             item
             direction='row-reverse'
             md={1}
-            columnSpacing={10}
+            columnSpacing={3}
             wrap='nowrap'
             justifyContent='space-between'
           >

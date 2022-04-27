@@ -6,9 +6,9 @@ import React, { ReactNode, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExperimentResult from '../../components/Results/Experiment';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import NavBar from '../../components/NavBar';
+import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
 
 export default function BasicSearchPage() {
   const location = useLocation();

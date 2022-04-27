@@ -2,7 +2,7 @@ import * as React from 'react';
 import NavBar from '../../components/NavBar';
 import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Platform } from '../../util/types';
 
@@ -25,7 +25,7 @@ export default function HomePage() {
     <Grid container direction='column' height='100vh' wrap='nowrap'>
       <NavBar hasSearch={false} />
       <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
-        <Grid item md={4}>
+        <Grid item md={4} m={3}>
           <Logo />
         </Grid>
         <PrimarySearch />
