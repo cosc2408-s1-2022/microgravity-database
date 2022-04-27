@@ -1,5 +1,5 @@
 import { Grid, GridProps, Link, Typography } from '@mui/material';
-import { SeoCode } from '../../../types';
+import { SeoCode } from '../../../util/types';
 
 export default function SeoCodeResult(props: GridProps & SeoCode) {
   const url = `/forCode/${props.id}`;

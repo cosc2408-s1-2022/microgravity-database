@@ -4,7 +4,7 @@ import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
 import { Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Platform } from '../../types';
+import { Platform } from '../../util/types';
 
 function PlatformElement(props: { platform: Platform; text: string }) {
   return (
@@ -26,7 +26,7 @@ export default function HomePage() {
         <Grid item md={4}>
           <Logo />
         </Grid>
-        <PrimarySearch mt='35px' />
+        <PrimarySearch />
         <Grid container item justifyContent='center' spacing={2} mt={1}>
           <PlatformElement platform={Platform.SPACE_STATION} text='Space Station' />
           <PlatformElement platform={Platform.SPACE_SHUTTLE} text='Space Shuttle' />

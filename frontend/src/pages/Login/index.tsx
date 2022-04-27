@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { AuthenticationResponse } from '../../types';
+import { AuthenticationResponse } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import api from '../../util/api';

@@ -1,5 +1,5 @@
 import { Grid, GridProps, Link, Typography } from '@mui/material';
-import { ForCode } from '../../../types';
+import { ForCode } from '../../../util/types';
 
 export default function ForCodeResult(props: GridProps & ForCode) {
   const url = `/forCode/${props.id}`;

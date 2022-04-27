@@ -1,6 +1,6 @@
 import NavBar from '../../components/NavBar';
 import React from 'react';
-import { Experiment } from '../../types';
+import { Experiment } from '../../util/types';
 import { Container, Paper, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 

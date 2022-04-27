@@ -1,12 +1,12 @@
 import { useMutation } from 'react-query';
 import { AxiosResponse } from 'axios';
-import { Experiment, ResultType, SearchResponse } from '../../types';
+import { Experiment, SearchResponse } from '../../util/types';
 import api from '../../util/api';
 import React, { ReactNode, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExperimentResult from '../../components/Results/ExperimentResult';
+import ExperimentResult from '../../components/Results/Experiment';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import NavBar from '../../components/NavBar';
 
@@ -25,7 +25,7 @@ export default function BasicSearchPage() {
     mutate();
   }, [location, mutate]);
 
-  let resultsElement: ReactNode = null;
+  let resultsElement: ReactNode;
   if (isLoading) {
     resultsElement = (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>

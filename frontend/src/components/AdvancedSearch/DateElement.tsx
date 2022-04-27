@@ -1,5 +1,5 @@
 import { Grid, GridProps, TextField } from '@mui/material';
-import { SearchField } from '../../types';
+import { SearchField } from '../../util/types';
 import React, { useEffect } from 'react';
 import moment, { Moment } from 'moment';
 import { DatePicker } from '@mui/x-date-pickers';

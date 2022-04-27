@@ -6,9 +6,10 @@ import Logo from '../../logo_no_text.svg';
 import { Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PrimarySearch from '../PrimarySearch';
+import { UserAuth } from '../../util/types';
 
 export default function NavBar(props: { hasSearch?: boolean }) {
-  const authToken: string | null = localStorage.getItem('authToken');
+  const authToken: UserAuth = localStorage.getItem('authToken');
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
               </Typography>
             </Grid>
             {/* Search elements*/}
-            {(props.hasSearch?? true) ? (
+            {props.hasSearch ?? true ? (
               <Grid item>
                 <PrimarySearch />
               </Grid>

@@ -1,9 +1,7 @@
 import { Grid, GridProps, Link, Typography } from '@mui/material';
-import { Mission, Person } from '../../types';
+import { ExperimentResultsProps } from '../../../util/types';
 
-export default function ExperimentResult(
-  props: GridProps & { id: string | undefined; objective: string | undefined; people: Person[]; mission: Mission },
-) {
+export default function ExperimentResult(props: GridProps & ExperimentResultsProps) {
   const url = `/experiment/${props.id}`;
   return (
     <Grid container item component={Link} href={url} bgcolor={props.bgcolor} padding={3} alignItems='baseline'>

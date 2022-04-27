@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mu
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
-import { AuthenticationResponse, Role } from '../../types';
+import { AuthenticationResponse, Role } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';

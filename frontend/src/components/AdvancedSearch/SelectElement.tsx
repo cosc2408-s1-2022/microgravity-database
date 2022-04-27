@@ -1,6 +1,6 @@
 import FormField from '../FormField';
 import { Grid, GridProps } from '@mui/material';
-import { SearchField } from '../../types';
+import { SearchField } from '../../util/types';
 import React, { useEffect } from 'react';
 
 export default function SelectElement(
