@@ -42,6 +42,7 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
     handlePlatformChange(Platform.SPACE_STATION);
     setStartDate('');
     setEndDate('');
+    navigate(`/search/advanced`);
   };
 
   return (
@@ -54,6 +55,8 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
         <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
           <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
           <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
+          <MenuItem value={ResultType.FOR_CODE}>FOR Code</MenuItem>
+          <MenuItem value={ResultType.SEO_CODE}>SEO Code</MenuItem>
         </SelectElement>
 
         <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>

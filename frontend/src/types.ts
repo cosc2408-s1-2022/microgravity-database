@@ -24,6 +24,8 @@ export enum Platform {
 export enum ResultType {
   EXPERIMENT = 'experiment',
   MISSION = 'mission',
+  FOR_CODE = 'forCode',
+  SEO_CODE = 'seoCode',
 }
 
 export const isResultType = (resultType: string | undefined) => {
@@ -72,7 +74,7 @@ export type Mission = {
 };
 
 export type Code = {
-  id: number;
+  id: string;
   code: string;
   name: string;
 };

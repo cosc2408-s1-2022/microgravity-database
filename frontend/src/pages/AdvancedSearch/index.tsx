@@ -4,6 +4,7 @@ import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Experiment,
+  ForCode,
   isPlatform,
   isResultType,
   Mission,
@@ -11,24 +12,27 @@ import {
   ResultType,
   SearchResponse,
   SearchState,
+  SeoCode,
 } from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
-import { platform } from 'os';
-import ExperimentResult from '../../components/Results/ExperimentResult';
-import MissionResult from '../../components/Results/MissionResult';
+import ExperimentResult from '../../components/Results/Experiment';
+import MissionResult from '../../components/Results/Mission';
+import SeoCodeResult from '../../components/Results/SeoCode';
+import ForCodeResult from '../../components/Results/ForCode';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
+  // TODO Handling Pagination @Matt
   const [page, setPage] = useState(1);
 
   const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION };
   const params = new URLSearchParams(location.search);
-  let results: Experiment[] | Mission[];
+  let results: Experiment[] | Mission[] | ForCode[];
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
@@ -93,6 +97,32 @@ export default function AdvancedSearchPage() {
           />
         );
       });
+    } else if (searchState.resultType === ResultType.FOR_CODE) {
+      results = data.data.results as unknown as ForCode[];
+      resultsElement = results.map((item: ForCode, index) => {
+        return (
+          <ForCodeResult
+            key={item.id}
+            id={item.id}
+            code={item.code}
+            name={item.name}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
+        );
+      });
+    } else if (searchState.resultType === ResultType.SEO_CODE) {
+      results = data.data.results as unknown as SeoCode[];
+      resultsElement = results.map((item: ForCode, index) => {
+        return (
+          <SeoCodeResult
+            key={item.id}
+            id={item.id}
+            code={item.code}
+            name={item.name}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
+        );
+      });
     }
   } else {
     resultsElement = (
@@ -103,6 +133,7 @@ export default function AdvancedSearchPage() {
     );
   }
 
+  // TODO Handling Pagination @Matt
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
