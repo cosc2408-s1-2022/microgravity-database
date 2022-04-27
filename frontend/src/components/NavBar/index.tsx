@@ -28,10 +28,14 @@ export default function NavBar(props: { hasSearch?: boolean }) {
         },
   };
 
-  const authElement = <Button onClick={authElementProps.onClick}>{authElementProps.text}</Button>;
+  const authElement = (
+    <Button variant='contained' onClick={authElementProps.onClick}>
+      {authElementProps.text}
+    </Button>
+  );
 
   const registerElement = authToken ? null : (
-    <Button component={Link} href='/register'>
+    <Button variant='contained' component={Link} href='/register'>
       Register
     </Button>
   );
@@ -58,7 +62,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
               </Grid>
             ) : null}
             <Grid item>
-              <Button component={Link} href='/search/advanced'>
+              <Button component={Link} href='/search/advanced' sx={{ padding: 0 }}>
                 Advanced Search
               </Button>
             </Grid>
@@ -69,7 +73,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
             item
             direction='row-reverse'
             md={1}
-            columnSpacing={5}
+            columnSpacing={3}
             wrap='nowrap'
             justifyContent='space-between'
           >

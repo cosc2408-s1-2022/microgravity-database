@@ -2,18 +2,20 @@ import * as React from 'react';
 import NavBar from '../../components/NavBar';
 import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Platforms } from '../../util/types';
 
 function PlatformElement(props: { platform: Platforms; text: string }) {
   return (
     <Grid item>
-      <Link to={`/search/advanced?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
-        <Typography sx={{ color: 'gray' }} variant='body1' display='inline'>
-          {props.text}
-        </Typography>
-      </Link>
+      <Button variant='contained'>
+        <Link to={`/search/advanced?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
+          <Typography sx={{ color: 'white' }} variant='body1' display='inline'>
+            {props.text}
+          </Typography>
+        </Link>
+      </Button>
     </Grid>
   );
 }
@@ -23,7 +25,7 @@ export default function HomePage() {
     <Grid container direction='column' height='100vh' wrap='nowrap'>
       <NavBar hasSearch={false} />
       <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
-        <Grid item md={4}>
+        <Grid item md={4} m={3}>
           <Logo />
         </Grid>
         <PrimarySearch />
