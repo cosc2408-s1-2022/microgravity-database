@@ -10,6 +10,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class Mission {
 
     @ManyToOne
     @IndexedEmbedded
-    @JsonIgnore
+    @NotNull
     private Platform platform;
 
     @PrePersist

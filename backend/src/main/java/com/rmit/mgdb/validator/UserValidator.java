@@ -1,6 +1,7 @@
 package com.rmit.mgdb.validator;
 
 import com.rmit.mgdb.model.User;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -14,7 +15,7 @@ public class UserValidator implements Validator {
     public static final int MINIMUM_PASSWORD_LENGTH = 6;
 
     @Override
-    public boolean supports(Class<?> aClass) {
+    public boolean supports(@NonNull Class<?> aClass) {
         return User.class.equals(aClass);
     }
 
@@ -22,7 +23,7 @@ public class UserValidator implements Validator {
      * Validates an {@link User} object.
      */
     @Override
-    public void validate(Object object, Errors errors) {
+    public void validate(@NonNull Object object, @NonNull Errors errors) {
         User user = (User) object;
 
         // Below are a few simple validations. Could always add/remove as necessary.

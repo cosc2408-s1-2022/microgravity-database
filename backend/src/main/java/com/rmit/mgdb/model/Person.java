@@ -7,6 +7,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextFi
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -21,9 +22,11 @@ public class Person {
     private Long id;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @NotBlank(message = "First name cannot be blank.")
     private String firstName;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @NotBlank(message = "Family name cannot be blank.")
     private String familyName;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")

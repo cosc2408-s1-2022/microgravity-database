@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/for-codes")
+@RequestMapping("/api/forCodes")
 public class ForCodeController {
 
     private final ForCodeService forCodeService;
@@ -20,9 +20,9 @@ public class ForCodeController {
         this.forCodeService = forCodeService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ForCode> getAll() {
-        return forCodeService.getAllForCode();
+        return forCodeService.getAllForCodes();
     }
 
 }

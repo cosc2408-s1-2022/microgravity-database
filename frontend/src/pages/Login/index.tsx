@@ -29,12 +29,11 @@ export default function Login() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'login',
-    () => {
-      return api.post('/users/login', {
+    () =>
+      api.post('/users/login', {
         username: username,
         password: password,
-      });
-    },
+      }),
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +68,7 @@ export default function Login() {
             zIndex: '-1',
           }}
         >
-          <source src='/space.mp4' type='video/mp4' />
+          <source src={'/space.mp4'} type='video/mp4' />
         </video>
         <div>
           <ThemeProvider theme={innerTheme}>
@@ -112,10 +111,7 @@ export default function Login() {
                 </Typography>
                 <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                   <FormField
-                    margin='normal'
                     required
-                    fullWidth
-                    id='Username'
                     label='Username'
                     name='username'
                     autoComplete='username'
@@ -124,13 +120,10 @@ export default function Login() {
                     onChange={setUsername}
                   />
                   <FormField
-                    margin='normal'
                     required
-                    fullWidth
                     name='password'
                     label='Password'
                     type='password'
-                    id='password'
                     autoComplete='current-password'
                     errors={error?.response?.data}
                     onChange={setPassword}

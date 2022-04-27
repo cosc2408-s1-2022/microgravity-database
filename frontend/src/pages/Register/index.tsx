@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mu
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
-import { AuthenticationResponse, Role } from '../../types';
+import { AuthenticationResponse, UserRole } from '../../types';
 import { Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
@@ -33,13 +33,12 @@ export default function Register() {
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
-    () => {
-      return api.post(`/users/register`, {
+    () =>
+      api.post(`/users/register`, {
         username: username,
         password: password,
-        role: Role.ROLE_USER,
-      });
-    },
+        role: UserRole.ROLE_USER,
+      }),
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,7 +47,9 @@ export default function Register() {
   };
 
   if (isSuccess && data) {
-    console.log(data?.data.jwt);
+    // Add token to localstorage for persistence
+    const authToken: string = data?.data.jwt;
+    localStorage.setItem('authToken', authToken);
     return <Navigate to='/home' />;
   }
 
@@ -72,7 +73,7 @@ export default function Register() {
             zIndex: '-1',
           }}
         >
-          <source src='/space.mp4' type='video/mp4' />
+          <source src={'/space.mp4'} type='video/mp4' />
         </video>
         <div>
           <br />
@@ -99,6 +100,7 @@ export default function Register() {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <FormField
+                        required
                         name='username'
                         label='Username'
                         autoComplete='username'
@@ -129,7 +131,7 @@ export default function Register() {
                         name='confirmPassword'
                         label='Confirm Password'
                         type='password'
-                        autoComplete='confirm-password'
+                        autoComplete='new-password'
                         errors={
                           passwordsMatchingError
                             ? {

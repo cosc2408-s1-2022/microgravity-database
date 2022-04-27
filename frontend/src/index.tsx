@@ -1,11 +1,9 @@
-import React from 'react';
 import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
@@ -15,6 +13,9 @@ import HomePage from './pages/HomePage';
 import SearchResults from './pages/SearchResults';
 import ViewExperiment from './pages/ViewExperiment';
 import AdvancedSearch from './pages/AdvancedSearch';
+import AddPerson from './pages/AddPerson';
+import AddMission from './pages/AddMission';
+import AddExperiment from './pages/AddExperiment';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -37,12 +38,14 @@ root.render(
               <Route path='/searchResults' element={<SearchResults />} />
               <Route path='/experiment/:id' element={<ViewExperiment />} />
               <Route path='/advancedSearch' element={<AdvancedSearch />} />
+              <Route path='/addPerson' element={<AddPerson />} />
+              <Route path='/addMission' element={<AddMission />} />
+              <Route path='/addExperiment' element={<AddExperiment />} />
             </Routes>
           </BrowserRouter>
         </CssBaseline>
       </ThemeProvider>
     </Provider>
-    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
 );
 

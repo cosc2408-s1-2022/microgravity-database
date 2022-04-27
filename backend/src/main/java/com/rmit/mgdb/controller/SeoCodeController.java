@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/seo-codes")
+@RequestMapping("/api/seoCodes")
 public class SeoCodeController {
 
     private final SeoCodeService sEOsService;
@@ -20,7 +20,7 @@ public class SeoCodeController {
         this.sEOsService = sEOsService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<SeoCode> getAll() {
         return sEOsService.getAllSeoCode();
     }
