@@ -7,7 +7,7 @@ import DateElement from './DateElement';
 import moment from 'moment';
 import SelectElement from './SelectElement';
 
-export default function AdvancedSearch(props: SearchState | GridProps) {
+export default function AdvancedSearch(props: SearchState & GridProps) {
   const searchProps = props as SearchState;
   const navigate = useNavigate();
 
@@ -36,12 +36,13 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     navigate(`/search/advanced?${params.toString()}`);
   };
 
-  const handleClear = () => {
-    handleSearchStringChange(undefined);
-    handleResultTypeChange('');
-    handlePlatformChange('');
-    setStartDate(undefined);
-    setEndDate(undefined);
+  const handleReset = () => {
+    handleSearchStringChange('');
+    handleResultTypeChange(ResultType.EXPERIMENT);
+    handlePlatformChange(Platform.SPACE_STATION);
+    setStartDate('');
+    setEndDate('');
+    navigate(`/search/advanced`);
   };
 
   return (
@@ -54,6 +55,8 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
           <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
           <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
+          <MenuItem value={ResultType.FOR_CODE}>FOR Code</MenuItem>
+          <MenuItem value={ResultType.SEO_CODE}>SEO Code</MenuItem>
         </SelectElement>
 
         <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
@@ -74,12 +77,10 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         ) : null}
 
         <Grid container item justifyContent='space-between'>
-          <Button type='submit' variant='contained' >
+          <Button type='submit' variant='contained'>
             Refine Search
           </Button>
-          <Button onClick={handleClear} >
-            Clear
-          </Button>
+          <Button onClick={handleReset}>Reset</Button>
         </Grid>
       </Grid>
     </Grid>

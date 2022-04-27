@@ -24,6 +24,8 @@ export enum Platform {
 export enum ResultType {
   EXPERIMENT = 'experiment',
   MISSION = 'mission',
+  FOR_CODE = 'forCode',
+  SEO_CODE = 'seoCode',
 }
 
 export const isResultType = (resultType: string | undefined) => {
@@ -66,11 +68,13 @@ export type Mission = {
   name: string;
   launchDate: Date;
   startDate: Date;
+  endDate: Date;
+  startDateString: string;
   endDateString: string;
 };
 
 export type Code = {
-  id: number;
+  id: string;
   code: string;
   name: string;
 };
@@ -100,7 +104,7 @@ export type SearchResponse = {
   totalPages: number;
   page: number;
   size: number;
-  results: Experiment[];
+  results: Experiment[] | Mission[];
 };
 
 export type SearchField = string | undefined;

@@ -2,43 +2,64 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Experiment, isPlatform, isResultType, Platform, ResultType, SearchResponse, SearchState } from '../../types';
+import {
+  Experiment,
+  ForCode,
+  isPlatform,
+  isResultType,
+  Mission,
+  Platform,
+  ResultType,
+  SearchResponse,
+  SearchState,
+  SeoCode,
+} from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
-import { platform } from 'os';
-import ExperimentResult from '../../components/Results/ExperimentResult';
+import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
+import MissionResult from '../../components/Results/Mission/MissionResult';
+import SeoCodeResult from '../../components/Results/SeoCode';
+import ForCodeResult from '../../components/Results/ForCode';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
+  // TODO Handling Pagination @Matt
   const [page, setPage] = useState(1);
 
   const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION };
   const params = new URLSearchParams(location.search);
-  let results;
+  let results: Experiment[] | Mission[] | ForCode[];
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
-    const isValidPlatform = key === 'platform' && isPlatform(value) && searchState.resultType === ResultType.MISSION;
+    const isValidKey = key === 'string' || key === 'startDate' || key === 'endDate';
+    const isValidPlatform = key === 'platform' && isPlatform(value);
     const isValidResultType = key === 'resultType' && isResultType(value);
-    if (key === 'string' || isValidResultType || isValidPlatform) {
+
+    if (isValidKey || isValidResultType || isValidPlatform) {
       searchState[key] = value;
     }
   });
 
-  const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
-    return api.get('/search/advanced', {
-      params: params,
-    });
-  });
+  const { data, isLoading, refetch } = useQuery<AxiosResponse<SearchResponse>>(
+    ['search', searchState],
+    ({ queryKey }) => {
+      const [, searchState] = queryKey;
+      return api.get('/search/advanced', {
+        params: searchState,
+      });
+    },
+    { enabled: false },
+  );
 
   useEffect(() => {
-    mutate();
-  }, [location, mutate]);
+    refetch();
+  }, [refetch, location.search]);
 
   let resultsElement: ReactNode = null;
   if (isLoading) {
@@ -48,9 +69,8 @@ export default function AdvancedSearchPage() {
       </Box>
     );
   } else if (data && data?.data.results.length != 0) {
-    results = data.data.results;
-    console.log(results);
     if (searchState.resultType === ResultType.EXPERIMENT) {
+      results = data.data.results as Experiment[];
       resultsElement = results.map((item: Experiment, index) => {
         return (
           <ExperimentResult
@@ -59,6 +79,46 @@ export default function AdvancedSearchPage() {
             objective={item.experimentObjective}
             people={item.people}
             mission={item.mission}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
+        );
+      });
+    } else if (searchState.resultType === ResultType.MISSION) {
+      results = data.data.results as Mission[];
+      resultsElement = results.map((item: Mission, index) => {
+        return (
+          <MissionResult
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            startDate={item.startDateString}
+            endDate={item.endDateString}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
+        );
+      });
+    } else if (searchState.resultType === ResultType.FOR_CODE) {
+      results = data.data.results as unknown as ForCode[];
+      resultsElement = results.map((item: ForCode, index) => {
+        return (
+          <ForCodeResult
+            key={item.id}
+            id={item.id}
+            code={item.code}
+            name={item.name}
+            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+          />
+        );
+      });
+    } else if (searchState.resultType === ResultType.SEO_CODE) {
+      results = data.data.results as unknown as SeoCode[];
+      resultsElement = results.map((item: ForCode, index) => {
+        return (
+          <SeoCodeResult
+            key={item.id}
+            id={item.id}
+            code={item.code}
+            name={item.name}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );
@@ -73,6 +133,7 @@ export default function AdvancedSearchPage() {
     );
   }
 
+  // TODO Handling Pagination @Matt
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };

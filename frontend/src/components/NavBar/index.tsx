@@ -40,48 +40,47 @@ export default function NavBar(props: { hasSearch?: boolean }) {
   );
 
   return (
-    <Box>
-      <AppBar
-        style={{ backgroundColor: '#F7F5F8' }}
-        position='sticky'
-        sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}
-      >
-        <Toolbar>
-          <Grid container wrap='nowrap'>
-            {/* Left Nav */}
-            <Grid container item alignItems='center' alignContent='center'>
-              <Grid item component={Link} href={'/home'}>
-                <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
-              </Grid>
-              <Grid item component={Link} href={'/home'}>
-                <Typography sx={{ color: 'black' }} variant='h6' mx='15px'>
-                  Microgravity Database
-                </Typography>
-              </Grid>
-              {/* Search elements*/}
-              <Grid item>
-                <Button variant='contained' component={Link} href='/search/advanced'>
-                  Advanced Search
-                </Button>
-              </Grid>
+    <AppBar position='sticky' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
+      <Toolbar>
+        <Grid container wrap='nowrap'>
+          {/* Left nav elements */}
+          <Grid container item alignItems='center'>
+            {/*  Logo + text link*/}
+            <Grid item component={Link} href={'/home'}>
+              <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
             </Grid>
-            {/* Right nav elements */}
-            <Grid
-              container
-              // item
-              direction='row-reverse'
-              md={1}
-              alignItems='center'
-              columnSpacing={2}
-              wrap='nowrap'
-              justifyContent='space-between'
-            >
-              <Grid item>{registerElement}</Grid>
-              <Grid item>{authElement}</Grid>
+            <Grid item component={Link} href={'/home'} >
+              <Typography variant='h6' mx='15px' >
+                Microgravity Database
+              </Typography>
+            </Grid>
+            {/* Search elements*/}
+            {(props.hasSearch?? true) ? (
+                <Grid item>
+                  <PrimarySearch />
+                </Grid>
+            ) : null}
+            <Grid item>
+              <Button component={Link} href='/search/advanced' sx={{padding: 0}}>
+                Advanced Search
+              </Button>
             </Grid>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </Box>
+          {/* Right nav elements */}
+          <Grid
+            container
+            item
+            direction='row-reverse'
+            md={1}
+            columnSpacing={10}
+            wrap='nowrap'
+            justifyContent='space-between'
+          >
+            {registerElement}
+            {authElement}
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }
