@@ -2,11 +2,13 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Logo from '../../logo_no_text.svg';
-import { Button, Grid, Link } from '@mui/material';
+import Logo from '../../assets/RMIT-LOGO-BLACK.png';
+import { Box, Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Theme from '../../theme';
+import PrimarySearch from '../PrimarySearch';
 
-export default function Header() {
+export default function NavBar(props: { hasSearch?: boolean }) {
   const authToken: string | null = localStorage.getItem('authToken');
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,42 +40,48 @@ export default function Header() {
   );
 
   return (
-    <AppBar position='sticky' sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}>
-      <Toolbar>
-        <Grid container wrap='nowrap'>
-          {/* Left nav elements */}
-          <Grid container item alignItems='center'>
-            {/*  Logo + text link*/}
-            <Grid item component={Link} href={'/home'}>
-              <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
+    <Box>
+      <AppBar
+        style={{ backgroundColor: '#F7F5F8' }}
+        position='sticky'
+        sx={{ boxShadow: '0px 7px 7px rgba(0,0,0,0.07)' }}
+      >
+        <Toolbar>
+          <Grid container wrap='nowrap'>
+            {/* Left Nav */}
+            <Grid container item alignItems='center' alignContent='center'>
+              <Grid item component={Link} href={'/home'}>
+                <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
+              </Grid>
+              <Grid item component={Link} href={'/home'}>
+                <Typography sx={{ color: 'black' }} variant='h6' mx='15px'>
+                  Microgravity Database
+                </Typography>
+              </Grid>
+              {/* Search elements*/}
+              <Grid item>
+                <Button variant='contained' component={Link} href='/search/advanced'>
+                  Advanced Search
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item component={Link} href={'/home'} >
-              <Typography variant='h6' mx='15px' >
-                Microgravity Database
-              </Typography>
-            </Grid>
-            {/* Search elements*/}
-            <Grid item>
-              <Button component={Link} href='/search/advanced' sx={{padding: 0}}>
-                Advanced Search
-              </Button>
+            {/* Right nav elements */}
+            <Grid
+              container
+              // item
+              direction='row-reverse'
+              md={1}
+              alignItems='center'
+              columnSpacing={2}
+              wrap='nowrap'
+              justifyContent='space-between'
+            >
+              <Grid item>{registerElement}</Grid>
+              <Grid item>{authElement}</Grid>
             </Grid>
           </Grid>
-          {/* Right nav elements */}
-          <Grid
-            container
-            item
-            direction='row-reverse'
-            md={1}
-            columnSpacing={10}
-            wrap='nowrap'
-            justifyContent='space-between'
-          >
-            {registerElement}
-            {authElement}
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }

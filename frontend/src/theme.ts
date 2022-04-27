@@ -8,42 +8,59 @@ const theme = createTheme({
     primary: {
       main: '#F7F5F8',
       light: '#FAFAFA',
-      dark: '#000000',
+      dark: '#2368de',
     },
     secondary: {
       main: '#f44336',
+      light: 'F7F5F8',
     },
     info: {
-      main: '#81c784',
+      main: '#F7F5F8',
     },
     error: {
       main: '#f44336',
     },
   },
   typography: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Roboto',
     allVariants: {
-      color: '#000000'
-    }
+      color: '#000000',
+    },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           color: '#FFFFFF',
-          backgroundColor: '#f44336'
+          backgroundColor: '#cc0808',
         },
         text: {
           color: '#f44336',
-          background: 'transparent'
-        }
-      }
+          background: 'transparent',
+        },
+      },
     },
     MuiLink: {
       styleOverrides: {
         root: {
           textDecoration: 'none',
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          height: 70,
+          minHeight: 40,
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          height: 70,
+          minHeight: 40,
         },
       },
     },
