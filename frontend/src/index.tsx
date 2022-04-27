@@ -16,7 +16,6 @@ import ViewExperiment from './pages/ViewExperiment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import AdvancedSearchPage from './pages/AdvancedSearch';
-import AdvancedSearch from './pages/AdvancedSearch';
 import AddPerson from './pages/AddPerson';
 import AddMission from './pages/AddMission';
 import AddExperiment from './pages/AddExperiment';
@@ -43,10 +42,10 @@ root.render(
                 <Route path='/search' element={<BasicSearchPage />} />
                 <Route path='/search/advanced' element={<AdvancedSearchPage />} />
                 <Route path='/experiment/:id' element={<ViewExperiment />} />
-              <Route path='/addPerson' element={<AddPerson />} />
-              <Route path='/addMission' element={<AddMission />} />
-              <Route path='/addExperiment' element={<AddExperiment />} />
-            </Routes>
+                <Route path='/addPerson' element={<AddPerson />} />
+                <Route path='/addMission' element={<AddMission />} />
+                <Route path='/addExperiment' element={<AddExperiment />} />
+              </Routes>
             </LocalizationProvider>
           </BrowserRouter>
         </CssBaseline>

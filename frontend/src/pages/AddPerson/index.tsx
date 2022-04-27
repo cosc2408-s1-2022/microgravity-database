@@ -6,8 +6,8 @@ import { Navigate } from 'react-router-dom';
 import AuthWrapper from '../../components/AuthWrapper';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
-import { Person, UserRole } from '../../types';
 import api from '../../util/api';
+import { Person, UserRole } from '../../util/types';
 
 export default function AddPerson() {
   const [firstName, setFirstName] = useState<string>();

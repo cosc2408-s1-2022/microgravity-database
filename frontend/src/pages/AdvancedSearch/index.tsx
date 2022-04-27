@@ -2,18 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
-import {
-  Experiment,
-  ForCode,
-  isPlatform,
-  isResultType,
-  Mission,
-  Platform,
-  ResultType,
-  SearchResponse,
-  SearchState,
-  SeoCode,
-} from '../../util/types';
+
 import CircularProgress from '@mui/material/CircularProgress';
 import { useQuery } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -24,13 +13,25 @@ import ExperimentResult from '../../components/Results/Experiment';
 import MissionResult from '../../components/Results/Mission';
 import SeoCodeResult from '../../components/Results/SeoCode';
 import ForCodeResult from '../../components/Results/ForCode';
+import {
+  Experiment,
+  ForCode,
+  isPlatform,
+  isResultType,
+  Mission,
+  Platforms,
+  ResultType,
+  SearchResponse,
+  SearchState,
+  SeoCode,
+} from '../../util/types';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
   // TODO Handling Pagination @Matt
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION };
+  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION };
   const params = new URLSearchParams(location.search);
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 

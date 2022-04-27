@@ -7,6 +7,7 @@ import { Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PrimarySearch from '../PrimarySearch';
 import { UserAuth } from '../../util/types';
+import theme from '../../theme';
 
 export default function NavBar(props: { hasSearch?: boolean }) {
   const authToken: UserAuth = localStorage.getItem('authToken');
@@ -46,7 +47,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
               <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
             </Grid>
             <Grid item component={Link} href={'/home'}>
-              <Typography variant='h6' mx='15px'>
+              <Typography color={theme.palette.text.primary} variant='h6' mx='15px'>
                 Microgravity Database
               </Typography>
             </Grid>

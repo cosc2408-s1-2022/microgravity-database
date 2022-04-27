@@ -37,7 +37,7 @@ export default function Register() {
       return api.post(`/users/register`, {
         username: username,
         password: password,
-        role: Role.ROLE_USER,
+        role: UserRole.ROLE_USER,
       });
     },
   );

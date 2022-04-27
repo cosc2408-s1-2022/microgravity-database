@@ -17,13 +17,22 @@ import { useMutation, useQuery } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode, UserRole } from '../../types';
 import api from '../../util/api';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
+import {
+  Experiment,
+  ExperimentPersonRequest,
+  ForCode,
+  Mission,
+  Person,
+  Role,
+  SeoCode,
+  UserRole,
+} from '../../util/types';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {

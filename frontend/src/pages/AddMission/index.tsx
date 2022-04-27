@@ -1,11 +1,10 @@
-import { Alert, Autocomplete, Box, Container, MenuItem, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Autocomplete, Box, Container, Snackbar, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { Navigate } from 'react-router-dom';
-import { Mission, Platform, UserRole } from '../../types';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -14,6 +13,7 @@ import lodash from 'lodash';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import AuthWrapper from '../../components/AuthWrapper';
+import { Mission, Platform, UserRole } from '../../util/types';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {

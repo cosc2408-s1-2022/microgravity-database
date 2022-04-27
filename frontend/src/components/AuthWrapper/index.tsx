@@ -3,8 +3,8 @@ import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { UserRole, User } from '../../types';
 import api from '../../util/api';
+import { User, UserRole } from '../../util/types';
 
 type AuthWrapperProps = {
   children: React.ReactNode;

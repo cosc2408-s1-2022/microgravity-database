@@ -1,5 +1,5 @@
 import { Button, Grid, GridProps, MenuItem } from '@mui/material';
-import { Platform, ResultType, SearchState } from '../../util/types';
+import { Platforms, ResultType, SearchState } from '../../util/types';
 import React, { useState } from 'react';
 import FormField from '../FormField';
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +39,7 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
   const handleReset = () => {
     handleSearchStringChange('');
     handleResultTypeChange(ResultType.EXPERIMENT);
-    handlePlatformChange(Platform.SPACE_STATION);
+    handlePlatformChange(Platforms.SPACE_STATION);
     setStartDate('');
     setEndDate('');
     navigate(`/search/advanced`);
@@ -60,12 +60,12 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
         </SelectElement>
 
         <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
-          <MenuItem value={Platform.SPACE_STATION}>Space Station</MenuItem>
-          <MenuItem value={Platform.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
-          <MenuItem value={Platform.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
-          <MenuItem value={Platform.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
-          <MenuItem value={Platform.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
-          <MenuItem value={Platform.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
+          <MenuItem value={Platforms.SPACE_STATION}>Space Station</MenuItem>
+          <MenuItem value={Platforms.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
+          <MenuItem value={Platforms.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
+          <MenuItem value={Platforms.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
+          <MenuItem value={Platforms.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
+          <MenuItem value={Platforms.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
         </SelectElement>
 
         {resultType === ResultType.MISSION ? (

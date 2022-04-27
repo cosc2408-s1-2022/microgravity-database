@@ -76,39 +76,39 @@ export default function Login() {
               </Typography>
             </Box>
 
-              <CssBaseline />
-              <Box
-                sx={{
-                  marginTop: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  height: 'auto',
-                  width: 'auto',
-                  bgcolor: '#FAEBEFFF',
-                  p: 4,
-                  borderRadius: '16px',
-                }}
-              >
-                {/* <Avatar sx={{ m: 1, bgcolor: 'green' }} /> */}
-                <Typography component='h1' variant='h4'>
-                  Login
-                </Typography>
-                <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                  <FormField
-                    required
-                    label='Username'
-                    name='username'
-                    autoComplete='username'
-                    autoFocus
-                    errors={error?.response?.data}
-                    onChange={setUsername}
-                  />
-                  <FormField
-                    required
-                    name='password'
-                    label='Password'
-                    type='password'
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                height: 'auto',
+                width: 'auto',
+                bgcolor: '#FAEBEFFF',
+                p: 4,
+                borderRadius: '16px',
+              }}
+            >
+              {/* <Avatar sx={{ m: 1, bgcolor: 'green' }} /> */}
+              <Typography component='h1' variant='h4'>
+                Login
+              </Typography>
+              <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <FormField
+                  required
+                  label='Username'
+                  name='username'
+                  autoComplete='username'
+                  autoFocus
+                  errors={error?.response?.data}
+                  onChange={setUsername}
+                />
+                <FormField
+                  required
+                  name='password'
+                  label='Password'
+                  type='password'
                   autoComplete='current-password'
                   errors={error?.response?.data}
                   onChange={setPassword}
