@@ -23,7 +23,7 @@ export default function AdvancedSearchPage() {
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
-    const isValidPlatform = key === 'platform' && isPlatform(value) && searchState.resultType === ResultType.MISSION;
+    const isValidPlatform = key === 'platform' && isPlatform(value);
     const isValidResultType = key === 'resultType' && isResultType(value);
     if (key === 'string' || isValidResultType || isValidPlatform) {
       searchState[key] = value;
@@ -32,7 +32,7 @@ export default function AdvancedSearchPage() {
 
   const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
     return api.get('/search/advanced', {
-      params: params,
+      params: searchState,
     });
   });
 

@@ -7,7 +7,7 @@ import DateElement from './DateElement';
 import moment from 'moment';
 import SelectElement from './SelectElement';
 
-export default function AdvancedSearch(props: SearchState | GridProps) {
+export default function AdvancedSearch(props: SearchState & GridProps) {
   const searchProps = props as SearchState;
   const navigate = useNavigate();
 
@@ -36,10 +36,10 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
     navigate(`/search/advanced?${params.toString()}`);
   };
 
-  const handleClear = () => {
+  const handleReset = () => {
     handleSearchStringChange(undefined);
-    handleResultTypeChange('');
-    handlePlatformChange('');
+    handleResultTypeChange(ResultType.EXPERIMENT);
+    handlePlatformChange(Platform.SPACE_STATION);
     setStartDate(undefined);
     setEndDate(undefined);
   };
@@ -74,12 +74,10 @@ export default function AdvancedSearch(props: SearchState | GridProps) {
         ) : null}
 
         <Grid container item justifyContent='space-between'>
-          <Button type='submit' variant='contained' >
+          <Button type='submit' variant='contained'>
             Refine Search
           </Button>
-          <Button onClick={handleClear} >
-            Clear
-          </Button>
+          <Button onClick={handleReset}>Reset</Button>
         </Grid>
       </Grid>
     </Grid>

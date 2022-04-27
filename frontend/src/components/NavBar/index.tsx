@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import Logo from '../../logo_no_text.svg';
 import { Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import PrimarySearch from '../PrimarySearch';
 
-export default function Header() {
+export default function NavBar(props: { hasSearch?: boolean }) {
   const authToken: string | null = localStorage.getItem('authToken');
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,14 +26,10 @@ export default function Header() {
         },
   };
 
-  const authElement = (
-    <Button variant='contained' onClick={authElementProps.onClick}>
-      {authElementProps.text}
-    </Button>
-  );
+  const authElement = <Button onClick={authElementProps.onClick}>{authElementProps.text}</Button>;
 
   const registerElement = authToken ? null : (
-    <Button variant='contained' component={Link} href='/register'>
+    <Button component={Link} href='/register'>
       Register
     </Button>
   );
@@ -47,14 +44,19 @@ export default function Header() {
             <Grid item component={Link} href={'/home'}>
               <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
             </Grid>
-            <Grid item component={Link} href={'/home'} >
-              <Typography variant='h6' mx='15px' >
+            <Grid item component={Link} href={'/home'}>
+              <Typography variant='h6' mx='15px'>
                 Microgravity Database
               </Typography>
             </Grid>
             {/* Search elements*/}
+            {(props.hasSearch?? true) ? (
+              <Grid item>
+                <PrimarySearch />
+              </Grid>
+            ) : null}
             <Grid item>
-              <Button component={Link} href='/search/advanced' sx={{padding: 0}}>
+              <Button component={Link} href='/search/advanced'>
                 Advanced Search
               </Button>
             </Grid>
@@ -65,7 +67,7 @@ export default function Header() {
             item
             direction='row-reverse'
             md={1}
-            columnSpacing={10}
+            columnSpacing={5}
             wrap='nowrap'
             justifyContent='space-between'
           >

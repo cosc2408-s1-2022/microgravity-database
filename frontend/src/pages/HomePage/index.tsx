@@ -20,14 +20,14 @@ function PlatformElement(props: { platform: Platform; text: string }) {
 
 export default function HomePage() {
   return (
-    <Grid container direction='column' height='100vh'>
-      <NavBar />
+    <Grid container direction='column' height='100vh' wrap='nowrap'>
+      <NavBar hasSearch={false} />
       <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
         <Grid item md={4}>
           <Logo />
         </Grid>
-        <PrimarySearch />
-        <Grid container item justifyContent='center' spacing={2}>
+        <PrimarySearch mt='35px' />
+        <Grid container item justifyContent='center' spacing={2} mt={1}>
           <PlatformElement platform={Platform.SPACE_STATION} text='Space Station' />
           <PlatformElement platform={Platform.SPACE_SHUTTLE} text='Space Shuttle' />
           <PlatformElement platform={Platform.RETRIEVABLE_CAPSULE} text='Retrievable Capsule' />

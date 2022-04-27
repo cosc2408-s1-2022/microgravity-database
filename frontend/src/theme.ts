@@ -24,21 +24,22 @@ const theme = createTheme({
     fontSize: 18,
     fontFamily: 'Roboto',
     allVariants: {
-      color: '#000000'
-    }
+      color: '#000000',
+    },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           color: '#FFFFFF',
-          backgroundColor: '#f44336'
+          backgroundColor: '#f44336',
         },
         text: {
           color: '#f44336',
-          background: 'transparent'
-        }
-      }
+          background: 'transparent',
+          padding: 0,
+        },
+      },
     },
     MuiLink: {
       styleOverrides: {
