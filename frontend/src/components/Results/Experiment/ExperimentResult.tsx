@@ -1,8 +1,13 @@
 import { Grid, GridProps, Link, Typography } from '@mui/material';
-import { Mission, Person } from '../../../util/types';
+import { ExperimentPerson, Mission } from '../../../util/types';
 
 export default function ExperimentResult(
-  props: GridProps & { id: string | undefined; objective: string | undefined; people: Person[]; mission: Mission },
+  props: GridProps & {
+    id: string | undefined;
+    objective: string | undefined;
+    people: ExperimentPerson[];
+    mission: Mission;
+  },
 ) {
   const url = `/experiment/${props.id}`;
   return (
