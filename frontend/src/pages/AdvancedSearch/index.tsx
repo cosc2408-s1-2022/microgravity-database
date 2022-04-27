@@ -2,7 +2,16 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Experiment, isPlatform, isResultType, Platform, ResultType, SearchResponse, SearchState } from '../../types';
+import {
+  Experiment,
+  isPlatform,
+  isResultType,
+  Mission,
+  Platform,
+  ResultType,
+  SearchResponse,
+  SearchState
+} from '../../types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -11,6 +20,7 @@ import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
 import { platform } from 'os';
 import ExperimentResult from '../../components/Results/ExperimentResult';
+import MissionResult from "../../components/Results/MissionResult";
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
@@ -18,14 +28,17 @@ export default function AdvancedSearchPage() {
 
   const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION };
   const params = new URLSearchParams(location.search);
-  let results;
+  let results: Experiment[] | Mission[];
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
+
+    const isValidKey = key === 'string' || key === 'startDate' || key === 'endDate';
     const isValidPlatform = key === 'platform' && isPlatform(value);
     const isValidResultType = key === 'resultType' && isResultType(value);
-    if (key === 'string' || isValidResultType || isValidPlatform) {
+
+    if (isValidKey || isValidResultType || isValidPlatform) {
       searchState[key] = value;
     }
   });
@@ -38,7 +51,7 @@ export default function AdvancedSearchPage() {
 
   useEffect(() => {
     mutate();
-  }, [location, mutate]);
+  }, [location]);
 
   let resultsElement: ReactNode = null;
   if (isLoading) {
@@ -48,9 +61,8 @@ export default function AdvancedSearchPage() {
       </Box>
     );
   } else if (data && data?.data.results.length != 0) {
-    results = data.data.results;
-    console.log(results);
     if (searchState.resultType === ResultType.EXPERIMENT) {
+      results = data.data.results as Experiment[];
       resultsElement = results.map((item: Experiment, index) => {
         return (
           <ExperimentResult
@@ -61,6 +73,20 @@ export default function AdvancedSearchPage() {
             mission={item.mission}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
+        );
+      });
+    } else if (searchState.resultType === ResultType.MISSION) {
+      results = data.data.results as Mission[];
+      resultsElement = results.map((item: Mission, index) => {
+        return (
+            <MissionResult
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                startDate={item.startDateString}
+                endDate={item.endDateString}
+                bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
+            />
         );
       });
     }

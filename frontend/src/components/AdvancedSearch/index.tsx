@@ -37,11 +37,11 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
   };
 
   const handleReset = () => {
-    handleSearchStringChange(undefined);
+    handleSearchStringChange('');
     handleResultTypeChange(ResultType.EXPERIMENT);
     handlePlatformChange(Platform.SPACE_STATION);
-    setStartDate(undefined);
-    setEndDate(undefined);
+    setStartDate('');
+    setEndDate('');
   };
 
   return (

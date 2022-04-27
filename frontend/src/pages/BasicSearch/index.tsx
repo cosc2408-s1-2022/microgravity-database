@@ -13,7 +13,7 @@ import NavBar from '../../components/NavBar';
 export default function BasicSearchPage() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  let results;
+  let results: Experiment[];
 
   const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
     return api.get('/search', {
@@ -33,8 +33,7 @@ export default function BasicSearchPage() {
       </Box>
     );
   } else if (data && data?.data.results.length != 0) {
-    results = data.data.results;
-    console.log(results);
+    results = data.data.results as Experiment[];
     resultsElement = results.map((item: Experiment, index) => {
       return (
         <ExperimentResult

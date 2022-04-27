@@ -66,6 +66,8 @@ export type Mission = {
   name: string;
   launchDate: Date;
   startDate: Date;
+  endDate: Date;
+  startDateString: string;
   endDateString: string;
 };
 
@@ -100,7 +102,7 @@ export type SearchResponse = {
   totalPages: number;
   page: number;
   size: number;
-  results: Experiment[];
+  results: Experiment[] | Mission[];
 };
 
 export type SearchField = string | undefined;
