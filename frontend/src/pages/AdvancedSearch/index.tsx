@@ -13,7 +13,7 @@ import {
   SearchResponse,
   SearchState,
   SeoCode,
-} from '../../types';
+} from '../../util/types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useQuery } from 'react-query';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -32,7 +32,7 @@ export default function AdvancedSearchPage() {
 
   const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION };
   const params = new URLSearchParams(location.search);
-  let results: Experiment[] | Mission[] | ForCode[];
+  let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
@@ -112,7 +112,7 @@ export default function AdvancedSearchPage() {
       });
     } else if (searchState.resultType === ResultType.SEO_CODE) {
       results = data.data.results as unknown as SeoCode[];
-      resultsElement = results.map((item: ForCode, index) => {
+      resultsElement = results.map((item: SeoCode, index) => {
         return (
           <SeoCodeResult
             key={item.id}

@@ -1,5 +1,5 @@
 import { Button, Grid, GridProps, MenuItem } from '@mui/material';
-import { Platform, ResultType, SearchState } from '../../types';
+import { Platform, ResultType, SearchState } from '../../util/types';
 import React, { useState } from 'react';
 import FormField from '../FormField';
 import { useNavigate } from 'react-router-dom';

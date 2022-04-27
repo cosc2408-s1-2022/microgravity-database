@@ -7,9 +7,10 @@ import { Box, Button, Grid, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Theme from '../../theme';
 import PrimarySearch from '../PrimarySearch';
+import { UserAuth } from '../../util/types';
 
 export default function NavBar(props: { hasSearch?: boolean }) {
-  const authToken: string | null = localStorage.getItem('authToken');
+  const authToken: UserAuth = localStorage.getItem('authToken');
   const location = useLocation();
   const navigate = useNavigate();
 
