@@ -19,8 +19,11 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -147,15 +150,15 @@ public class SearchService {
     private void validateParams(Map<String, String> params) {
         for (String paramKey : params.keySet()) {
             if (!SearchParam.isValidSearchParam(paramKey)) {
-                throw new InvalidSearchParamException(String.format("Unknown search param %s.", paramKey));
+                throw new InvalidSearchParamException(String.format("Unknown search param '%s'.", paramKey));
             } else if (paramKey.equals(SearchParam.RESULT_TYPE.string)) {
                 String paramValue = params.get(paramKey);
                 if (!ResultType.isValidResultType(paramValue))
-                    throw new InvalidSearchParamException(String.format("Unknown result type %s.", paramValue));
+                    throw new InvalidSearchParamException(String.format("Unknown result type '%s'.", paramValue));
             } else if (paramKey.equals(SearchParam.PLATFORM.string)) {
                 String paramValue = params.get(paramKey);
                 if (!PlatformType.isValidPlatformType(paramValue))
-                    throw new InvalidSearchParamException(String.format("Unknown platform type %s.", paramValue));
+                    throw new InvalidSearchParamException(String.format("Unknown platform type '%s'.", paramValue));
             }
         }
     }
@@ -165,7 +168,7 @@ public class SearchService {
      */
     private String extractStringParam(Map<String, String> params, String paramKey) {
         String paramValue = Optional.ofNullable(params.get(paramKey)).orElseThrow(() -> new InvalidSearchParamException(
-                String.format("Required search param \"%s\" cannot be empty.", paramKey)));
+                String.format("Required search param '%s' cannot be empty.", paramKey)));
         return URLDecoder.decode(paramValue, StandardCharsets.UTF_8);
     }
 
@@ -189,7 +192,7 @@ public class SearchService {
                 return Integer.parseInt(paramValue);
             } catch (NumberFormatException exception) {
                 throw new InvalidSearchParamException(
-                        String.format("Non-numeric value received for search param \"%s\"", paramValue));
+                        String.format("Non-numeric value received for search param '%s'", paramValue));
             }
         }
     }
@@ -203,11 +206,15 @@ public class SearchService {
             return Optional.empty();
         } else {
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+                DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                        .appendPattern("yyyy")
+                        .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+                        .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                        .toFormatter();
                 return Optional.of(LocalDate.parse(paramValue, formatter));
             } catch (DateTimeParseException e) {
                 throw new InvalidSearchParamException(
-                        String.format("Invalid value for date param \"%s\"", paramValue));
+                        String.format("Invalid value for date param '%s'", paramValue));
             }
         }
     }
