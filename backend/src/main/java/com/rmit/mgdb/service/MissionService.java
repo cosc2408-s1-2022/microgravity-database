@@ -22,4 +22,9 @@ public class MissionService {
         return missionRepository.findAll().stream().map(MissionPayload::new).collect(Collectors.toList());
     }
 
+    public MissionPayload getById(Long id) {
+        // TODO Throw exception on not found.
+        return new MissionPayload(missionRepository.findById(id).orElseThrow());
+    }
+
 }

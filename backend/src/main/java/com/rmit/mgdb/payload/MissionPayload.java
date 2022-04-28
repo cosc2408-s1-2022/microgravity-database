@@ -19,9 +19,11 @@ public class MissionPayload {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long experimentCount;
+
+    @JsonIgnoreProperties({"forCodes", "seoCodes"})
     private Platform platform;
 
-    @JsonIgnoreProperties({"mission", "platform"})
+    @JsonIgnoreProperties({"mission", "platform", "forCode", "seoCode", "people"})
     private List<Experiment> experiments;
 
     public MissionPayload(Mission mission) {
