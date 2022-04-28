@@ -28,7 +28,7 @@ public class SeoCodeController {
 
     @GetMapping("/{id}")
     public SeoCodePayload getById(@PathVariable Long id) {
-        return seoCodeService.getById(id);
+        return seoCodeService.getSeoCodePayloadById(id);
     }
 
 }

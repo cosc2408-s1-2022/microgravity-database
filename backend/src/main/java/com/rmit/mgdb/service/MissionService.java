@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,13 +30,17 @@ public class MissionService {
         this.platformService = platformService;
     }
 
-    public List<MissionPayload> getAllMission() {
+    public List<MissionPayload> getAllMissions() {
         return missionRepository.findAll().stream().map(MissionPayload::new).collect(Collectors.toList());
     }
 
     public Mission getMissionById(Long id) {
         return missionRepository.findById(id)
                                 .orElseThrow(() -> new NotFoundException("Mission could not be found.", id));
+    }
+
+    public MissionPayload getMissionPayloadById(Long id) {
+        return new MissionPayload(getMissionById(id));
     }
 
     public Mission addMission(AddMissionRequest missionRequest) {

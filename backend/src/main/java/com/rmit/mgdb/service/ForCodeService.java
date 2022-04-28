@@ -24,14 +24,13 @@ public class ForCodeService {
         return forCodeRepository.findAll().stream().map(ForCodePayload::new).collect(Collectors.toList());
     }
 
-    public ForCodePayload getById(Long id) {
-        // TODO Throw exception on not found.
-        return new ForCodePayload(forCodeRepository.findById(id).orElseThrow());
-    }
-
     public ForCode getForCodeById(Long id) {
         return forCodeRepository.findById(id)
                                 .orElseThrow(() -> new NotFoundException("FOR code could not be found.", id));
+    }
+
+    public ForCodePayload getForCodePayloadById(Long id) {
+        return new ForCodePayload(getForCodeById(id));
     }
 
 }

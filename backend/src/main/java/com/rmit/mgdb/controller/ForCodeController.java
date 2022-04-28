@@ -28,7 +28,7 @@ public class ForCodeController {
 
     @GetMapping("/{id}")
     public ForCodePayload getById(@PathVariable Long id) {
-        return forCodeService.getById(id);
+        return forCodeService.getForCodePayloadById(id);
     }
 
 }

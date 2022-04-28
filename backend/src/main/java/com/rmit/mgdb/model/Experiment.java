@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,16 +32,20 @@ public class Experiment {
     private String leadInstitution;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
     private String experimentAim;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
     private String experimentObjective;
 
     // TODO Fields "experimentModuleDrawing" and "experimentPublications" might be collection types.
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
     private String experimentModuleDrawing;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
     private String experimentPublications;
 
     @ManyToOne

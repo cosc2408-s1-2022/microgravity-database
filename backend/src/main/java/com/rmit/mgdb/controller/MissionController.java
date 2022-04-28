@@ -1,6 +1,5 @@
 package com.rmit.mgdb.controller;
 
-import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.payload.AddMissionRequest;
 import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.service.MissionService;
@@ -10,10 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +28,7 @@ public class MissionController {
     }
 
     @GetMapping
-    public List<Mission> getAll() {
+    public List<MissionPayload> getAll() {
         return missionService.getAllMissions();
     }
 
@@ -48,7 +43,7 @@ public class MissionController {
 
     @GetMapping("/{id}")
     public MissionPayload getById(@PathVariable Long id) {
-        return missionService.getById(id);
+        return missionService.getMissionPayloadById(id);
     }
 
 }
