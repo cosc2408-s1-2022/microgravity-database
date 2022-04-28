@@ -8,7 +8,7 @@ export default function SeoCodeResult(props: GridProps & SeoCode) {
       <Grid container item direction='column' md={3} marginRight={5}>
         <Grid item>
           <Typography display={'inline'} variant='body1'>
-            Socio-Economic Objective Classification:
+            Socio-Economic Objective Classification (SEO) :
             <Typography color={'primary.dark'} variant={'body1'} display={'inline'}>
               {' '}
               {props.id}{' '}

@@ -8,7 +8,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import NavBar from '../../components/NavBar';
-import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
+import ExperimentResult from '../../components/Results/Experiment';
 
 export default function BasicSearchPage() {
   const location = useLocation();

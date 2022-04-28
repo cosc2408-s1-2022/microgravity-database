@@ -20,8 +20,8 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import api from '../../util/api';
 import { AxiosResponse } from 'axios';
 import AdvancedSearch from '../../components/AdvancedSearch';
-import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
-import MissionResult from '../../components/Results/Mission/MissionResult';
+import ExperimentResult from '../../components/Results/Experiment';
+import MissionResult from '../../components/Results/Mission';
 import SeoCodeResult from '../../components/Results/SeoCode';
 import FoRCodeResult from '../../components/Results/ForCode';
 
