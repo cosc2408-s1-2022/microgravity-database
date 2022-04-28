@@ -106,7 +106,8 @@ export default function AdvancedSearchPage() {
       resultsElement = results.map((item: ForCode, index) => {
         return (
           <FoRCodeResult
-            key={item.code}
+            key={item.id}
+            id={item.id}
             code={item.code}
             name={item.name}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
@@ -118,7 +119,8 @@ export default function AdvancedSearchPage() {
       resultsElement = results.map((item: SeoCode, index) => {
         return (
           <SeoCodeResult
-            key={item.code}
+            key={item.id}
+            id={item.id}
             code={item.code}
             name={item.name}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}

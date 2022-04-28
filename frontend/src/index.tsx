@@ -18,6 +18,7 @@ import AddMission from './pages/AddMission';
 import AddExperiment from './pages/AddExperiment';
 import ViewMission from './pages/ViewMission';
 import ViewForCode from './pages/ForCode';
+import ViewSeoCode from './pages/SeoCode';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -46,6 +47,7 @@ root.render(
               <Route path='/experiment/:id' element={<ViewExperiment />} />
               <Route path='/mission/:id' element={<ViewMission />} />
               <Route path='/forCode/:id' element={<ViewForCode />} />
+              <Route path='/seoCode/:id' element={<ViewSeoCode />} />
             </Routes>
           </LocalizationProvider>
         </BrowserRouter>

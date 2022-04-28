@@ -106,6 +106,7 @@ export type Platform = {
 };
 
 export type Code = {
+  id: string;
   code: number;
   name: string;
   experiments?: Experiment[];
@@ -116,12 +117,14 @@ export type ForCode = Code;
 export type SeoCode = Code;
 
 export type ForCodeResult = {
+  id: string;
   code: number;
   name: string;
   experiments: Experiment[];
 };
 
 export type SeoCodeResult = {
+  id: string;
   code: number;
   name: string;
   experiments: Experiment[];
