@@ -1,10 +1,11 @@
-import { Box, Card, CircularProgress, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Card, CircularProgress, Container, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import { ForCodeResult } from '../../util/types';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getForCode } from '../../util/apiCalls';
+import ExperimentPaper from '../../components/ExperimentPaper';
 
 export default function ViewForCode() {
   const id = useParams().id as unknown as string;
@@ -29,61 +30,66 @@ export default function ViewForCode() {
       ) : (
         <>
           <NavBar />
-          <Container maxWidth='md'>
-            <Paper sx={{ alignItems: 'center', justifyContent: 'center', mt: 3 }}>
-              <Grid container display='flex'>
-                <Grid item sm={12} display='flex'>
-                  <Card
-                    sx={{
-                      p: 2,
-                      m: 2,
-                      width: '100%',
-                    }}
-                  >
-                    <Box display='inline-flex' flexDirection='column' sx={{ m: 1.5 }}>
-                      <Typography variant='h6' fontWeight='bold'>
-                        Fields of Research (FoR) Classification{' '}
-                      </Typography>
-                      <Typography variant='body1'>{forCode?.code}</Typography>
-                    </Box>
-                    <Box display='inline-flex' flexDirection='column' sx={{ m: 1.5 }}>
-                      <Typography variant='h6' fontWeight='bold'>
-                        Fields of Research (FoR) Name{' '}
-                      </Typography>
-                      <Typography variant='body1'>{forCode?.name}</Typography>
-                    </Box>
-                  </Card>
-                </Grid>
-                <Grid item sm={12} display='flex'>
-                  <Card
-                    sx={{
-                      p: 2,
-                      m: 2,
-                      flexDirection: 'column',
-                      width: '100%',
-                    }}
-                  >
-                    <Box display='inline-flex' alignItems='center' flexDirection='column'>
-                      <Typography variant='h6' fontWeight='bold'>
-                        Experiments
-                      </Typography>
-                      {forCode?.experiments.map((experiment) => (
-                        <Box key={experiment.id} flexDirection='column' alignItems='left'>
-                          <Typography variant='body1'>{experiment.title}</Typography>
-                          <Typography variant='body1'>{experiment.experimentAim}</Typography>
-                          <Typography variant='body1'>{experiment.experimentObjective}</Typography>
-                          <Typography variant='body1'>{experiment.experimentPublications}</Typography>
-                          <Typography variant='body1'>{experiment.platform.name}</Typography>
-                          <Typography variant='body1'>{experiment.leadInstitution}</Typography>
-                          <Typography variant='body1'>{experiment.principalInvestigator}</Typography>
-                          <Typography variant='body1'>{experiment.toa}</Typography>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Card>
-                </Grid>
-              </Grid>
-            </Paper>
+          <Container maxWidth='md' sx={{ my: 4 }}>
+            <Card
+              elevation={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                p: 2,
+              }}
+            >
+              <Card
+                elevation={24}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  p: 2,
+                }}
+              >
+                <Typography variant='h5' fontWeight='bold'>
+                  Fields of Research (FoR) Classification{' '}
+                </Typography>
+                <Box display='inline-flex' alignItems='center'>
+                  <Typography variant='body1' sx={{ pr: 1 }}>
+                    {forCode?.code}
+                  </Typography>
+                </Box>
+                <Box display='inline-flex' alignItems='center'>
+                  <Typography variant='h6' sx={{ pr: 1 }}>
+                    Fields of Research (FoR) Name
+                  </Typography>
+                </Box>
+                <Box display='inline-flex' alignItems='center'>
+                  <Typography variant='body1' sx={{ pr: 1 }}>
+                    {forCode?.name}
+                  </Typography>
+                </Box>
+              </Card>
+              <Card
+                elevation={24}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  p: 2,
+                  mt: 2,
+                }}
+              >
+                <Box display='inline-flex' alignItems='center'>
+                  <Typography variant='h5' fontWeight='bold' sx={{ pr: 1 }}>
+                    Experiments
+                  </Typography>
+                </Box>
+                {forCode?.experiments && forCode?.experiments.length > 0 ? (
+                  forCode.experiments.map((e) => <ExperimentPaper experiment={e} key={e.id} />)
+                ) : (
+                  <Typography>None yet.</Typography>
+                )}
+              </Card>
+            </Card>
           </Container>
         </>
       )}

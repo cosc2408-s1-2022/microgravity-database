@@ -9,7 +9,7 @@ export default function ForCodeResult(props: GridProps & ForCode) {
         <Grid item>
           <Typography display={'inline'}>Fields of Research Classification (FoR) : </Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
-            {props.id}
+            {props.code}
           </Typography>
         </Grid>
       </Grid>
