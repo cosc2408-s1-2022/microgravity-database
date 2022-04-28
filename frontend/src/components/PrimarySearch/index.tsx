@@ -17,7 +17,15 @@ export default function PrimarySearch() {
   };
 
   return (
-    <Grid container item component='form' onSubmit={handleSubmit} justifyContent='center' alignItems='center'>
+    <Grid
+      container
+      item
+      component='form'
+      onSubmit={handleSubmit}
+      justifyContent='center'
+      alignItems='center'
+      wrap='nowrap'
+    >
       <Grid item md={6}>
         <FormField required id='search' label='Keyword(s)' name='searchString' value={string} onChange={setString} />
       </Grid>
