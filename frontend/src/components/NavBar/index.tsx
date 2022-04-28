@@ -60,11 +60,25 @@ export default function NavBar(props: { hasSearch?: boolean }) {
                 <PrimarySearch />
               </Grid>
             ) : null}
-            <Grid item>
-              <Button component={Link} href='/search/advanced' sx={{ padding: 0 }}>
-                Advanced Search
-              </Button>
-            </Grid>
+            {/* if windows location is /search/advanced show the back button */}
+            {location.pathname.includes('/search/advanced') ? (
+              <Grid item>
+                <Button
+                  variant='contained'
+                  onClick={() => {
+                    navigate('/home');
+                  }}
+                >
+                  Back
+                </Button>
+              </Grid>
+            ) : (
+              <Grid item>
+                <Button component={Link} href='/search/advanced' sx={{ padding: 0 }}>
+                  Advanced Search
+                </Button>
+              </Grid>
+            )}
           </Grid>
           {/* Right nav elements */}
           <Grid
