@@ -17,6 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import AdvancedSearchPage from './pages/AdvancedSearch';
 import ViewMission from './pages/ViewMission';
+import ViewForCode from './pages/ForCode';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -41,6 +42,7 @@ root.render(
                 <Route path='/search/advanced' element={<AdvancedSearchPage />} />
                 <Route path='/experiment' element={<ViewExperiment />} />
                 <Route path='/mission/:id' element={<ViewMission />} />
+                <Route path='/forCode/:id' element={<ViewForCode />} />
               </Routes>
             </LocalizationProvider>
           </BrowserRouter>

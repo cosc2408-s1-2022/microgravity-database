@@ -86,14 +86,26 @@ export type Platform = {
 };
 
 export type Code = {
-  id: string;
-  code: string;
+  code: number;
   name: string;
+  experiments?: Experiment[];
 };
 
 export type ForCode = Code;
 
 export type SeoCode = Code;
+
+export type ForCodeResult = {
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
+
+export type SeoCodeResult = {
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
 
 export type Person = {
   id: number;

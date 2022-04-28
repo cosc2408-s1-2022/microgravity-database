@@ -61,7 +61,7 @@ export default function ViewExperiment() {
                         <Typography mt={2} variant='h6' fontWeight='bold'>
                           Fields of Research classification
                         </Typography>
-                        <Typography variant='body1'>{experiment?.forCode.id}</Typography>
+                        <Typography variant='body1'>{experiment?.forCode.code}</Typography>
                         <Typography mt={2} variant='h6' fontWeight='bold'>
                           FOR Classification Name
                         </Typography>
@@ -80,7 +80,7 @@ export default function ViewExperiment() {
                         <Typography mt={2} variant='h6' fontWeight='bold'>
                           Socio-Economic Objective classification
                         </Typography>
-                        <Typography variant='body1'>{experiment?.seoCode.id}</Typography>
+                        <Typography variant='body1'>{experiment?.seoCode.code}</Typography>
                         <Typography mt={2} variant='h6' fontWeight='bold'>
                           SEO Classification Name
                         </Typography>
