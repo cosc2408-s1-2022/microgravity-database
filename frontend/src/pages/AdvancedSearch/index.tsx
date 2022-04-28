@@ -1,4 +1,4 @@
-import {Box, Grid, Pagination, Typography} from '@mui/material';
+import { Box, Grid, Pagination, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
@@ -8,7 +8,7 @@ import {
   isPlatform,
   isResultType,
   Mission,
-  Platform,
+  Platforms,
   ResultType,
   SearchResponse,
   SearchState,
@@ -23,21 +23,19 @@ import AdvancedSearch from '../../components/AdvancedSearch';
 import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
 import MissionResult from '../../components/Results/Mission/MissionResult';
 import SeoCodeResult from '../../components/Results/SeoCode';
-import ForCodeResult from '../../components/Results/ForCode';
+import FoRCodeResult from '../../components/Results/ForCode';
 
 export default function AdvancedSearchPage() {
-
   const location = useLocation();
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platform.SPACE_STATION, page: page};
+  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION, page: page };
   const params = new URLSearchParams(location.search);
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 
   // Validate URL params
   // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
-
     const isValidKey = key === 'string' || key === 'startDate' || key === 'endDate';
     const isValidPlatform = key === 'platform' && isPlatform(value);
     const isValidResultType = key === 'resultType' && isResultType(value);
@@ -107,7 +105,7 @@ export default function AdvancedSearchPage() {
       results = data.data.results as unknown as ForCode[];
       resultsElement = results.map((item: ForCode, index) => {
         return (
-          <ForCodeResult
+          <FoRCodeResult
             key={item.id}
             id={item.id}
             code={item.code}
@@ -138,7 +136,7 @@ export default function AdvancedSearchPage() {
       </Grid>
     );
   }
-  
+
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -150,13 +148,11 @@ export default function AdvancedSearchPage() {
         <AdvancedSearch {...searchState} container item md={3} />
         <Grid container item direction='column' alignItems='center'>
           {resultsElement}
-          {
-            pages > 1? (
-                <Grid item my={2}>
-                  <Pagination count={pages} onChange={handlePageChange}/>
-                </Grid>
-            ) : null
-          }
+          {pages > 1 ? (
+            <Grid item my={2}>
+              <Pagination count={pages} onChange={handlePageChange} />
+            </Grid>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>

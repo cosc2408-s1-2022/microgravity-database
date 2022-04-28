@@ -4,9 +4,9 @@ import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
 import { Button, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Platform } from '../../util/types';
+import { Platforms } from '../../util/types';
 
-function PlatformElement(props: { platform: Platform; text: string }) {
+function PlatformElement(props: { platform: Platforms; text: string }) {
   return (
     <Grid item>
       <Button variant='contained'>
@@ -30,12 +30,12 @@ export default function HomePage() {
         </Grid>
         <PrimarySearch />
         <Grid container item justifyContent='center' spacing={2} mt={1}>
-          <PlatformElement platform={Platform.SPACE_STATION} text='Space Station' />
-          <PlatformElement platform={Platform.SPACE_SHUTTLE} text='Space Shuttle' />
-          <PlatformElement platform={Platform.RETRIEVABLE_CAPSULE} text='Retrievable Capsule' />
-          <PlatformElement platform={Platform.SOUNDING_ROCKET} text='Sounding Rocket' />
-          <PlatformElement platform={Platform.PARABOLIC_FLIGHT} text='Parabolic Flight' />
-          <PlatformElement platform={Platform.GROUND_BASED_FACILITY} text='Ground Based Facility' />
+          <PlatformElement platform={Platforms.SPACE_STATION} text='Space Station' />
+          <PlatformElement platform={Platforms.SPACE_SHUTTLE} text='Space Shuttle' />
+          <PlatformElement platform={Platforms.RETRIEVABLE_CAPSULE} text='Retrievable Capsule' />
+          <PlatformElement platform={Platforms.SOUNDING_ROCKET} text='Sounding Rocket' />
+          <PlatformElement platform={Platforms.PARABOLIC_FLIGHT} text='Parabolic Flight' />
+          <PlatformElement platform={Platforms.GROUND_BASED_FACILITY} text='Ground Based Facility' />
         </Grid>
       </Grid>
     </Grid>

@@ -16,7 +16,7 @@ export enum Role {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
-export enum Platform {
+export enum Platforms {
   SPACE_STATION = 'spaceStation',
   SPACE_SHUTTLE = 'spaceShuttle',
   RETRIEVABLE_CAPSULE = 'retrievableCapsule',
@@ -37,7 +37,7 @@ export const isResultType = (resultType: string | undefined) => {
 };
 
 export const isPlatform = (platform: string | undefined) => {
-  return platform ? (Object.values(Platform) as string[]).includes(platform) : false;
+  return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
 };
 
 export type AuthenticationResponse = {
@@ -57,12 +57,12 @@ export type Experiment = {
   experimentAim: string;
   experimentObjective: string;
   experimentPublications: string;
-  platform: string;
+  platform: Platform;
   leadInstitution: string;
   principalInvestigator: string;
   toa: string;
-  forCode?: ForCode;
-  seoCode?: SeoCode;
+  forCode: ForCode;
+  seoCode: SeoCode;
   mission: Mission;
   people: Person[];
 };
@@ -76,6 +76,13 @@ export type Mission = {
   endDate: Date;
   startDateString: string;
   endDateString: string;
+};
+
+export type Platform = {
+  id: string;
+  name: string;
+  forCodes: ForCode[];
+  seoCodes: SeoCode[];
 };
 
 export type Code = {
