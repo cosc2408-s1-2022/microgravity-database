@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 @Service
@@ -37,10 +41,15 @@ public class MissionService {
         Mission mission = new Mission();
         DateFormat dateFormat = new SimpleDateFormat("yyyy");
         try {
-            mission.setLaunchDate(dateFormat.parse(missionRequest.getLaunchDate()));
-            mission.setStartDate(dateFormat.parse(missionRequest.getStartDate()));
-            mission.setEndDate(dateFormat.parse(missionRequest.getEndDate()));
-        } catch (ParseException ignored) {
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                    .appendPattern("yyyy")
+                    .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+                    .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                    .toFormatter();
+            mission.setLaunchDate(LocalDate.parse(missionRequest.getLaunchDate(), formatter));
+            mission.setStartDate(LocalDate.parse(missionRequest.getStartDate(), formatter));
+            mission.setEndDate(LocalDate.parse(missionRequest.getEndDate(), formatter));
+        } catch (DateTimeParseException ignored) {
         }
 
         mission.setPlatform(platformService.getPlatformById(missionRequest.getPlatformId()));

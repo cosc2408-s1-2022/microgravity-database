@@ -53,6 +53,7 @@ public class Mission {
     @Transient
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "launchDate")))
+    @JsonIgnore
     public String getLaunchDateString() {
         return getLocalDateStringOrEmpty(launchDate);
     }
@@ -60,6 +61,7 @@ public class Mission {
     @Transient
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "startDate")))
+    @JsonIgnore
     public String getStartDateString() {
         return getLocalDateStringOrEmpty(startDate);
     }
@@ -67,6 +69,7 @@ public class Mission {
     @Transient
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     @IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "endDate")))
+    @JsonIgnore
     public String getEndDateString() {
         return getLocalDateStringOrEmpty(endDate);
     }
@@ -82,9 +85,6 @@ public class Mission {
     }
 
     private void synchroniseFields() {
-        //        launchDateString = launchDate == null ? null : DateUtil.format(launchDate);
-        //        startDateString = startDate == null ? null : DateUtil.format(startDate);
-        //        endDateString = endDate == null ? null : DateUtil.format(endDate);
         experimentCount = (long) (experiments == null ? 0 : experiments.size());
     }
 
