@@ -6,6 +6,9 @@ import com.rmit.mgdb.exception.UsernameNotFoundException;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +57,18 @@ public class UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                              .orElseThrow(() -> new UsernameNotFoundException("User could not be found.", username));
+    }
+
+
+    /**
+     * Get all users, optionally paginated.
+     */
+    public Page<User> getUsers(Optional<Integer> page, Optional<Integer> size) {
+        if (page.isPresent() && size.isPresent()) {
+            return userRepository.findUsersBy(PageRequest.of(page.orElse(0), size.orElse(DEFAULT_PAGE_SIZE)));
+        } else {
+            return userRepository.findUsersBy(Pageable.unpaged());
+        }
     }
 
 }

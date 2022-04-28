@@ -62,7 +62,7 @@ export default function Experiments() {
       <Grid container spacing={2}>
         {experimentPage?.content.map((e) => (
           <Grid item xs={12} key={e.id}>
-            <Paper key={e.id} sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', p: 1 }}>
+            <Paper sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', p: 1 }}>
               <Typography variant='body1' flexGrow={1} pr={2} color={e.deleted ? 'text.secondary' : 'text.primary'}>
                 {e.title} {e.deleted && ' (DELETED)'}
               </Typography>
