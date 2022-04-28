@@ -1,5 +1,6 @@
 package com.rmit.mgdb.service;
 
+import com.rmit.mgdb.payload.SeoCodePayload;
 import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.SeoCode;
 import com.rmit.mgdb.repository.SeoCodeRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SeoCodeService {
@@ -18,8 +20,8 @@ public class SeoCodeService {
         this.seoCodeRepository = seoCodeRepository;
     }
 
-    public List<SeoCode> getAllSeoCode() {
-        return seoCodeRepository.findAll();
+    public List<SeoCodePayload> getAllSeoCode() {
+        return seoCodeRepository.findAll().stream().map(SeoCodePayload::new).collect(Collectors.toList());
     }
 
     public SeoCode getSeoCodeById(Long id) {

@@ -37,7 +37,7 @@ export default function DateElement(
         minDate={props.min}
         maxDate={props.max || moment()}
         onChange={(e: Moment | null) => handleDateChange(e)}
-        renderInput={(params) => <TextField size='small' {...params} />}
+        renderInput={(params) => <TextField size='small' fullWidth {...params} />}
       />
     </Grid>
   );

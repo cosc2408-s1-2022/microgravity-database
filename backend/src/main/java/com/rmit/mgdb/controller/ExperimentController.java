@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/experiments")
@@ -30,6 +31,11 @@ public class ExperimentController {
     @GetMapping("/all")
     public List<Experiment> getAll() {
         return experimentService.getAllExperiment();
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<Optional<Experiment>> getById(@RequestParam int id) {
+        return new ResponseEntity<>(experimentService.getExperimentById(id), HttpStatus.OK);
     }
 
     @PostMapping("/add")

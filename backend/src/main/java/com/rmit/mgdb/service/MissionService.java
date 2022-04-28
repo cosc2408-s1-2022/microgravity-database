@@ -3,6 +3,7 @@ package com.rmit.mgdb.service;
 import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.payload.AddMissionRequest;
+import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.repository.MissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MissionService {
@@ -28,8 +29,8 @@ public class MissionService {
         this.platformService = platformService;
     }
 
-    public List<Mission> getAllMissions() {
-        return missionRepository.findAll();
+    public List<MissionPayload> getAllMission() {
+        return missionRepository.findAll().stream().map(MissionPayload::new).collect(Collectors.toList());
     }
 
     public Mission getMissionById(Long id) {

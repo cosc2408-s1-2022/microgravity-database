@@ -92,12 +92,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 // TODO API endpoints are subject to change.
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/users/register").permitAll()
-                .antMatchers("/api/users/login").permitAll()
-                .antMatchers("/api/search/**").permitAll()
-                .antMatchers("/api/users/**").authenticated()
-                .anyRequest().authenticated();
+
+                // FIXME Production.
+                //  .antMatchers("/h2-console/**").permitAll()
+                //  .antMatchers("/api/users/register").permitAll()
+                //  .antMatchers("/api/users/login").permitAll()
+                //  .antMatchers("/api/search/**").permitAll()
+                //  .antMatchers("/api/experiments/**").permitAll()
+                //  .antMatchers("/api/users/**").authenticated()
+                //  .anyRequest().authenticated();
+
+                // FIXME Development.
+                .anyRequest().permitAll();
 
         // Configure the JWT authentication filter to run before processing every HTTP request.
         security.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

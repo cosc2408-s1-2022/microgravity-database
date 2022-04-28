@@ -1,31 +1,38 @@
-import { useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 import { AxiosResponse } from 'axios';
 import { Experiment, SearchResponse } from '../../util/types';
 import api from '../../util/api';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Pagination, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import NavBar from '../../components/NavBar';
-import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
+import ExperimentResult from '../../components/Results/Experiment';
 
 export default function BasicSearchPage() {
   const location = useLocation();
+  const [page, setPage] = useState(1);
+
   const params = new URLSearchParams(location.search);
   let results: Experiment[];
 
-  const { data, isLoading, mutate } = useMutation<AxiosResponse<SearchResponse>>('search', () => {
-    return api.get('/search', {
-      params: params,
-    });
-  });
+  const { data, isLoading, refetch } = useQuery<AxiosResponse<SearchResponse>>(
+    'search',
+    () => {
+      return api.get('/search/', {
+        params: { string: params.get('string'), page: page },
+      });
+    },
+    { enabled: false },
+  );
 
   useEffect(() => {
-    mutate();
-  }, [location, mutate]);
+    refetch();
+  }, [refetch, location.search, page]);
 
   let resultsElement: ReactNode;
+  let pages = 1;
   if (isLoading) {
     resultsElement = (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -34,11 +41,13 @@ export default function BasicSearchPage() {
     );
   } else if (data && data?.data.results.length != 0) {
     results = data.data.results as Experiment[];
+    pages = data.data.totalPages;
     resultsElement = results.map((item: Experiment, index) => {
       return (
         <ExperimentResult
           key={item.id}
           id={item.id}
+          title={item.title}
           objective={item.experimentObjective}
           people={item.people}
           mission={item.mission}
@@ -55,11 +64,20 @@ export default function BasicSearchPage() {
     );
   }
 
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
     <Grid container direction='column' height='100vh' wrap='nowrap'>
       <NavBar />
-      <Grid container direction='column' alignSelf='center'>
+      <Grid container direction='column' alignSelf='center' alignItems='center'>
         {resultsElement}
+        {pages > 1 ? (
+          <Grid item my={2}>
+            <Pagination count={pages} onChange={handlePageChange} />
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );

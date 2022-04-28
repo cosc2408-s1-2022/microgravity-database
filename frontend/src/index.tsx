@@ -1,4 +1,3 @@
-import React from 'react';
 import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
@@ -19,6 +18,8 @@ import AdvancedSearchPage from './pages/AdvancedSearch';
 import AddPerson from './pages/AddPerson';
 import AddMission from './pages/AddMission';
 import AddExperiment from './pages/AddExperiment';
+import ViewMission from './pages/ViewMission';
+import ViewForCode from './pages/ForCode';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -41,10 +42,13 @@ root.render(
                 <Route path='/register' element={<Register />} />
                 <Route path='/search' element={<BasicSearchPage />} />
                 <Route path='/search/advanced' element={<AdvancedSearchPage />} />
-                <Route path='/experiment/:id' element={<ViewExperiment />} />
                 <Route path='/addPerson' element={<AddPerson />} />
                 <Route path='/addMission' element={<AddMission />} />
                 <Route path='/addExperiment' element={<AddExperiment />} />
+                <Route path='/experiment' element={<ViewExperiment />} />
+                <Route path='/experiment/:id' element={<ViewExperiment />} />
+                <Route path='/mission/:id' element={<ViewMission />} />
+                <Route path='/forCode/:id' element={<ViewForCode />} />
               </Routes>
             </LocalizationProvider>
           </BrowserRouter>

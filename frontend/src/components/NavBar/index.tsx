@@ -28,15 +28,19 @@ export default function NavBar(props: { hasSearch?: boolean }) {
   };
 
   const authElement = (
-    <Button variant='contained' onClick={authElementProps.onClick}>
-      {authElementProps.text}
-    </Button>
+    <Grid item>
+      <Button variant='contained' onClick={authElementProps.onClick}>
+        {authElementProps.text}
+      </Button>
+    </Grid>
   );
 
   const registerElement = authToken ? null : (
-    <Button variant='contained' component={Link} href='/register'>
-      Register
-    </Button>
+    <Grid item>
+      <Button variant='contained' component={Link} href='/register'>
+        Register
+      </Button>
+    </Grid>
   );
 
   return (
@@ -44,7 +48,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
       <Toolbar>
         <Grid container wrap='nowrap'>
           {/* Left nav elements */}
-          <Grid container item alignItems='center'>
+          <Grid container item alignItems='center' wrap='nowrap'>
             {/*  Logo + text link*/}
             <Grid item component={Link} href={'/home'}>
               <img src={Logo} alt='RMIT LOGO' height={'40vmin'} />
@@ -60,22 +64,28 @@ export default function NavBar(props: { hasSearch?: boolean }) {
                 <PrimarySearch />
               </Grid>
             ) : null}
-            <Grid item>
-              <Button component={Link} href='/search/advanced' sx={{ padding: 0 }}>
-                Advanced Search
-              </Button>
-            </Grid>
+            {/* if windows location is /search/advanced show the back button */}
+            {location.pathname.includes('/search/advanced') ? (
+              <Grid item>
+                <Button
+                  variant='contained'
+                  onClick={() => {
+                    navigate('/home');
+                  }}
+                >
+                  Back
+                </Button>
+              </Grid>
+            ) : (
+              <Grid item>
+                <Button component={Link} href='/search/advanced'>
+                  Advanced Search
+                </Button>
+              </Grid>
+            )}
           </Grid>
           {/* Right nav elements */}
-          <Grid
-            container
-            item
-            direction='row-reverse'
-            md={1}
-            columnSpacing={3}
-            wrap='nowrap'
-            justifyContent='space-between'
-          >
+          <Grid container item alignItems='center' direction='row-reverse' wrap='nowrap' md={1} columnSpacing={3}>
             {registerElement}
             {authElement}
           </Grid>

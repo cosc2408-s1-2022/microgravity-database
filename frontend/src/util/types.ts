@@ -8,7 +8,7 @@ export type User = {
   username: string;
   role: UserRole;
   createdAt: Date;
-  updatedAt: Date | null;
+  updatedAt?: Date;
 };
 
 export enum UserRole {
@@ -43,76 +43,7 @@ export const isResultType = (resultType: string | undefined) => {
 
 export const isPlatform = (platform: string | undefined) => {
   return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
-};
-
-export type Code = {
-  id: string;
-  code: string;
-  name: string;
-};
-
-export type ForCode = Code;
-
-export type SeoCode = Code;
-
-export type Person = {
-  id: number;
-  firstName: string;
-  familyName: string;
-  city: string;
-  state: string;
-  country: string;
-  affiliation: string;
-  person: Researcher;
-  role: string;
-};
-
-export type Researcher = {
-  id: number;
-  firstName: string;
-  familyName: string;
-  city: string;
-  state: string;
-  country: string;
-  affiliation: string;
-};
-
-export type SearchResponse = {
-  totalElements: number;
-  totalPages: number;
-  page: number;
-  size: number;
-  results: Experiment[] | Mission[];
-};
-
-export type SearchField = string | undefined;
-
-export type SearchState = {
-  string?: SearchField;
-  resultType?: SearchField;
-  platform?: SearchField;
-  startDate?: SearchField;
-  endDate?: SearchField;
-};
-
-export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'onChange'> & {
-  onChange?: (value: string) => void;
-  name: T;
-  errors?: Record<string | T, string>;
-};
-
-export type ExperimentResultsProps = {
-  id: string | undefined;
-  objective: string | undefined;
-  people: ExperimentPerson[];
-  mission: Mission;
-};
-
-export type MissionResultsProps = {
-  id: string | undefined;
-  name: string | undefined;
-  startDate: string | undefined;
-  endDate: string | undefined;
+  return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
 };
 
 export type AuthenticationResponse = {
@@ -124,11 +55,6 @@ export type AuthenticationResponse = {
   username: string;
   role: string;
   password: string;
-};
-
-export type Platform = {
-  id: number;
-  name: string;
 };
 
 export type Experiment = {
@@ -151,13 +77,10 @@ export type Experiment = {
 export type Mission = {
   id: string;
   name: string;
-  launchDate: Date;
-  launchDateString: string;
-  startDate?: Date;
-  startDateString?: string;
-  endDate?: Date;
-  endDateString?: string;
   platform: Platform;
+  launchDate: Date;
+  startDate: Date;
+  endDate: Date;
 };
 
 export type ExperimentPerson = {
@@ -173,4 +96,86 @@ export type ExperimentPerson = {
 export type ExperimentPersonRequest = {
   personId: number;
   roleId: number;
+};
+
+
+export type Platform = {
+  id: string;
+  name: string;
+  forCodes: ForCode[];
+  seoCodes: SeoCode[];
+};
+
+export type Code = {
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
+
+export type ForCode = Code;
+
+export type SeoCode = Code;
+
+export type ForCodeResult = {
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
+
+export type SeoCodeResult = {
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
+
+export type Person = {
+  id: number;
+  firstName: string;
+  familyName: string;
+  city: string;
+  state: string;
+  country: string;
+  affiliation: string;
+  role: Role;
+};
+
+export type SearchResponse = {
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  size: number;
+  results: Experiment[] | Mission[];
+};
+
+export type SearchField = string | undefined;
+
+export type SearchState = {
+  string?: SearchField;
+  resultType?: SearchField;
+  platform?: SearchField;
+  startDate?: SearchField;
+  endDate?: SearchField;
+  page?: number;
+};
+
+export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'onChange'> & {
+  onChange?: (value: string) => void;
+  name: T;
+  errors?: Record<string | T, string>;
+};
+
+export type ExperimentResultsProps = {
+  id: string | undefined;
+  objective: string | undefined;
+  title: string | undefined;
+  people: ExperimentPerson[];
+  mission: Mission;
+};
+
+export type MissionResultsProps = {
+  id: string | undefined;
+  name: string | undefined;
+  startDate: string | undefined;
+  endDate: string | undefined;
+  launchDate: string | undefined;
 };

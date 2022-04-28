@@ -1,18 +1,7 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Pagination, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
-
-import CircularProgress from '@mui/material/CircularProgress';
-import { useQuery } from 'react-query';
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import api from '../../util/api';
-import { AxiosResponse } from 'axios';
-import AdvancedSearch from '../../components/AdvancedSearch';
-import ExperimentResult from '../../components/Results/Experiment/ExperimentResult';
-import MissionResult from '../../components/Results/Mission/MissionResult';
-import SeoCodeResult from '../../components/Results/SeoCode';
-import ForCodeResult from '../../components/Results/ForCode';
 import {
   Experiment,
   ForCode,
@@ -25,13 +14,22 @@ import {
   SearchState,
   SeoCode,
 } from '../../util/types';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useQuery } from 'react-query';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import api from '../../util/api';
+import { AxiosResponse } from 'axios';
+import AdvancedSearch from '../../components/AdvancedSearch';
+import ExperimentResult from '../../components/Results/Experiment';
+import MissionResult from '../../components/Results/Mission';
+import SeoCodeResult from '../../components/Results/SeoCode';
+import FoRCodeResult from '../../components/Results/ForCode';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
-  // TODO Handling Pagination @Matt
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION };
+  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION, page: page };
   const params = new URLSearchParams(location.search);
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 
@@ -60,9 +58,11 @@ export default function AdvancedSearchPage() {
 
   useEffect(() => {
     refetch();
-  }, [refetch, location.search]);
+  }, [refetch, location.search, page]);
 
   let resultsElement: ReactNode = null;
+  let pages = 1;
+
   if (isLoading) {
     resultsElement = (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -70,6 +70,7 @@ export default function AdvancedSearchPage() {
       </Box>
     );
   } else if (data && data?.data.results.length != 0) {
+    pages = data.data.totalPages;
     if (searchState.resultType === ResultType.EXPERIMENT) {
       results = data.data.results as Experiment[];
       resultsElement = results.map((item: Experiment, index) => {
@@ -78,6 +79,7 @@ export default function AdvancedSearchPage() {
             key={item.id}
             id={item.id}
             objective={item.experimentObjective}
+            title={item.title}
             people={item.people}
             mission={item.mission}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
@@ -94,6 +96,7 @@ export default function AdvancedSearchPage() {
             name={item.name}
             startDate={item.startDateString}
             endDate={item.endDateString}
+            launchDate={item.launchDate as unknown as string}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );
@@ -102,9 +105,8 @@ export default function AdvancedSearchPage() {
       results = data.data.results as unknown as ForCode[];
       resultsElement = results.map((item: ForCode, index) => {
         return (
-          <ForCodeResult
-            key={item.id}
-            id={item.id}
+          <FoRCodeResult
+            key={item.code}
             code={item.code}
             name={item.name}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
@@ -116,8 +118,7 @@ export default function AdvancedSearchPage() {
       resultsElement = results.map((item: SeoCode, index) => {
         return (
           <SeoCodeResult
-            key={item.id}
-            id={item.id}
+            key={item.code}
             code={item.code}
             name={item.name}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
@@ -134,7 +135,6 @@ export default function AdvancedSearchPage() {
     );
   }
 
-  // TODO Handling Pagination @Matt
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -144,8 +144,13 @@ export default function AdvancedSearchPage() {
       <NavBar />
       <Grid container direction='row' wrap='nowrap' flexGrow={1}>
         <AdvancedSearch {...searchState} container item md={3} />
-        <Grid container item direction='column'>
+        <Grid container item direction='column' alignItems='center'>
           {resultsElement}
+          {pages > 1 ? (
+            <Grid item my={2}>
+              <Pagination count={pages} onChange={handlePageChange} />
+            </Grid>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>

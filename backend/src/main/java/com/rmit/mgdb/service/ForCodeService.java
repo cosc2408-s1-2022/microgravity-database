@@ -2,11 +2,13 @@ package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.ForCode;
+import com.rmit.mgdb.payload.ForCodePayload;
 import com.rmit.mgdb.repository.ForCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ForCodeService {
@@ -18,8 +20,13 @@ public class ForCodeService {
         this.forCodeRepository = forCodeRepository;
     }
 
-    public List<ForCode> getAllForCodes() {
-        return forCodeRepository.findAll();
+    public List<ForCodePayload> getAllForCode() {
+        return forCodeRepository.findAll().stream().map(ForCodePayload::new).collect(Collectors.toList());
+    }
+
+    public ForCodePayload getById(Long id) {
+        // TODO Throw exception on not found.
+        return new ForCodePayload(forCodeRepository.findById(id).orElseThrow());
     }
 
     public ForCode getForCodeById(Long id) {
