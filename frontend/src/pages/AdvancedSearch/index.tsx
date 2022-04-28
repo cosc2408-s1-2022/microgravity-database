@@ -94,9 +94,9 @@ export default function AdvancedSearchPage() {
             key={item.id}
             id={item.id}
             name={item.name}
-            startDate={item.startDateString}
-            endDate={item.endDateString}
-            launchDate={item.launchDate as unknown as string}
+            startDate={item.startDate}
+            endDate={item.endDate}
+            launchDate={item.launchDate}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );

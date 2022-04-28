@@ -78,7 +78,7 @@ export default function NavBar(props: { hasSearch?: boolean }) {
               </Grid>
             ) : (
               <Grid item>
-                <Button component={Link} href='/search/advanced'>
+                <Button variant='contained' component={Link} href='/search/advanced'>
                   Advanced Search
                 </Button>
               </Grid>

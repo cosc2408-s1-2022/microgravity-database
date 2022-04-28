@@ -43,7 +43,6 @@ export const isResultType = (resultType: string | undefined) => {
 
 export const isPlatform = (platform: string | undefined) => {
   return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
-  return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
 };
 
 export type AuthenticationResponse = {
@@ -98,7 +97,6 @@ export type ExperimentPersonRequest = {
   roleId: number;
 };
 
-
 export type Platform = {
   id: string;
   name: string;
@@ -109,7 +107,7 @@ export type Platform = {
 export type Code = {
   code: number;
   name: string;
-  experiments: Experiment[];
+  experiments?: Experiment[];
 };
 
 export type ForCode = Code;
@@ -175,7 +173,7 @@ export type ExperimentResultsProps = {
 export type MissionResultsProps = {
   id: string | undefined;
   name: string | undefined;
-  startDate: string | undefined;
-  endDate: string | undefined;
-  launchDate: string | undefined;
+  launchDate: Date;
+  startDate: Date;
+  endDate: Date;
 };
