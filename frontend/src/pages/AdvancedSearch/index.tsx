@@ -77,6 +77,7 @@ export default function AdvancedSearchPage() {
             key={item.id}
             id={item.id}
             objective={item.experimentObjective}
+            title={item.title}
             people={item.people}
             mission={item.mission}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
@@ -93,6 +94,7 @@ export default function AdvancedSearchPage() {
             name={item.name}
             startDate={item.startDateString}
             endDate={item.endDateString}
+            launchDate={item.launchDate as unknown as string}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );

@@ -39,6 +39,7 @@ export default function BasicSearchPage() {
         <ExperimentResult
           key={item.id}
           id={item.id}
+          title={item.title}
           objective={item.experimentObjective}
           people={item.people}
           mission={item.mission}
