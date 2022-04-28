@@ -39,7 +39,7 @@ root.render(
                 <Route path='/register' element={<Register />} />
                 <Route path='/search' element={<BasicSearchPage />} />
                 <Route path='/search/advanced' element={<AdvancedSearchPage />} />
-                <Route path='/experiment/:id' element={<ViewExperiment />} />
+                <Route path='/experiment' element={<ViewExperiment />} />
               </Routes>
             </LocalizationProvider>
           </BrowserRouter>
