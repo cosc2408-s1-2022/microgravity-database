@@ -1,6 +1,5 @@
 import React from 'react';
-import { TextField } from '@mui/material';
-import { FormFieldProps } from '../../util/types';
+import { TextField, TextFieldProps } from '@mui/material';
 
 /**
  * A wrapper around {@link TextField} to automatically enter an errored state if an error is present
@@ -22,5 +21,11 @@ function FormField({ onChange, name, errors, ...rest }: FormFieldProps) {
     />
   );
 }
+
+export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'onChange'> & {
+  onChange?: (value: string) => void;
+  name: T;
+  errors?: Record<string | T, string>;
+};
 
 export default FormField;

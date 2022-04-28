@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../util/types';
@@ -36,7 +36,6 @@ export default function Login() {
 
   return (
     <>
-      <CssBaseline />
       <Header />
       <main>
         <video
@@ -58,86 +57,100 @@ export default function Login() {
         </video>
         <div>
           <Container maxWidth='sm'>
-            <Box
+            <Grid
+              container
               sx={{
-                marginTop: 4,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                height: 'auto',
-                width: 'auto',
-                bgcolor: '#FAEBEFFF',
-                p: 3,
-                borderRadius: '16px',
+                justifyContent: 'center',
               }}
             >
-              <Typography variant='h3' align='center' color='Text-primary' gutterBottom>
-                Welcome to RMIT Microgravity Database
-              </Typography>
-            </Box>
-
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                height: 'auto',
-                width: 'auto',
-                bgcolor: '#FAEBEFFF',
-                p: 4,
-                borderRadius: '16px',
-              }}
-            >
-              {/* <Avatar sx={{ m: 1, bgcolor: 'green' }} /> */}
-              <Typography component='h1' variant='h4'>
-                Login
-              </Typography>
-              <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <FormField
-                  required
-                  label='Username'
-                  name='username'
-                  autoComplete='username'
-                  autoFocus
-                  errors={error?.response?.data}
-                  onChange={setUsername}
-                />
-                <FormField
-                  required
-                  name='password'
-                  label='Password'
-                  type='password'
-                  autoComplete='current-password'
-                  errors={error?.response?.data}
-                  onChange={setPassword}
-                />
-                <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
-                <Button
-                  color='error'
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2, '&.MuiButton-root': { color: 'white' } }}
+              <Grid item>
+                <Box
+                  sx={{
+                    marginTop: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: 'auto',
+                    width: 'auto',
+                    bgcolor: '#FAEBEFFF',
+                    p: 3,
+                    borderRadius: '16px',
+                  }}
                 >
-                  Sign In
-                </Button>
-                <Grid container>
-                  <Grid item xs>
-                    {/*TODO forgot password ?*/}
-                    <Link href='#' variant='body2'>
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href={'/register'} variant='body2'>
-                      {"Don't have an account? Register Now"}
-                    </Link>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
+                  <Typography variant='h3' align='center' color='Text-primary' fontWeight='bold'>
+                    Welcome to RMIT Microgravity Database
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box
+                  sx={{
+                    marginTop: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: 'auto',
+                    width: 'auto',
+                    bgcolor: '#FAEBEFFF',
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <Typography component='h1' variant='h4' fontWeight='bold'>
+                    Login
+                  </Typography>
+                  <Box component='form' onSubmit={handleSubmit} noValidate>
+                    <FormField
+                      required
+                      label='Username'
+                      name='username'
+                      autoComplete='username'
+                      autoFocus
+                      errors={error?.response?.data}
+                      onChange={setUsername}
+                      sx={{ mt: 2 }}
+                    />
+                    <FormField
+                      required
+                      name='password'
+                      label='Password'
+                      type='password'
+                      autoComplete='current-password'
+                      errors={error?.response?.data}
+                      onChange={setPassword}
+                      sx={{ mt: 2 }}
+                      size='medium'
+                    />
+                    <Button
+                      color='error'
+                      type='submit'
+                      fullWidth
+                      variant='contained'
+                      size='medium'
+                      sx={{ mt: 3, mb: 2, '&.MuiButton-root': { color: 'white' } }}
+                    >
+                      Sign In
+                    </Button>
+                    <Grid container>
+                      <Grid item xs>
+                        {/*TODO forgot password ?*/}
+                        <Link href='#' variant='body2' color='secondary'>
+                          Forgot password?
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link href={'/register'} variant='body2' color='secondary'>
+                          {"Don't have an account? Register Now"}
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </Container>
         </div>
       </main>

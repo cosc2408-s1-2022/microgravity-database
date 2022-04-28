@@ -1,7 +1,5 @@
 // File to contain application wide type definitions.
 
-import { TextFieldProps } from '@mui/material';
-
 export type UserAuth = string | null;
 
 export type User = {
@@ -158,12 +156,6 @@ export type SearchState = {
   startDate?: SearchField;
   endDate?: SearchField;
   page?: number;
-};
-
-export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'onChange'> & {
-  onChange?: (value: string) => void;
-  name: T;
-  errors?: Record<string | T, string>;
 };
 
 export type ExperimentResultsProps = {

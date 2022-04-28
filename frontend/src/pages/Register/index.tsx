@@ -1,21 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
 import { AuthenticationResponse, UserRole } from '../../util/types';
 import { Navigate } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material/styles';
 import api from '../../util/api';
 import Header from '../../components/NavBar';
-
-const innerTheme = createTheme({
-  typography: {
-    fontFamily: 'Roboto',
-  },
-});
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -53,7 +45,6 @@ export default function Register() {
 
   return (
     <>
-      <CssBaseline />
       <Header />
       <main>
         <video
@@ -74,10 +65,8 @@ export default function Register() {
           <source src={'/space.mp4'} type='video/mp4' />
         </video>
         <div>
-          <br />
-          <br />
-          <ThemeProvider theme={innerTheme}>
-            <Container component='main' maxWidth='xs'>
+          <Container maxWidth='sm'>
+            <Grid container justifyContent='center'>
               <Box
                 sx={{
                   marginTop: 4,
@@ -91,7 +80,7 @@ export default function Register() {
                   borderRadius: '16px',
                 }}
               >
-                <Typography component='h1' variant='h4'>
+                <Typography component='h1' variant='h4' fontWeight='bold'>
                   Register
                 </Typography>
                 <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -145,14 +134,14 @@ export default function Register() {
                     Register
                   </Button>
                   <Grid item>
-                    <Link href={'/login'} variant='body2'>
+                    <Link href={'/login'} variant='body2' color='secondary'>
                       {'Already have an account? Login'}
                     </Link>
                   </Grid>
                 </Box>
               </Box>
-            </Container>
-          </ThemeProvider>
+            </Grid>
+          </Container>
         </div>
       </main>
     </>
