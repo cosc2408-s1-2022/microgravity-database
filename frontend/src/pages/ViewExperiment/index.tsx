@@ -36,122 +36,177 @@ export default function ViewExperiment() {
                       </Typography>
                       <Grid container rowSpacing={0}>
                         <Grid item xs={12} md={6}>
-                          <Card sx={{ p: 0.5, m: 2, minWidth: '350' }} elevation={3}>
+                          <Card sx={{ p: 2, m: 2, minWidth: '350' }} elevation={3}>
                             <Grid container direction='row' alignItems='center'>
                               <Grid item>
                                 <FlagIcon />
                               </Grid>
                               <Grid item>
-                                <Typography variant={'h6'}>Missions :</Typography>
+                                <Typography variant={'h5'}>Missions :</Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid item>
-                                  <Typography>{data?.mission.name}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'}>
+                                    {data?.mission.name}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid container item>
                               <Grid item>
-                                <Typography variant={'h6'} display={'inline'}>
+                                <Typography variant={'h5'} display={'inline'}>
                                   Fields of Research classification :
                                 </Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid item>
-                                  <Typography display={'inline'}>{data?.forCode.id}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
+                                    {data?.forCode.id}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid container>
                               <Grid item>
-                                <Typography variant={'h6'} display={'inline'}>
+                                <Typography variant={'h5'} display={'inline'}>
                                   FoR Classification Name :
                                 </Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid item>
-                                  <Typography display={'inline'}>{data?.forCode.name}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
+                                    {data?.forCode.name}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                           </Card>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <Card sx={{ p: 0.5, m: 2, minWidth: '350' }} elevation={3}>
+                          <Card sx={{ p: 2, m: 2, minWidth: '350' }} elevation={3}>
                             <Grid container direction={'row'} alignItems={'center'}>
                               <Grid item>
                                 <RocketLaunchIcon />
                               </Grid>
                               <Grid item>
-                                <Typography variant={'h6'} display={'inline'}>
+                                <Typography variant={'h5'} display={'inline'}>
                                   Platform :
                                 </Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid item>
-                                  <Typography display={'inline'}>{data?.platform.name}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
+                                    {(() => {
+                                      if (data?.platform.name === 'spaceStation') {
+                                        return 'Space Station';
+                                      } else if (data?.platform.name === 'spaceShuttle') {
+                                        return 'Space Shuttle';
+                                      } else if (data?.platform.name === 'retrievableCapsule') {
+                                        return 'Retrievable Capsule';
+                                      } else if (data?.platform.name === 'soundingRocket') {
+                                        return 'Sounding Rocket';
+                                      } else if (data?.platform.name === 'parabolicFlight') {
+                                        return 'Parabolic Flight';
+                                      } else if (data?.platform.name === 'groundBasedFacility') {
+                                        return 'Ground Based Facility';
+                                      }
+                                    })()}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid container item>
                               <Grid item>
-                                <Typography variant={'h6'} display={'inline'}>
+                                <Typography variant={'h5'} display={'inline'}>
                                   Socio-Economic Objective classification :
                                 </Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid>
-                                  <Typography display={'inline'}>{data?.seoCode.id}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
+                                    {data?.seoCode.id}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                             <Grid container item>
                               <Grid item>
-                                <Typography variant={'h6'} display={'inline'}>
+                                <Typography variant={'h5'} display={'inline'}>
                                   SEO Classification Name :
                                 </Typography>
                               </Grid>
                               <Grid container direction='column' alignItems='left'>
                                 <Grid item>
-                                  <Typography display={'inline'}>{data?.seoCode.name}</Typography>
+                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
+                                    {data?.seoCode.name}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </Grid>
                           </Card>
                         </Grid>
                       </Grid>
-                      <Grid container sx={{ p: 0.5 }}>
-                        <Grid item sx={{ m: 2 }}>
-                          <Card elevation={10}>
+                      <Grid container>
+                        <Grid container>
+                          <Card sx={{ p: 2, m: 2 }} elevation={10}>
                             <Grid item>
-                              <Typography>Researchers :</Typography>
-                              <Grid item spacing={2}>
+                              <Typography gutterBottom variant={'h5'}>
+                                Researchers :
+                              </Typography>
+                              <Grid item spacing={2} direction='column'>
                                 {data?.people.map((person) => (
-                                  <Grid item key={person.person.id}>
-                                    <Typography>{`${person.person.familyName[0]}. ${person.person.firstName}`}</Typography>
+                                  <Grid container key={person.person.id}>
+                                    <Grid item>
+                                      <Typography gutterBottom variant={'body1'} display={'block'}>
+                                        {person.person.familyName[0]}. {person.person.firstName}
+                                        {' affiliated with '}
+                                        {person.person.affiliation} {' works at '} {person.person.city} {' in '}{' '}
+                                        {person.person.state} , {person.person.country}
+                                      </Typography>
+                                    </Grid>
                                   </Grid>
                                 ))}
                               </Grid>
                             </Grid>
                             <Grid item>
-                              <Typography>Experiment Publication :</Typography>
-                              <Typography>{data?.experimentPublications}</Typography>
+                              <Typography gutterBottom variant={'h5'} display={'inline'}>
+                                Experiment Publication :{' '}
+                              </Typography>
+                              <Typography gutterBottom variant={'body1'}>
+                                {data?.experimentPublications}
+                              </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography>Lead Institution :</Typography>
-                              <Typography>{data?.leadInstitution}</Typography>
+                              <Typography gutterBottom variant={'h5'} display={'inline'}>
+                                Lead Institution :{' '}
+                              </Typography>
+                              <Typography gutterBottom variant={'body1'}>
+                                {data?.leadInstitution}
+                              </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography>Type of Activity (ToA) :</Typography>
-                              <Typography>{data?.toa}</Typography>
+                              <Typography gutterBottom variant={'h5'}>
+                                Type of Activity (ToA) :
+                              </Typography>
+                              <Typography gutterBottom variant={'body1'}>
+                                {data?.toa}
+                              </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography>Experiment Aim :</Typography>
-                              <Typography>{data?.experimentAim}</Typography>
+                              <Typography gutterBottom variant={'h5'}>
+                                Experiment Aim :
+                              </Typography>
+                              <Typography gutterBottom variant={'body1'}>
+                                {data?.experimentAim}
+                              </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography>Experiment Objective :</Typography>
-                              <Typography>{data?.experimentObjective}</Typography>
+                              <Typography gutterBottom variant={'h5'}>
+                                Experiment Objective :
+                              </Typography>
+                              <Typography gutterBottom variant={'body1'}>
+                                {data?.experimentObjective}
+                              </Typography>
                             </Grid>
                           </Card>
                         </Grid>
