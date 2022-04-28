@@ -53,7 +53,7 @@ export type AuthenticationResponse = {
 
 export type Experiment = {
   id: string;
-  title: string;
+  title?: string;
   experimentAim: string;
   experimentObjective: string;
   platform: string;
@@ -130,6 +130,7 @@ export type FormFieldProps<T extends string = string> = Omit<TextFieldProps, 'on
 export type ExperimentResultsProps = {
   id: string | undefined;
   objective: string | undefined;
+  title: string | undefined;
   people: Person[];
   mission: Mission;
 };
@@ -139,4 +140,5 @@ export type MissionResultsProps = {
   name: string | undefined;
   startDate: string | undefined;
   endDate: string | undefined;
+  launchDate: string | undefined;
 };
