@@ -2,8 +2,6 @@ import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
@@ -30,31 +28,29 @@ root.render(
   // TODO Page not found.
   // TODO Prevent access to search results.
   <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <BrowserRouter>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <Routes>
-                <Route path='/' element={<Navigate to='/home' />} />
-                <Route path='/home' element={<HomePage />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/search' element={<BasicSearchPage />} />
-                <Route path='/search/advanced' element={<AdvancedSearchPage />} />
-                <Route path='/addPerson' element={<AddPerson />} />
-                <Route path='/addMission' element={<AddMission />} />
-                <Route path='/addExperiment' element={<AddExperiment />} />
-                <Route path='/experiment' element={<ViewExperiment />} />
-                <Route path='/experiment/:id' element={<ViewExperiment />} />
-                <Route path='/mission/:id' element={<ViewMission />} />
-                <Route path='/forCode/:id' element={<ViewForCode />} />
-              </Routes>
-            </LocalizationProvider>
-          </BrowserRouter>
-        </CssBaseline>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <Routes>
+              <Route path='/' element={<Navigate to='/home' />} />
+              <Route path='/home' element={<HomePage />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/search' element={<BasicSearchPage />} />
+              <Route path='/search/advanced' element={<AdvancedSearchPage />} />
+              <Route path='/addPerson' element={<AddPerson />} />
+              <Route path='/addMission' element={<AddMission />} />
+              <Route path='/addExperiment' element={<AddExperiment />} />
+              <Route path='/experiment' element={<ViewExperiment />} />
+              <Route path='/experiment/:id' element={<ViewExperiment />} />
+              <Route path='/mission/:id' element={<ViewMission />} />
+              <Route path='/forCode/:id' element={<ViewForCode />} />
+            </Routes>
+          </LocalizationProvider>
+        </BrowserRouter>
+      </CssBaseline>
+    </ThemeProvider>
   </QueryClientProvider>,
 );
 

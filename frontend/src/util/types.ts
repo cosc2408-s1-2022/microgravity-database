@@ -80,6 +80,7 @@ export type Mission = {
   launchDate: Date;
   startDate: Date;
   endDate: Date;
+  experiments: Experiment[];
 };
 
 export type ExperimentPerson = {

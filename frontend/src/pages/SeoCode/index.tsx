@@ -1,7 +1,7 @@
 import { Box, Card, CircularProgress, Container, Grid, Paper, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getSeoCode } from '../../util/apiCalls';
 import { SeoCodeResult } from '../../util/types';
@@ -73,7 +73,7 @@ export default function ViewSeoCode() {
                           <Typography variant='body1'>{experiment.experimentAim}</Typography>
                           <Typography variant='body1'>{experiment.experimentObjective}</Typography>
                           <Typography variant='body1'>{experiment.experimentPublications}</Typography>
-                          <Typography variant='body1'>{experiment.platform}</Typography>
+                          <Typography variant='body1'>{experiment.platform.name}</Typography>
                           <Typography variant='body1'>{experiment.leadInstitution}</Typography>
                           <Typography variant='body1'>{experiment.principalInvestigator}</Typography>
                           <Typography variant='body1'>{experiment.toa}</Typography>

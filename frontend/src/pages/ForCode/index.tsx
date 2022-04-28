@@ -73,7 +73,7 @@ export default function ViewForCode() {
                           <Typography variant='body1'>{experiment.experimentAim}</Typography>
                           <Typography variant='body1'>{experiment.experimentObjective}</Typography>
                           <Typography variant='body1'>{experiment.experimentPublications}</Typography>
-                          <Typography variant='body1'>{experiment.platform}</Typography>
+                          <Typography variant='body1'>{experiment.platform.name}</Typography>
                           <Typography variant='body1'>{experiment.leadInstitution}</Typography>
                           <Typography variant='body1'>{experiment.principalInvestigator}</Typography>
                           <Typography variant='body1'>{experiment.toa}</Typography>

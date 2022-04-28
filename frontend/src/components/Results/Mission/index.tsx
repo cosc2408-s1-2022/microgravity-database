@@ -1,4 +1,5 @@
 import { Grid, GridProps, Link, Typography } from '@mui/material';
+import moment from 'moment';
 import { MissionResultsProps } from '../../../util/types';
 
 export default function MissionResult(props: GridProps & MissionResultsProps) {
@@ -14,19 +15,19 @@ export default function MissionResult(props: GridProps & MissionResultsProps) {
         <Grid item m={1}>
           <Typography display={'inline'}>Start Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.startDate}
+            {moment(props.startDate).year()}
           </Typography>
         </Grid>
         <Grid item m={1}>
           <Typography display={'inline'}>End Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.endDate}
+            {moment(props.endDate).year()}
           </Typography>
         </Grid>
         <Grid item m={1}>
           <Typography display={'inline'}>Launch Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.launchDate}
+            {moment(props.launchDate).year()}
           </Typography>
         </Grid>
       </Grid>
