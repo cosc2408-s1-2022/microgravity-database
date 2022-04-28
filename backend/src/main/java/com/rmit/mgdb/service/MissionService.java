@@ -1,11 +1,12 @@
 package com.rmit.mgdb.service;
 
-import com.rmit.mgdb.model.Mission;
+import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.repository.MissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MissionService {
@@ -17,8 +18,8 @@ public class MissionService {
         this.missionRepository = missionRepository;
     }
 
-    public List<Mission> getAllMission() {
-        return missionRepository.findAll();
+    public List<MissionPayload> getAllMission() {
+        return missionRepository.findAll().stream().map(MissionPayload::new).collect(Collectors.toList());
     }
 
 }

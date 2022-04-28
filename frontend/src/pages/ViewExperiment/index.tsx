@@ -1,224 +1,135 @@
 import NavBar from '../../components/NavBar';
-import React, { useState } from 'react';
-import { Box, Card, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Card, CircularProgress, Container, Grid, Paper, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getExperiment } from '../../util/api';
-import CircularProgress from '@mui/material/CircularProgress';
-import FlagIcon from '@mui/icons-material/Flag';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import lodash from 'lodash';
+import { Flag, RocketLaunch, Science } from '@mui/icons-material';
+import { getExperiment } from '../../util/apiCalls';
+import { Experiment } from '../../util/types';
 
 export default function ViewExperiment() {
   const [id] = useState(new URLSearchParams(useLocation().search).get('id') as string);
-  const { data, isLoading } = useQuery('experiments', () => getExperiment({ id: id }));
+  const [experiment, setExperiment] = useState<Experiment>();
+  const { data, isSuccess, isLoading } = useQuery(['experiments', id], ({ queryKey }) => {
+    const [, id] = queryKey;
+    return getExperiment({ id });
+  });
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      setExperiment(data);
+    }
+  }, [isSuccess, data]);
 
   return (
     <>
       {isLoading ? (
-        // TODO Center Loading Process And Change Color ?
-        <Grid>
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <CircularProgress />
-          </Box>
-        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <CircularProgress />
+        </Box>
       ) : (
-        <Grid container alignItems='stretch'>
+        <>
           <NavBar />
-          <Grid item xs={1.5} />
-          <Grid item xs={9}>
-            <Grid container justifyContent='center'>
-              <Box display='flex' alignItems='center' justifyContent='center'>
-                <Paper elevation={24}>
-                  <Grid container alignItems={'center'}>
-                    <Grid container direction='column' alignContent='center' wrap='nowrap' my={3}>
-                      <Typography variant='h4' textAlign='center'>
-                        {data?.title}
-                      </Typography>
-                      <Grid container rowSpacing={0}>
-                        <Grid item xs={12} md={6}>
-                          <Card sx={{ p: 2, m: 2, minWidth: '350' }} elevation={3}>
-                            <Grid container direction='row' alignItems='center'>
-                              <Grid item>
-                                <FlagIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography variant={'h5'}>Missions :</Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid item>
-                                  <Typography gutterBottom={true} variant={'body1'}>
-                                    {data?.mission.name}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid container item>
-                              <Grid item>
-                                <Typography variant={'h5'} display={'inline'}>
-                                  Fields of Research classification :
-                                </Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid item>
-                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
-                                    {data?.forCode.id}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid container>
-                              <Grid item>
-                                <Typography variant={'h5'} display={'inline'}>
-                                  FoR Classification Name :
-                                </Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid item>
-                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
-                                    {data?.forCode.name}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <Card sx={{ p: 2, m: 2, minWidth: '350' }} elevation={3}>
-                            <Grid container direction={'row'} alignItems={'center'}>
-                              <Grid item>
-                                <RocketLaunchIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography variant={'h5'} display={'inline'}>
-                                  Platform :
-                                </Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid item>
-                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
-                                    {(() => {
-                                      if (data?.platform.name === 'spaceStation') {
-                                        return 'Space Station';
-                                      } else if (data?.platform.name === 'spaceShuttle') {
-                                        return 'Space Shuttle';
-                                      } else if (data?.platform.name === 'retrievableCapsule') {
-                                        return 'Retrievable Capsule';
-                                      } else if (data?.platform.name === 'soundingRocket') {
-                                        return 'Sounding Rocket';
-                                      } else if (data?.platform.name === 'parabolicFlight') {
-                                        return 'Parabolic Flight';
-                                      } else if (data?.platform.name === 'groundBasedFacility') {
-                                        return 'Ground Based Facility';
-                                      }
-                                    })()}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid container item>
-                              <Grid item>
-                                <Typography variant={'h5'} display={'inline'}>
-                                  Socio-Economic Objective classification :
-                                </Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid>
-                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
-                                    {data?.seoCode.id}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid container item>
-                              <Grid item>
-                                <Typography variant={'h5'} display={'inline'}>
-                                  SEO Classification Name :
-                                </Typography>
-                              </Grid>
-                              <Grid container direction='column' alignItems='left'>
-                                <Grid item>
-                                  <Typography gutterBottom={true} variant={'body1'} display={'inline'}>
-                                    {data?.seoCode.name}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid container>
-                          <Card sx={{ p: 2, m: 2 }} elevation={10}>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'}>
-                                Researchers :
-                              </Typography>
-                              <Grid item spacing={2} direction='column'>
-                                {data?.people.map((person) => (
-                                  <Grid container key={person.person.id}>
-                                    <Grid item>
-                                      <Typography gutterBottom variant={'body1'} display={'block'}>
-                                        {person.person.familyName[0]}. {person.person.firstName}
-                                        {' affiliated with '}
-                                        {person.person.affiliation} {' works at '} {person.person.city} {' in '}{' '}
-                                        {person.person.state} , {person.person.country}
-                                      </Typography>
-                                    </Grid>
-                                  </Grid>
-                                ))}
-                              </Grid>
-                            </Grid>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'} display={'inline'}>
-                                Experiment Publication :{' '}
-                              </Typography>
-                              <Typography gutterBottom variant={'body1'}>
-                                {data?.experimentPublications}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'} display={'inline'}>
-                                Lead Institution :{' '}
-                              </Typography>
-                              <Typography gutterBottom variant={'body1'}>
-                                {data?.leadInstitution}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'}>
-                                Type of Activity (ToA) :
-                              </Typography>
-                              <Typography gutterBottom variant={'body1'}>
-                                {data?.toa}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'}>
-                                Experiment Aim :
-                              </Typography>
-                              <Typography gutterBottom variant={'body1'}>
-                                {data?.experimentAim}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography gutterBottom variant={'h5'}>
-                                Experiment Objective :
-                              </Typography>
-                              <Typography gutterBottom variant={'body1'}>
-                                {data?.experimentObjective}
-                              </Typography>
-                            </Grid>
-                          </Card>
-                        </Grid>
-                      </Grid>
+          <Container maxWidth='md' sx={{ my: 4 }}>
+            <Paper elevation={24} sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant='h4' fontWeight='bold' mb={3}>
+                    {experiment?.title}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container display='flex' spacing={3}>
+                    <Grid item xs={12} md={6} display='flex'>
+                      <Card
+                        sx={{
+                          p: 2,
+                          width: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}
+                        elevation={3}
+                      >
+                        <Box display='inline-flex' alignItems='center'>
+                          <Typography variant='h5' fontWeight='bold' pr={1}>
+                            Mission
+                          </Typography>
+                          <Flag fontSize='medium' />
+                        </Box>
+                        <Typography variant='body1'>{experiment?.mission.name}</Typography>
+                        <Typography mt={2} variant='h6' fontWeight='bold'>
+                          Fields of Research classification
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.forCode.id}</Typography>
+                        <Typography mt={2} variant='h6' fontWeight='bold'>
+                          FOR Classification Name
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.forCode.name}</Typography>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6} display='flex'>
+                      <Card sx={{ p: 2, width: '100%', display: 'flex', flexDirection: 'column' }} elevation={3}>
+                        <Box display='inline-flex' alignItems='center'>
+                          <Typography variant='h5' fontWeight='bold' pr={1}>
+                            Platform
+                          </Typography>
+                          <RocketLaunch fontSize='medium' />
+                        </Box>
+                        <Typography variant='body1'>{lodash(experiment?.platform.name).startCase()}</Typography>
+                        <Typography mt={2} variant='h6' fontWeight='bold'>
+                          Socio-Economic Objective classification
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.seoCode.id}</Typography>
+                        <Typography mt={2} variant='h6' fontWeight='bold'>
+                          SEO Classification Name
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.seoCode.name}</Typography>
+                      </Card>
                     </Grid>
                   </Grid>
-                </Paper>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid item xs={1.5} />
-        </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Card sx={{ p: 2, mt: 3 }} elevation={3}>
+                    <Box display='inline-flex' alignItems='center'>
+                      <Typography variant='h5' fontWeight='bold'>
+                        Researchers
+                      </Typography>
+                      <Science />
+                    </Box>
+                    {experiment?.people.map((person, i) => (
+                      <Typography key={i} gutterBottom variant={'body1'} display={'block'}>
+                        {`${person.person.familyName.at(0)}. ${person.person.firstName} affiliated with ${
+                          person.person.affiliation
+                        } works at ${person.person.city} in ${person.person.state}, ${person.person.country}`}
+                      </Typography>
+                    ))}
+                    <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                      Experiment Publication
+                    </Typography>
+                    <Typography variant='body1'>{experiment?.experimentPublications || 'None'}</Typography>
+                    <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                      Lead Institution
+                    </Typography>
+                    <Typography variant='body1'>{experiment?.leadInstitution}</Typography>
+                    <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                      Type of Activity (ToA)
+                    </Typography>
+                    <Typography variant='body1'>{experiment?.toa}</Typography>
+                    <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                      Experiment Aim
+                    </Typography>
+                    <Typography variant='body1'>{experiment?.experimentAim}</Typography>
+                    <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                      Experiment Objective
+                    </Typography>
+                    <Typography variant='body1'>{experiment?.experimentObjective}</Typography>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Container>
+        </>
       )}
     </>
   );

@@ -1,6 +1,6 @@
 package com.rmit.mgdb.controller;
 
-import com.rmit.mgdb.model.Mission;
+import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +20,8 @@ public class MissionController {
         this.missionService = missionService;
     }
 
-    @GetMapping("/all")
-    public List<Mission> getAll() {
+    @GetMapping
+    public List<MissionPayload> getAll() {
         return missionService.getAllMission();
     }
 

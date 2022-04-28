@@ -31,7 +31,6 @@ public class ExperimentController {
 
     @GetMapping("/get")
     public ResponseEntity<Optional<Experiment>> getById(@RequestParam int id) {
-        System.out.println(id);
         return new ResponseEntity<>(experimentService.getExperimentById(id), HttpStatus.OK);
     }
 
