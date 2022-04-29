@@ -7,7 +7,6 @@ import api from '../../util/api';
 import { Mission } from '../../util/types';
 import lodash from 'lodash';
 import moment from 'moment';
-import { RocketLaunchRounded, DateRangeRounded, ScienceRounded } from '@mui/icons-material';
 import ExperimentPaper from '../../components/ExperimentPaper';
 
 export default function ViewMission() {

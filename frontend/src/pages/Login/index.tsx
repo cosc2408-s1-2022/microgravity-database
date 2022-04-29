@@ -78,7 +78,9 @@ export default function Login() {
               borderRadius: '16px',
             }}
           >
-            <Typography variant='h4'>Login</Typography>
+            <Typography variant='h4' fontWeight='bold'>
+              Login
+            </Typography>
             <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -109,7 +111,7 @@ export default function Login() {
                     type='submit'
                     fullWidth
                     variant='contained'
-                    sx={{ mt: 3, mb: 2, '&.MuiButton-root': { color: 'white' } }}
+                    sx={{ mt: 1, mb: 2, '&.MuiButton-root': { color: 'white' } }}
                   >
                     Sign In
                   </Button>
