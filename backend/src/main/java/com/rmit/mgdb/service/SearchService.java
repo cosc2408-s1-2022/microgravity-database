@@ -107,7 +107,7 @@ public class SearchService {
                                                            // Must match string if present.
                                                            if (!stringParam.isEmpty()) {
                                                                b.must(s -> s.match()
-                                                                            .fields(resultTypeParam.searchFields)
+                                                                            .fields(SIMPLE_SEARCH_FIELDS)
                                                                             .matching(stringParam));
                                                            }
 

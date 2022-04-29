@@ -4,10 +4,9 @@ import { Experiment, SearchResponse } from '../../util/types';
 import api from '../../util/api';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Grid, Pagination, Typography } from '@mui/material';
+import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import NavBar from '../../components/NavBar';
 import ExperimentResult from '../../components/Results/Experiment';
 
 export default function BasicSearchPage() {
@@ -69,16 +68,17 @@ export default function BasicSearchPage() {
   };
 
   return (
-    <Grid container direction='column' height='100vh' wrap='nowrap'>
-      <NavBar />
-      <Grid container direction='column' alignSelf='center' alignItems='center'>
-        {resultsElement}
-        {pages > 1 ? (
-          <Grid item my={2}>
-            <Pagination count={pages} onChange={handlePageChange} />
-          </Grid>
-        ) : null}
+    <Container maxWidth='lg'>
+      <Grid container direction='column' height='100vh' wrap='nowrap'>
+        <Grid container direction='column' alignSelf='center' alignItems='center'>
+          {resultsElement}
+          {pages > 1 ? (
+            <Grid item my={2}>
+              <Pagination count={pages} onChange={handlePageChange} />
+            </Grid>
+          ) : null}
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }

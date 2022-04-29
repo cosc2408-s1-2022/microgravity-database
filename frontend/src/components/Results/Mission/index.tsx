@@ -12,19 +12,19 @@ export default function MissionResult(props: GridProps & MissionResultsProps) {
             <Typography display={'inline'}> Mission Name : </Typography> {props.name}
           </Typography>
         </Grid>
-        <Grid item m={1}>
+        <Grid item>
           <Typography display={'inline'}>Start Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
             {moment(props.startDate).year()}
           </Typography>
         </Grid>
-        <Grid item m={1}>
+        <Grid item>
           <Typography display={'inline'}>End Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
             {moment(props.endDate).year()}
           </Typography>
         </Grid>
-        <Grid item m={1}>
+        <Grid item>
           <Typography display={'inline'}>Launch Date : </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
             {moment(props.launchDate).year()}

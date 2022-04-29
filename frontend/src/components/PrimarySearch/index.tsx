@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -17,23 +17,26 @@ export default function PrimarySearch() {
   };
 
   return (
-    <Grid
-      container
-      item
+    <Box
       component='form'
+      noValidate
       onSubmit={handleSubmit}
+      display='flex'
       justifyContent='center'
-      alignItems='center'
-      wrap='nowrap'
+      alignItems='stretch'
     >
-      <Grid item md={6}>
-        <FormField required id='search' label='Keyword(s)' name='searchString' value={string} onChange={setString} />
-      </Grid>
-      <Grid item>
-        <Button type='submit' variant='contained' color='secondary' style={{ padding: '8px', marginLeft: '15px' }}>
-          <SearchIcon />
-        </Button>
-      </Grid>
-    </Grid>
+      <FormField
+        required
+        id='search'
+        label='Keyword(s)'
+        name='searchString'
+        value={string}
+        onChange={setString}
+        sx={{ flexGrow: 1 }}
+      />
+      <Button type='submit' disabled={!string} variant='contained' sx={{ ml: 1 }}>
+        <SearchIcon />
+      </Button>
+    </Box>
   );
 }

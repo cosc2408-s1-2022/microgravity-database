@@ -7,7 +7,6 @@ import FormField from '../../components/FormField';
 import { AuthenticationResponse, UserRole } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import api from '../../util/api';
-import Header from '../../components/NavBar';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -45,105 +44,111 @@ export default function Register() {
 
   return (
     <>
-      <Header />
-      <main>
-        <video
-          autoPlay
-          loop
-          muted
-          style={{
-            position: 'absolute',
-            width: '100%',
-            left: '50%',
-            top: '50%',
-            height: '100%',
-            objectFit: 'cover',
-            transform: 'translate(-50%, -50%)',
-            zIndex: '-1',
-          }}
-        >
-          <source src={'/space.mp4'} type='video/mp4' />
-        </video>
-        <div>
-          <Container maxWidth='sm'>
-            <Grid container justifyContent='center'>
-              <Box
-                sx={{
-                  marginTop: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  height: 'auto',
-                  width: 'auto',
-                  bgcolor: '#FAEBEFFF',
-                  p: 3,
-                  borderRadius: '16px',
-                }}
-              >
-                <Typography component='h1' variant='h4' fontWeight='bold'>
+      <video
+        autoPlay
+        loop
+        muted
+        style={{
+          position: 'fixed',
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          outline: 'none',
+          zIndex: '-1',
+        }}
+      >
+        <source src={'/space.mp4'} type='video/mp4' />
+      </video>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backdropFilter: 'blur(8px)',
+          zIndex: '-1',
+        }}
+      />
+      <div>
+        <Container maxWidth='xs'>
+          <Box
+            sx={{
+              marginTop: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              height: 'auto',
+              width: 'auto',
+              bgcolor: '#FAEBEFFF',
+              p: 3,
+              borderRadius: '16px',
+            }}
+          >
+            <Typography variant='h4'>Register</Typography>
+            <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FormField
+                    required
+                    name='username'
+                    label='Username'
+                    autoComplete='username'
+                    errors={error?.response?.data}
+                    onChange={setUsername}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormField
+                    required
+                    name='password'
+                    label='Password'
+                    type='password'
+                    autoComplete='new-password'
+                    errors={
+                      passwordRegex
+                        ? {
+                            password: passwordRegex,
+                          }
+                        : undefined
+                    }
+                    onChange={setPassword}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormField
+                    required
+                    name='confirmPassword'
+                    label='Confirm Password'
+                    type='password'
+                    autoComplete='new-password'
+                    errors={
+                      passwordsMatchingError
+                        ? {
+                            confirmPassword: passwordsMatchingError,
+                          }
+                        : undefined
+                    }
+                    onChange={setConfirmPassword}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Button color='error' type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                   Register
-                </Typography>
-                <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <FormField
-                        required
-                        name='username'
-                        label='Username'
-                        autoComplete='username'
-                        errors={error?.response?.data}
-                        onChange={setUsername}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormField
-                        required
-                        name='password'
-                        label='Password'
-                        type='password'
-                        autoComplete='new-password'
-                        errors={
-                          passwordRegex
-                            ? {
-                                password: passwordRegex,
-                              }
-                            : undefined
-                        }
-                        onChange={setPassword}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormField
-                        required
-                        name='confirmPassword'
-                        label='Confirm Password'
-                        type='password'
-                        autoComplete='new-password'
-                        errors={
-                          passwordsMatchingError
-                            ? {
-                                confirmPassword: passwordsMatchingError,
-                              }
-                            : undefined
-                        }
-                        onChange={setConfirmPassword}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Button color='error' type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-                    Register
-                  </Button>
-                  <Grid item>
-                    <Link href={'/login'} variant='body2' color='secondary'>
-                      {'Already have an account? Login'}
-                    </Link>
-                  </Grid>
-                </Box>
-              </Box>
-            </Grid>
-          </Container>
-        </div>
-      </main>
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Link href={'/login'} color='text.primary' sx={{ textDecoration: 'underline' }}>
+                  Already have an account? Login
+                </Link>
+              </Grid>
+            </Box>
+          </Box>
+        </Container>
+      </div>
     </>
   );
 }

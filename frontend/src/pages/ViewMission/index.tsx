@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Link, Paper, Typography } from '@mui/material';
+import { Box, CircularProgress, Container, Paper, Typography } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -8,7 +8,6 @@ import { Mission } from '../../util/types';
 import lodash from 'lodash';
 import moment from 'moment';
 import { RocketLaunchRounded, DateRangeRounded, ScienceRounded } from '@mui/icons-material';
-import NavBar from '../../components/NavBar';
 import ExperimentPaper from '../../components/ExperimentPaper';
 
 export default function ViewMission() {
@@ -30,57 +29,45 @@ export default function ViewMission() {
       <CircularProgress size={24} color='primary' />
     </Box>
   ) : (
-    <>
-      <NavBar />
-      <Container maxWidth='md' sx={{ my: 4 }}>
-        <Paper
-          elevation={24}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            p: 2,
-          }}
-        >
-          <Typography variant='h4' fontWeight='bold'>
-            {`${mission?.name} (${moment(mission?.launchDate).year()})`}
-          </Typography>
-          <Box display='inline-flex' alignItems='center'>
-            <Typography variant='h6' sx={{ pr: 1 }}>
-              {lodash(mission?.platform.name).startCase()}
-            </Typography>
-            <RocketLaunchRounded fontSize='small' />
-          </Box>
-          <Box display='inline-flex' alignItems='center'>
-            <Typography variant='h6' sx={{ pr: 1 }} color='GrayText'>{`${moment(mission?.startDate).year()} - ${moment(
-              mission?.endDate,
-            ).year()}`}</Typography>
-            <DateRangeRounded fontSize='small' />
-          </Box>
-        </Paper>
-        <Paper
-          elevation={24}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            p: 2,
-            mt: 2,
-          }}
-        >
-          <Box display='inline-flex' alignItems='center'>
-            <Typography variant='h5' fontWeight='bold' sx={{ pr: 1 }}>
-              Experiments
-            </Typography>
-            <ScienceRounded />
-          </Box>
-          {mission?.experiments && mission?.experiments.length > 0 ? (
-            mission.experiments.map((e) => <ExperimentPaper experiment={e} key={e.id} />)
-          ) : (
-            <Typography>None yet.</Typography>
-          )}
-        </Paper>
-      </Container>
-    </>
+    <Container maxWidth='md'>
+      <Paper
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          p: 2,
+          boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        }}
+      >
+        <Typography variant='h4' fontWeight='bold'>
+          {`${mission?.name} (${moment(mission?.launchDate).year()})`}
+        </Typography>
+        <Typography variant='h6' sx={{ pr: 1 }}>
+          {lodash(mission?.platform.name).startCase()}
+        </Typography>
+        <Typography variant='body1' sx={{ pr: 1 }} color='GrayText'>{`${moment(mission?.startDate).year()} - ${moment(
+          mission?.endDate,
+        ).year()}`}</Typography>
+      </Paper>
+      <Paper
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          p: 2,
+          mt: 2,
+          boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        }}
+      >
+        <Typography variant='h5' fontWeight='bold' sx={{ pr: 1 }}>
+          Experiments
+        </Typography>
+        {mission?.experiments && mission?.experiments.length > 0 ? (
+          mission.experiments.map((e) => <ExperimentPaper experiment={e} key={e.id} />)
+        ) : (
+          <Typography>None yet.</Typography>
+        )}
+      </Paper>
+    </Container>
   );
 }

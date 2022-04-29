@@ -1,4 +1,4 @@
-import { Grid, GridProps, Link, makeStyles, Typography } from '@mui/material';
+import { Grid, GridProps, Link, Typography } from '@mui/material';
 import { ExperimentResultsProps } from '../../../util/types';
 
 export default function ExperimentResult(props: GridProps & ExperimentResultsProps) {
@@ -9,10 +9,10 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
       <Grid container item direction='column' md={3}>
         <Grid item>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
-            <Typography display={'inline'}>Mission : </Typography> {props.mission.name}
+            <Typography display={'inline'}>Mission: </Typography> {props.mission.name}
           </Typography>
         </Grid>
-        <Typography>Experiment Researchers :</Typography>
+        <Typography>Researchers:</Typography>
         <Grid container item spacing={2}>
           {props.people.map((person) => (
             <Grid item key={person.person.id}>
@@ -25,15 +25,16 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
       </Grid>
       <Grid item md>
         <Grid item>
-          <Typography display={'inline'}>Experiment Title : </Typography>
+          <Typography display={'inline'}>Experiment Title: </Typography>
           <Typography color='primary.dark' variant='body1' fontSize={16} display={'inline'}>
             {props.title}
           </Typography>
         </Grid>
         <Grid item>
-          <Typography display={'inline'}>Experiment Objective : </Typography>
+          <Typography display={'inline'}>Experiment Objective: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.objective?.substring(0, 250).concat('...')}
+            {props.objective &&
+              (props.objective.substring(0, props.objective.indexOf('.')) || props.objective).concat('...')}
           </Typography>
         </Grid>
       </Grid>

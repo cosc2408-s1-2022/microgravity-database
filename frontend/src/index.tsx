@@ -17,8 +17,9 @@ import AddPerson from './pages/AddPerson';
 import AddMission from './pages/AddMission';
 import AddExperiment from './pages/AddExperiment';
 import ViewMission from './pages/ViewMission';
-import ViewForCode from './pages/ForCode';
-import ViewSeoCode from './pages/SeoCode';
+import ViewForCode from './pages/ViewForCode';
+import ViewSeoCode from './pages/ViewSeoCode';
+import NavBar from './components/NavBar';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -33,6 +34,7 @@ root.render(
       <CssBaseline>
         <BrowserRouter>
           <LocalizationProvider dateAdapter={AdapterMoment}>
+            <NavBar />
             <Routes>
               <Route path='/' element={<Navigate to='/home' />} />
               <Route path='/home' element={<HomePage />} />

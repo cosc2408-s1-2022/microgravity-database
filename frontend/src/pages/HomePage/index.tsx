@@ -1,43 +1,43 @@
-import * as React from 'react';
-import NavBar from '../../components/NavBar';
 import PrimarySearch from '../../components/PrimarySearch';
 import { ReactComponent as Logo } from '../../logo_black.svg';
-import { Button, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Container, Grid, Link, Typography } from '@mui/material';
 import { Platforms } from '../../util/types';
-
-function PlatformElement(props: { platform: Platforms; text: string }) {
-  return (
-    <Grid item>
-      <Button variant='contained'>
-        <Link to={`/search/advanced?platform=${props.platform}`} style={{ textDecoration: 'none' }}>
-          <Typography sx={{ color: 'white' }} variant='body1' display='inline'>
-            {props.text}
-          </Typography>
-        </Link>
-      </Button>
-    </Grid>
-  );
-}
+import lodash from 'lodash';
 
 export default function HomePage() {
   return (
-    <Grid container direction='column' height='100vh' wrap='nowrap'>
-      <NavBar hasSearch={false} />
-      <Grid container item direction='column' alignItems='center' justifyContent='center' flexGrow={1}>
-        <Grid item md={4} m={3}>
-          <Logo />
+    <Container maxWidth='md'>
+      <Grid
+        container
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Grid item xs={12}>
+          <Logo className='logo' height={'12rem'} style={{ margin: '4rem 0' }} />
         </Grid>
-        <PrimarySearch />
-        <Grid container item justifyContent='center' spacing={2} mt={1}>
-          <PlatformElement platform={Platforms.SPACE_STATION} text='Space Station' />
-          <PlatformElement platform={Platforms.SPACE_SHUTTLE} text='Space Shuttle' />
-          <PlatformElement platform={Platforms.RETRIEVABLE_CAPSULE} text='Retrievable Capsule' />
-          <PlatformElement platform={Platforms.SOUNDING_ROCKET} text='Sounding Rocket' />
-          <PlatformElement platform={Platforms.PARABOLIC_FLIGHT} text='Parabolic Flight' />
-          <PlatformElement platform={Platforms.GROUND_BASED_FACILITY} text='Ground Based Facility' />
+        <Grid item xs={12}>
+          <Grid container flexDirection='column' alignItems='center'>
+            <Grid item xs={12} style={{ width: '100%' }}>
+              <PrimarySearch />
+            </Grid>
+            <Grid item xs={12}>
+              <Box display='inline-flex'>
+                {Object.values(Platforms).map((platform) => (
+                  <Link key={platform} href={`/search/advanced?platform=${platform}`} sx={{ m: 1 }}>
+                    <Typography color='text.secondary' variant='body1' sx={{ textDecoration: 'underline' }}>
+                      {lodash(platform).startCase()}
+                    </Typography>
+                  </Link>
+                ))}
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }

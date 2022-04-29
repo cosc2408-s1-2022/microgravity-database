@@ -68,19 +68,27 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
           <MenuItem value={Platforms.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
         </SelectElement>
 
-        {resultType === ResultType.MISSION ? (
-          <DateElement label='Start Date' value={startDate} callback={setStartDate} />
-        ) : null}
-
-        {resultType === ResultType.MISSION ? (
-          <DateElement label='End Date' value={endDate} min={moment(startDate)} callback={setEndDate} />
-        ) : null}
+        <DateElement
+          disabled={resultType !== ResultType.MISSION}
+          label='Start Date'
+          value={startDate}
+          callback={setStartDate}
+        />
+        <DateElement
+          disabled={resultType !== ResultType.MISSION}
+          label='End Date'
+          value={endDate}
+          min={moment(startDate)}
+          callback={setEndDate}
+        />
 
         <Grid container item justifyContent='space-between'>
-          <Button type='submit' variant='contained'>
+          <Button fullWidth type='submit' variant='contained'>
             Refine Search
           </Button>
-          <Button onClick={handleReset}>Reset</Button>
+          <Button sx={{ mt: 2 }} fullWidth onClick={handleReset}>
+            Reset
+          </Button>
         </Grid>
       </Grid>
     </Grid>

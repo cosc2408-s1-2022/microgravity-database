@@ -1,6 +1,5 @@
-import { Box, Grid, Pagination, Typography } from '@mui/material';
+import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Experiment,
@@ -142,19 +141,20 @@ export default function AdvancedSearchPage() {
   };
 
   return (
-    <Grid container direction='column' height='100vh' wrap='nowrap'>
-      <NavBar />
-      <Grid container direction='row' wrap='nowrap' flexGrow={1}>
-        <AdvancedSearch {...searchState} container item md={3} />
-        <Grid container item direction='column' alignItems='center'>
-          {resultsElement}
-          {pages > 1 ? (
-            <Grid item my={2}>
-              <Pagination count={pages} onChange={handlePageChange} />
-            </Grid>
-          ) : null}
+    <Container maxWidth='lg'>
+      <Grid container direction='column' height='100vh' wrap='nowrap'>
+        <Grid container direction='row' wrap='nowrap' flexGrow={1}>
+          <AdvancedSearch {...searchState} container item md={3} />
+          <Grid container item direction='column' alignItems='center'>
+            {resultsElement}
+            {pages > 1 ? (
+              <Grid item my={2}>
+                <Pagination count={pages} onChange={handlePageChange} />
+              </Grid>
+            ) : null}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }

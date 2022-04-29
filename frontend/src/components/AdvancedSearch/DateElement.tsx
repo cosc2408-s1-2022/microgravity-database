@@ -8,6 +8,7 @@ export default function DateElement(
   props: GridProps & {
     label: string;
     value: SearchField;
+    disabled: boolean;
     min?: Moment | undefined;
     max?: Moment | undefined;
     callback: React.Dispatch<React.SetStateAction<SearchField>>;
@@ -31,13 +32,14 @@ export default function DateElement(
   return (
     <Grid item>
       <DatePicker
+        disabled={props.disabled}
         views={['year']}
         label={props.label}
         value={props.value}
         minDate={props.min}
         maxDate={props.max || moment()}
         onChange={(e: Moment | null) => handleDateChange(e)}
-        renderInput={(params) => <TextField size='small' fullWidth {...params} />}
+        renderInput={(params) => <TextField size='small' fullWidth {...params} color='secondary' />}
       />
     </Grid>
   );
