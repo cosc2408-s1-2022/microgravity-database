@@ -3,6 +3,7 @@
 export type UserAuth = string | null;
 
 export type User = {
+  id: number;
   username: string;
   role: UserRole;
   createdAt: Date;
@@ -55,7 +56,7 @@ export type AuthenticationResponse = {
 };
 
 export type Experiment = {
-  id: string;
+  id: number;
   title: string;
   toa: string;
   leadInstitution: string;
@@ -64,6 +65,7 @@ export type Experiment = {
   experimentObjective: string;
   experimentModuleDrawing: string;
   experimentPublications: string;
+  deleted: boolean;
   mission: Mission;
   platform: Platform;
   forCode: ForCode;
@@ -97,36 +99,22 @@ export type ExperimentPersonRequest = {
 };
 
 export type Platform = {
-  id: string;
+  id: number;
   name: string;
   forCodes: ForCode[];
   seoCodes: SeoCode[];
 };
 
 export type Code = {
-  id: string;
+  id: number;
   code: number;
   name: string;
-  experiments?: Experiment[];
+  experiments: Experiment[];
 };
 
 export type ForCode = Code;
 
 export type SeoCode = Code;
-
-export type ForCodeResult = {
-  id: string;
-  code: number;
-  name: string;
-  experiments: Experiment[];
-};
-
-export type SeoCodeResult = {
-  id: string;
-  code: number;
-  name: string;
-  experiments: Experiment[];
-};
 
 export type Person = {
   id: number;
@@ -137,6 +125,12 @@ export type Person = {
   country: string;
   affiliation: string;
   role: Role;
+};
+
+export type Page<T> = {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
 };
 
 export type SearchResponse = {

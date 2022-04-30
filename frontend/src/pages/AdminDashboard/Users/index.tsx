@@ -5,12 +5,9 @@ import {
   FormControl,
   Grid,
   Paper,
-  Select,
   ToggleButtonGroup,
   ToggleButton,
   Typography,
-  Autocomplete,
-  TextField,
   OutlinedInput,
   InputLabel,
   InputAdornment,
@@ -22,13 +19,15 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
 import CenteredCircularProgress from '../../../components/CenteredCircularProgress';
-import { Page, Role, User } from '../../../types';
+import { Page, UserRole, User } from '../../../util/types';
 import api from '../../../util/api';
 import { useLoggedInUser } from '../../../util/hooks';
 import { ClearRounded, PersonRounded, SearchRounded, ShieldRounded } from '@mui/icons-material';
+import MessageSnackbar from '../../../components/MessageSnackbar';
 
 export default function Users() {
   const navigate = useNavigate();
+  
   const { user: loggedInUser, isLoading: isLoggedInUserLoading, isError: isLoggedInUserError } = useLoggedInUser();
   useEffect(() => {
     if (isLoggedInUserError) {
@@ -37,7 +36,6 @@ export default function Users() {
   }, [isLoggedInUserError, navigate]);
 
   const [usersPage, setUsersPage] = useState<Page<User>>();
-  const [users, setUsers] = useState<User[]>();
   const {
     data: usersData,
     isLoading: isUsersLoading,
@@ -48,7 +46,6 @@ export default function Users() {
   useEffect(() => {
     if (isUsersSuccess && usersData && loggedInUser) {
       setUsersPage(usersData.data);
-      setUsers(usersData.data.content);
     }
   }, [isUsersSuccess, usersData, loggedInUser]);
 
@@ -66,20 +63,29 @@ export default function Users() {
     );
   };
 
-  const [changedUsers, setChangedUsers] = useState<User[]>();
+  const [changedUsers, setChangedUsers] = useState<User[]>([]);
   const {
     isLoading: isSaveUsersLoading,
     isSuccess: isSaveUsersSuccess,
+    isError: isSaveUsersError,
     mutate: saveUsers,
-  } = useMutation('saveUsers', () => api.post('/users/saveAll', { users }));
+  } = useMutation('saveUsers', () => api.post('/users/saveAll', changedUsers));
   const handleSaveChanges = () => {
     saveUsers();
-    refetchUsers();
   };
+  const handleDiscardChanges = () => {
+    setChangedUsers([]);
+  };
+  useEffect(() => {
+    if (isSaveUsersSuccess) {
+      setChangedUsers([]);
+      refetchUsers();
+    }
+  }, [isSaveUsersSuccess, refetchUsers]);
 
   return isLoggedInUserLoading || isUsersLoading || !loggedInUser ? (
     <CenteredCircularProgress />
-  ) : loggedInUser.role === Role.ROLE_ADMIN ? (
+  ) : loggedInUser.role === UserRole.ROLE_ADMIN ? (
     <Container maxWidth='sm' sx={{ mt: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} display='flex' justifyContent='flex-end' alignItems='center'>
@@ -102,14 +108,15 @@ export default function Users() {
           </FormControl>
         </Grid>
         {usersPage?.content.filter(filterBySearchString).map((u) => {
-          const currentRole = users?.find((cu) => cu.id === u.id)?.role;
-          const roleChanged = currentRole !== u.role;
+          const currentRole = changedUsers.find((cu) => cu.id === u.id)?.role;
+          const roleChanged = currentRole && currentRole !== u.role;
+          const isLoggedInUser = u.id === loggedInUser.id;
           return (
             <Grid item key={u.id} xs={12}>
               <Paper sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', p: 1 }}>
                 <Box display='flex' flexDirection='column' flexGrow={1}>
                   <Typography variant='body1' flexGrow={1} pr={2}>
-                    {u.username}
+                    {`${u.username} ${isLoggedInUser ? '(You)' : ''}`}
                   </Typography>
                   <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
                     {`Joined ${moment(u.createdAt).fromNow()}`}
@@ -117,10 +124,17 @@ export default function Users() {
                 </Box>
                 <ToggleButtonGroup
                   exclusive
-                  disabled={u.id === loggedInUser.id}
-                  value={currentRole}
+                  disabled={isLoggedInUser}
+                  value={currentRole || u.role}
                   onChange={(_event, value) => {
-                    value && setUsers((prev) => prev?.map((pu) => (pu.id === u.id ? { ...pu, role: value } : pu)));
+                    if (value && value !== currentRole) {
+                      setChangedUsers((prev) =>
+                        prev.findIndex((cu) => cu.id === u.id) === -1
+                          ? prev.concat({ ...u, role: value })
+                          : prev.filter((cu) => cu.id !== u.id),
+                      );
+                      console.log(changedUsers);
+                    }
                   }}
                   sx={
                     roleChanged
@@ -134,13 +148,13 @@ export default function Users() {
                         }
                   }
                 >
-                  <ToggleButton size='small' value={Role.ROLE_USER}>
+                  <ToggleButton size='small' value={UserRole.ROLE_USER}>
                     <Typography variant='body2' textTransform='none' mx={0.5}>
                       User
                     </Typography>
                     <PersonRounded />
                   </ToggleButton>
-                  <ToggleButton size='small' value={Role.ROLE_ADMIN}>
+                  <ToggleButton size='small' value={UserRole.ROLE_ADMIN}>
                     <Typography variant='body2' textTransform='none' mx={0.5}>
                       Admin
                     </Typography>
@@ -152,9 +166,24 @@ export default function Users() {
           );
         })}
       </Grid>
-      <Button sx={{ mt: 2 }} variant='contained' disabled={} onClick={handleSaveChanges}>
+      <Button
+        sx={{ mt: 2, mr: 1 }}
+        variant='contained'
+        onClick={handleSaveChanges}
+        disabled={isSaveUsersLoading || changedUsers.length === 0}
+      >
         Save Changes
       </Button>
+      <Button
+        sx={{ mt: 2, backgroundColor: 'gray' }}
+        variant='contained'
+        onClick={handleDiscardChanges}
+        disabled={isSaveUsersLoading || changedUsers.length === 0}
+      >
+        Discard
+      </Button>
+      <MessageSnackbar open={isSaveUsersSuccess} message='Your changes are saved.' severity='success' />
+      <MessageSnackbar open={isSaveUsersError} message='Could not save changes. Please try again.' severity='error' />
     </Container>
   ) : (
     <Navigate to='/login' />

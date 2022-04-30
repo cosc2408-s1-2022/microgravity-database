@@ -1,21 +1,25 @@
-import { Grid, GridProps, Link, Typography } from '@mui/material';
+import { Grid, Link, LinkProps, Typography } from '@mui/material';
 import { ForCode } from '../../../util/types';
 
-export default function ForCodeResult(props: GridProps & ForCode) {
-  const url = `/forCode/${props.id}`;
+interface ForCodeResultProps extends LinkProps {
+  forCode: ForCode;
+}
+
+export default function ForCodeResult({ forCode, ...rest }: ForCodeResultProps) {
+  const url = `/forCode/${forCode.id}`;
   return (
-    <Grid container item component={Link} href={url} bgcolor={props.bgcolor} padding={3} alignItems='baseline'>
+    <Grid {...rest} container item component={Link} href={url} padding={3} alignItems='baseline'>
       <Grid container item direction='column' md={3} marginRight={5}>
         <Grid item>
           <Typography display={'inline'}>Fields of Research Classification (FoR) : </Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
-            {props.code}
+            {forCode.code}
           </Typography>
         </Grid>
       </Grid>
       <Grid item>
         <Typography display={'inline'} color='primary.dark' variant='body1'>
-          <Typography display={'inline'}>Fields of Research Classification Name : </Typography> {props.name}
+          <Typography display={'inline'}>Fields of Research Classification Name : </Typography> {forCode.name}
         </Typography>
       </Grid>
     </Grid>

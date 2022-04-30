@@ -7,11 +7,15 @@ import com.rmit.mgdb.payload.AddExperimentPersonRequest;
 import com.rmit.mgdb.payload.AddExperimentRequest;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
+
+import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 
 @Service
 public class ExperimentService {
@@ -39,10 +43,6 @@ public class ExperimentService {
         this.personService = personService;
         this.roleService = roleService;
         this.experimentPersonService = experimentPersonService;
-    }
-
-    public List<Experiment> getAllExperiment() {
-        return experimentRepository.findAll();
     }
 
     public Optional<Experiment> getExperimentById(long id) {
@@ -74,6 +74,18 @@ public class ExperimentService {
         }
 
         return experiment;
+    }
+
+    /**
+     * Get all experiments, optionally paginated.
+     */
+    public Page<Experiment> getExperiments(Optional<Integer> page, Optional<Integer> size) {
+        if (page.isPresent() || size.isPresent()) {
+            return experimentRepository.findExperimentsBy(
+                    PageRequest.of(page.orElse(0), size.orElse(DEFAULT_PAGE_SIZE)));
+        } else {
+            return experimentRepository.findExperimentsBy(Pageable.unpaged());
+        }
     }
 
 }

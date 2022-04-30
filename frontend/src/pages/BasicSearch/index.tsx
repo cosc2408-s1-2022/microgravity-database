@@ -45,7 +45,7 @@ export default function BasicSearchPage() {
       return (
         <ExperimentResult
           key={item.id}
-          id={item.id}
+          id={item.id.toString()}
           title={item.title}
           objective={item.experimentObjective}
           people={item.people}

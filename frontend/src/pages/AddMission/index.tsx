@@ -4,7 +4,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -18,6 +18,8 @@ import { Mission, Platform, UserRole } from '../../util/types';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
+  const navigate = useNavigate();
+
   const [platforms, setPlatforms] = useState<Platform[]>();
   const {
     data: platformsData,
@@ -66,9 +68,11 @@ export default function AddMission() {
     }
   }, [isMissionError]);
 
-  if (isMissionSuccess) {
-    return <Navigate to='/home' />;
-  }
+  useEffect(() => {
+    if (isMissionSuccess) {
+      navigate('/home');
+    }
+  }, [isMissionSuccess, navigate]);
 
   return (
     <AuthWrapper role={UserRole.ROLE_USER}>

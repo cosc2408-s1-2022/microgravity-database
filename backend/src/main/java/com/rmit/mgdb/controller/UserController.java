@@ -9,6 +9,7 @@ import com.rmit.mgdb.service.UserService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import com.rmit.mgdb.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -92,6 +95,17 @@ public class UserController {
     public ResponseEntity<?> getAuthenticated() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public Page<User> getExperiments(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
+        return userService.getUsers(page, size);
+    }
+
+    @PostMapping("/saveAll")
+    public ResponseEntity<?> getExperiments(@RequestBody List<User> users) {
+        userService.saveUsers(users);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

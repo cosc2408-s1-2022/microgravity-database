@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { User } from '../types';
+import { User } from '../util/types';
 import api from './api';
 
 export const useLoggedInUser = () => {

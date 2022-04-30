@@ -20,6 +20,9 @@ import ViewMission from './pages/ViewMission';
 import ViewForCode from './pages/ViewForCode';
 import ViewSeoCode from './pages/ViewSeoCode';
 import NavBar from './components/NavBar';
+import Users from './pages/AdminDashboard/Users';
+import Experiments from './pages/AdminDashboard/Experiments';
+import AdminDashboard from './pages/AdminDashboard';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -45,11 +48,13 @@ root.render(
               <Route path='/addPerson' element={<AddPerson />} />
               <Route path='/addMission' element={<AddMission />} />
               <Route path='/addExperiment' element={<AddExperiment />} />
-              <Route path='/experiment' element={<ViewExperiment />} />
               <Route path='/experiment/:id' element={<ViewExperiment />} />
               <Route path='/mission/:id' element={<ViewMission />} />
               <Route path='/forCode/:id' element={<ViewForCode />} />
               <Route path='/seoCode/:id' element={<ViewSeoCode />} />
+              <Route path='/admin/dashboard' element={<AdminDashboard />} />
+              <Route path='/admin/users' element={<Users />} />
+              <Route path='/admin/experiments' element={<Experiments />} />
             </Routes>
           </LocalizationProvider>
         </BrowserRouter>

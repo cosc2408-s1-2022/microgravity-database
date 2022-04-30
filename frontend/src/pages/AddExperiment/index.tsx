@@ -1,21 +1,9 @@
-import {
-  Alert,
-  Autocomplete,
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, Container, Grid, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useReducer, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -35,6 +23,7 @@ import {
   UserRole,
 } from '../../util/types';
 import Header from '../../components/NavBar';
+import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -159,19 +148,11 @@ export default function AddExperiment() {
     mutateExperiment();
   };
 
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-  const handleErrorSnackbarClose = () => {
-    setErrorSnackbarOpen(false);
-  };
   useEffect(() => {
-    if (isExperimentError) {
-      setErrorSnackbarOpen(true);
+    if (isExperimentSuccess) {
+      navigate('/home');
     }
-  }, [isExperimentError]);
-
-  if (isExperimentSuccess) {
-    return <Navigate to='/home' />;
-  }
+  }, [isExperimentSuccess, navigate]);
 
   return (
     <AuthWrapper role={UserRole.ROLE_USER}>
@@ -555,11 +536,7 @@ export default function AddExperiment() {
               Add Experiment
             </LoadingButton>
           </Box>
-          <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
-            <Alert severity='error' onClose={handleErrorSnackbarClose}>
-              Failed to add experiment.
-            </Alert>
-          </Snackbar>
+          <MessageSnackbar open={isExperimentError} message='Failed to add experiment.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

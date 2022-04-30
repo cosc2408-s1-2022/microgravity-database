@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Container, Grid, Pagination, Paper, Typo
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { Experiment, Page } from '../../../types';
+import { Experiment, Page } from '../../../util/types';
 import { DeleteRounded, EditRounded, RestoreFromTrashRounded } from '@mui/icons-material';
 import api from '../../../util/api';
 

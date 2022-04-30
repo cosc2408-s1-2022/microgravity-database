@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import api from './api';
-import { Experiment, ForCodeResult, SeoCodeResult } from './types';
+import { Experiment, ForCode, SeoCode } from './types';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -15,10 +15,10 @@ export const getExperiment = makeTypedAPICall<{ id: string }, Experiment>((args)
   return api.get(`${backendUrl}/experiments/get?${search.toString()}`);
 });
 
-export const getForCode = makeTypedAPICall<{ id: string }, ForCodeResult>((args) => {
+export const getForCode = makeTypedAPICall<{ id: string }, ForCode>((args) => {
   return api.get(`${backendUrl}/forCodes/${args.id.toString()}`);
 });
 
-export const getSeoCode = makeTypedAPICall<{ id: string }, SeoCodeResult>((args) => {
+export const getSeoCode = makeTypedAPICall<{ id: string }, SeoCode>((args) => {
   return api.get(`${backendUrl}/seoCodes/${args.id.toString()}`);
 });

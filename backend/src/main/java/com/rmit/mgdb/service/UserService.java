@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
@@ -64,11 +65,15 @@ public class UserService {
      * Get all users, optionally paginated.
      */
     public Page<User> getUsers(Optional<Integer> page, Optional<Integer> size) {
-        if (page.isPresent() && size.isPresent()) {
+        if (page.isPresent() || size.isPresent()) {
             return userRepository.findUsersBy(PageRequest.of(page.orElse(0), size.orElse(DEFAULT_PAGE_SIZE)));
         } else {
             return userRepository.findUsersBy(Pageable.unpaged());
         }
+    }
+
+    public void saveUsers(List<User> users) {
+        userRepository.saveAll(users);
     }
 
 }

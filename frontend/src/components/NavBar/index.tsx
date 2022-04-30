@@ -82,28 +82,9 @@ export default function NavBar() {
                   </Button>
                 </Box>
               ) : (
-                <Box display='flex' alignItems='stretch'>
-                  {location.pathname.includes('/search/advanced') ? (
-                    <Button
-                      variant='contained'
-                      href='/home'
-                      sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                    >
-                      Primary Search
-                    </Button>
-                  ) : (
-                    <Button
-                      variant='contained'
-                      href='/search/advanced'
-                      sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                    >
-                      Advanced Search
-                    </Button>
-                  )}
-                  <Button variant='contained' sx={{ ml: 1 }} onClick={authElementProps.onClick} color='inherit'>
-                    Logout
-                  </Button>
-                </Box>
+                <Button variant='contained' sx={{ ml: 1 }} onClick={authElementProps.onClick} color='inherit'>
+                  Logout
+                </Button>
               )}
             </Box>
           </Box>
