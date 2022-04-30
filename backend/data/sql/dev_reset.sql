@@ -1,3 +1,15 @@
+drop table if exists experiment_person;
+drop table if exists experiment;
+drop table if exists mission;
+drop table if exists person;
+drop table if exists platform_for_code;
+drop table if exists for_code;
+drop table if exists platform_seo_code;
+drop table if exists seo_code;
+drop table if exists platform;
+drop table if exists role;
+drop table if exists user;
+
 create table user
 (
     id         bigint auto_increment

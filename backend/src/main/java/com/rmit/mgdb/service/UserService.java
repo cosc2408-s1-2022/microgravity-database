@@ -4,6 +4,7 @@ import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.exception.UsernameAlreadyExistsException;
 import com.rmit.mgdb.exception.UsernameNotFoundException;
 import com.rmit.mgdb.model.User;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,11 +65,25 @@ public class UserService {
     /**
      * Get all users, optionally paginated.
      */
-    public Page<User> getUsers(Optional<Integer> page, Optional<Integer> size) {
+    public ResultsResponse<User> getUsers(Optional<Integer> page, Optional<Integer> size) {
+        Page<User> users;
         if (page.isPresent() || size.isPresent()) {
-            return userRepository.findUsersBy(PageRequest.of(page.orElse(0), size.orElse(DEFAULT_PAGE_SIZE)));
+            int pageInt = page.orElse(1) - 1;
+            int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
+            users = userRepository.findUsersBy(PageRequest.of(pageInt, sizeInt));
+            return new ResultsResponse<>(
+                    users.getTotalElements(),
+                    users.getTotalPages(),
+                    pageInt + 1, sizeInt,
+                    users.getContent());
         } else {
-            return userRepository.findUsersBy(Pageable.unpaged());
+            users = userRepository.findUsersBy(Pageable.unpaged());
+            return new ResultsResponse<>(
+                    users.getTotalElements(),
+                    users.getTotalPages(),
+                    users.getTotalPages() + 1,
+                    users.getTotalElements(),
+                    users.getContent());
         }
     }
 

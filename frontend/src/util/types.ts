@@ -133,13 +133,15 @@ export type Page<T> = {
   totalElements: number;
 };
 
-export type SearchResponse = {
+export type ResultsResponse<T> = {
   totalElements: number;
   totalPages: number;
   page: number;
   size: number;
-  results: Experiment[] | Mission[];
+  results: T[];
 };
+
+export type SearchResponse = ResultsResponse<Experiment | Mission | ForCode | SeoCode>;
 
 export type SearchField = string | undefined;
 

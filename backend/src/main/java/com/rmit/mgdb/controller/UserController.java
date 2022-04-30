@@ -3,6 +3,7 @@ package com.rmit.mgdb.controller;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.payload.AuthenticationRequest;
 import com.rmit.mgdb.payload.AuthenticationResponse;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.security.JWTTokenProvider;
 import com.rmit.mgdb.service.CustomUserDetailsService;
 import com.rmit.mgdb.service.UserService;
@@ -98,7 +99,7 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<User> getExperiments(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
+    public ResultsResponse<User> getExperiments(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
         return userService.getUsers(page, size);
     }
 

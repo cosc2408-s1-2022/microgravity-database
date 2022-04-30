@@ -2,7 +2,7 @@ package com.rmit.mgdb.payload;
 
 import java.util.List;
 
-public class SearchResponse<T> {
+public class ResultsResponse<T> {
 
     public long totalElements;
     public long totalPages;
@@ -10,7 +10,7 @@ public class SearchResponse<T> {
     public long size;
     public List<T> results;
 
-    public SearchResponse(long totalElements, long totalPages, long page, long size, List<T> results) {
+    public ResultsResponse(long totalElements, long totalPages, long page, long size, List<T> results) {
         this.totalElements = totalElements;
         this.totalPages = totalPages;
         this.page = page;

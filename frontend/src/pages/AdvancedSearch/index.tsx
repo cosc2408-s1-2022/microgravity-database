@@ -101,12 +101,12 @@ export default function AdvancedSearchPage() {
         );
       });
     } else if (searchState.resultType === ResultType.FOR_CODE) {
-      results = data.data.results as unknown as ForCode[];
+      results = data.data.results as ForCode[];
       resultsElement = results.map((item: ForCode, index) => {
         return <ForCodeResult key={item.id} forCode={item} bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'} />;
       });
     } else if (searchState.resultType === ResultType.SEO_CODE) {
-      results = data.data.results as unknown as SeoCode[];
+      results = data.data.results as SeoCode[];
       resultsElement = results.map((item: SeoCode, index) => {
         return <SeoCodeResult key={item.id} seoCode={item} bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'} />;
       });

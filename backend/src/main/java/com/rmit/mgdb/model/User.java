@@ -3,6 +3,8 @@ package com.rmit.mgdb.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +18,7 @@ import java.util.Date;
 @Getter
 @Setter
 // Table name enclosed with quotes as some database flavours have "user" as a reserved keyword.
+@Indexed
 @Table(name = "\"user\"")
 public class User {
 
@@ -28,6 +31,7 @@ public class User {
 
     @Column(unique = true)
     @NotBlank(message = "Username cannot be blank.")
+    @FullTextField(analyzer = "non_edge_index_analyzer", searchAnalyzer = "search_analyzer")
     private String username;
 
     @NotBlank(message = "Password cannot be blank.")
@@ -36,6 +40,7 @@ public class User {
 
     @NotBlank(message = "User needs to have a role defined.")
     @Pattern(regexp = "(^ROLE_USER|ROLE_ADMIN)", message = "Not a valid role.")
+    @FullTextField(analyzer = "non_edge_index_analyzer", searchAnalyzer = "search_analyzer")
     private String role;
 
     // The following fields are for debugging purposes only.
