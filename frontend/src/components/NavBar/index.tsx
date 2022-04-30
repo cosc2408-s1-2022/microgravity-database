@@ -82,7 +82,7 @@ export default function NavBar() {
                   </Button>
                 </Box>
               ) : (
-                <Button variant='contained' sx={{ ml: 1 }} onClick={authElementProps.onClick} color='inherit'>
+                <Button variant='contained' sx={{ ml: 1 }} onClick={authElementProps.onClick}>
                   Logout
                 </Button>
               )}

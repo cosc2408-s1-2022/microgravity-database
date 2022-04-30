@@ -71,19 +71,12 @@ public class UserService {
             int pageInt = page.orElse(1) - 1;
             int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
             users = userRepository.findUsersBy(PageRequest.of(pageInt, sizeInt));
-            return new ResultsResponse<>(
-                    users.getTotalElements(),
-                    users.getTotalPages(),
-                    pageInt + 1, sizeInt,
-                    users.getContent());
+            return new ResultsResponse<>(users.getTotalElements(), users.getTotalPages(), pageInt + 1, sizeInt,
+                                         users.getContent());
         } else {
-            users = userRepository.findUsersBy(Pageable.unpaged());
-            return new ResultsResponse<>(
-                    users.getTotalElements(),
-                    users.getTotalPages(),
-                    users.getTotalPages() + 1,
-                    users.getTotalElements(),
-                    users.getContent());
+            users = userRepository.findUsersBy(Pageable.ofSize(DEFAULT_PAGE_SIZE));
+            return new ResultsResponse<>(users.getTotalElements(), users.getTotalPages(), users.getTotalPages() + 1,
+                                         DEFAULT_PAGE_SIZE, users.getContent());
         }
     }
 

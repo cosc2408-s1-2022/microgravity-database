@@ -10,7 +10,6 @@ import com.rmit.mgdb.service.UserService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import com.rmit.mgdb.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -99,7 +98,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResultsResponse<User> getExperiments(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
+    public ResultsResponse<User> getExperiments(@RequestParam Optional<Integer> page,
+                                                @RequestParam Optional<Integer> size) {
         return userService.getUsers(page, size);
     }
 

@@ -63,12 +63,12 @@ public class SearchService {
         page--;
 
         SearchResult<T> result = searchSession.search(tClass)
-                                                       .where(s -> s.match()
-                                                                    .fields(fields)
-                                                                    .matching(stringParam)
+                                              .where(s -> s.match()
+                                                           .fields(fields)
+                                                           .matching(stringParam)
 
-                                                             )
-                                                       .fetch(page * size, size);
+                                                    )
+                                              .fetch(page * size, size);
 
         long totalHitCount = result.total().hitCount();
         return new ResultsResponse<>(
