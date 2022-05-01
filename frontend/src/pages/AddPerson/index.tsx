@@ -7,8 +7,8 @@ import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import { Person } from '../../util/types';
-import Header from '../../components/NavBar';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import AuthWrapper from '../../components/AuthWrapper';
 
 export default function AddPerson() {
   const navigate = useNavigate();
@@ -45,13 +45,12 @@ export default function AddPerson() {
   }, [isSuccess, navigate]);
 
   return (
-    <>
-      <Header />
-      <Container maxWidth={'sm'}>
+    <AuthWrapper>
+      <Container maxWidth='sm'>
         <Box
           sx={{
             my: -2,
-            marginTop: 8,
+            mt: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -135,6 +134,6 @@ export default function AddPerson() {
           <MessageSnackbar open={isError} message='Failed to add person.' severity='error' />
         </Box>
       </Container>
-    </>
+    </AuthWrapper>
   );
 }

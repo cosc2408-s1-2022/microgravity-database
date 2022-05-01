@@ -3,8 +3,12 @@ import { ReactComponent as Logo } from '../../logo_black.svg';
 import { Box, Container, Grid, Link, Typography } from '@mui/material';
 import { Platforms } from '../../util/types';
 import lodash from 'lodash';
+import MessageSnackbar from '../../components/MessageSnackbar';
+import { useLocation } from 'react-router-dom';
 
 export default function HomePage() {
+  const { state } = useLocation() as { state: { isError: boolean; message: string } };
+
   return (
     <Container maxWidth='md'>
       <Grid
@@ -38,6 +42,11 @@ export default function HomePage() {
           </Grid>
         </Grid>
       </Grid>
+      <MessageSnackbar
+        open={state?.isError || false}
+        message={state?.message || 'Sorry, something went wrong.'}
+        severity='error'
+      />
     </Container>
   );
 }

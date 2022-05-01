@@ -6,7 +6,7 @@ import { UserRole } from '../../util/types';
 
 type AuthWrapperProps = {
   children: React.ReactNode;
-  role: UserRole;
+  role?: UserRole;
 };
 
 export default function AuthWrapper({ children, role }: AuthWrapperProps) {
@@ -24,8 +24,16 @@ export default function AuthWrapper({ children, role }: AuthWrapperProps) {
     <Box sx={{ p: 4 }} display='flex' justifyContent='center'>
       <CircularProgress size={24} color='secondary' />
     </Box>
-  ) : user?.role === role ? (
-    <>{children}</>
+  ) : user ? (
+    role ? (
+      user.role === role ? (
+        <>{children}</>
+      ) : (
+        <Navigate to='/home' state={{ isError: true, message: 'Sorry, you do not have sufficient permission.' }} />
+      )
+    ) : (
+      <>{children}</>
+    )
   ) : (
     <Navigate to='/login' />
   );

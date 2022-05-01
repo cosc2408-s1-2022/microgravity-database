@@ -12,9 +12,8 @@ import moment from 'moment';
 import lodash from 'lodash';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import Header from '../../components/NavBar';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Mission, Platform, UserRole } from '../../util/types';
+import { Mission, Platform } from '../../util/types';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
@@ -75,14 +74,13 @@ export default function AddMission() {
   }, [isMissionSuccess, navigate]);
 
   return (
-    <AuthWrapper role={UserRole.ROLE_USER}>
+    <AuthWrapper>
       <LocalizationProvider dateAdapter={AdapterMoment}>
-        <Header />
-        <Container maxWidth='xs'>
+        <Container maxWidth='sm'>
           <Box
             sx={{
               my: -2,
-              marginTop: 4,
+              mt: 4,
               display: 'flex',
               flexDirection: 'column',
               height: 'auto',
@@ -93,12 +91,18 @@ export default function AddMission() {
             }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
+              <Typography variant='h3' sx={{ mt: 1, mb: 1 }}>
                 Add Mission
               </Typography>
             </Box>
             <Box component='form' noValidate onSubmit={handleSubmit}>
-              <FormField label='Name' name='name' errors={missionError?.response?.data} onChange={setName} />
+              <FormField
+                margin='normal'
+                label='Name'
+                name='name'
+                errors={missionError?.response?.data}
+                onChange={setName}
+              />
               <DatePicker
                 label='Launch Date'
                 views={['year']}
@@ -113,6 +117,8 @@ export default function AddMission() {
                   <TextField
                     {...params}
                     margin='normal'
+                    size='small'
+                    color='secondary'
                     fullWidth
                     error={isMissionError && !!missionError?.response?.data?.launchDate}
                     helperText={missionError?.response?.data?.launchDate}
@@ -133,6 +139,8 @@ export default function AddMission() {
                   <TextField
                     {...params}
                     margin='normal'
+                    size='small'
+                    color='secondary'
                     fullWidth
                     error={startDateError || (isMissionError && !!missionError?.response?.data?.startDate)}
                     helperText={
@@ -157,6 +165,8 @@ export default function AddMission() {
                   <TextField
                     {...params}
                     margin='normal'
+                    size='small'
+                    color='secondary'
                     fullWidth
                     error={endDateError || (isMissionError && !!missionError?.response?.data?.endDate)}
                     helperText={
@@ -182,6 +192,8 @@ export default function AddMission() {
                   <TextField
                     {...params}
                     margin='normal'
+                    size='small'
+                    color='secondary'
                     fullWidth
                     error={isMissionError && !!missionError?.response?.data?.platformId}
                     helperText={missionError?.response?.data?.platformId}

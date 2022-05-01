@@ -12,17 +12,7 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import {
-  Experiment,
-  ExperimentPersonRequest,
-  ForCode,
-  Mission,
-  Person,
-  Role,
-  SeoCode,
-  UserRole,
-} from '../../util/types';
-import Header from '../../components/NavBar';
+import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
@@ -155,13 +145,12 @@ export default function AddExperiment() {
   }, [isExperimentSuccess, navigate]);
 
   return (
-    <AuthWrapper role={UserRole.ROLE_USER}>
-      <Header />
-      <Container maxWidth='lg'>
+    <AuthWrapper>
+      <Container maxWidth='md'>
         <Box
           sx={{
             my: -2,
-            marginTop: 2,
+            mt: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -199,8 +188,6 @@ export default function AddExperiment() {
                   onChange={setLeadInstitution}
                 />
               </Grid>
-              {/*</Grid>*/}
-              {/*<Grid container spacing={2}>*/}
               <Grid item xs={12}>
                 <FormField
                   label='Experiment Aim'
@@ -253,7 +240,9 @@ export default function AddExperiment() {
                 <TextField
                   {...params}
                   margin='normal'
+                  size='small'
                   fullWidth
+                  color='secondary'
                   error={isExperimentError && !!experimentError?.response?.data?.missionId}
                   helperText={experimentError?.response?.data?.missionId}
                   label='Mission'
@@ -285,12 +274,13 @@ export default function AddExperiment() {
                     No such missions found.
                   </Typography>
                   <Button variant='outlined' onClick={() => navigate('/addMission')} sx={{ textTransform: 'none' }}>
-                    <Typography variant='body1'>Add a new mission?</Typography>
+                    <Typography variant='body1' color='primary'>
+                      Add a new mission?
+                    </Typography>
                   </Button>
                 </Box>
               }
             />
-
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Autocomplete
@@ -310,6 +300,8 @@ export default function AddExperiment() {
                     <TextField
                       {...params}
                       margin='normal'
+                      size='small'
+                      color='secondary'
                       fullWidth
                       error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
                       helperText={experimentError?.response?.data?.forCodeId}
@@ -357,6 +349,8 @@ export default function AddExperiment() {
                     <TextField
                       {...params}
                       margin='normal'
+                      size='small'
+                      color='secondary'
                       fullWidth
                       error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
                       helperText={experimentError?.response?.data?.seoCodeId}
@@ -388,8 +382,8 @@ export default function AddExperiment() {
               </Grid>
             </Grid>
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
-              <Box p={1} display='flex' alignItems='center'>
-                <Typography sx={{ p: 1 }}>Add People</Typography>
+              <Box display='flex' alignItems='center'>
+                <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
                 <IconButton
                   onClick={() => {
                     dispatchPeople({
@@ -423,7 +417,16 @@ export default function AddExperiment() {
                           dispatchPeople({ type: 'MODIFY', payload });
                         }
                       }}
-                      renderInput={(params) => <TextField {...params} margin='normal' fullWidth label='Person' />}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          margin='normal'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Person'
+                        />
+                      )}
                       renderOption={(props, option, { inputValue }) => {
                         const fullName = `${option.firstName} ${option.familyName}`;
                         const matches = match(fullName, inputValue);
@@ -487,7 +490,9 @@ export default function AddExperiment() {
                           dispatchPeople({ type: 'MODIFY', payload });
                         }
                       }}
-                      renderInput={(params) => <TextField {...params} margin='normal' fullWidth label='Role' />}
+                      renderInput={(params) => (
+                        <TextField {...params} margin='normal' size='small' color='secondary' fullWidth label='Role' />
+                      )}
                       renderOption={(props, option, { inputValue }) => {
                         const matches = match(option.name, inputValue);
                         const parts = parse(option.name, matches);

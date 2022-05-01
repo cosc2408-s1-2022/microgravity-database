@@ -12,7 +12,6 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
-import { UserRole } from '../../../util/types';
 import { ClearRounded, SearchRounded } from '@mui/icons-material';
 import AuthWrapper from '../../../components/AuthWrapper';
 import ViewExperiments from '../../../components/AdminDashboard/ViewExperiments';
@@ -33,7 +32,7 @@ export default function Experiments() {
   };
 
   return (
-    <AuthWrapper role={UserRole.ROLE_ADMIN}>
+    <AuthWrapper>
       <Container maxWidth='md' sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} display='flex' justifyContent='space-between' alignItems='center'>
