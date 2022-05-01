@@ -17,7 +17,7 @@ import CenteredCircularProgress from '../../../components/CenteredCircularProgre
 import { UserRole } from '../../../util/types';
 import { useLoggedInUser } from '../../../util/hooks';
 import { ClearRounded, SearchRounded } from '@mui/icons-material';
-import UserSearch from '../../../components/UserSearch';
+import ViewUsers from '../../../components/AdminDashboard/ViewUsers';
 
 export default function Users() {
   const navigate = useNavigate();
@@ -92,7 +92,7 @@ export default function Users() {
           <Divider />
         </Grid>
         <Grid item xs={12}>
-          <UserSearch size={size} searchString={searchString} loggedInUser={loggedInUser} />
+          <ViewUsers size={size} searchString={searchString} loggedInUser={loggedInUser} />
         </Grid>
       </Grid>
     </Container>

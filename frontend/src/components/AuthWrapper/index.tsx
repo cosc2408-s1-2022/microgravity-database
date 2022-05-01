@@ -1,10 +1,8 @@
 import { Box, CircularProgress } from '@mui/material';
-import { AxiosResponse } from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import api from '../../util/api';
-import { User, UserRole } from '../../util/types';
+import { useLoggedInUser } from '../../util/hooks';
+import { UserRole } from '../../util/types';
 
 type AuthWrapperProps = {
   children: React.ReactNode;
@@ -20,21 +18,9 @@ export default function AuthWrapper({ children, role }: AuthWrapperProps) {
     }
   }, [isLoggedIn, navigate]);
 
-  const [user, setUser] = useState<User>();
-  const { data, isSuccess, isError } = useQuery<AxiosResponse<User>>(
-    'getAuthenticatedUser',
-    () => api.get('/users/authenticated'),
-    {
-      enabled: !user,
-    },
-  );
-  useEffect(() => {
-    if (isSuccess && data) {
-      setUser(data.data);
-    }
-  }, [isSuccess, data, isError, navigate]);
+  const { user, isLoading, isError } = useLoggedInUser();
 
-  return !user && !isError ? (
+  return isLoading && !isError ? (
     <Box sx={{ p: 4 }} display='flex' justifyContent='center'>
       <CircularProgress size={24} color='secondary' />
     </Box>

@@ -1,101 +1,89 @@
-import { Box, Button, CircularProgress, Container, Grid, Pagination, Paper, Typography } from '@mui/material';
-import { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { Experiment, Page } from '../../../util/types';
-import { DeleteRounded, EditRounded, RestoreFromTrashRounded } from '@mui/icons-material';
-import api from '../../../util/api';
+import {
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import { UserRole } from '../../../util/types';
+import { ClearRounded, SearchRounded } from '@mui/icons-material';
+import AuthWrapper from '../../../components/AuthWrapper';
+import ViewExperiments from '../../../components/AdminDashboard/ViewExperiments';
 
 export default function Experiments() {
-  const [experimentPage, setExperimentPage] = useState<Page<Experiment>>();
-  const [page, setPage] = useState<number>();
-
-  const {
-    data,
-    isLoading: isExperimentsLoading,
-    isSuccess: isExperimentsSuccess,
-    refetch,
-  } = useQuery<AxiosResponse<Page<Experiment>>>(
-    ['getExperiments', page],
-    ({ queryKey }) => {
-      const [, page] = queryKey;
-      return api.get('/experiments', {
-        params: {
-          page,
-        },
-      });
-    },
-    {
-      enabled: false,
-    },
-  );
-
-  useEffect(() => {
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  const {
-    isLoading: isToggleDeleteLoading,
-    isSuccess: isToggleDeleteSuccess,
-    mutate,
-  } = useMutation('toggleExperimentDelete', (id: number) => api.post(`/experiments/${id}/toggleDelete`));
-
-  useEffect(() => {
-    if (isExperimentsSuccess && data) {
-      setExperimentPage(data.data);
+  const [size, setSize] = useState<number>();
+  const [searchString, setSearchString] = useState<string>();
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setSearchString(e.target.value);
+  };
+  const handleSearchInputClick = () => {
+    if (searchString) {
+      setSearchString(undefined);
     }
-  }, [isExperimentsSuccess, data]);
+  };
+  const handleSizeChange = (e: SelectChangeEvent<string | number>) => {
+    setSize(e.target.value as number);
+  };
 
-  useEffect(() => {
-    if (isToggleDeleteSuccess) {
-      refetch();
-    }
-  }, [isToggleDeleteSuccess, refetch]);
-
-  return isExperimentsLoading ? (
-    <Box display='flex' justifyContent='center'>
-      <CircularProgress />
-    </Box>
-  ) : (
-    <Container maxWidth='md' sx={{ mt: 3 }}>
-      <Grid container spacing={2}>
-        {experimentPage?.content.map((e) => (
-          <Grid item xs={12} key={e.id}>
-            <Paper sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', p: 1 }}>
-              <Typography variant='body1' flexGrow={1} pr={2} color={e.deleted ? 'text.secondary' : 'text.primary'}>
-                {e.title} {e.deleted && ' (DELETED)'}
-              </Typography>
-              <Button variant='outlined' color='secondary' size='small' sx={{ mr: 1 }}>
-                <EditRounded fontSize='small' />
-              </Button>
-              <Button
-                onClick={() => {
-                  mutate(e.id);
-                }}
-                disabled={isToggleDeleteLoading}
-                variant='outlined'
+  return (
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
+      <Container maxWidth='md' sx={{ mt: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} display='flex' justifyContent='space-between' alignItems='center'>
+            <FormControl size='small' variant='outlined'>
+              <InputLabel htmlFor='search-input' color='secondary'>
+                Search
+              </InputLabel>
+              <OutlinedInput
+                id='search-input'
+                type='text'
+                value={searchString || ''}
+                onChange={handleSearchInputChange}
+                label='Search'
                 color='secondary'
-                size='small'
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton onClick={handleSearchInputClick} edge='end'>
+                      {searchString ? <ClearRounded /> : <SearchRounded />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControl size='small' variant='outlined'>
+              <InputLabel id='select-size' color='secondary'>
+                Result Size
+              </InputLabel>
+              <Select
+                labelId='select-size'
+                value={size || ''}
+                label='Result Size'
+                color='secondary'
+                sx={{ minWidth: '8rem' }}
+                onChange={handleSizeChange}
               >
-                {e.deleted ? <RestoreFromTrashRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
-              </Button>
-            </Paper>
+                <MenuItem value={8}>Default</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+                <MenuItem value={32}>32</MenuItem>
+                <MenuItem value={96}>96</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
-        ))}
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Pagination
-            count={experimentPage?.totalPages}
-            variant='outlined'
-            shape='rounded'
-            color='primary'
-            page={(page || 0) + 1}
-            onChange={(_e, page) => {
-              setPage((page || 1) - 1);
-            }}
-          />
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <ViewExperiments size={size} searchString={searchString} />
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </AuthWrapper>
   );
 }

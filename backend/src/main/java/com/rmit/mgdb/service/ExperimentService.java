@@ -1,10 +1,12 @@
 package com.rmit.mgdb.service;
 
+import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.Experiment;
 import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.model.Role;
 import com.rmit.mgdb.payload.AddExperimentPersonRequest;
 import com.rmit.mgdb.payload.AddExperimentRequest;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,8 +47,9 @@ public class ExperimentService {
         this.experimentPersonService = experimentPersonService;
     }
 
-    public Optional<Experiment> getExperimentById(long id) {
-        return experimentRepository.findById(id);
+    public Experiment getExperimentById(Long id) {
+        return experimentRepository.findById(id)
+                                   .orElseThrow(() -> new NotFoundException("Experiment could not be found.", id));
     }
 
     public Experiment addExperiment(AddExperimentRequest experimentRequest) {
@@ -79,13 +82,27 @@ public class ExperimentService {
     /**
      * Get all experiments, optionally paginated.
      */
-    public Page<Experiment> getExperiments(Optional<Integer> page, Optional<Integer> size) {
+    public ResultsResponse<Experiment> getExperiments(Optional<Integer> page, Optional<Integer> size) {
+        Page<Experiment> experiments;
         if (page.isPresent() || size.isPresent()) {
-            return experimentRepository.findExperimentsBy(
-                    PageRequest.of(page.orElse(0), size.orElse(DEFAULT_PAGE_SIZE)));
+            int pageInt = page.orElse(1) - 1;
+            int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
+            experiments = experimentRepository.findExperimentsBy(PageRequest.of(pageInt, sizeInt));
+            return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(), pageInt + 1,
+                                         sizeInt,
+                                         experiments.getContent());
         } else {
-            return experimentRepository.findExperimentsBy(Pageable.unpaged());
+            experiments = experimentRepository.findExperimentsBy(Pageable.ofSize(DEFAULT_PAGE_SIZE));
+            return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(),
+                                         experiments.getTotalPages() + 1,
+                                         DEFAULT_PAGE_SIZE, experiments.getContent());
         }
+    }
+
+    public void toggleExperimentDelete(Long id) {
+        Experiment experiment = getExperimentById(id);
+        experiment.setDeleted(!experiment.isDeleted());
+        experimentRepository.save(experiment);
     }
 
 }

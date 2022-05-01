@@ -2,10 +2,10 @@ package com.rmit.mgdb.controller;
 
 import com.rmit.mgdb.model.Experiment;
 import com.rmit.mgdb.payload.AddExperimentRequest;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.service.ExperimentService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -29,7 +29,7 @@ public class ExperimentController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Optional<Experiment>> getById(@RequestParam int id) {
+    public ResponseEntity<Experiment> getById(@RequestParam Long id) {
         return new ResponseEntity<>(experimentService.getExperimentById(id), HttpStatus.OK);
     }
 
@@ -43,8 +43,14 @@ public class ExperimentController {
     }
 
     @GetMapping
-    public Page<Experiment> getExperiments(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
+    public ResultsResponse<Experiment> getExperiments(@RequestParam Optional<Integer> page,
+                                                      @RequestParam Optional<Integer> size) {
         return experimentService.getExperiments(page, size);
+    }
+
+    @PostMapping("/{id}/toggleDelete")
+    public void toggleDeleteById(@PathVariable Long id) {
+        experimentService.toggleExperimentDelete(id);
     }
 
 }
