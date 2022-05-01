@@ -2,10 +2,16 @@ import { Grid, GridProps, Link, Typography } from '@mui/material';
 import { ExperimentResultsProps } from '../../../util/types';
 
 export default function ExperimentResult(props: GridProps & ExperimentResultsProps) {
-  const url = `/experiment?id=${props.id}`;
-
   return (
-    <Grid container item component={Link} href={url} bgcolor={props.bgcolor} padding={3} alignItems='baseline'>
+    <Grid
+      container
+      item
+      component={Link}
+      href={`/experiment/${props.id}`}
+      bgcolor={props.bgcolor}
+      padding={3}
+      alignItems='baseline'
+    >
       <Grid container item direction='column' md={3}>
         <Grid item>
           <Typography color='primary.dark' variant='body1' display={'inline'}>

@@ -109,4 +109,10 @@ public class ExperimentService {
         experimentRepository.save(experiment);
     }
 
+    public void approveExperiment(Long id) {
+        Experiment experiment = getExperimentById(id);
+        experiment.setApproved(true);
+        experimentRepository.save(experiment);
+    }
+
 }

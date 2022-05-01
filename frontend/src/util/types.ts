@@ -66,6 +66,7 @@ export type Experiment = {
   experimentModuleDrawing: string;
   experimentPublications: string;
   deleted: boolean;
+  approved: boolean;
   mission: Mission;
   platform: Platform;
   forCode: ForCode;

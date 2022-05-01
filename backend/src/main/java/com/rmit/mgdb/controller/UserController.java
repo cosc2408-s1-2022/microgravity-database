@@ -98,13 +98,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResultsResponse<User> getExperiments(@RequestParam Optional<Integer> page,
-                                                @RequestParam Optional<Integer> size) {
+    public ResultsResponse<User> getUsers(@RequestParam Optional<Integer> page,
+                                          @RequestParam Optional<Integer> size) {
         return userService.getUsers(page, size);
     }
 
     @PostMapping("/saveAll")
-    public ResponseEntity<?> getExperiments(@RequestBody List<User> users) {
+    public ResponseEntity<?> saveAllUsers(@RequestBody List<User> users) {
         userService.saveUsers(users);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

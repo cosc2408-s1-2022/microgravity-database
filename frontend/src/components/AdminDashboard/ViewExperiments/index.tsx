@@ -1,6 +1,13 @@
-import { DeleteRounded, EditRounded } from '@mui/icons-material';
+import {
+  DeleteRounded,
+  DoneRounded,
+  EditRounded,
+  NewReleasesRounded,
+  VerifiedSharp,
+  WarningRounded,
+} from '@mui/icons-material';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
-import { Box, Button, Grid, Pagination, Paper, Typography } from '@mui/material';
+import { Link, Box, Button, Grid, Pagination, Paper, Typography, Tooltip } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -63,13 +70,24 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
   const {
     isLoading: isToggleDeleteLoading,
     isSuccess: isToggleDeleteSuccess,
-    mutate,
+    mutate: toggleExperimentDelete,
   } = useMutation('toggleExperimentDelete', (id: number) => api.post(`/experiments/${id}/toggleDelete`));
   useEffect(() => {
     if (isToggleDeleteSuccess) {
       refetchExperiments();
     }
   }, [isToggleDeleteSuccess, refetchExperiments]);
+
+  const {
+    isLoading: isApproveLoading,
+    isSuccess: isApproveSuccess,
+    mutate: approveExperiment,
+  } = useMutation('approveExperiment', (id: number) => api.post(`/experiments/${id}/approve`));
+  useEffect(() => {
+    if (isApproveSuccess) {
+      refetchExperiments();
+    }
+  }, [isApproveSuccess, refetchExperiments]);
 
   return (
     <Grid container spacing={2} mb={3}>
@@ -89,21 +107,46 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                 boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
               }}
             >
-              <Box display='flex' flexDirection='column' flexGrow={1}>
-                <Typography
-                  variant='body2'
-                  fontWeight='bold'
-                  flexGrow={1}
-                  pr={2}
-                  color={e.deleted ? 'text.secondary' : 'text.primary'}
-                >
-                  {e.title} {e.deleted && ' (DELETED)'}
-                </Typography>
-                <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
-                  {e.mission.name}
-                </Typography>
+              <Box display='flex' alignItems='center' flexGrow={1}>
+                {e.approved && !e.deleted ? (
+                  <Tooltip title='This experiment has been approved by an admin.'>
+                    <VerifiedSharp fontSize='medium' color='success' />
+                  </Tooltip>
+                ) : e.deleted ? (
+                  <Tooltip title='This experiment has been deleted and will not be publicly visible.'>
+                    <WarningRounded fontSize='medium' color='warning' />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title='This experiment requires approval.'>
+                    <NewReleasesRounded fontSize='medium' color='error' />
+                  </Tooltip>
+                )}
+                <Link ml={1} href={`/experiment/${e.id}`}>
+                  <Typography variant='body2' fontWeight='bold' color={e.deleted ? 'text.secondary' : 'text.primary'}>
+                    {e.title} {e.deleted && ' (DELETED)'}
+                  </Typography>
+                  <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
+                    {e.mission.name}
+                  </Typography>
+                </Link>
               </Box>
-              <Box display='flex'>
+              <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center'>
+                {!e.approved && !e.deleted && (
+                  <Button
+                    onClick={() => {
+                      approveExperiment(e.id);
+                    }}
+                    variant='contained'
+                    color='primary'
+                    disabled={isApproveLoading}
+                    sx={{ mr: 1, width: '7rem' }}
+                  >
+                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                      Approve
+                    </Typography>
+                    <DoneRounded fontSize='small' />
+                  </Button>
+                )}
                 <Button
                   onClick={() => {
                     navigate('/admin/experiments/edit', {
@@ -112,7 +155,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                   }}
                   variant='contained'
                   color='primary'
-                  sx={{ mr: 1 }}
+                  sx={{ mr: 1, width: '5rem' }}
                 >
                   <Typography variant='body1' color='primary' textTransform='none' mr={1}>
                     Edit
@@ -121,11 +164,12 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                 </Button>
                 <Button
                   onClick={() => {
-                    mutate(e.id);
+                    toggleExperimentDelete(e.id);
                   }}
                   disabled={isToggleDeleteLoading}
                   variant='contained'
                   color='primary'
+                  sx={{ width: '7rem' }}
                 >
                   <Typography variant='body1' color='primary' textTransform='none' mr={1}>
                     {e.deleted ? 'Restore' : 'Delete'}
@@ -157,6 +201,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
         message='Could not load experiments. Please try again.'
         severity='error'
       />
+      <MessageSnackbar open={isApproveSuccess} message='Experiment approved.' severity='success' />
     </Grid>
   );
 }

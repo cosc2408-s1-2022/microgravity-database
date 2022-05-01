@@ -12,10 +12,15 @@ export const useLoggedInUser = () => {
     data,
     isLoading: isQueryLoading,
     isError: isQueryError,
+    refetch: refetchQuery,
   } = useQuery<AxiosResponse<User>>('getAuthenticatedUser', () => api.get('/users/authenticated'), {
     retry: false,
-    enabled: !user && !isError,
   });
+
+  const authToken = localStorage.getItem('authToken');
+  useEffect(() => {
+    refetchQuery();
+  }, [refetchQuery, authToken]);
 
   useEffect(() => data && setUser(data.data), [data]);
   useEffect(() => setIsloading(isQueryLoading), [isQueryLoading]);

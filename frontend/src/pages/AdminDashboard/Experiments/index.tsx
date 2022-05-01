@@ -33,7 +33,7 @@ export default function Experiments() {
 
   return (
     <AuthWrapper>
-      <Container maxWidth='md' sx={{ mt: 3 }}>
+      <Container maxWidth='lg' sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} display='flex' justifyContent='space-between' alignItems='center'>
             <FormControl size='small' variant='outlined'>

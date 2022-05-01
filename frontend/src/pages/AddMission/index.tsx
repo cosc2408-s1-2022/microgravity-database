@@ -98,7 +98,13 @@ export default function AddMission() {
             <Box component='form' noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <FormField label='Name' name='name' errors={missionError?.response?.data} onChange={setName} />
+                  <FormField
+                    autoFocus
+                    label='Name'
+                    name='name'
+                    errors={missionError?.response?.data}
+                    onChange={setName}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <DatePicker

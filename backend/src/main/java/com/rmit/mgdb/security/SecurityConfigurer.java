@@ -94,12 +94,34 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // TODO API endpoints are subject to change.
 
                 // FIXME Production.
-                //  .antMatchers("/h2-console/**").permitAll()
+                //  Users.
                 //  .antMatchers("/api/users/register").permitAll()
                 //  .antMatchers("/api/users/login").permitAll()
-                //  .antMatchers("/api/search/**").permitAll()
-                //  .antMatchers("/api/experiments/**").permitAll()
                 //  .antMatchers("/api/users/**").authenticated()
+                //  Search.
+                //  .antMatchers("/api/search/**").permitAll()
+                //  .antMatchers("/api/search/users").authenticated()
+                //  Experiments.
+                //  .antMatchers("/api/experiments").permitAll()
+                //  .antMatchers("/api/experiments/get").permitAll()
+                //  .antMatchers("/api/experiments/**").authenticated()
+                //  FOR Codes.
+                //  .antMatchers("/api/forCodes/**").permitAll()
+                //  SEO Codes.
+                //  .antMatchers("/api/seoCodes/**").permitAll()
+                //  Missions.
+                //  .antMatchers("/api/missions/{id}").permitAll()
+                //  .antMatchers("/api/missions/add").authenticated()
+                //  People.
+                //  .antMatchers("/api/people").authenticated()
+                //  .antMatchers("/api/people/add").permitAll()
+                //  Platforms.
+                //  .antMatchers("/api/platforms/**").permitAll()
+                //  Roles.
+                //  .antMatchers("/api/roles/**").permitAll()
+                //  Misc.
+                //  .antMatchers("/h2-console/**").permitAll()
+                //  ...rest.
                 //  .anyRequest().authenticated();
 
                 // FIXME Development.

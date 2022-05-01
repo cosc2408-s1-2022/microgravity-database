@@ -174,7 +174,13 @@ export default function AddExperiment() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FormField label='Title' name='title' errors={experimentError?.response?.data} onChange={setTitle} />
+                <FormField
+                  autoFocus
+                  label='Title'
+                  name='title'
+                  errors={experimentError?.response?.data}
+                  onChange={setTitle}
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormField label='TOA' name='toa' errors={experimentError?.response?.data} onChange={setToa} />

@@ -50,6 +50,8 @@ public class Experiment {
 
     private boolean deleted;
 
+    private boolean approved;
+
     @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded
