@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useReducer, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -16,8 +16,18 @@ import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, Se
 import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
-export default function AddExperiment() {
+export default function EditExperiment() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const experiment = location.state as Experiment;
+  if (!experiment) {
+    navigate('/', {
+      state: {
+        isError: true,
+        message: 'Experiment could not be found.',
+      },
+    });
+  }
 
   const [missions, setMissions] = useState<Mission[]>();
   const {
@@ -69,16 +79,20 @@ export default function AddExperiment() {
     if (isRolesSuccess && rolesData) setRoles(rolesData.data);
   }, [isRolesSuccess, rolesData]);
 
-  const [title, setTitle] = useState<string>();
-  const [toa, setToa] = useState<string>();
-  const [leadInstitution, setLeadInstitution] = useState<string>();
-  const [experimentAim, setExperimentAim] = useState<string>();
-  const [experimentObjective, setExperimentObjective] = useState<string>();
-  const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string>();
-  const [experimentPublications, setExperimentPublications] = useState<string>();
-  const [mission, setMission] = useState<Mission | null>();
-  const [forCode, setForCode] = useState<ForCode | null>();
-  const [seoCode, setSeoCode] = useState<SeoCode | null>();
+  const [title, setTitle] = useState<string | undefined>(experiment?.title);
+  const [toa, setToa] = useState<string | undefined>(experiment?.toa);
+  const [leadInstitution, setLeadInstitution] = useState<string | undefined>(experiment?.leadInstitution);
+  const [experimentAim, setExperimentAim] = useState<string | undefined>(experiment?.experimentAim);
+  const [experimentObjective, setExperimentObjective] = useState<string | undefined>(experiment?.experimentObjective);
+  const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string | undefined>(
+    experiment?.experimentModuleDrawing,
+  );
+  const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
+    experiment?.experimentPublications,
+  );
+  const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
+  const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
+  const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
   type ExperimentPersonRequestEntry = {
     id: number;
     data: ExperimentPersonRequest;
@@ -109,7 +123,21 @@ export default function AddExperiment() {
       }
     }
   };
-  const [peopleState, dispatchPeople] = useReducer(peopleReducer, { uid: 0, data: [] });
+
+  let uid = 0;
+  const initialState = {
+    uid: 0,
+    data:
+      experiment?.people.map((person) => ({
+        id: uid++,
+        data: {
+          roleId: person.role.id,
+          personId: person.id.personId,
+        },
+      })) || [],
+  };
+  initialState.uid = uid;
+  const [peopleState, dispatchPeople] = useReducer(peopleReducer, initialState);
   const {
     error: experimentError,
     isSuccess: isExperimentSuccess,
@@ -118,6 +146,7 @@ export default function AddExperiment() {
     mutate: mutateExperiment,
   } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () =>
     api.post('/experiments/add', {
+      id: experiment.id,
       title,
       toa,
       leadInstitution,
@@ -126,30 +155,29 @@ export default function AddExperiment() {
       experimentModuleDrawing,
       experimentPublications,
       missionId: mission?.id,
-      forCodeId: forCode?.code,
-      seoCodeId: seoCode?.code,
+      forCodeId: forCode?.id,
+      seoCodeId: seoCode?.id,
       experimentPersonRequests: peopleState.data.map((entry) => entry.data),
     }),
   );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     mutateExperiment();
   };
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/home');
+      navigate('/admin/experiments');
     }
   }, [isExperimentSuccess, navigate]);
 
   return (
     <AuthWrapper>
-      <Container maxWidth='md'>
+      <Container maxWidth='md' sx={{ mb: 3 }}>
         <Box
           sx={{
-            my: -2,
-            mt: 4,
+            my: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -161,7 +189,7 @@ export default function AddExperiment() {
         >
           <Box display='flex' flexDirection='column' alignItems='center'>
             <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
-              Add Experiment
+              Edit Experiment
             </Typography>
           </Box>
           <Box
@@ -174,7 +202,13 @@ export default function AddExperiment() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FormField label='Title' name='title' errors={experimentError?.response?.data} onChange={setTitle} />
+                <FormField
+                  label='Title'
+                  name='title'
+                  value={title || ''}
+                  errors={experimentError?.response?.data}
+                  onChange={setTitle}
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormField label='TOA' name='toa' errors={experimentError?.response?.data} onChange={setToa} />
@@ -183,6 +217,7 @@ export default function AddExperiment() {
                 <FormField
                   label='Lead Institution'
                   name='leadInstitution'
+                  value={leadInstitution || ''}
                   errors={experimentError?.response?.data}
                   onChange={setLeadInstitution}
                 />
@@ -191,6 +226,7 @@ export default function AddExperiment() {
                 <FormField
                   label='Experiment Aim'
                   name='experimentAim'
+                  value={experimentAim || ''}
                   errors={experimentError?.response?.data}
                   onChange={setExperimentAim}
                 />
@@ -199,6 +235,7 @@ export default function AddExperiment() {
                 <FormField
                   label='Experiment Objective'
                   name='experimentObjective'
+                  value={experimentObjective || ''}
                   multiline
                   minRows={4}
                   errors={experimentError?.response?.data}
@@ -209,6 +246,7 @@ export default function AddExperiment() {
                 <FormField
                   label='Experiment Module Drawing'
                   name='experimentModuleDrawing'
+                  value={experimentModuleDrawing || ''}
                   errors={experimentError?.response?.data}
                   onChange={setExperimentModuleDrawing}
                 />
@@ -216,7 +254,8 @@ export default function AddExperiment() {
               <Grid item xs={12}>
                 <FormField
                   label='Experiment Publications'
-                  name='Experiment Publications'
+                  name='experimentPublications'
+                  value={experimentPublications || ''}
                   errors={experimentError?.response?.data}
                   onChange={setExperimentPublications}
                 />
@@ -226,6 +265,8 @@ export default function AddExperiment() {
               disablePortal
               openText='Mission'
               options={missions || []}
+              value={mission}
+              isOptionEqualToValue={(option, value) => option.name === value.name}
               getOptionLabel={(option) => option.name}
               loading={isMissionsLoading}
               fullWidth
@@ -287,6 +328,8 @@ export default function AddExperiment() {
                   openText='FOR Code'
                   options={forCodes || []}
                   getOptionLabel={(option) => option.name}
+                  value={forCode}
+                  isOptionEqualToValue={(option, value) => option.name === value.name}
                   fullWidth
                   loading={isForCodesLoading}
                   onChange={(_event, value) => {
@@ -336,6 +379,8 @@ export default function AddExperiment() {
                   openText='SEO Code'
                   options={seoCodes || []}
                   getOptionLabel={(option) => option.name}
+                  value={seoCode}
+                  isOptionEqualToValue={(option, value) => option.name === value.name}
                   fullWidth
                   loading={isSeoCodesLoading}
                   onChange={(_event, value) => {
@@ -382,7 +427,7 @@ export default function AddExperiment() {
             </Grid>
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
               <Box display='flex' alignItems='center'>
-                <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
+                <Typography sx={{ p: 1, pl: 1.5 }}>Edit People</Typography>
                 <IconButton
                   onClick={() => {
                     dispatchPeople({
@@ -402,6 +447,8 @@ export default function AddExperiment() {
                       openText='Person'
                       options={people || []}
                       getOptionLabel={(option) => `${option.firstName} ${option.familyName}`}
+                      value={people?.find((p) => p.id === entry.data.personId) || null}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
                       fullWidth
                       loading={isPeopleLoading}
                       onChange={(_event, value) => {
@@ -475,6 +522,8 @@ export default function AddExperiment() {
                       openText='Role'
                       options={roles || []}
                       getOptionLabel={(option) => option.name}
+                      value={roles?.find((r) => r.id === entry.data.roleId) || null}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
                       fullWidth
                       loading={isRolesLoading}
                       onChange={(_event, value) => {
@@ -530,15 +579,20 @@ export default function AddExperiment() {
                 </Grid>
               ))}
             </Paper>
+          </Box>
+          <Box display='flex' alignItems='center' mt={3}>
             <LoadingButton
+              sx={{ mr: 2 }}
               loading={isExperimentLoading}
-              type='submit'
+              onClick={handleSubmit}
               variant='contained'
               color='secondary'
-              sx={{ width: '50%', mt: 3, mb: 1 }}
             >
-              Add Experiment
+              Save Changes
             </LoadingButton>
+            <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate('/admin/experiments')}>
+              Cancel
+            </Button>
           </Box>
           <MessageSnackbar open={isExperimentError} message='Failed to add experiment.' severity='error' />
         </Box>

@@ -2,11 +2,12 @@ package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.Experiment;
+import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.model.Role;
-import com.rmit.mgdb.payload.AddExperimentPersonRequest;
-import com.rmit.mgdb.payload.AddExperimentRequest;
 import com.rmit.mgdb.payload.ResultsResponse;
+import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
+import com.rmit.mgdb.payload.SaveExperimentRequest;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,6 @@ public class ExperimentService {
 
     private final ExperimentRepository experimentRepository;
     private final MissionService missionService;
-    private final PlatformService platformService;
     private final ForCodeService forCodeService;
     private final SeoCodeService seoCodeService;
     private final PersonService personService;
@@ -33,13 +33,11 @@ public class ExperimentService {
 
     @Autowired
     public ExperimentService(ExperimentRepository experimentRepository,
-                             MissionService missionService, PlatformService platformService,
-                             ForCodeService forCodeService, SeoCodeService seoCodeService,
-                             PersonService personService, RoleService roleService,
+                             MissionService missionService, ForCodeService forCodeService,
+                             SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
         this.experimentRepository = experimentRepository;
         this.missionService = missionService;
-        this.platformService = platformService;
         this.forCodeService = forCodeService;
         this.seoCodeService = seoCodeService;
         this.personService = personService;
@@ -52,8 +50,13 @@ public class ExperimentService {
                                    .orElseThrow(() -> new NotFoundException("Experiment could not be found.", id));
     }
 
-    public Experiment addExperiment(AddExperimentRequest experimentRequest) {
+    public Experiment saveExperiment(SaveExperimentRequest experimentRequest) {
         Experiment experiment = new Experiment();
+        Long id = experimentRequest.getId();
+        if (id != null) {
+            experiment.setId(id);
+            experimentPersonService.removeAllExperimentPeople(id);
+        }
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setToa(experimentRequest.getToa());
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
@@ -61,13 +64,14 @@ public class ExperimentService {
         experiment.setExperimentObjective(experimentRequest.getExperimentObjective());
         experiment.setExperimentModuleDrawing(experimentRequest.getExperimentModuleDrawing());
         experiment.setExperimentPublications(experimentRequest.getExperimentPublications());
-        experiment.setMission(missionService.getMissionById(experimentRequest.getMissionId()));
-        experiment.setPlatform(platformService.getPlatformById(experimentRequest.getPlatformId()));
+        Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
+        experiment.setMission(mission);
+        experiment.setPlatform(mission.getPlatform());
         experiment.setForCode(forCodeService.getForCodeById(experimentRequest.getForCodeId()));
         experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
         experimentRepository.save(experiment);
 
-        AddExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
+        SaveExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
         if (personRequests != null && personRequests.length > 0) {
             experiment.setPeople(Arrays.stream(personRequests).map(personRequest -> {
                 Person person = personService.getPersonById(personRequest.getPersonId());

@@ -6,6 +6,8 @@ import com.rmit.mgdb.repository.ExperimentPersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ExperimentPersonService {
 
@@ -34,6 +36,11 @@ public class ExperimentPersonService {
         experimentPerson.setRole(role);
 
         return experimentPersonRepository.save(experimentPerson);
+    }
+
+    @Transactional
+    public void removeAllExperimentPeople(Long id) {
+        experimentPersonRepository.deleteAllByExperiment_Id(id);
     }
 
 }

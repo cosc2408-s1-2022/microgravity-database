@@ -23,6 +23,7 @@ import NavBar from './components/NavBar';
 import Users from './pages/AdminDashboard/Users';
 import Experiments from './pages/AdminDashboard/Experiments';
 import AdminDashboard from './pages/AdminDashboard';
+import EditExperiment from './pages/EditExperiment';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -55,6 +56,7 @@ root.render(
               <Route path='/admin/dashboard' element={<AdminDashboard />} />
               <Route path='/admin/users' element={<Users />} />
               <Route path='/admin/experiments' element={<Experiments />} />
+              <Route path='/admin/experiments/edit' element={<EditExperiment />} />
             </Routes>
           </LocalizationProvider>
         </BrowserRouter>

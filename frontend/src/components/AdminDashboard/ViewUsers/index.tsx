@@ -177,7 +177,7 @@ export default function ViewUsers({ size, searchString, loggedInUser }: ViewUser
           onClick={handleDiscardChanges}
           disabled={isSaveUsersLoading || changedUsers.length === 0}
         >
-          Discard
+          Cancel
         </Button>
       </Grid>
       <MessageSnackbar open={isUsersError} message='Could not load users. Please try again.' severity='error' />

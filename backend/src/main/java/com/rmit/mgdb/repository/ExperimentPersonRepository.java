@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExperimentPersonRepository extends JpaRepository<ExperimentPerson, ExperimentPersonKey> {
+
+    void deleteAllByExperiment_Id(Long id);
+
 }

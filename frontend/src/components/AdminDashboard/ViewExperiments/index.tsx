@@ -4,6 +4,7 @@ import { Box, Button, Grid, Pagination, Paper, Typography } from '@mui/material'
 import { AxiosResponse } from 'axios';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import api from '../../../util/api';
 import { Experiment, ResultsResponse } from '../../../util/types';
 import CenteredNoneFound from '../../CenteredNoneFound';
@@ -15,6 +16,7 @@ type ViewExperimentsProps = {
 };
 
 export default function ViewExperiments({ size, searchString }: ViewExperimentsProps) {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [experiments, setExperiments] = useState<ResultsResponse<Experiment>>();
@@ -69,8 +71,6 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
     }
   }, [isToggleDeleteSuccess, refetchExperiments]);
 
-  console.log(experiments);
-
   return (
     <Grid container spacing={2} mb={3}>
       {experiments?.totalElements === 0 ? (
@@ -91,7 +91,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
             >
               <Box display='flex' flexDirection='column' flexGrow={1}>
                 <Typography
-                  variant='body1'
+                  variant='body2'
                   fontWeight='bold'
                   flexGrow={1}
                   pr={2}
@@ -103,19 +103,36 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                   {e.mission.name}
                 </Typography>
               </Box>
-              <Button variant='contained' color='primary' sx={{ mr: 1 }}>
-                <EditRounded fontSize='medium' />
-              </Button>
-              <Button
-                onClick={() => {
-                  mutate(e.id);
-                }}
-                disabled={isToggleDeleteLoading}
-                variant='contained'
-                color='primary'
-              >
-                {e.deleted ? <RestartAltRoundedIcon fontSize='medium' /> : <DeleteRounded fontSize='medium' />}
-              </Button>
+              <Box display='flex'>
+                <Button
+                  onClick={() => {
+                    navigate('/admin/experiments/edit', {
+                      state: e,
+                    });
+                  }}
+                  variant='contained'
+                  color='primary'
+                  sx={{ mr: 1 }}
+                >
+                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                    Edit
+                  </Typography>
+                  <EditRounded fontSize='small' />
+                </Button>
+                <Button
+                  onClick={() => {
+                    mutate(e.id);
+                  }}
+                  disabled={isToggleDeleteLoading}
+                  variant='contained'
+                  color='primary'
+                >
+                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                    {e.deleted ? 'Restore' : 'Delete'}
+                  </Typography>
+                  {e.deleted ? <RestartAltRoundedIcon fontSize='small' /> : <DeleteRounded fontSize='small' />}
+                </Button>
+              </Box>
             </Paper>
           </Grid>
         ))

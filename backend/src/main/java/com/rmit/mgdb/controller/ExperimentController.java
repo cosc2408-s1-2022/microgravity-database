@@ -1,8 +1,8 @@
 package com.rmit.mgdb.controller;
 
 import com.rmit.mgdb.model.Experiment;
-import com.rmit.mgdb.payload.AddExperimentRequest;
 import com.rmit.mgdb.payload.ResultsResponse;
+import com.rmit.mgdb.payload.SaveExperimentRequest;
 import com.rmit.mgdb.service.ExperimentService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +34,12 @@ public class ExperimentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@Valid @RequestBody AddExperimentRequest experimentRequest, BindingResult result) {
+    public ResponseEntity<?> add(@Valid @RequestBody SaveExperimentRequest experimentRequest, BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)
             return errorMap;
 
-        return new ResponseEntity<>(experimentService.addExperiment(experimentRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(experimentService.saveExperiment(experimentRequest), HttpStatus.CREATED);
     }
 
     @GetMapping
