@@ -53,31 +53,31 @@ export default function NavBar() {
                 </Typography>
               )}
             </Box>
-            <Box display='flex'>
-              {['/', '/home'].includes(location.pathname) ? undefined : matches ? (
-                <PrimarySearch />
-              ) : (
-                <Button href='/home' variant='contained' sx={{ ml: 1 }}>
-                  <SearchRounded />
-                </Button>
-              )}
-              {!location.pathname.includes('/search/advanced') ? (
-                matches ? (
-                  <Button
-                    href='/search/advanced'
-                    variant='contained'
-                    sx={{ ml: 1, minWidth: 'auto', whiteSpace: 'nowrap', height: '2.5rem' }}
-                  >
-                    Advanced Search
+            {!isLoggedInUserLoading && (loggedInUser || isLoggedInUserError) && (
+              <Box display='flex'>
+                {['/', '/home'].includes(location.pathname) ? undefined : matches ? (
+                  <PrimarySearch />
+                ) : (
+                  <Button href='/home' variant='contained' sx={{ ml: 1 }}>
+                    <SearchRounded />
                   </Button>
-                ) : !['/login', '/register'].includes(location.pathname) ? (
-                  <Button href='/search/advanced' variant='contained' sx={{ ml: 1 }}>
-                    <ManageSearchRounded />
-                  </Button>
-                ) : undefined
-              ) : undefined}
-              {!isLoggedInUserLoading ? (
-                loggedInUser && loggedInUser.role === UserRole.ROLE_ADMIN ? (
+                )}
+                {!location.pathname.includes('/search/advanced') ? (
+                  matches ? (
+                    <Button
+                      href='/search/advanced'
+                      variant='contained'
+                      sx={{ ml: 1, minWidth: 'auto', whiteSpace: 'nowrap', height: '2.5rem' }}
+                    >
+                      Advanced Search
+                    </Button>
+                  ) : !['/login', '/register'].includes(location.pathname) ? (
+                    <Button href='/search/advanced' variant='contained' sx={{ ml: 1 }}>
+                      <ManageSearchRounded />
+                    </Button>
+                  ) : undefined
+                ) : undefined}
+                {loggedInUser && loggedInUser.role === UserRole.ROLE_ADMIN ? (
                   matches ? (
                     <Button
                       variant='contained'
@@ -91,10 +91,8 @@ export default function NavBar() {
                       <AdminPanelSettingsRounded />
                     </Button>
                   )
-                ) : undefined
-              ) : undefined}
-              {!isLoggedInUserLoading ? (
-                isLoggedInUserError ? (
+                ) : undefined}
+                {isLoggedInUserError ? (
                   matches ? (
                     <Box display='inline-flex' alignItems='center'>
                       <Button
@@ -192,9 +190,9 @@ export default function NavBar() {
                       <LogoutRounded />
                     </Button>
                   </>
-                )
-              ) : undefined}
-            </Box>
+                )}
+              </Box>
+            )}
           </Box>
         </Container>
       </Toolbar>

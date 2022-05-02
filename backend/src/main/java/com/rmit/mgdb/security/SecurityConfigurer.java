@@ -94,34 +94,29 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // TODO API endpoints are subject to change.
 
                 // FIXME Production.
-                //  Users.
-                //  .antMatchers("/api/users/register").permitAll()
-                //  .antMatchers("/api/users/login").permitAll()
-                //  .antMatchers("/api/users/**").authenticated()
-                //  Search.
-                //  .antMatchers("/api/search/**").permitAll()
-                //  .antMatchers("/api/search/users").authenticated()
-                //  Experiments.
                 //  .antMatchers("/api/experiments").permitAll()
+                //  .antMatchers("/api/experiments/add").authenticated()
                 //  .antMatchers("/api/experiments/get").permitAll()
-                //  .antMatchers("/api/experiments/**").authenticated()
-                //  FOR Codes.
+                //  .antMatchers("/api/experiments/{id}/approve").hasRole(ADMIN.name())
+                //  .antMatchers("/api/experiments/{id}/toggleDelete").hasRole(ADMIN.name())
                 //  .antMatchers("/api/forCodes/**").permitAll()
-                //  SEO Codes.
-                //  .antMatchers("/api/seoCodes/**").permitAll()
-                //  Missions.
-                //  .antMatchers("/api/missions/{id}").permitAll()
+                //  .antMatchers("/api/missions").permitAll()
                 //  .antMatchers("/api/missions/add").authenticated()
-                //  People.
+                //  .antMatchers("/api/missions/{id}").permitAll()
                 //  .antMatchers("/api/people").authenticated()
-                //  .antMatchers("/api/people/add").permitAll()
-                //  Platforms.
+                //  .antMatchers("/api/people/add").authenticated()
                 //  .antMatchers("/api/platforms/**").permitAll()
-                //  Roles.
                 //  .antMatchers("/api/roles/**").permitAll()
-                //  Misc.
+                //  .antMatchers("/api/search/**").permitAll()
+                //  .antMatchers("/api/search/advanced").permitAll()
+                //  .antMatchers("/api/search/users").authenticated()
+                //  .antMatchers("/api/seoCodes/**").permitAll()
+                //  .antMatchers("/api/users").hasRole(ADMIN.name())
+                //  .antMatchers("/api/users/authenticated").permitAll()
+                //  .antMatchers("/api/users/login").permitAll()
+                //  .antMatchers("/api/users/register").permitAll()
+                //  .antMatchers("/api/users/saveAll").hasRole(ADMIN.name())
                 //  .antMatchers("/h2-console/**").permitAll()
-                //  ...rest.
                 //  .anyRequest().authenticated();
 
                 // FIXME Development.

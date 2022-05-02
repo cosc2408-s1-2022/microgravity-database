@@ -67,7 +67,7 @@ public class SearchService {
                                                            .fields(fields)
                                                            .matching(stringParam)
 
-                                                    )
+                                              )
                                               .fetch(page * size, size);
 
         long totalHitCount = result.total().hitCount();
@@ -112,7 +112,7 @@ public class SearchService {
                                                            // Must match string if present.
                                                            if (!stringParam.isEmpty()) {
                                                                b.must(s -> s.match()
-                                                                            .fields(EXPERIMENT_SEARCH_FIELDS)
+                                                                            .fields(resultTypeParam.searchFields)
                                                                             .matching(stringParam));
                                                            }
 
