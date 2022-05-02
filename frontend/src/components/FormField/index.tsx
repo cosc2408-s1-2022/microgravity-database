@@ -14,7 +14,7 @@ function FormField({ onChange, name, errors, ...rest }: FormFieldProps) {
       variant='outlined'
       fullWidth
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        if (errors != undefined) errors[name] = '';
+        if (errors !== undefined) errors[name] = '';
         onChange && onChange(event.target.value);
       }}
       color='secondary'

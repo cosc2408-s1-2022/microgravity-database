@@ -38,7 +38,7 @@ export default function BasicSearchPage() {
         <CircularProgress />
       </Box>
     );
-  } else if (data && data?.data.results.length != 0) {
+  } else if (data && data?.data.results.length !== 0) {
     results = data.data.results as Experiment[];
     pages = data.data.totalPages;
     resultsElement = results.map((item: Experiment, index) => {

@@ -68,7 +68,7 @@ export default function AdvancedSearchPage() {
         <CircularProgress />
       </Box>
     );
-  } else if (data && data?.data.results.length != 0) {
+  } else if (data && data?.data.results.length !== 0) {
     pages = data.data.totalPages;
     if (searchState.resultType === ResultType.EXPERIMENT) {
       results = data.data.results as Experiment[];

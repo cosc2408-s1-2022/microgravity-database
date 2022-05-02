@@ -271,7 +271,7 @@ export default function EditExperiment() {
               loading={isMissionsLoading}
               fullWidth
               onChange={(_event, value) => {
-                if (experimentError?.response?.data != undefined) {
+                if (experimentError?.response?.data !== undefined) {
                   experimentError.response.data.missionId = '';
                 }
                 setMission(value);
@@ -333,7 +333,7 @@ export default function EditExperiment() {
                   fullWidth
                   loading={isForCodesLoading}
                   onChange={(_event, value) => {
-                    if (experimentError?.response?.data != undefined) {
+                    if (experimentError?.response?.data !== undefined) {
                       experimentError.response.data.forCodeId = '';
                     }
                     setForCode(value);
@@ -384,7 +384,7 @@ export default function EditExperiment() {
                   fullWidth
                   loading={isSeoCodesLoading}
                   onChange={(_event, value) => {
-                    if (experimentError?.response?.data != undefined) {
+                    if (experimentError?.response?.data !== undefined) {
                       experimentError.response.data.seoCodeId = '';
                     }
                     setSeoCode(value);

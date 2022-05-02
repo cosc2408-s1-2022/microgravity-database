@@ -112,7 +112,7 @@ export default function AddMission() {
                     views={['year']}
                     value={launchDate}
                     onChange={(value) => {
-                      if (missionError?.response?.data != undefined) {
+                      if (missionError?.response?.data !== undefined) {
                         missionError.response.data.launchDate = '';
                       }
                       setLaunchDate(value);
@@ -135,7 +135,7 @@ export default function AddMission() {
                     views={['year']}
                     value={startDate}
                     onChange={(value) => {
-                      if (missionError?.response?.data != undefined) {
+                      if (missionError?.response?.data !== undefined) {
                         missionError.response.data.startDate = '';
                       }
                       setStartDate(value);
@@ -162,7 +162,7 @@ export default function AddMission() {
                     views={['year']}
                     value={endDate}
                     onChange={(value) => {
-                      if (missionError?.response?.data != undefined) {
+                      if (missionError?.response?.data !== undefined) {
                         missionError.response.data.endDate = '';
                       }
                       setEndDate(value);
@@ -192,7 +192,7 @@ export default function AddMission() {
                     fullWidth
                     loading={isPlatformsLoading}
                     onChange={(_event, value) => {
-                      if (missionError?.response?.data != undefined) {
+                      if (missionError?.response?.data !== undefined) {
                         missionError.response.data.platformId = '';
                       }
                       setPlatform(value);
