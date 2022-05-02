@@ -9,12 +9,16 @@ import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
 import com.rmit.mgdb.repository.ExperimentRepository;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -22,6 +26,10 @@ import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 
 @Service
 public class ExperimentService {
+
+    @PersistenceContext
+    private final EntityManager entityManager;
+    private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
     private final MissionService missionService;
@@ -32,10 +40,13 @@ public class ExperimentService {
     private final ExperimentPersonService experimentPersonService;
 
     @Autowired
-    public ExperimentService(ExperimentRepository experimentRepository,
+    public ExperimentService(EntityManager entityManager,
+                             ExperimentRepository experimentRepository,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
+        this.entityManager = entityManager;
+        this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
@@ -69,7 +80,7 @@ public class ExperimentService {
         experiment.setPlatform(mission.getPlatform());
         experiment.setForCode(forCodeService.getForCodeById(experimentRequest.getForCodeId()));
         experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
-        experimentRepository.save(experiment);
+        experimentRepository.saveAndFlush(experiment);
 
         SaveExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
         if (personRequests != null && personRequests.length > 0) {
@@ -80,6 +91,7 @@ public class ExperimentService {
             }).toList());
         }
 
+        searchSession.massIndexer().start();
         return experiment;
     }
 
@@ -91,12 +103,16 @@ public class ExperimentService {
         if (page.isPresent() || size.isPresent()) {
             int pageInt = page.orElse(1) - 1;
             int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
-            experiments = experimentRepository.findExperimentsBy(PageRequest.of(pageInt, sizeInt));
+            experiments =
+                    experimentRepository.findExperimentsByApprovedAndDeleted(PageRequest.of(pageInt, sizeInt), true,
+                                                                             false);
             return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(), pageInt + 1,
                                          sizeInt,
                                          experiments.getContent());
         } else {
-            experiments = experimentRepository.findExperimentsBy(Pageable.ofSize(DEFAULT_PAGE_SIZE));
+            experiments =
+                    experimentRepository.findExperimentsByApprovedAndDeleted(Pageable.ofSize(DEFAULT_PAGE_SIZE), true,
+                                                                             false);
             return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(),
                                          experiments.getTotalPages() + 1,
                                          DEFAULT_PAGE_SIZE, experiments.getContent());
@@ -106,13 +122,15 @@ public class ExperimentService {
     public void toggleExperimentDelete(Long id) {
         Experiment experiment = getExperimentById(id);
         experiment.setDeleted(!experiment.isDeleted());
-        experimentRepository.save(experiment);
+        experimentRepository.saveAndFlush(experiment);
+        searchSession.massIndexer().start();
     }
 
     public void approveExperiment(Long id) {
         Experiment experiment = getExperimentById(id);
         experiment.setApproved(true);
-        experimentRepository.save(experiment);
+        experimentRepository.saveAndFlush(experiment);
+        searchSession.massIndexer().start();
     }
 
 }

@@ -5,15 +5,16 @@ import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.payload.AddMissionRequest;
 import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.repository.MissionRepository;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,12 +22,19 @@ import java.util.stream.Collectors;
 @Service
 public class MissionService {
 
+    @PersistenceContext
+    private final EntityManager entityManager;
+    private final SearchSession searchSession;
+
     private final MissionRepository missionRepository;
     private final PlatformService platformService;
 
     @Autowired
-    public MissionService(MissionRepository missionRepository, PlatformService platformService) {
+    public MissionService(EntityManager entityManager, MissionRepository missionRepository,
+                          PlatformService platformService) {
+        this.entityManager = entityManager;
         this.missionRepository = missionRepository;
+        this.searchSession = Search.session(entityManager);
         this.platformService = platformService;
     }
 
@@ -45,22 +53,20 @@ public class MissionService {
 
     public Mission addMission(AddMissionRequest missionRequest) {
         Mission mission = new Mission();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy");
-        try {
-            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                    .appendPattern("yyyy")
-                    .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-                    .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-                    .toFormatter();
-            mission.setLaunchDate(LocalDate.parse(missionRequest.getLaunchDate(), formatter));
-            mission.setStartDate(LocalDate.parse(missionRequest.getStartDate(), formatter));
-            mission.setEndDate(LocalDate.parse(missionRequest.getEndDate(), formatter));
-        } catch (DateTimeParseException ignored) {
-        }
-
+        mission.setName(missionRequest.getName());
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy")
+                .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .toFormatter();
+        mission.setLaunchDate(LocalDate.parse(missionRequest.getLaunchDate(), formatter));
+        mission.setStartDate(LocalDate.parse(missionRequest.getStartDate(), formatter));
+        mission.setEndDate(LocalDate.parse(missionRequest.getEndDate(), formatter));
         mission.setPlatform(platformService.getPlatformById(missionRequest.getPlatformId()));
+        mission = missionRepository.saveAndFlush(mission);
 
-        return missionRepository.save(mission);
+        searchSession.massIndexer().start();
+        return mission;
     }
 
 }

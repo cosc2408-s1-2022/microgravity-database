@@ -62,13 +62,26 @@ public class SearchService {
         // Hibernate Search uses zero-based index.
         page--;
 
-        SearchResult<T> result = searchSession.search(tClass)
-                                              .where(s -> s.match()
-                                                           .fields(fields)
-                                                           .matching(stringParam)
+        SearchResult<T> result;
+        if (tClass.equals(Experiment.class)) {
+            result = searchSession.search(tClass)
+                                  .where(s -> s.bool().must(m -> m.match()
+                                                                  .fields(fields)
+                                                                  .matching(stringParam))
+                                               .must(m -> m.match().field("approved").matching(true))
+                                               .must(m -> m.match().field("deleted").matching(false))
 
-                                              )
-                                              .fetch(page * size, size);
+                                        )
+                                  .fetch(page * size, size);
+        } else {
+            result = searchSession.search(tClass)
+                                  .where(s -> s.match()
+                                               .fields(fields)
+                                               .matching(stringParam)
+
+                                        )
+                                  .fetch(page * size, size);
+        }
 
         long totalHitCount = result.total().hitCount();
         return new ResultsResponse<>(
@@ -114,6 +127,11 @@ public class SearchService {
                                                                b.must(s -> s.match()
                                                                             .fields(resultTypeParam.searchFields)
                                                                             .matching(stringParam));
+                                                           }
+
+                                                           if (resultTypeParam == ResultType.EXPERIMENT) {
+                                                               b.must(s -> s.match().field("approved").matching(true));
+                                                               b.must(s -> s.match().field("deleted").matching(false));
                                                            }
 
                                                            // Date range filters.

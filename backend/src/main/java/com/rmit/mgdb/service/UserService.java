@@ -6,6 +6,8 @@ import com.rmit.mgdb.exception.UsernameNotFoundException;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.repository.UserRepository;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +28,18 @@ import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 @Service
 public class UserService {
 
+    @PersistenceContext
+    private final EntityManager entityManager;
+    private final SearchSession searchSession;
+
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(EntityManager entityManager, UserRepository userRepository,
+                       BCryptPasswordEncoder passwordEncoder) {
+        this.entityManager = entityManager;
+        this.searchSession = Search.session(entityManager);
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -42,7 +53,11 @@ public class UserService {
                     String.format("User by username %s already exists.", user.getUsername()));
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        user = userRepository.saveAndFlush(user);
+
+
+        searchSession.massIndexer().start();
+        return user;
     }
 
     /**
@@ -81,7 +96,8 @@ public class UserService {
     }
 
     public void saveUsers(List<User> users) {
-        userRepository.saveAll(users);
+        userRepository.saveAllAndFlush(users);
+        searchSession.massIndexer().start();
     }
 
 }

@@ -35,7 +35,7 @@ public class ExperimentPersonService {
         experimentPerson.setPerson(person);
         experimentPerson.setRole(role);
 
-        return experimentPersonRepository.save(experimentPerson);
+        return experimentPersonRepository.saveAndFlush(experimentPerson);
     }
 
     @Transactional

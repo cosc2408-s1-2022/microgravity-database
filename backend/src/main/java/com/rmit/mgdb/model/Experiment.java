@@ -3,6 +3,7 @@ package com.rmit.mgdb.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.validator.constraints.Length;
@@ -48,8 +49,10 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentPublications;
 
+    @GenericField
     private boolean deleted;
 
+    @GenericField
     private boolean approved;
 
     @ManyToOne
