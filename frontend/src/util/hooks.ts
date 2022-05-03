@@ -15,6 +15,7 @@ export const useLoggedInUser = () => {
     refetch: refetchQuery,
   } = useQuery<AxiosResponse<User>>('getAuthenticatedUser', () => api.get('/users/authenticated'), {
     retry: false,
+    enabled: false,
   });
 
   const authToken = localStorage.getItem('authToken');

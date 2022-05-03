@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExperimentRepository extends JpaRepository<Experiment, Long> {
 
-    Page<Experiment> findExperimentsByApprovedAndDeleted(Pageable pageable, boolean approved, boolean deleted);
+    Page<Experiment> findExperimentsBy(Pageable pageable);
 
 }

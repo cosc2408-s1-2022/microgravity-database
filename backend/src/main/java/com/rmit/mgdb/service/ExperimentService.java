@@ -104,15 +104,13 @@ public class ExperimentService {
             int pageInt = page.orElse(1) - 1;
             int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
             experiments =
-                    experimentRepository.findExperimentsByApprovedAndDeleted(PageRequest.of(pageInt, sizeInt), true,
-                                                                             false);
+                    experimentRepository.findExperimentsBy(PageRequest.of(pageInt, sizeInt));
             return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(), pageInt + 1,
                                          sizeInt,
                                          experiments.getContent());
         } else {
             experiments =
-                    experimentRepository.findExperimentsByApprovedAndDeleted(Pageable.ofSize(DEFAULT_PAGE_SIZE), true,
-                                                                             false);
+                    experimentRepository.findExperimentsBy(Pageable.ofSize(DEFAULT_PAGE_SIZE));
             return new ResultsResponse<>(experiments.getTotalElements(), experiments.getTotalPages(),
                                          experiments.getTotalPages() + 1,
                                          DEFAULT_PAGE_SIZE, experiments.getContent());
