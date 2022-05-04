@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 public class ForCodePayload {
 
+    private Long id;
     private String code;
     private String name;
 
@@ -19,6 +20,7 @@ public class ForCodePayload {
     private List<Experiment> experiments;
 
     public ForCodePayload(ForCode forCode) {
+        this.id = forCode.getId();
         this.code = forCode.getCode();
         this.name = forCode.getName();
         this.experiments = forCode.getExperiments();

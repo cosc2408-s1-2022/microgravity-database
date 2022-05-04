@@ -91,7 +91,7 @@ export default function AdvancedSearchPage() {
         return (
           <MissionResult
             key={item.id}
-            id={item.id}
+            id={item.id.toString()}
             name={item.name}
             startDate={item.startDate}
             endDate={item.endDate}

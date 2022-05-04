@@ -9,6 +9,7 @@ import {
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import { Link, Box, Button, Grid, Pagination, Paper, Typography, Tooltip } from '@mui/material';
 import { AxiosResponse } from 'axios';
+import moment from 'moment';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -126,11 +127,11 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                     {e.title} {e.deleted && ' (DELETED)'}
                   </Typography>
                   <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
-                    {e.mission.name}
+                    {e.mission.name} &bull; Added {moment(e.createdAt).fromNow()}
                   </Typography>
                 </Link>
               </Box>
-              <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center'>
+              <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center' sx={{ width: '20rem' }}>
                 {!e.approved && !e.deleted && (
                   <Button
                     onClick={() => {

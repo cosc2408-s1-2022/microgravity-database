@@ -126,14 +126,16 @@ export default function AddExperiment() {
       experimentModuleDrawing,
       experimentPublications,
       missionId: mission?.id,
-      forCodeId: forCode?.code,
-      seoCodeId: seoCode?.code,
+      forCodeId: forCode?.id,
+      seoCodeId: seoCode?.id,
       experimentPersonRequests: peopleState.data.map((entry) => entry.data),
     }),
   );
+  console.log('forCodes', forCodes);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('mission', mission);
     mutateExperiment();
   };
 

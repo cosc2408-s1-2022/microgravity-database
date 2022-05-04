@@ -72,10 +72,12 @@ export type Experiment = {
   forCode: ForCode;
   seoCode: SeoCode;
   people: ExperimentPerson[];
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type Mission = {
-  id: string;
+  id: number;
   name: string;
   platform: Platform;
   launchDate: Date;

@@ -43,7 +43,6 @@ public class User {
     @FullTextField(analyzer = "non_edge_index_analyzer", searchAnalyzer = "search_analyzer")
     private String role;
 
-    // The following fields are for debugging purposes only.
     private Date createdAt;
     private Date updatedAt;
 

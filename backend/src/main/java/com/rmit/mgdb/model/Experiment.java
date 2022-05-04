@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -55,6 +56,8 @@ public class Experiment {
     @GenericField
     private boolean approved;
 
+
+
     @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded
@@ -82,5 +85,24 @@ public class Experiment {
     @OneToMany(mappedBy = "experiment")
     @IndexedEmbedded
     private List<ExperimentPerson> people;
+
+    private Date createdAt;
+    private Date updatedAt;
+
+    /**
+     * Saves the timestamp of creation.
+     */
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+
+    /**
+     * Updates the timestamp of modification.
+     */
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
 
 }

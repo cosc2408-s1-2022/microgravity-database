@@ -46,7 +46,7 @@ export default function Users() {
   return isLoggedInUserLoading || !loggedInUser ? (
     <CenteredCircularProgress />
   ) : loggedInUser.role === UserRole.ROLE_ADMIN ? (
-    <Container maxWidth='sm' sx={{ mt: 4 }}>
+    <Container maxWidth='lg' sx={{ mt: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} display='flex' justifyContent='space-between' alignItems='center'>
           <FormControl size='small' variant='outlined'>

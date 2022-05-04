@@ -60,8 +60,14 @@ public class MissionService {
                 .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
                 .toFormatter();
         mission.setLaunchDate(LocalDate.parse(missionRequest.getLaunchDate(), formatter));
-        mission.setStartDate(LocalDate.parse(missionRequest.getStartDate(), formatter));
-        mission.setEndDate(LocalDate.parse(missionRequest.getEndDate(), formatter));
+        String startDate = missionRequest.getStartDate();
+        String endDate = missionRequest.getEndDate();
+        if (startDate != null) {
+            mission.setStartDate(LocalDate.parse(startDate, formatter));
+        }
+        if (endDate != null) {
+            mission.setEndDate(LocalDate.parse(endDate, formatter));
+        }
         mission.setPlatform(platformService.getPlatformById(missionRequest.getPlatformId()));
         mission = missionRepository.saveAndFlush(mission);
 

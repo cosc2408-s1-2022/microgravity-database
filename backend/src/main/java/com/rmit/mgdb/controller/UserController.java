@@ -92,7 +92,7 @@ public class UserController {
      * Get the currently authenticated user or the user from the request's authentication token.
      */
     @GetMapping("/authenticated")
-    public ResponseEntity<?> getAuthenticated() {
+    public ResponseEntity<?> getAuthenticated() throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
     }

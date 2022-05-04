@@ -20,7 +20,7 @@ export default function AuthWrapper({ children, role }: AuthWrapperProps) {
 
   const { user, isLoading, isError } = useLoggedInUser();
 
-  return isLoading && !isError ? (
+  return isLoading || (!user && !isError) ? (
     <Box sx={{ p: 4 }} display='flex' justifyContent='center'>
       <CircularProgress size={24} color='secondary' />
     </Box>

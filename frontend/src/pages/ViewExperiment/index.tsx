@@ -114,9 +114,10 @@ export default function ViewExperiment() {
                   </Typography>
                   {experiment?.people.map((person, i) => (
                     <Box key={i} mb={2}>
-                      <Typography variant={'body1'}>
+                      <Typography variant={'body1'} fontWeight='bold'>
                         {`${person.person.familyName.at(0)}. ${person.person.firstName}`}
                       </Typography>
+                      <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
                       <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
                       <Typography
                         variant={'body2'}

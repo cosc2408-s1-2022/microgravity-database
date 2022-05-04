@@ -53,9 +53,10 @@ root.render(
               <Route path='/mission/:id' element={<ViewMission />} />
               <Route path='/forCode/:id' element={<ViewForCode />} />
               <Route path='/seoCode/:id' element={<ViewSeoCode />} />
-              <Route path='/admin/dashboard' element={<AdminDashboard />} />
-              <Route path='/admin/users' element={<Users />} />
-              <Route path='/admin/experiments' element={<Experiments />} />
+              <Route path='/admin/dashboard' element={<AdminDashboard />}>
+                <Route path='users' element={<Users />} />
+                <Route path='experiments' element={<Experiments />} />
+              </Route>
               <Route path='/admin/experiments/edit' element={<EditExperiment />} />
             </Routes>
           </LocalizationProvider>

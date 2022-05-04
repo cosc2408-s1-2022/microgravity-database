@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 public class MissionPayload {
 
+    private Long id;
     private String name;
     private LocalDate launchDate;
     private LocalDate startDate;
@@ -27,6 +28,7 @@ public class MissionPayload {
     private List<Experiment> experiments;
 
     public MissionPayload(Mission mission) {
+        this.id = mission.getId();
         this.name = mission.getName();
         this.launchDate = mission.getLaunchDate();
         this.startDate = mission.getStartDate();

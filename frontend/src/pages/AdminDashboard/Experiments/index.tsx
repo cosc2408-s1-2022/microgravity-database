@@ -15,6 +15,7 @@ import { ChangeEvent, useState } from 'react';
 import { ClearRounded, SearchRounded } from '@mui/icons-material';
 import AuthWrapper from '../../../components/AuthWrapper';
 import ViewExperiments from '../../../components/AdminDashboard/ViewExperiments';
+import { UserRole } from '../../../util/types';
 
 export default function Experiments() {
   const [size, setSize] = useState<number>();
@@ -32,8 +33,8 @@ export default function Experiments() {
   };
 
   return (
-    <AuthWrapper>
-      <Container maxWidth='lg' sx={{ mt: 3 }}>
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
+      <Container maxWidth='lg' sx={{ mt: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} display='flex' justifyContent='space-between' alignItems='center'>
             <FormControl size='small' variant='outlined'>
