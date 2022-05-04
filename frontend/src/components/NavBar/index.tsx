@@ -81,13 +81,13 @@ export default function NavBar() {
                   matches ? (
                     <Button
                       variant='contained'
-                      href='/admin/dashboard'
+                      href='/admin/dashboard/users'
                       sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
                     >
                       Admin Dashboard
                     </Button>
                   ) : (
-                    <Button href='/admin/dashboard' variant='contained' sx={{ ml: 1 }}>
+                    <Button href='/admin/dashboard/users' variant='contained' sx={{ ml: 1 }}>
                       <AdminPanelSettingsRounded />
                     </Button>
                   )

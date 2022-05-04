@@ -84,6 +84,7 @@ create table experiment
     id                        bigint auto_increment
         primary key,
     approved                  bit           not null,
+    created_at                datetime(6)   null,
     deleted                   bit           not null,
     experiment_aim            varchar(1023) null,
     experiment_module_drawing varchar(1023) null,
@@ -92,6 +93,7 @@ create table experiment
     lead_institution          varchar(255)  null,
     title                     varchar(255)  null,
     toa                       varchar(255)  null,
+    updated_at                datetime(6)   null,
     for_code_id               bigint        not null,
     mission_id                bigint        not null,
     platform_id               bigint        not null,

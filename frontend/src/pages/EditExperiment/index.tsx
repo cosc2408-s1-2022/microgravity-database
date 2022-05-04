@@ -168,7 +168,7 @@ export default function EditExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/admin/experiments');
+      navigate('/admin/dashboard/experiments');
     }
   }, [isExperimentSuccess, navigate]);
 
@@ -590,7 +590,11 @@ export default function EditExperiment() {
             >
               Save Changes
             </LoadingButton>
-            <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate('/admin/experiments')}>
+            <Button
+              sx={{ backgroundColor: 'gray' }}
+              variant='contained'
+              onClick={() => navigate('/admin/dashboard/experiments')}
+            >
               Cancel
             </Button>
           </Box>

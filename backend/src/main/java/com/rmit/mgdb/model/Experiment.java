@@ -56,8 +56,6 @@ public class Experiment {
     @GenericField
     private boolean approved;
 
-
-
     @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded
