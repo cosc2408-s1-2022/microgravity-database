@@ -14,8 +14,9 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
     >
       <Grid container item direction='column' md={3}>
         <Grid item>
+          <Typography display={'inline'}>Mission:</Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
-            <Typography display={'inline'}>Mission: </Typography> {props.mission.name}
+            {props.mission.name}
           </Typography>
         </Grid>
         <Typography>Researchers:</Typography>

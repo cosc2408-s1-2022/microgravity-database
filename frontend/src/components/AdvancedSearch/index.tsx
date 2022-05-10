@@ -7,15 +7,18 @@ import DateElement from './DateElement';
 import moment from 'moment';
 import SelectElement from './SelectElement';
 
-export default function AdvancedSearch(props: SearchState & GridProps) {
-  const searchProps = props as SearchState;
+interface AdvSearchProps extends GridProps {
+  searchState: SearchState;
+}
+
+export default function AdvancedSearch({ searchState, ...gridProps }: AdvSearchProps) {
   const navigate = useNavigate();
 
-  const [string, handleSearchStringChange] = useState(searchProps.string);
-  const [resultType, handleResultTypeChange] = useState(searchProps.resultType);
-  const [platform, handlePlatformChange] = useState(searchProps.platform);
-  const [startDate, setStartDate] = useState(searchProps.startDate);
-  const [endDate, setEndDate] = useState(searchProps.endDate);
+  const [string, handleSearchStringChange] = useState(searchState.string);
+  const [resultType, handleResultTypeChange] = useState(searchState.resultType);
+  const [platform, handlePlatformChange] = useState(searchState.platform);
+  const [startDate, setStartDate] = useState(searchState.startDate);
+  const [endDate, setEndDate] = useState(searchState.endDate);
 
   const state = {
     string: string,
@@ -46,7 +49,7 @@ export default function AdvancedSearch(props: SearchState & GridProps) {
   };
 
   return (
-    <Grid {...props} bgcolor='primary.light'>
+    <Grid {...gridProps} bgcolor='primary.light'>
       <Grid component='form' onSubmit={handleSubmit} container item direction='column' padding={5} spacing={3}>
         <Grid item>
           <FormField value={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
