@@ -1,14 +1,14 @@
 import { Box, Card, CircularProgress, Container, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { ForCodeResult } from '../../util/types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getForCode } from '../../util/apiCalls';
+import { ForCode } from '../../util/types';
 import ExperimentPaper from '../../components/ExperimentPaper';
 
 export default function ViewForCode() {
   const id = useParams().id as unknown as string;
-  const [forCode, setForCode] = useState<ForCodeResult>();
+  const [forCode, setForCode] = useState<ForCode>();
   const { data, isSuccess, isLoading } = useQuery(['forCode', id], ({ queryKey }) => {
     const [, id] = queryKey;
     return getForCode({ id });

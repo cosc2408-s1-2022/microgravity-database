@@ -6,13 +6,13 @@ import { createTheme } from '@mui/material/styles'; // TODO Create a custom them
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#F7F5F8',
-      light: '#FAFAFA',
+      main: '#f7f5f8',
+      light: '#fafafa',
       dark: '#2368de',
     },
     secondary: {
       main: '#f44336',
-      light: 'F7F5F8',
+      light: '#f7f5f8',
     },
     info: {
       main: '#81c784',
@@ -24,7 +24,7 @@ const theme = createTheme({
       primary: '#000000',
     },
     success: {
-      main: '#4B878BFF',
+      main: '#4b878bff',
     },
   },
   typography: {
@@ -38,7 +38,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: '#FFFFFF',
+          color: '#ffffff',
           backgroundColor: '#cc0808',
         },
         text: {

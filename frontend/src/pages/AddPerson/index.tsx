@@ -1,15 +1,18 @@
-import { Alert, Box, Container, Grid, Snackbar, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import { Person } from '../../util/types';
-import Header from '../../components/NavBar';
+import MessageSnackbar from '../../components/MessageSnackbar';
+import AuthWrapper from '../../components/AuthWrapper';
 
 export default function AddPerson() {
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState<string>();
   const [familyName, setFamilyName] = useState<string>();
   const [affiliation, setAffiliation] = useState<string>();
@@ -34,28 +37,20 @@ export default function AddPerson() {
     event.preventDefault();
     mutate();
   };
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-  const handleErrorSnackbarClose = () => {
-    setErrorSnackbarOpen(false);
-  };
-  useEffect(() => {
-    if (isError) {
-      setErrorSnackbarOpen(true);
-    }
-  }, [isError]);
 
-  if (isSuccess) {
-    return <Navigate to='/home' />;
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/home');
+    }
+  }, [isSuccess, navigate]);
 
   return (
-    <>
-      <Header />
-      <Container maxWidth={'sm'}>
+    <AuthWrapper>
+      <Container maxWidth='sm'>
         <Box
           sx={{
             my: -2,
-            marginTop: 8,
+            mt: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -136,13 +131,9 @@ export default function AddPerson() {
               </Grid>
             </Grid>
           </Box>
-          <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
-            <Alert severity='error' onClose={handleErrorSnackbarClose}>
-              Failed to add person.
-            </Alert>
-          </Snackbar>
+          <MessageSnackbar open={isError} message='Failed to add person.' severity='error' />
         </Box>
       </Container>
-    </>
+    </AuthWrapper>
   );
 }

@@ -3,6 +3,7 @@
 export type UserAuth = string | null;
 
 export type User = {
+  id: number;
   username: string;
   role: UserRole;
   createdAt: Date;
@@ -55,7 +56,7 @@ export type AuthenticationResponse = {
 };
 
 export type Experiment = {
-  id: string;
+  id: number;
   title: string;
   toa: string;
   leadInstitution: string;
@@ -64,15 +65,19 @@ export type Experiment = {
   experimentObjective: string;
   experimentModuleDrawing: string;
   experimentPublications: string;
+  deleted: boolean;
+  approved: boolean;
   mission: Mission;
   platform: Platform;
   forCode: ForCode;
   seoCode: SeoCode;
   people: ExperimentPerson[];
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type Mission = {
-  id: string;
+  id: number;
   name: string;
   platform: Platform;
   launchDate: Date;
@@ -97,36 +102,22 @@ export type ExperimentPersonRequest = {
 };
 
 export type Platform = {
-  id: string;
+  id: number;
   name: string;
   forCodes: ForCode[];
   seoCodes: SeoCode[];
 };
 
 export type Code = {
-  id: string;
+  id: number;
   code: number;
   name: string;
-  experiments?: Experiment[];
+  experiments: Experiment[];
 };
 
 export type ForCode = Code;
 
 export type SeoCode = Code;
-
-export type ForCodeResult = {
-  id: string;
-  code: number;
-  name: string;
-  experiments: Experiment[];
-};
-
-export type SeoCodeResult = {
-  id: string;
-  code: number;
-  name: string;
-  experiments: Experiment[];
-};
 
 export type Person = {
   id: number;
@@ -139,13 +130,21 @@ export type Person = {
   role: Role;
 };
 
-export type SearchResponse = {
+export type Page<T> = {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+};
+
+export type ResultsResponse<T> = {
   totalElements: number;
   totalPages: number;
   page: number;
   size: number;
-  results: Experiment[] | Mission[];
+  results: T[];
 };
+
+export type SearchResponse = ResultsResponse<Experiment | Mission | ForCode | SeoCode>;
 
 export type SearchField = string | undefined;
 

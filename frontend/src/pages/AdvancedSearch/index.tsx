@@ -22,7 +22,7 @@ import AdvancedSearch from '../../components/AdvancedSearch';
 import ExperimentResult from '../../components/Results/Experiment';
 import MissionResult from '../../components/Results/Mission';
 import SeoCodeResult from '../../components/Results/SeoCode';
-import FoRCodeResult from '../../components/Results/ForCode';
+import ForCodeResult from '../../components/Results/ForCode';
 
 export default function AdvancedSearchPage() {
   const location = useLocation();
@@ -68,7 +68,7 @@ export default function AdvancedSearchPage() {
         <CircularProgress />
       </Box>
     );
-  } else if (data && data?.data.results.length != 0) {
+  } else if (data && data?.data.results.length !== 0) {
     pages = data.data.totalPages;
     if (searchState.resultType === ResultType.EXPERIMENT) {
       results = data.data.results as Experiment[];
@@ -76,7 +76,7 @@ export default function AdvancedSearchPage() {
         return (
           <ExperimentResult
             key={item.id}
-            id={item.id}
+            id={item.id.toString()}
             objective={item.experimentObjective}
             title={item.title}
             people={item.people}
@@ -91,7 +91,7 @@ export default function AdvancedSearchPage() {
         return (
           <MissionResult
             key={item.id}
-            id={item.id}
+            id={item.id.toString()}
             name={item.name}
             startDate={item.startDate}
             endDate={item.endDate}
@@ -101,30 +101,14 @@ export default function AdvancedSearchPage() {
         );
       });
     } else if (searchState.resultType === ResultType.FOR_CODE) {
-      results = data.data.results as unknown as ForCode[];
+      results = data.data.results as ForCode[];
       resultsElement = results.map((item: ForCode, index) => {
-        return (
-          <FoRCodeResult
-            key={item.id}
-            id={item.id}
-            code={item.code}
-            name={item.name}
-            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
-          />
-        );
+        return <ForCodeResult key={item.id} forCode={item} bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'} />;
       });
     } else if (searchState.resultType === ResultType.SEO_CODE) {
-      results = data.data.results as unknown as SeoCode[];
+      results = data.data.results as SeoCode[];
       resultsElement = results.map((item: SeoCode, index) => {
-        return (
-          <SeoCodeResult
-            key={item.id}
-            id={item.id}
-            code={item.code}
-            name={item.name}
-            bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
-          />
-        );
+        return <SeoCodeResult key={item.id} seoCode={item} bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'} />;
       });
     }
   } else {
@@ -136,7 +120,7 @@ export default function AdvancedSearchPage() {
     );
   }
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
@@ -144,7 +128,7 @@ export default function AdvancedSearchPage() {
     <Container maxWidth='lg'>
       <Grid container direction='column' height='100vh' wrap='nowrap'>
         <Grid container direction='row' wrap='nowrap' flexGrow={1}>
-          <AdvancedSearch {...searchState} container item md={3} />
+          <AdvancedSearch searchState={searchState} container item md={3} />
           <Grid container item direction='column' alignItems='center'>
             {resultsElement}
             {pages > 1 ? (

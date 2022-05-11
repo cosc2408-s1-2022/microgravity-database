@@ -1,21 +1,9 @@
-import {
-  Alert,
-  Autocomplete,
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, Container, Grid, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useReducer, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -24,17 +12,8 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import {
-  Experiment,
-  ExperimentPersonRequest,
-  ForCode,
-  Mission,
-  Person,
-  Role,
-  SeoCode,
-  UserRole,
-} from '../../util/types';
-import Header from '../../components/NavBar';
+import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -147,40 +126,32 @@ export default function AddExperiment() {
       experimentModuleDrawing,
       experimentPublications,
       missionId: mission?.id,
-      platformId: mission?.platform.id,
-      forCodeId: forCode?.code,
-      seoCodeId: seoCode?.code,
+      forCodeId: forCode?.id,
+      seoCodeId: seoCode?.id,
       experimentPersonRequests: peopleState.data.map((entry) => entry.data),
     }),
   );
+  console.log('forCodes', forCodes);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('mission', mission);
     mutateExperiment();
   };
 
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-  const handleErrorSnackbarClose = () => {
-    setErrorSnackbarOpen(false);
-  };
   useEffect(() => {
-    if (isExperimentError) {
-      setErrorSnackbarOpen(true);
+    if (isExperimentSuccess) {
+      navigate('/home');
     }
-  }, [isExperimentError]);
-
-  if (isExperimentSuccess) {
-    return <Navigate to='/home' />;
-  }
+  }, [isExperimentSuccess, navigate]);
 
   return (
-    <AuthWrapper role={UserRole.ROLE_USER}>
-      <Header />
-      <Container maxWidth='lg'>
+    <AuthWrapper>
+      <Container maxWidth='md'>
         <Box
           sx={{
             my: -2,
-            marginTop: 2,
+            mt: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -205,7 +176,13 @@ export default function AddExperiment() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FormField label='Title' name='title' errors={experimentError?.response?.data} onChange={setTitle} />
+                <FormField
+                  autoFocus
+                  label='Title'
+                  name='title'
+                  errors={experimentError?.response?.data}
+                  onChange={setTitle}
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormField label='TOA' name='toa' errors={experimentError?.response?.data} onChange={setToa} />
@@ -218,8 +195,6 @@ export default function AddExperiment() {
                   onChange={setLeadInstitution}
                 />
               </Grid>
-              {/*</Grid>*/}
-              {/*<Grid container spacing={2}>*/}
               <Grid item xs={12}>
                 <FormField
                   label='Experiment Aim'
@@ -263,7 +238,7 @@ export default function AddExperiment() {
               loading={isMissionsLoading}
               fullWidth
               onChange={(_event, value) => {
-                if (experimentError?.response?.data != undefined) {
+                if (experimentError?.response?.data !== undefined) {
                   experimentError.response.data.missionId = '';
                 }
                 setMission(value);
@@ -272,7 +247,9 @@ export default function AddExperiment() {
                 <TextField
                   {...params}
                   margin='normal'
+                  size='small'
                   fullWidth
+                  color='secondary'
                   error={isExperimentError && !!experimentError?.response?.data?.missionId}
                   helperText={experimentError?.response?.data?.missionId}
                   label='Mission'
@@ -304,12 +281,13 @@ export default function AddExperiment() {
                     No such missions found.
                   </Typography>
                   <Button variant='outlined' onClick={() => navigate('/addMission')} sx={{ textTransform: 'none' }}>
-                    <Typography variant='body1'>Add a new mission?</Typography>
+                    <Typography variant='body1' color='primary'>
+                      Add a new mission?
+                    </Typography>
                   </Button>
                 </Box>
               }
             />
-
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Autocomplete
@@ -320,7 +298,7 @@ export default function AddExperiment() {
                   fullWidth
                   loading={isForCodesLoading}
                   onChange={(_event, value) => {
-                    if (experimentError?.response?.data != undefined) {
+                    if (experimentError?.response?.data !== undefined) {
                       experimentError.response.data.forCodeId = '';
                     }
                     setForCode(value);
@@ -329,6 +307,8 @@ export default function AddExperiment() {
                     <TextField
                       {...params}
                       margin='normal'
+                      size='small'
+                      color='secondary'
                       fullWidth
                       error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
                       helperText={experimentError?.response?.data?.forCodeId}
@@ -367,7 +347,7 @@ export default function AddExperiment() {
                   fullWidth
                   loading={isSeoCodesLoading}
                   onChange={(_event, value) => {
-                    if (experimentError?.response?.data != undefined) {
+                    if (experimentError?.response?.data !== undefined) {
                       experimentError.response.data.seoCodeId = '';
                     }
                     setSeoCode(value);
@@ -376,6 +356,8 @@ export default function AddExperiment() {
                     <TextField
                       {...params}
                       margin='normal'
+                      size='small'
+                      color='secondary'
                       fullWidth
                       error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
                       helperText={experimentError?.response?.data?.seoCodeId}
@@ -407,8 +389,8 @@ export default function AddExperiment() {
               </Grid>
             </Grid>
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
-              <Box p={1} display='flex' alignItems='center'>
-                <Typography sx={{ p: 1 }}>Add People</Typography>
+              <Box display='flex' alignItems='center'>
+                <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
                 <IconButton
                   onClick={() => {
                     dispatchPeople({
@@ -442,7 +424,16 @@ export default function AddExperiment() {
                           dispatchPeople({ type: 'MODIFY', payload });
                         }
                       }}
-                      renderInput={(params) => <TextField {...params} margin='normal' fullWidth label='Person' />}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          margin='normal'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Person'
+                        />
+                      )}
                       renderOption={(props, option, { inputValue }) => {
                         const fullName = `${option.firstName} ${option.familyName}`;
                         const matches = match(fullName, inputValue);
@@ -464,8 +455,8 @@ export default function AddExperiment() {
                           </li>
                         );
                       }}
-                      filterOptions={(options) =>
-                        options.filter((option) => !peopleState.data.some((entry) => entry.data.personId === option.id))
+                      getOptionDisabled={(option: Person) =>
+                        peopleState.data.some((entry) => entry.data.personId === option.id)
                       }
                       noOptionsText={
                         <Box display='flex' justifyContent='space-between' alignItems='center'>
@@ -506,7 +497,9 @@ export default function AddExperiment() {
                           dispatchPeople({ type: 'MODIFY', payload });
                         }
                       }}
-                      renderInput={(params) => <TextField {...params} margin='normal' fullWidth label='Role' />}
+                      renderInput={(params) => (
+                        <TextField {...params} margin='normal' size='small' color='secondary' fullWidth label='Role' />
+                      )}
                       renderOption={(props, option, { inputValue }) => {
                         const matches = match(option.name, inputValue);
                         const parts = parse(option.name, matches);
@@ -550,16 +543,12 @@ export default function AddExperiment() {
               type='submit'
               variant='contained'
               color='secondary'
-              sx={{ width: '50%', mt: 3, mb: 2 }}
+              sx={{ width: '50%', mt: 3, mb: 1 }}
             >
               Add Experiment
             </LoadingButton>
           </Box>
-          <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
-            <Alert severity='error' onClose={handleErrorSnackbarClose}>
-              Failed to add experiment.
-            </Alert>
-          </Snackbar>
+          <MessageSnackbar open={isExperimentError} message='Failed to add experiment.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

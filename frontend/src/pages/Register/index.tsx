@@ -14,13 +14,16 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordsMatchingError = password && password !== confirmPassword && 'Passwords must match.';
   const passLengthValidation = (value: string) => {
-    const re = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$`);
-    return re.test(value);
+    // TODO Show strength but do not force.
+    // const re = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$`);
+    // return re.test(value);
+    return value.length >= 8;
   };
   const passwordRegex =
     password &&
     !passLengthValidation(password) &&
-    'Password has to have at least 8 characters with one special character eg. !@#$%*';
+    // 'Password has to have at least 8 characters with one special character eg. !@#$%*';
+    'Password has to have at least 8 characters';
 
   const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
@@ -39,7 +42,10 @@ export default function Register() {
   };
 
   if (isSuccess && data) {
-    return <Navigate to='/login' />;
+    // Add token to localstorage for persistence
+    const authToken: string = data?.data.jwt;
+    localStorage.setItem('authToken', authToken);
+    return <Navigate to='/home' />;
   }
 
   return (

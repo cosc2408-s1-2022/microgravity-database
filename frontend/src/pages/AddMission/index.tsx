@@ -1,10 +1,10 @@
-import { Alert, Autocomplete, Box, Container, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Autocomplete, Box, Container, Grid, Snackbar, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
@@ -12,12 +12,13 @@ import moment from 'moment';
 import lodash from 'lodash';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import Header from '../../components/NavBar';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Mission, Platform, UserRole } from '../../util/types';
+import { Mission, Platform } from '../../util/types';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
+  const navigate = useNavigate();
+
   const [platforms, setPlatforms] = useState<Platform[]>();
   const {
     data: platformsData,
@@ -66,19 +67,20 @@ export default function AddMission() {
     }
   }, [isMissionError]);
 
-  if (isMissionSuccess) {
-    return <Navigate to='/home' />;
-  }
+  useEffect(() => {
+    if (isMissionSuccess) {
+      navigate('/home');
+    }
+  }, [isMissionSuccess, navigate]);
 
   return (
-    <AuthWrapper role={UserRole.ROLE_USER}>
+    <AuthWrapper>
       <LocalizationProvider dateAdapter={AdapterMoment}>
-        <Header />
-        <Container maxWidth='xs'>
+        <Container maxWidth='sm'>
           <Box
             sx={{
               my: -2,
-              marginTop: 4,
+              mt: 4,
               display: 'flex',
               flexDirection: 'column',
               height: 'auto',
@@ -94,129 +96,154 @@ export default function AddMission() {
               </Typography>
             </Box>
             <Box component='form' noValidate onSubmit={handleSubmit}>
-              <FormField label='Name' name='name' errors={missionError?.response?.data} onChange={setName} />
-              <DatePicker
-                label='Launch Date'
-                views={['year']}
-                value={launchDate}
-                onChange={(value) => {
-                  if (missionError?.response?.data != undefined) {
-                    missionError.response.data.launchDate = '';
-                  }
-                  setLaunchDate(value);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    margin='normal'
-                    fullWidth
-                    error={isMissionError && !!missionError?.response?.data?.launchDate}
-                    helperText={missionError?.response?.data?.launchDate}
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <FormField
+                    autoFocus
+                    label='Name'
+                    name='name'
+                    errors={missionError?.response?.data}
+                    onChange={setName}
                   />
-                )}
-              />
-              <DatePicker
-                label='Start Date'
-                views={['year']}
-                value={startDate}
-                onChange={(value) => {
-                  if (missionError?.response?.data != undefined) {
-                    missionError.response.data.startDate = '';
-                  }
-                  setStartDate(value);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    margin='normal'
-                    fullWidth
-                    error={startDateError || (isMissionError && !!missionError?.response?.data?.startDate)}
-                    helperText={
-                      startDateError
-                        ? 'Start date cannot be before the launch date.'
-                        : missionError?.response?.data?.startDate
-                    }
+                </Grid>
+                <Grid item xs={12}>
+                  <DatePicker
+                    label='Launch Date'
+                    views={['year']}
+                    value={launchDate}
+                    onChange={(value) => {
+                      if (missionError?.response?.data !== undefined) {
+                        missionError.response.data.launchDate = '';
+                      }
+                      setLaunchDate(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={isMissionError && !!missionError?.response?.data?.launchDate}
+                        helperText={missionError?.response?.data?.launchDate}
+                      />
+                    )}
                   />
-                )}
-              />
-              <DatePicker
-                label='End Date'
-                views={['year']}
-                value={endDate}
-                onChange={(value) => {
-                  if (missionError?.response?.data != undefined) {
-                    missionError.response.data.endDate = '';
-                  }
-                  setEndDate(value);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    margin='normal'
-                    fullWidth
-                    error={endDateError || (isMissionError && !!missionError?.response?.data?.endDate)}
-                    helperText={
-                      endDateError ? 'End date cannot be before the start date.' : missionError?.response?.data?.endDate
-                    }
+                </Grid>
+                <Grid item xs={12}>
+                  <DatePicker
+                    label='Start Date'
+                    views={['year']}
+                    value={startDate}
+                    onChange={(value) => {
+                      if (missionError?.response?.data !== undefined) {
+                        missionError.response.data.startDate = '';
+                      }
+                      setStartDate(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={startDateError || (isMissionError && !!missionError?.response?.data?.startDate)}
+                        helperText={
+                          startDateError
+                            ? 'Start date cannot be before the launch date.'
+                            : missionError?.response?.data?.startDate
+                        }
+                      />
+                    )}
                   />
-                )}
-              />
-              <Autocomplete
-                disablePortal
-                openText='Platform'
-                options={platforms || []}
-                getOptionLabel={(option) => lodash.startCase(option.name)}
-                fullWidth
-                loading={isPlatformsLoading}
-                onChange={(_event, value) => {
-                  if (missionError?.response?.data != undefined) {
-                    missionError.response.data.platformId = '';
-                  }
-                  setPlatform(value);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    margin='normal'
-                    fullWidth
-                    error={isMissionError && !!missionError?.response?.data?.platformId}
-                    helperText={missionError?.response?.data?.platformId}
-                    label='Platform'
+                </Grid>
+                <Grid item xs={12}>
+                  <DatePicker
+                    label='End Date'
+                    views={['year']}
+                    value={endDate}
+                    onChange={(value) => {
+                      if (missionError?.response?.data !== undefined) {
+                        missionError.response.data.endDate = '';
+                      }
+                      setEndDate(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={endDateError || (isMissionError && !!missionError?.response?.data?.endDate)}
+                        helperText={
+                          endDateError
+                            ? 'End date cannot be before the start date.'
+                            : missionError?.response?.data?.endDate
+                        }
+                      />
+                    )}
                   />
-                )}
-                renderOption={(props, option, { inputValue }) => {
-                  const startCaseValue = lodash.startCase(option.name);
-                  const matches = match(startCaseValue, inputValue);
-                  const parts = parse(startCaseValue, matches);
-                  return (
-                    <li {...props}>
-                      <div>
-                        {parts.map((part, index) => (
-                          <span
-                            key={index}
-                            style={{
-                              fontWeight: part.highlight ? 700 : 400,
-                            }}
-                          >
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    </li>
-                  );
-                }}
-                noOptionsText='No such platforms found.'
-              />
-              <LoadingButton
-                loading={isMissionLoading}
-                type='submit'
-                variant='contained'
-                color='secondary'
-                fullWidth
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Add Mission
-              </LoadingButton>
+                </Grid>
+                <Grid item xs={12}>
+                  <Autocomplete
+                    disablePortal
+                    openText='Platform'
+                    options={platforms || []}
+                    getOptionLabel={(option) => lodash.startCase(option.name)}
+                    fullWidth
+                    loading={isPlatformsLoading}
+                    onChange={(_event, value) => {
+                      if (missionError?.response?.data !== undefined) {
+                        missionError.response.data.platformId = '';
+                      }
+                      setPlatform(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={isMissionError && !!missionError?.response?.data?.platformId}
+                        helperText={missionError?.response?.data?.platformId}
+                        label='Platform'
+                      />
+                    )}
+                    renderOption={(props, option, { inputValue }) => {
+                      const startCaseValue = lodash.startCase(option.name);
+                      const matches = match(startCaseValue, inputValue);
+                      const parts = parse(startCaseValue, matches);
+                      return (
+                        <li {...props}>
+                          <div>
+                            {parts.map((part, index) => (
+                              <span
+                                key={index}
+                                style={{
+                                  fontWeight: part.highlight ? 700 : 400,
+                                }}
+                              >
+                                {part.text}
+                              </span>
+                            ))}
+                          </div>
+                        </li>
+                      );
+                    }}
+                    noOptionsText='No such platforms found.'
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <LoadingButton
+                    loading={isMissionLoading}
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    fullWidth
+                  >
+                    Add Mission
+                  </LoadingButton>
+                </Grid>
+              </Grid>
             </Box>
             <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
               <Alert severity='error' onClose={handleErrorSnackbarClose}>

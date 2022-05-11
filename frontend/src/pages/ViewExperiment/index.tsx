@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, CircularProgress, Container, Grid, Link, Paper, Typography } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import lodash from 'lodash';
 import { getExperiment } from '../../util/apiCalls';
@@ -8,7 +8,7 @@ import { Experiment } from '../../util/types';
 import moment from 'moment';
 
 export default function ViewExperiment() {
-  const [id] = useState(new URLSearchParams(useLocation().search).get('id') as string);
+  const id = useParams().id as unknown as string;
   const [experiment, setExperiment] = useState<Experiment>();
   const { data, isSuccess, isLoading } = useQuery(['experiments', id], ({ queryKey }) => {
     const [, id] = queryKey;
@@ -114,9 +114,10 @@ export default function ViewExperiment() {
                   </Typography>
                   {experiment?.people.map((person, i) => (
                     <Box key={i} mb={2}>
-                      <Typography variant={'body1'}>
+                      <Typography variant={'body1'} fontWeight='bold'>
                         {`${person.person.familyName.at(0)}. ${person.person.firstName}`}
                       </Typography>
+                      <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
                       <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
                       <Typography
                         variant={'body2'}

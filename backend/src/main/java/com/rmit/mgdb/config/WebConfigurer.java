@@ -22,8 +22,7 @@ public class WebConfigurer {
                 if (registry != null) {
                     WebMvcConfigurer.super.addCorsMappings(registry);
                     registry.addMapping("/**")
-                            // TODO Allows only the default React port. May need to be updated in the future.
-                            .allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT", "DELETE");
+                            .allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE");
                 }
             }
 

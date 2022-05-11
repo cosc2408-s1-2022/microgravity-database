@@ -9,11 +9,13 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class MissionPayload {
 
+    private Long id;
     private String name;
     private LocalDate launchDate;
     private LocalDate startDate;
@@ -27,13 +29,15 @@ public class MissionPayload {
     private List<Experiment> experiments;
 
     public MissionPayload(Mission mission) {
+        this.id = mission.getId();
         this.name = mission.getName();
         this.launchDate = mission.getLaunchDate();
         this.startDate = mission.getStartDate();
         this.endDate = mission.getStartDate();
         this.experimentCount = mission.getExperimentCount();
         this.platform = mission.getPlatform();
-        this.experiments = mission.getExperiments();
+        this.experiments = mission.getExperiments().stream().filter(e -> e.isApproved() && !e.isDeleted()).collect(
+                Collectors.toList());
     }
 
 }

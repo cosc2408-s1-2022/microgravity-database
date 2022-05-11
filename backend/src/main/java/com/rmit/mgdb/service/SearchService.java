@@ -1,11 +1,8 @@
 package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.InvalidSearchParamException;
-import com.rmit.mgdb.model.Experiment;
-import com.rmit.mgdb.model.ForCode;
-import com.rmit.mgdb.model.Mission;
-import com.rmit.mgdb.model.SeoCode;
-import com.rmit.mgdb.payload.SearchResponse;
+import com.rmit.mgdb.model.*;
+import com.rmit.mgdb.payload.ResultsResponse;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.mapper.orm.Search;
@@ -43,10 +40,18 @@ public class SearchService {
     }
 
     /**
-     * Perform search based on the query params and return a paginated {@link SearchResponse}.
+     * Perform search based on the query params and return a paginated {@link ResultsResponse}.
      * This is the simpler search method which only searches across experiments.
      */
-    public SearchResponse<Experiment> search(Map<String, String> params) {
+    public ResultsResponse<Experiment> search(Map<String, String> params) {
+        return searchEntity(params, Experiment.class, EXPERIMENT_SEARCH_FIELDS);
+    }
+
+    public ResultsResponse<User> searchUsers(Map<String, String> params) {
+        return searchEntity(params, User.class, USER_SEARCH_FIELDS);
+    }
+
+    private <T> ResultsResponse<T> searchEntity(Map<String, String> params, Class<T> tClass, String[] fields) {
         validateParams(params);
 
         // Extract necessary params.
@@ -57,24 +62,37 @@ public class SearchService {
         // Hibernate Search uses zero-based index.
         page--;
 
-        SearchResult<Experiment> result = searchSession.search(Experiment.class)
-                                                       .where(s -> s.match()
-                                                                    .fields(SIMPLE_SEARCH_FIELDS)
-                                                                    .matching(stringParam)
+        SearchResult<T> result;
+        if (tClass.equals(Experiment.class)) {
+            result = searchSession.search(tClass)
+                                  .where(s -> s.bool().must(m -> m.match()
+                                                                  .fields(fields)
+                                                                  .matching(stringParam))
+                                               .must(m -> m.match().field("approved").matching(true))
+                                               .must(m -> m.match().field("deleted").matching(false))
 
-                                                             )
-                                                       .fetch(page * size, size);
+                                        )
+                                  .fetch(page * size, size);
+        } else {
+            result = searchSession.search(tClass)
+                                  .where(s -> s.match()
+                                               .fields(fields)
+                                               .matching(stringParam)
+
+                                        )
+                                  .fetch(page * size, size);
+        }
 
         long totalHitCount = result.total().hitCount();
-        return new SearchResponse<>(
+        return new ResultsResponse<>(
                 totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 
     /**
-     * Perform search based on the query params and return a paginated {@link SearchResponse}.
+     * Perform search based on the query params and return a paginated {@link ResultsResponse}.
      * This is the advanced search method which allows complex queries.
      */
-    public SearchResponse<?> advancedSearch(Map<String, String> params) {
+    public ResultsResponse<?> advancedSearch(Map<String, String> params) {
         validateParams(params);
 
         // Extract necessary params.
@@ -107,8 +125,13 @@ public class SearchService {
                                                            // Must match string if present.
                                                            if (!stringParam.isEmpty()) {
                                                                b.must(s -> s.match()
-                                                                            .fields(SIMPLE_SEARCH_FIELDS)
+                                                                            .fields(resultTypeParam.searchFields)
                                                                             .matching(stringParam));
+                                                           }
+
+                                                           if (resultTypeParam == ResultType.EXPERIMENT) {
+                                                               b.must(s -> s.match().field("approved").matching(true));
+                                                               b.must(s -> s.match().field("deleted").matching(false));
                                                            }
 
                                                            // Date range filters.
@@ -139,7 +162,7 @@ public class SearchService {
                                               .fetch(page * size, size);
 
         long totalHitCount = result.total().hitCount();
-        return new SearchResponse<>(
+        return new ResultsResponse<>(
                 totalHitCount, (long) Math.ceil((double) totalHitCount / size), page + 1, size, result.hits());
     }
 

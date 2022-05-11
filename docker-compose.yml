@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  mgdb_prod:
+    image: mysql:8.0.29
+    environment:
+      MYSQL_DATABASE: prod
+      MYSQL_ROOT_PASSWORD: password
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mgdb_prod
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:3000
+    depends_on:
+      - backend
+  # TODO Use networks to solve the localhost issue.

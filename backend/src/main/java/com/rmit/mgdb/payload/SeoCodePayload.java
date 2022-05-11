@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 public class SeoCodePayload {
 
+    private Long id;
     private String code;
     private String name;
 
@@ -19,6 +20,7 @@ public class SeoCodePayload {
     private List<Experiment> experiments;
 
     public SeoCodePayload(SeoCode seoCode) {
+        this.id = seoCode.getId();
         this.code = seoCode.getCode();
         this.name = seoCode.getName();
         this.experiments = seoCode.getExperiments();

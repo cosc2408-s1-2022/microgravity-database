@@ -17,7 +17,7 @@ export default function ExperimentPaper({ experiment }: ExperimentPaperProps) {
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
       }}
       component={Link}
-      href={`/experiment/?id=${experiment.id}`}
+      href={`/experiment/${experiment.id}`}
     >
       <Typography variant='h6'>{experiment.title}</Typography>
       <Typography variant='body1'>{`TOA: ${experiment.toa}`}</Typography>

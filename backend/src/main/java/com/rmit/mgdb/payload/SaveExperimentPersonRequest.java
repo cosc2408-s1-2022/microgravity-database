@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddExperimentPersonRequest {
+public class SaveExperimentPersonRequest {
 
     private Long personId;
     private Long roleId;

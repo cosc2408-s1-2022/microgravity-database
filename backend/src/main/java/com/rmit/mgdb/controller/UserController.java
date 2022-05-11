@@ -3,6 +3,7 @@ package com.rmit.mgdb.controller;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.payload.AuthenticationRequest;
 import com.rmit.mgdb.payload.AuthenticationResponse;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.security.JWTTokenProvider;
 import com.rmit.mgdb.service.CustomUserDetailsService;
 import com.rmit.mgdb.service.UserService;
@@ -19,6 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -89,9 +92,21 @@ public class UserController {
      * Get the currently authenticated user or the user from the request's authentication token.
      */
     @GetMapping("/authenticated")
-    public ResponseEntity<?> getAuthenticated() {
+    public ResponseEntity<?> getAuthenticated() throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResultsResponse<User> getUsers(@RequestParam Optional<Integer> page,
+                                          @RequestParam Optional<Integer> size) {
+        return userService.getUsers(page, size);
+    }
+
+    @PostMapping("/saveAll")
+    public ResponseEntity<?> saveAllUsers(@RequestBody List<User> users) {
+        userService.saveUsers(users);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

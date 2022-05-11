@@ -8,7 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class AddExperimentRequest {
+public class SaveExperimentRequest {
+
+    private Long id;
 
     @NotBlank(message = "Experiments must have a title.")
     private String title;
@@ -29,15 +31,12 @@ public class AddExperimentRequest {
     @NotNull(message = "Experiments must belong to a mission.")
     private Long missionId;
 
-    @NotNull(message = "Experiments must be on a platform.")
-    private Long platformId;
-
     @NotNull(message = "Experiments must have an FOR code specified.")
     private Long forCodeId;
 
     @NotNull(message = "Experiments must have an SEO code specified.")
     private Long seoCodeId;
 
-    private AddExperimentPersonRequest[] experimentPersonRequests;
+    private SaveExperimentPersonRequest[] experimentPersonRequests;
 
 }

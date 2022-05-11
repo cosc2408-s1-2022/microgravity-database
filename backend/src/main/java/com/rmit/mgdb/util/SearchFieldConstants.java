@@ -2,7 +2,12 @@ package com.rmit.mgdb.util;
 
 public class SearchFieldConstants {
 
-    public static final String[] SIMPLE_SEARCH_FIELDS = new String[]{
+    public static final String[] USER_SEARCH_FIELDS = new String[]{
+            "username",
+            "role"
+    };
+
+    public static final String[] EXPERIMENT_SEARCH_FIELDS = new String[]{
             "title",
             "toa",
             "leadInstitution",
@@ -26,12 +31,6 @@ public class SearchFieldConstants {
             "people.person.city",
             "people.person.state",
             "people.person.country"
-    };
-
-    public static final String[] EXPERIMENT_SEARCH_FIELDS = new String[]{
-            "title",
-            "toa",
-            "leadInstitution"
     };
 
     public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform.name";

@@ -94,12 +94,29 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // TODO API endpoints are subject to change.
 
                 // FIXME Production.
-                //  .antMatchers("/h2-console/**").permitAll()
-                //  .antMatchers("/api/users/register").permitAll()
-                //  .antMatchers("/api/users/login").permitAll()
+                //  .antMatchers("/api/experiments").permitAll()
+                //  .antMatchers("/api/experiments/add").authenticated()
+                //  .antMatchers("/api/experiments/get").permitAll()
+                //  .antMatchers("/api/experiments/{id}/approve").hasRole(ADMIN.name())
+                //  .antMatchers("/api/experiments/{id}/toggleDelete").hasRole(ADMIN.name())
+                //  .antMatchers("/api/forCodes/**").permitAll()
+                //  .antMatchers("/api/missions").permitAll()
+                //  .antMatchers("/api/missions/add").authenticated()
+                //  .antMatchers("/api/missions/{id}").permitAll()
+                //  .antMatchers("/api/people").authenticated()
+                //  .antMatchers("/api/people/add").authenticated()
+                //  .antMatchers("/api/platforms/**").permitAll()
+                //  .antMatchers("/api/roles/**").permitAll()
                 //  .antMatchers("/api/search/**").permitAll()
-                //  .antMatchers("/api/experiments/**").permitAll()
-                //  .antMatchers("/api/users/**").authenticated()
+                //  .antMatchers("/api/search/advanced").permitAll()
+                //  .antMatchers("/api/search/users").authenticated()
+                //  .antMatchers("/api/seoCodes/**").permitAll()
+                //  .antMatchers("/api/users").hasRole(ADMIN.name())
+                //  .antMatchers("/api/users/authenticated").permitAll()
+                //  .antMatchers("/api/users/login").permitAll()
+                //  .antMatchers("/api/users/register").permitAll()
+                //  .antMatchers("/api/users/saveAll").hasRole(ADMIN.name())
+                //  .antMatchers("/h2-console/**").permitAll()
                 //  .anyRequest().authenticated();
 
                 // FIXME Development.

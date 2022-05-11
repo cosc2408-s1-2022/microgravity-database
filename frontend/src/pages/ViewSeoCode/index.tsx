@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getSeoCode } from '../../util/apiCalls';
-import { SeoCodeResult } from '../../util/types';
+import { SeoCode } from '../../util/types';
 import ExperimentPaper from '../../components/ExperimentPaper';
 
 export default function ViewSeoCode() {
   const id = useParams().id as unknown as string;
-  const [seoCode, setSeoCode] = useState<SeoCodeResult>();
+  const [seoCode, setSeoCode] = useState<SeoCode>();
   const { data, isSuccess, isLoading } = useQuery(['seoCode', id], ({ queryKey }) => {
     const [, id] = queryKey;
     return getSeoCode({ id });
