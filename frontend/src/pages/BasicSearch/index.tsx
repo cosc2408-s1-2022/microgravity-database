@@ -74,7 +74,7 @@ export default function BasicSearchPage() {
           {resultsElement}
           {pages > 1 ? (
             <Grid item my={2}>
-              <Pagination count={pages} onChange={handlePageChange} />
+              <Pagination count={pages} page={page} onChange={handlePageChange} />
             </Grid>
           ) : null}
         </Grid>
