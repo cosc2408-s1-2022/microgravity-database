@@ -41,10 +41,8 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentObjective;
 
-    // TODO Fields "experimentModuleDrawing" and "experimentPublications" might be collection types.
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
-    private String experimentModuleDrawing;
+    @OneToMany(mappedBy = "experiment")
+    private List<ExperimentAttachment> experimentAttachments;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     @Length(max = 1023)

@@ -1,25 +1,32 @@
 package com.rmit.mgdb.service;
 
+import com.rmit.mgdb.exception.InvalidExperimentAttachmentException;
 import com.rmit.mgdb.exception.NotFoundException;
-import com.rmit.mgdb.model.Experiment;
-import com.rmit.mgdb.model.Mission;
-import com.rmit.mgdb.model.Person;
-import com.rmit.mgdb.model.Role;
+import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
+import com.rmit.mgdb.repository.ExperimentAttachmentRepository;
 import com.rmit.mgdb.repository.ExperimentRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
@@ -32,6 +39,7 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
+    private final ExperimentAttachmentRepository experimentAttachmentRepository;
     private final MissionService missionService;
     private final ForCodeService forCodeService;
     private final SeoCodeService seoCodeService;
@@ -42,12 +50,14 @@ public class ExperimentService {
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
+                             ExperimentAttachmentRepository experimentAttachmentRepository,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
+        this.experimentAttachmentRepository = experimentAttachmentRepository;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
         this.seoCodeService = seoCodeService;
@@ -76,7 +86,6 @@ public class ExperimentService {
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
         experiment.setExperimentAim(experimentRequest.getExperimentAim());
         experiment.setExperimentObjective(experimentRequest.getExperimentObjective());
-        experiment.setExperimentModuleDrawing(experimentRequest.getExperimentModuleDrawing());
         experiment.setExperimentPublications(experimentRequest.getExperimentPublications());
         Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
         experiment.setMission(mission);
@@ -91,6 +100,36 @@ public class ExperimentService {
                 Person person = personService.getPersonById(personRequest.getPersonId());
                 Role role = roleService.getRoleById(personRequest.getRoleId());
                 return experimentPersonService.addExperimentPerson(experiment, person, role);
+            }).toList());
+        }
+
+        MultipartFile[] experimentAttachments = experimentRequest.getExperimentAttachments();
+        if (experimentAttachments != null && experimentAttachments.length > 0) {
+            experiment.setExperimentAttachments(Arrays.stream(experimentAttachments).map(file -> {
+                String originalFileName = Objects.requireNonNull(file.getOriginalFilename());
+                String fileExtension = FilenameUtils.getExtension(originalFileName);
+                if (originalFileName.isEmpty() || fileExtension.isEmpty())
+                    throw new InvalidExperimentAttachmentException("Could not acquire filename or extension.",
+                                                                   originalFileName);
+                if (file.isEmpty())
+                    throw new InvalidExperimentAttachmentException("File is empty.", originalFileName);
+
+                String finalFileName =
+                        FilenameUtils.removeExtension(originalFileName).replaceAll("[\\p{Punct}\\s]+", "_") + "." +
+                        fileExtension;
+                String mediaType = Objects.requireNonNull(file.getContentType());
+                Path parent = Paths.get(mediaType.equals(MediaType.APPLICATION_PDF_VALUE) ? "documents" : "images");
+                try {
+                    Files.copy(file.getInputStream(), parent.resolve(finalFileName));
+                } catch (IOException ignored) {
+                    throw new InvalidExperimentAttachmentException("Could not create file.", originalFileName);
+                }
+
+                ExperimentAttachment experimentAttachment = new ExperimentAttachment();
+                experimentAttachment.setExperiment(experiment);
+                experimentAttachment.setFilename(finalFileName);
+                experimentAttachmentRepository.save(experimentAttachment);
+                return experimentAttachment;
             }).toList());
         }
 
