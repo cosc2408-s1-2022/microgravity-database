@@ -1,8 +1,10 @@
 package com.rmit.mgdb.payload;
 
+import com.rmit.mgdb.model.ExperimentPublication;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +28,8 @@ public class SaveExperimentRequest {
 
     private String experimentModuleDrawing;
 
-    private String experimentPublications;
+    @Valid
+    private ExperimentPublication[] experimentPublications;
 
     @NotNull(message = "Experiments must belong to a mission.")
     private Long missionId;

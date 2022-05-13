@@ -1,13 +1,12 @@
 package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.NotFoundException;
-import com.rmit.mgdb.model.Experiment;
-import com.rmit.mgdb.model.Mission;
-import com.rmit.mgdb.model.Person;
-import com.rmit.mgdb.model.Role;
+import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
+import com.rmit.mgdb.repository.ExperimentPublicationAuthorRepository;
+import com.rmit.mgdb.repository.ExperimentPublicationRepository;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
@@ -32,6 +32,8 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
+    private final ExperimentPublicationRepository experimentPublicationRepository;
+    private final ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository;
     private final MissionService missionService;
     private final ForCodeService forCodeService;
     private final SeoCodeService seoCodeService;
@@ -42,12 +44,16 @@ public class ExperimentService {
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
+                             ExperimentPublicationRepository experimentPublicationRepository,
+                             ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
+        this.experimentPublicationRepository = experimentPublicationRepository;
+        this.experimentPublicationAuthorRepository = experimentPublicationAuthorRepository;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
         this.seoCodeService = seoCodeService;
@@ -77,7 +83,7 @@ public class ExperimentService {
         experiment.setExperimentAim(experimentRequest.getExperimentAim());
         experiment.setExperimentObjective(experimentRequest.getExperimentObjective());
         experiment.setExperimentModuleDrawing(experimentRequest.getExperimentModuleDrawing());
-        experiment.setExperimentPublications(experimentRequest.getExperimentPublications());
+
         Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
         experiment.setMission(mission);
         experiment.setPlatform(mission.getPlatform());
@@ -91,6 +97,18 @@ public class ExperimentService {
                 Person person = personService.getPersonById(personRequest.getPersonId());
                 Role role = roleService.getRoleById(personRequest.getRoleId());
                 return experimentPersonService.addExperimentPerson(experiment, person, role);
+            }).toList());
+        }
+
+        ExperimentPublication[] publications = experimentRequest.getExperimentPublications();
+        if (publications != null && publications.length > 0) {
+            experiment.setExperimentPublications(Arrays.stream(publications).map(publication -> {
+                List<ExperimentPublicationAuthor> authors = publication.getAuthors();
+                if (authors != null && authors.size() > 0)
+                    publication.setAuthors(
+                            authors.stream().map(experimentPublicationAuthorRepository::saveAndFlush).toList());
+
+                return experimentPublicationRepository.saveAndFlush(publication);
             }).toList());
         }
 
