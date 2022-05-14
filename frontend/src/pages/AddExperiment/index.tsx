@@ -15,6 +15,7 @@ import AuthWrapper from '../../components/AuthWrapper';
 import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
+import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -77,7 +78,6 @@ export default function AddExperiment() {
   const [experimentObjective, setExperimentObjective] = useState<string>();
   const [experimentPublications, setExperimentPublications] = useState<string>();
 
-  const ACCEPTED_ATTACHMENT_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
   const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
   const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.item(0);
@@ -136,7 +136,7 @@ export default function AddExperiment() {
     leadInstitution && formData.append('leadInstitution', leadInstitution);
     experimentAim && formData.append('experimentAim', experimentAim);
     for (const attachment of experimentAttachments) {
-      formData.append('experimentAttachments[]', attachment);
+      formData.append('experimentAttachmentFiles[]', attachment);
     }
     experimentObjective && formData.append('experimentObjective', experimentObjective);
     experimentPublications && formData.append('experimentPublications', experimentPublications);
@@ -148,7 +148,7 @@ export default function AddExperiment() {
       formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
     }
 
-    return api.post('/experiments/add', formData, {
+    return api.post('/experiments/save', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   });
@@ -291,7 +291,7 @@ export default function AddExperiment() {
                               <DeleteOutlineRounded color='secondary' />
                             </IconButton>
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
-                              {`${index + 1}. ${file.name}`}
+                              {file.name}
                             </Typography>
                           </Grid>
                         ) : (
@@ -329,7 +329,7 @@ export default function AddExperiment() {
                               <DeleteOutlineRounded color='secondary' />
                             </IconButton>
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
-                              {`${index + 1}. ${file.name}`}
+                              {file.name}
                             </Typography>
                           </Grid>
                         ),

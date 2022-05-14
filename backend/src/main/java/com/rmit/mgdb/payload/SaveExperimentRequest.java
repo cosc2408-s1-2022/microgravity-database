@@ -25,7 +25,9 @@ public class SaveExperimentRequest {
 
     private String experimentObjective;
 
-    private MultipartFile[] experimentAttachments;
+    private MultipartFile[] experimentAttachmentFiles;
+
+    private Long[] experimentAttachmentIds;
 
     private String experimentPublications;
 

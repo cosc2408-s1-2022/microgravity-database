@@ -63,7 +63,7 @@ export type Experiment = {
   principalInvestigator: string;
   experimentAim: string;
   experimentObjective: string;
-  experimentModuleDrawing: string;
+  experimentAttachments: ExperimentAttachment[];
   experimentPublications: string;
   deleted: boolean;
   approved: boolean;
@@ -74,6 +74,12 @@ export type Experiment = {
   people: ExperimentPerson[];
   createdAt: Date;
   updatedAt?: Date;
+};
+
+export type ExperimentAttachment = {
+  id: number;
+  mediaType: 'image/jpeg' | 'image/png' | 'application/pdf';
+  filename: string;
 };
 
 export type Mission = {

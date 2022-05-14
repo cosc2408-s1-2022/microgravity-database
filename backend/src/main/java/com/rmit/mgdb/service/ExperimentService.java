@@ -26,9 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 
@@ -104,9 +102,10 @@ public class ExperimentService {
             }).toList());
         }
 
-        MultipartFile[] experimentAttachments = experimentRequest.getExperimentAttachments();
-        if (experimentAttachments != null && experimentAttachments.length > 0) {
-            experiment.setExperimentAttachments(Arrays.stream(experimentAttachments).map(file -> {
+        List<ExperimentAttachment> experimentAttachments = new ArrayList<>();
+        MultipartFile[] experimentAttachmentFiles = experimentRequest.getExperimentAttachmentFiles();
+        if (experimentAttachmentFiles != null && experimentAttachmentFiles.length > 0) {
+            experimentAttachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
                 String originalFileName = Objects.requireNonNull(file.getOriginalFilename());
                 String fileExtension = FilenameUtils.getExtension(originalFileName);
                 if (originalFileName.isEmpty() || fileExtension.isEmpty())
@@ -116,7 +115,7 @@ public class ExperimentService {
                     throw new InvalidExperimentAttachmentException("File is empty.", originalFileName);
 
                 String finalFileName =
-                        (LocalDateTime.now() + "_" + FilenameUtils.removeExtension(originalFileName)).replaceAll(
+                        (LocalDateTime.now() + "DT" + FilenameUtils.removeExtension(originalFileName)).replaceAll(
                                 "[\\p{Punct}\\s]+", "_") + "." + fileExtension;
                 String mediaType = Objects.requireNonNull(file.getContentType());
                 Path parent = Paths.get(mediaType.equals(MediaType.APPLICATION_PDF_VALUE) ? "documents" : "images");
@@ -128,11 +127,22 @@ public class ExperimentService {
 
                 ExperimentAttachment experimentAttachment = new ExperimentAttachment();
                 experimentAttachment.setExperiment(experiment);
+                experimentAttachment.setMediaType(mediaType);
                 experimentAttachment.setFilename(finalFileName);
                 experimentAttachmentRepository.save(experimentAttachment);
                 return experimentAttachment;
             }).toList());
         }
+        Long[] experimentAttachmentIds = experimentRequest.getExperimentAttachmentIds();
+        if (experimentAttachmentIds != null && experimentAttachmentIds.length > 0) {
+            experimentAttachments.addAll(Arrays.stream(experimentRequest.getExperimentAttachmentIds())
+                                               .map(aLong -> {
+                                                   Optional<ExperimentAttachment> attachment =
+                                                           experimentAttachmentRepository.findById(aLong);
+                                                   return attachment.orElse(null);
+                                               }).toList());
+        }
+        experiment.setExperimentAttachments(experimentAttachments);
 
         searchSession.massIndexer().start();
         return experiment;

@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
@@ -20,6 +21,10 @@ public class ExperimentAttachment {
     @NotBlank
     @Length(max = 1023)
     private String filename;
+
+    @NotBlank
+    @Pattern(regexp = "(^image/jpeg|image/png|application/pdf)", message = "Not a valid media type.")
+    private String mediaType;
 
     @ManyToOne
     @JoinColumn(name = "experiment_id")

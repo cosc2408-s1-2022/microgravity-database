@@ -6,14 +6,25 @@ import { useMutation, useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
-import api from '../../util/api';
+import api, { BACKEND_URL } from '../../util/api';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import {
+  Experiment,
+  ExperimentAttachment,
+  ExperimentPersonRequest,
+  ForCode,
+  Mission,
+  Person,
+  Role,
+  SeoCode,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
+import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 
 // TODO Refactor into smaller sub-components.
 export default function EditExperiment() {
@@ -84,9 +95,24 @@ export default function EditExperiment() {
   const [leadInstitution, setLeadInstitution] = useState<string | undefined>(experiment?.leadInstitution);
   const [experimentAim, setExperimentAim] = useState<string | undefined>(experiment?.experimentAim);
   const [experimentObjective, setExperimentObjective] = useState<string | undefined>(experiment?.experimentObjective);
-  const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string | undefined>(
-    experiment?.experimentModuleDrawing,
+
+  const [experimentAttachments, setExperimentAttachments] = useState<ExperimentAttachment[]>(
+    experiment.experimentAttachments,
   );
+  const [newExperimentAttachments, setNewExperimentAttachments] = useState<File[]>([]);
+  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.item(0);
+    if (file && ACCEPTED_ATTACHMENT_TYPES.includes(file.type)) {
+      setNewExperimentAttachments((prevState) => [...prevState, file]);
+    }
+  };
+  const removeFile = (index: number) => {
+    setNewExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
+  };
+  const removeAttachment = (id: number) => {
+    setExperimentAttachments((prevState) => prevState.filter((attachment) => attachment.id !== id));
+  };
+
   const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
     experiment?.experimentPublications,
   );
@@ -144,22 +170,33 @@ export default function EditExperiment() {
     isLoading: isExperimentLoading,
     isError: isExperimentError,
     mutate: mutateExperiment,
-  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () =>
-    api.post('/experiments/add', {
-      id: experiment.id,
-      title,
-      toa,
-      leadInstitution,
-      experimentAim,
-      experimentObjective,
-      experimentModuleDrawing,
-      experimentPublications,
-      missionId: mission?.id,
-      forCodeId: forCode?.id,
-      seoCodeId: seoCode?.id,
-      experimentPersonRequests: peopleState.data.map((entry) => entry.data),
-    }),
-  );
+  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () => {
+    const formData = new FormData();
+    formData.append('id', experiment.id.toString());
+    title && formData.append('title', title);
+    toa && formData.append('toa', toa);
+    leadInstitution && formData.append('leadInstitution', leadInstitution);
+    experimentAim && formData.append('experimentAim', experimentAim);
+    for (const id of experimentAttachments.map((attachment) => attachment.id.toString())) {
+      formData.append('experimentAttachmentIds[]', id);
+    }
+    for (const file of newExperimentAttachments) {
+      formData.append('experimentAttachmentFiles[]', file);
+    }
+    experimentObjective && formData.append('experimentObjective', experimentObjective);
+    experimentPublications && formData.append('experimentPublications', experimentPublications);
+    mission?.id && formData.append('missionId', mission.id.toString());
+    forCode?.id && formData.append('forCodeId', forCode.id.toString());
+    seoCode?.id && formData.append('seoCodeId', seoCode.id.toString());
+    for (const i in peopleState.data) {
+      formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
+      formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
+    }
+
+    return api.post('/experiments/save', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -243,13 +280,189 @@ export default function EditExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormField
-                  label='Experiment Module Drawing'
-                  name='experimentModuleDrawing'
-                  value={experimentModuleDrawing || ''}
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentModuleDrawing}
-                />
+                <Paper
+                  sx={{ width: '100%', border: '1px #c4c4c4 solid', display: 'flex', flexDirection: 'column' }}
+                  variant='outlined'
+                >
+                  <Box display='flex' alignItems='center'>
+                    <Typography sx={{ p: 1, pl: 1.5 }}>Experiment Attachments</Typography>
+                    <label htmlFor='add-attachment'>
+                      <input
+                        style={{ display: 'none' }}
+                        id='add-attachment'
+                        name='add-attachment'
+                        type='file'
+                        accept={ACCEPTED_ATTACHMENT_TYPES.join(',')}
+                        onChange={addFile}
+                      />
+                      <IconButton component='span'>
+                        <AttachFileRounded />
+                      </IconButton>
+                    </label>
+                  </Box>
+                  {(experimentAttachments.length > 0 || newExperimentAttachments.length > 0) && (
+                    <Grid container spacing={2} p={2}>
+                      {experimentAttachments.map((attachment) =>
+                        attachment.mediaType.includes('image') ? (
+                          <Grid
+                            item
+                            key={attachment.id}
+                            xs={3}
+                            sx={{ position: 'relative' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              component='img'
+                              sx={{
+                                width: '100%',
+                                height: '10rem',
+                                objectFit: 'cover',
+                              }}
+                              alt='Attachment Image'
+                              src={`${BACKEND_URL}/images/${attachment.filename}`}
+                            />
+                            <IconButton
+                              size='small'
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '1.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(4px) brightness(60%)',
+                              }}
+                              onClick={() => removeAttachment(attachment.id)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
+                            </Typography>
+                          </Grid>
+                        ) : (
+                          <Grid
+                            item
+                            key={attachment.id}
+                            xs={3}
+                            sx={{ position: 'relative' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '100%',
+                                height: '10rem',
+                              }}
+                            >
+                              <PictureAsPdfRounded fontSize='large' color='secondary' />
+                            </Paper>
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '1.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(8px)',
+                              }}
+                              onClick={() => removeAttachment(attachment.id)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 1)}`}
+                            </Typography>
+                          </Grid>
+                        ),
+                      )}
+                      {newExperimentAttachments.map((file, index) =>
+                        file.type.includes('image') ? (
+                          <Grid
+                            item
+                            key={index}
+                            xs={3}
+                            sx={{ position: 'relative' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              component='img'
+                              sx={{
+                                width: '100%',
+                                height: '10rem',
+                                objectFit: 'cover',
+                              }}
+                              alt='Attachment Image'
+                              src={URL.createObjectURL(file)}
+                            />
+                            <IconButton
+                              size='small'
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '1.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(4px) brightness(60%)',
+                              }}
+                              onClick={() => removeFile(index)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {file.name}
+                            </Typography>
+                          </Grid>
+                        ) : (
+                          <Grid
+                            item
+                            key={index}
+                            xs={3}
+                            sx={{ position: 'relative' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '100%',
+                                height: '10rem',
+                              }}
+                            >
+                              <PictureAsPdfRounded fontSize='large' color='secondary' />
+                            </Paper>
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '1.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(8px)',
+                              }}
+                              onClick={() => removeFile(index)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {file.name}
+                            </Typography>
+                          </Grid>
+                        ),
+                      )}
+                    </Grid>
+                  )}
+                </Paper>
               </Grid>
               <Grid item xs={12}>
                 <FormField
