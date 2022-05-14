@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -115,8 +116,8 @@ public class ExperimentService {
                     throw new InvalidExperimentAttachmentException("File is empty.", originalFileName);
 
                 String finalFileName =
-                        FilenameUtils.removeExtension(originalFileName).replaceAll("[\\p{Punct}\\s]+", "_") + "." +
-                        fileExtension;
+                        (LocalDateTime.now() + "_" + FilenameUtils.removeExtension(originalFileName)).replaceAll(
+                                "[\\p{Punct}\\s]+", "_") + "." + fileExtension;
                 String mediaType = Objects.requireNonNull(file.getContentType());
                 Path parent = Paths.get(mediaType.equals(MediaType.APPLICATION_PDF_VALUE) ? "documents" : "images");
                 try {
