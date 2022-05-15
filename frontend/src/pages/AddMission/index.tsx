@@ -43,7 +43,7 @@ export default function AddMission() {
     isLoading: isMissionLoading,
     isError: isMissionError,
     mutate: mutateMission,
-  } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
+  } = useMutation<AxiosResponse<Mission>, AxiosError>('saveMission', () =>
     api.post('/missions/save', {
       name: name || '',
       launchDate: launchDate && moment(launchDate).year().toString(),

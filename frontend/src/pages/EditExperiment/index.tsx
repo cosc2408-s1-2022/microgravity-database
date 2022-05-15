@@ -153,8 +153,8 @@ export default function EditExperiment() {
     isLoading: isExperimentLoading,
     isError: isExperimentError,
     mutate: mutateExperiment,
-  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () =>
-    api.post('/experiments/add', {
+  } = useMutation<AxiosResponse<Experiment>, AxiosError>('saveExperiment', () =>
+    api.post('/experiments/save', {
       id: experiment.id,
       title,
       toa,

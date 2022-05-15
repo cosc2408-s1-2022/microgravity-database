@@ -4,41 +4,40 @@ import {
   NewReleasesRounded,
   DoneRounded,
   EditRounded,
-  DeleteRounded,
   RestartAltRounded,
+  DeleteRounded,
 } from '@mui/icons-material';
-import { Box, Button, Grid, Link, Pagination, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Grid, Pagination, Paper, Tooltip, Typography } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../util/api';
-import { ResultsResponse, Mission } from '../../../util/types';
+import { Person, ResultsResponse } from '../../../util/types';
 import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
-import lodash from 'lodash';
 
-type ViewMissionProps = {
+type ViewPeopleProps = {
   page?: number;
   size?: number;
   searchString?: string;
   onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewMissions({ page, size, searchString, onPageChange }: ViewMissionProps) {
+export default function ViewPeople({ page, size, searchString, onPageChange }: ViewPeopleProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [missions, setMissions] = useState<ResultsResponse<Mission>>();
+  const [people, setPeople] = useState<ResultsResponse<Person>>();
   const {
-    data: missionsData,
-    isSuccess: isMissionsSuccess,
+    data: peopleData,
+    isSuccess: isPeopleSuccess,
     isLoading: hasPendingRequests,
-    isError: isMissionsError,
-    refetch: refetchMissions,
-  } = useQuery<AxiosResponse<ResultsResponse<Mission>>>(
-    ['getMissions', page, size, searchString],
+    isError: isPeopleError,
+    refetch: refetchPeople,
+  } = useQuery<AxiosResponse<ResultsResponse<Person>>>(
+    ['getPeople', page, size, searchString],
     ({ queryKey, signal }) => {
       const [, page, size, searchString] = queryKey;
       const params = new URLSearchParams();
@@ -48,8 +47,8 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
 
       const paramsEncoded = encodeURI(params.toString());
       const url = searchString
-        ? `/search/missions?${paramsEncoded}`
-        : `/missions/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
+        ? `/search/people?${paramsEncoded}`
+        : `/people/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
 
       return api.get(url, { signal });
     },
@@ -58,46 +57,46 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
     },
   );
   useEffect(() => {
-    if (hasPendingRequests) queryClient.cancelQueries('getMissions');
-    refetchMissions();
-  }, [refetchMissions, page, size, searchString, hasPendingRequests, queryClient]);
+    if (hasPendingRequests) queryClient.cancelQueries('getPeople');
+    refetchPeople();
+  }, [refetchPeople, page, size, searchString, hasPendingRequests, queryClient]);
   useEffect(() => {
-    if (isMissionsSuccess && missionsData) {
-      setMissions(missionsData.data);
+    if (isPeopleSuccess && peopleData) {
+      setPeople(peopleData.data);
     }
-  }, [isMissionsSuccess, missionsData]);
+  }, [isPeopleSuccess, peopleData]);
 
   const {
     isLoading: isToggleDeleteLoading,
     isSuccess: isToggleDeleteSuccess,
-    mutate: toggleMissionDelete,
-  } = useMutation('toggleMissionDelete', (id: number) => api.post(`/missions/${id}/toggleDelete`));
+    mutate: togglePersonDelete,
+  } = useMutation('togglePersonDelete', (id: number) => api.post(`/people/${id}/toggleDelete`));
   useEffect(() => {
     if (isToggleDeleteSuccess) {
-      refetchMissions();
+      refetchPeople();
     }
-  }, [isToggleDeleteSuccess, refetchMissions]);
+  }, [isToggleDeleteSuccess, refetchPeople]);
 
   const {
     isLoading: isApproveLoading,
     isSuccess: isApproveSuccess,
-    mutate: approveMission,
-  } = useMutation('approveMission', (id: number) => api.post(`/missions/${id}/approve`));
+    mutate: approvePerson,
+  } = useMutation('approvePerson', (id: number) => api.post(`/people/${id}/approve`));
   useEffect(() => {
     if (isApproveSuccess) {
-      refetchMissions();
+      refetchPeople();
     }
-  }, [isApproveSuccess, refetchMissions]);
+  }, [isApproveSuccess, refetchPeople]);
 
   return (
     <Grid container spacing={2} mb={3}>
-      {missions?.totalElements === 0 ? (
+      {people?.totalElements === 0 ? (
         <Grid item xs={12}>
           <CenteredNoneFound />
         </Grid>
       ) : (
-        missions?.results.map((m) => (
-          <Grid item key={m.id} xs={12}>
+        people?.results.map((p) => (
+          <Grid item key={p.id} xs={12}>
             <Paper
               sx={{
                 display: 'flex',
@@ -108,34 +107,33 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
               }}
             >
               <Box display='flex' alignItems='center' flexGrow={1}>
-                {m.approved && !m.deleted ? (
-                  <Tooltip title='This mission has been approved by an admin.'>
+                {p.approved && !p.deleted ? (
+                  <Tooltip title='This person has been approved by an admin.'>
                     <VerifiedSharp fontSize='medium' color='success' />
                   </Tooltip>
-                ) : m.deleted ? (
-                  <Tooltip title='This mission has been deleted and will not be publicly visible.'>
+                ) : p.deleted ? (
+                  <Tooltip title='This person has been deleted and will not be publicly visible (including associated experiments).'>
                     <WarningRounded fontSize='medium' color='warning' />
                   </Tooltip>
                 ) : (
-                  <Tooltip title='This mission requires approval.'>
+                  <Tooltip title='This person requires approval.'>
                     <NewReleasesRounded fontSize='medium' color='error' />
                   </Tooltip>
                 )}
-                <Link ml={1} href={`/mission/${m.id}`}>
-                  <Typography variant='body2' fontWeight='bold' color={m.deleted ? 'text.secondary' : 'text.primary'}>
-                    {m.name} {m.deleted && ' (DELETED)'}
+                <Box ml={1}>
+                  <Typography variant='body2' fontWeight='bold' color={p.deleted ? 'text.secondary' : 'text.primary'}>
+                    {`${p.firstName} ${p.familyName}`} {p.deleted && ' (DELETED)'}
                   </Typography>
                   <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
-                    {moment(m.launchDate).year()} &bull; {lodash(m.platform.name).startCase()} &bull; Added{' '}
-                    {moment(m.createdAt).fromNow()}
+                    {p.affiliation} &bull; Added {moment(p.createdAt).fromNow()}
                   </Typography>
-                </Link>
+                </Box>
               </Box>
               <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center' sx={{ width: '20rem' }}>
-                {!m.approved && !m.deleted && (
+                {!p.approved && !p.deleted && (
                   <Button
                     onClick={() => {
-                      approveMission(m.id);
+                      approvePerson(p.id);
                     }}
                     variant='contained'
                     color='primary'
@@ -150,8 +148,8 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                 )}
                 <Button
                   onClick={() => {
-                    navigate('/admin/missions/edit', {
-                      state: m,
+                    navigate('/admin/people/edit', {
+                      state: p,
                     });
                   }}
                   variant='contained'
@@ -165,7 +163,7 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                 </Button>
                 <Button
                   onClick={() => {
-                    toggleMissionDelete(m.id);
+                    togglePersonDelete(p.id);
                   }}
                   disabled={isToggleDeleteLoading}
                   variant='contained'
@@ -173,9 +171,9 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                   sx={{ width: '7rem' }}
                 >
                   <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                    {m.deleted ? 'Restore' : 'Delete'}
+                    {p.deleted ? 'Restore' : 'Delete'}
                   </Typography>
-                  {m.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
+                  {p.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
                 </Button>
               </Box>
             </Paper>
@@ -184,7 +182,7 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
       )}
       <Grid item xs={12} display='flex' justifyContent='center'>
         <Pagination
-          count={missions?.totalPages}
+          count={people?.totalPages}
           variant='outlined'
           shape='rounded'
           color='secondary'
@@ -193,8 +191,8 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
           onChange={onPageChange}
         />
       </Grid>
-      <MessageSnackbar open={isMissionsError} message='Could not load missions. Please try again.' severity='error' />
-      <MessageSnackbar open={isApproveSuccess} message='Mission approved.' severity='success' />
+      <MessageSnackbar open={isPeopleError} message='Could not load people. Please try again.' severity='error' />
+      <MessageSnackbar open={isApproveSuccess} message='Person approved.' severity='success' />
     </Grid>
   );
 }

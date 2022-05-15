@@ -7,7 +7,7 @@ public class SearchFieldConstants {
             "role"
     };
 
-    public static final String[] EXPERIMENT_SEARCH_FIELDS = new String[]{
+    public static final String[] EXPERIMENT_SEARCH_FIELDS = {
             "title",
             "toa",
             "leadInstitution",
@@ -35,7 +35,7 @@ public class SearchFieldConstants {
 
     public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform.name";
 
-    public static final String[] MISSION_SEARCH_FIELDS = new String[]{
+    public static final String[] MISSION_SEARCH_FIELDS = {
             "name",
             "launchDateString",
             "startDateString",
@@ -44,22 +44,29 @@ public class SearchFieldConstants {
 
     public static final String MISSION_PLATFORM_SEARCH_FIELD = "platform.name";
 
-    public static final String[] FOR_CODE_SEARCH_FIELDS = new String[]{
+    public static final String[] FOR_CODE_SEARCH_FIELDS = {
             "code",
             "name"
     };
 
     public static final String FOR_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
 
-    public static final String[] SEO_CODE_SEARCH_FIELDS = new String[]{
+    public static final String[] SEO_CODE_SEARCH_FIELDS = {
             "code",
             "name"
     };
 
     public static final String SEO_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
 
-    public static final String[] DATE_RANGE_FIELDS = new String[]{
-            "launchDate"
+    public static final String DATE_RANGE_FIELDS = "launchDate";
+
+    public static final String[] PERSON_SEARCH_FIELDS = {
+            "firstName",
+            "familyName",
+            "affiliation",
+            "city",
+            "state",
+            "country"
     };
 
 }

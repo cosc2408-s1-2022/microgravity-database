@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -41,8 +43,28 @@ public class Person {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String country;
 
+    @GenericField
+    private boolean deleted;
+
+    @GenericField
+    private boolean approved;
+
+    private Date createdAt;
+
+    private Date updatedAt;
+
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private List<ExperimentPerson> experiments;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
 
 }

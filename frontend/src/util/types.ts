@@ -133,6 +133,10 @@ export type Person = {
   country: string;
   affiliation: string;
   role: Role;
+  deleted: boolean;
+  approved: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type Page<T> = {

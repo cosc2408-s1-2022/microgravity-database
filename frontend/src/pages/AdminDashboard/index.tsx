@@ -17,6 +17,8 @@ export default function AdminDashboard() {
                 return 1;
               case '/admin/dashboard/missions':
                 return 2;
+              case '/admin/dashboard/people':
+                return 3;
             }
           })()}
           onChange={(_e, v) => {
@@ -30,6 +32,9 @@ export default function AdminDashboard() {
               case 2:
                 navigate('missions');
                 break;
+              case 3:
+                navigate('people');
+                break;
               default:
                 break;
             }
@@ -40,6 +45,7 @@ export default function AdminDashboard() {
           <Tab label='Users' sx={{ fontSize: 'large', color: 'text.primary', textTransform: 'none' }} />
           <Tab label='Experiments' sx={{ fontSize: 'large', color: 'text.primary', textTransform: 'none' }} />
           <Tab label='Missions' sx={{ fontSize: 'large', color: 'text.primary', textTransform: 'none' }} />
+          <Tab label='People' sx={{ fontSize: 'large', color: 'text.primary', textTransform: 'none' }} />
         </Tabs>
       </Box>
       <Outlet />

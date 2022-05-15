@@ -52,7 +52,7 @@ export default function EditMission() {
     isLoading: isMissionLoading,
     isError: isMissionError,
     mutate: mutateMission,
-  } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
+  } = useMutation<AxiosResponse<Mission>, AxiosError>('saveMission', () =>
     api.post('/missions/save', {
       id: mission.id,
       name: name || '',

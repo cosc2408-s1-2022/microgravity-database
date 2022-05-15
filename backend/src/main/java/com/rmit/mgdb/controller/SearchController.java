@@ -42,4 +42,9 @@ public class SearchController {
         return new ResponseEntity<>(searchService.searchMissions(params), HttpStatus.OK);
     }
 
+    @GetMapping("/search/people")
+    public ResponseEntity<?> searchPeople(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(searchService.searchPeople(params), HttpStatus.OK);
+    }
+
 }

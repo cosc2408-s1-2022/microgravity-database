@@ -116,8 +116,8 @@ export default function AddExperiment() {
     isLoading: isExperimentLoading,
     isError: isExperimentError,
     mutate: mutateExperiment,
-  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () =>
-    api.post('/experiments/add', {
+  } = useMutation<AxiosResponse<Experiment>, AxiosError>('saveExperiment', () =>
+    api.post('/experiments/save', {
       title,
       toa,
       leadInstitution,
@@ -131,17 +131,15 @@ export default function AddExperiment() {
       experimentPersonRequests: peopleState.data.map((entry) => entry.data),
     }),
   );
-  console.log('forCodes', forCodes);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('mission', mission);
     mutateExperiment();
   };
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/home');
+      navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
 

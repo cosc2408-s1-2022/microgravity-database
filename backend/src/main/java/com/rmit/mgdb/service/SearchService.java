@@ -55,6 +55,10 @@ public class SearchService {
         return searchEntity(params, Mission.class, MISSION_SEARCH_FIELDS);
     }
 
+    public ResultsResponse<Person> searchPeople(Map<String, String> params) {
+        return searchEntity(params, Person.class, PERSON_SEARCH_FIELDS);
+    }
+
     private <T> ResultsResponse<T> searchEntity(Map<String, String> params, Class<T> tClass, String[] fields) {
         validateParams(params);
 
@@ -139,22 +143,29 @@ public class SearchService {
                                                                b.must(s -> s.match().field("deleted").matching(false));
                                                            }
 
+                                                           if (resultTypeParam == ResultType.EXPERIMENT) {
+                                                               b.must(s -> s.match().field("people.person.approved")
+                                                                            .matching(true));
+                                                               b.must(s -> s.match().field("people.person.deleted")
+                                                                            .matching(false));
+                                                           }
+
                                                            // Date range filters.
                                                            // Only allow missions to be filtered.
                                                            if (resultTypeParam == ResultType.MISSION) {
                                                                if (startDate.isPresent() && endDate.isPresent()) {
                                                                    b.must(s -> s.range()
-                                                                                .fields(DATE_RANGE_FIELDS)
+                                                                                .field(DATE_RANGE_FIELDS)
                                                                                 .between(startDate.get(),
                                                                                          endDate.get()));
                                                                } else if (startDate.isPresent()) {
                                                                    b.must(s -> s.range()
-                                                                                .fields(DATE_RANGE_FIELDS)
+                                                                                .field(DATE_RANGE_FIELDS)
                                                                                 .atLeast(startDate.get()));
                                                                } else {
                                                                    endDate.ifPresent(date -> b.must(
                                                                            s -> s.range()
-                                                                                 .fields(DATE_RANGE_FIELDS)
+                                                                                 .field(DATE_RANGE_FIELDS)
                                                                                  .atMost(date)));
                                                                }
                                                            }

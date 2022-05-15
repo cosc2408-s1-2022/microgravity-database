@@ -44,6 +44,7 @@ public class User {
     private String role;
 
     private Date createdAt;
+
     private Date updatedAt;
 
     /**

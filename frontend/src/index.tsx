@@ -26,6 +26,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import EditExperiment from './pages/EditExperiment';
 import Missions from './pages/AdminDashboard/Missions';
 import EditMission from './pages/EditMission';
+import People from './pages/AdminDashboard/People';
+import EditPerson from './pages/EditPerson';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -59,9 +61,11 @@ root.render(
                 <Route path='users' element={<Users />} />
                 <Route path='experiments' element={<Experiments />} />
                 <Route path='missions' element={<Missions />} />
+                <Route path='people' element={<People />} />
               </Route>
               <Route path='/admin/experiments/edit' element={<EditExperiment />} />
               <Route path='/admin/missions/edit' element={<EditMission />} />
+              <Route path='/admin/people/edit' element={<EditPerson />} />
             </Routes>
           </LocalizationProvider>
         </BrowserRouter>

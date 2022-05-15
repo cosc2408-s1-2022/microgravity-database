@@ -41,7 +41,6 @@ public class MissionController {
         return missionService.getMissions(page, size);
     }
 
-
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody AddMissionRequest missionRequest, BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
