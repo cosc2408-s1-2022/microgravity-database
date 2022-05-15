@@ -12,7 +12,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import CenteredCircularProgress from '../../../components/CenteredCircularProgress';
 import { UserRole } from '../../../util/types';
 import { useLoggedInUser } from '../../../util/hooks';
@@ -21,7 +21,6 @@ import ViewUsers from '../../../components/AdminDashboard/ViewUsers';
 
 export default function Users() {
   const navigate = useNavigate();
-
   const { user: loggedInUser, isLoading: isLoggedInUserLoading, isError: isLoggedInUserError } = useLoggedInUser();
   useEffect(() => {
     if (isLoggedInUserError) {
@@ -29,19 +28,43 @@ export default function Users() {
     }
   }, [isLoggedInUserError, navigate]);
 
-  const [size, setSize] = useState<number>();
-  const [searchString, setSearchString] = useState<string>();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const pageParam = searchParams.get('page');
+  const sizeParam = searchParams.get('size');
+  const searchStringParam = searchParams.get('string');
+
+  const [page, setPage] = useState<number | undefined>(pageParam ? Number(pageParam) : undefined);
+  const [size, setSize] = useState<number | undefined>(sizeParam ? Number(sizeParam) : undefined);
+  const [searchString, setSearchString] = useState<string | undefined>(searchStringParam ?? undefined);
+  const handlePageChange = (_e: ChangeEvent<unknown>, page: number) => {
+    setPage(page);
+  };
+  const handleSizeChange = (e: SelectChangeEvent<string | number>) => {
+    setSize(e.target.value as number);
+    setPage(undefined);
+  };
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setSearchString(e.target.value);
+    setPage(undefined);
   };
   const handleSearchInputClick = () => {
     if (searchString) {
       setSearchString(undefined);
+      setPage(undefined);
     }
   };
-  const handleSizeChange = (e: SelectChangeEvent<string | number>) => {
-    setSize(e.target.value as number);
-  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    page && params.append('page', page.toString());
+    size && params.append('size', size.toString());
+    searchString && params.append('string', searchString);
+
+    const paramsEncoded = encodeURI(params.toString());
+    paramsEncoded && navigate(`?${paramsEncoded}`);
+  }, [page, size, searchString, navigate]);
 
   return isLoggedInUserLoading || !loggedInUser ? (
     <CenteredCircularProgress />
@@ -92,7 +115,13 @@ export default function Users() {
           <Divider />
         </Grid>
         <Grid item xs={12}>
-          <ViewUsers size={size} searchString={searchString} loggedInUser={loggedInUser} />
+          <ViewUsers
+            page={page}
+            size={size}
+            searchString={searchString}
+            loggedInUser={loggedInUser}
+            onPageChange={handlePageChange}
+          />
         </Grid>
       </Grid>
     </Container>

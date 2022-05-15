@@ -19,19 +19,17 @@ import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
 
 type ViewExperimentsProps = {
+  page?: number;
   size?: number;
   searchString?: string;
+  onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewExperiments({ size, searchString }: ViewExperimentsProps) {
+export default function ViewExperiments({ page, size, searchString, onPageChange }: ViewExperimentsProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [experiments, setExperiments] = useState<ResultsResponse<Experiment>>();
-  const [page, setPage] = useState<number>();
-  const handlePageChange = (_e: ChangeEvent<unknown>, page: number) => {
-    setPage(page);
-  };
   const {
     data: experimentsData,
     isSuccess: isExperimentsSuccess,
@@ -189,7 +187,8 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
           shape='rounded'
           color='secondary'
           page={page || 1}
-          onChange={handlePageChange}
+          siblingCount={0}
+          onChange={onPageChange}
         />
       </Grid>
       <MessageSnackbar

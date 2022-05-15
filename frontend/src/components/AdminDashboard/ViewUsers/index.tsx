@@ -10,19 +10,17 @@ import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
 
 type ViewUsersProps = {
+  page?: number;
   size?: number;
   searchString?: string;
   loggedInUser: User;
+  onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewUsers({ size, searchString, loggedInUser }: ViewUsersProps) {
+export default function ViewUsers({ page, size, searchString, loggedInUser, onPageChange }: ViewUsersProps) {
   const queryClient = useQueryClient();
 
   const [users, setUsers] = useState<ResultsResponse<User>>();
-  const [page, setPage] = useState<number>();
-  const handlePageChange = (_e: ChangeEvent<unknown>, page: number) => {
-    setPage(page);
-  };
   const {
     data: usersData,
     isSuccess: isUsersSuccess,
@@ -159,7 +157,8 @@ export default function ViewUsers({ size, searchString, loggedInUser }: ViewUser
           shape='rounded'
           color='secondary'
           page={page || 1}
-          onChange={handlePageChange}
+          siblingCount={0}
+          onChange={onPageChange}
         />
       </Grid>
       <Grid item xs={12}>

@@ -50,10 +50,8 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentPublications;
 
-    @GenericField
     private boolean deleted;
 
-    @GenericField
     private boolean approved;
 
     @ManyToOne
