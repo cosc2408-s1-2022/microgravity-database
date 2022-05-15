@@ -7,7 +7,18 @@ import {
   DeleteRounded,
   RestartAltRounded,
 } from '@mui/icons-material';
-import { Box, Button, Grid, Link, Pagination, Paper, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  Pagination,
+  Paper,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { ChangeEvent, useState, useEffect } from 'react';
@@ -89,6 +100,9 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
     }
   }, [isApproveSuccess, refetchMissions]);
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
     <Grid container spacing={2} mb={3}>
       {missions?.totalElements === 0 ? (
@@ -140,11 +154,13 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                     variant='contained'
                     color='primary'
                     disabled={isApproveLoading}
-                    sx={{ mr: 1, width: '7rem' }}
+                    sx={matches ? { mr: 1, width: '7rem' } : { mr: 1 }}
                   >
-                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                      Approve
-                    </Typography>
+                    {matches && (
+                      <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                        Approve
+                      </Typography>
+                    )}
                     <DoneRounded fontSize='small' />
                   </Button>
                 )}
@@ -156,11 +172,13 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                   }}
                   variant='contained'
                   color='primary'
-                  sx={{ mr: 1, width: '5rem' }}
+                  sx={matches ? { mr: 1, width: '5rem' } : { mr: 1 }}
                 >
-                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                    Edit
-                  </Typography>
+                  {matches && (
+                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                      Edit
+                    </Typography>
+                  )}
                   <EditRounded fontSize='small' />
                 </Button>
                 <Button
@@ -170,11 +188,13 @@ export default function ViewMissions({ page, size, searchString, onPageChange }:
                   disabled={isToggleDeleteLoading}
                   variant='contained'
                   color='primary'
-                  sx={{ width: '7rem' }}
+                  sx={matches ? { mr: 1, width: '7rem' } : { mr: 1 }}
                 >
-                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                    {m.deleted ? 'Restore' : 'Delete'}
-                  </Typography>
+                  {matches && (
+                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                      {m.deleted ? 'Restore' : 'Delete'}
+                    </Typography>
+                  )}
                   {m.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
                 </Button>
               </Box>

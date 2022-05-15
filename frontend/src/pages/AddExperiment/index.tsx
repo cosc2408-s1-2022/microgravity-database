@@ -495,6 +495,9 @@ export default function AddExperiment() {
                           dispatchPeople({ type: 'MODIFY', payload });
                         }
                       }}
+                      getOptionDisabled={(option: Role) =>
+                        peopleState.data.some((entry) => entry.data.roleId === 1 && entry.data.roleId === option.id)
+                      }
                       renderInput={(params) => (
                         <TextField {...params} margin='normal' size='small' color='secondary' fullWidth label='Role' />
                       )}
