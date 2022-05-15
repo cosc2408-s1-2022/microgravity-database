@@ -50,8 +50,10 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentPublications;
 
+    @GenericField
     private boolean deleted;
 
+    @GenericField
     private boolean approved;
 
     @ManyToOne
@@ -83,6 +85,7 @@ public class Experiment {
     private List<ExperimentPerson> people;
 
     private Date createdAt;
+
     private Date updatedAt;
 
     /**

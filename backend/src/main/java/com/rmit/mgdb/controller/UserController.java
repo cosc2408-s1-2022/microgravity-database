@@ -97,7 +97,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/paginated")
     public ResultsResponse<User> getUsers(@RequestParam Optional<Integer> page,
                                           @RequestParam Optional<Integer> size) {
         return userService.getUsers(page, size);

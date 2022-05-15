@@ -12,7 +12,16 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import {
+  Experiment,
+  ExperimentPersonRequest,
+  ForCode,
+  Mission,
+  Person,
+  Role,
+  SeoCode,
+  UserRole,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
@@ -168,12 +177,12 @@ export default function EditExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/admin/dashboard/experiments');
+      navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
 
   return (
-    <AuthWrapper>
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
       <Container maxWidth='md' sx={{ mb: 3 }}>
         <Box
           sx={{
@@ -590,15 +599,11 @@ export default function EditExperiment() {
             >
               Save Changes
             </LoadingButton>
-            <Button
-              sx={{ backgroundColor: 'gray' }}
-              variant='contained'
-              onClick={() => navigate('/admin/dashboard/experiments')}
-            >
+            <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
               Cancel
             </Button>
           </Box>
-          <MessageSnackbar open={isExperimentError} message='Failed to add experiment.' severity='error' />
+          <MessageSnackbar open={isExperimentError} message='Failed to save experiment.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

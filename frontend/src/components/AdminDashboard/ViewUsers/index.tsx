@@ -39,7 +39,7 @@ export default function ViewUsers({ page, size, searchString, loggedInUser, onPa
       const paramsEncoded = encodeURI(params.toString());
       const url = searchString
         ? `/search/users?${paramsEncoded}`
-        : `/users${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
+        : `/users/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
 
       return api.get(url, { signal });
     },

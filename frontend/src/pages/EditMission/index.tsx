@@ -1,24 +1,33 @@
-import { Autocomplete, Box, Container, Grid, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { AxiosError, AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import FormField from '../../components/FormField';
-import LoadingButton from '../../components/LoadingButton';
-import api from '../../util/api';
-import moment from 'moment';
-import lodash from 'lodash';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
+import { AxiosResponse, AxiosError } from 'axios';
+import lodash from 'lodash';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { useQuery, useMutation } from 'react-query';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Mission, Platform } from '../../util/types';
+import FormField from '../../components/FormField';
+import LoadingButton from '../../components/LoadingButton';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import api from '../../util/api';
+import { Mission, Platform, UserRole } from '../../util/types';
 
-// TODO Refactor into smaller sub-components.
-export default function AddMission() {
+export default function EditMission() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const mission = location.state as Mission;
+  if (!mission) {
+    navigate('/', {
+      state: {
+        isError: true,
+        message: 'Mission could not be found.',
+      },
+    });
+  }
 
   const [platforms, setPlatforms] = useState<Platform[]>();
   const {
@@ -30,11 +39,11 @@ export default function AddMission() {
     if (isPlatformsSuccess && platformsData) setPlatforms(platformsData.data);
   }, [isPlatformsSuccess, platformsData]);
 
-  const [name, setName] = useState<string>();
-  const [launchDate, setLaunchDate] = useState<Date | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [platform, setPlatform] = useState<Platform | null>();
+  const [name, setName] = useState<string>(mission.name);
+  const [launchDate, setLaunchDate] = useState<Date | null>(mission.launchDate);
+  const [startDate, setStartDate] = useState<Date | null>(mission.startDate ?? null);
+  const [endDate, setEndDate] = useState<Date | null>(mission.endDate ?? null);
+  const [platform, setPlatform] = useState<Platform | null>(mission.platform);
   const startDateError = launchDate && startDate && launchDate < startDate;
   const endDateError = startDate && endDate && endDate < startDate;
   const {
@@ -45,6 +54,7 @@ export default function AddMission() {
     mutate: mutateMission,
   } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
     api.post('/missions/save', {
+      id: mission.id,
       name: name || '',
       launchDate: launchDate && moment(launchDate).year().toString(),
       startDate: startDate && moment(startDate).year().toString(),
@@ -53,7 +63,7 @@ export default function AddMission() {
     }),
   );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     !endDateError && mutateMission();
   };
@@ -65,7 +75,7 @@ export default function AddMission() {
   }, [isMissionSuccess, navigate]);
 
   return (
-    <AuthWrapper>
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <Container maxWidth='sm'>
           <Box
@@ -93,6 +103,7 @@ export default function AddMission() {
                     autoFocus
                     label='Name'
                     name='name'
+                    value={name}
                     errors={missionError?.response?.data}
                     onChange={setName}
                   />
@@ -182,6 +193,7 @@ export default function AddMission() {
                     getOptionLabel={(option) => lodash.startCase(option.name)}
                     fullWidth
                     loading={isPlatformsLoading}
+                    value={platform}
                     onChange={(_event, value) => {
                       if (missionError?.response?.data !== undefined) {
                         missionError.response.data.platformId = '';
@@ -224,15 +236,20 @@ export default function AddMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <LoadingButton
-                    loading={isMissionLoading}
-                    type='submit'
-                    variant='contained'
-                    color='secondary'
-                    fullWidth
-                  >
-                    Add Mission
-                  </LoadingButton>
+                  <Box display='flex' alignItems='center'>
+                    <LoadingButton
+                      sx={{ mr: 2 }}
+                      loading={isMissionLoading}
+                      onClick={handleSubmit}
+                      variant='contained'
+                      color='secondary'
+                    >
+                      Save Changes
+                    </LoadingButton>
+                    <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
+                      Cancel
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </Box>

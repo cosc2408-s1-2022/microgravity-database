@@ -4,10 +4,14 @@ import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.Mission;
 import com.rmit.mgdb.payload.AddMissionRequest;
 import com.rmit.mgdb.payload.MissionPayload;
+import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.repository.MissionRepository;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -17,7 +21,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.rmit.mgdb.util.Constants.DEFAULT_PAGE_SIZE;
 
 @Service
 public class MissionService {
@@ -51,8 +58,16 @@ public class MissionService {
         return new MissionPayload(getMissionById(id));
     }
 
-    public Mission addMission(AddMissionRequest missionRequest) {
+    public Mission saveMission(AddMissionRequest missionRequest) {
         Mission mission = new Mission();
+        Long id = missionRequest.getId();
+        if (id != null) {
+            Mission existingExperiment = getMissionById(id);
+            mission.setId(id);
+            mission.setApproved(existingExperiment.isApproved());
+            mission.setDeleted(existingExperiment.isDeleted());
+            mission.setCreatedAt(existingExperiment.getCreatedAt());
+        }
         mission.setName(missionRequest.getName());
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("yyyy")
@@ -73,6 +88,39 @@ public class MissionService {
 
         searchSession.massIndexer().start();
         return mission;
+    }
+
+    public ResultsResponse<Mission> getMissions(Optional<Integer> page, Optional<Integer> size) {
+        Page<Mission> missions;
+        if (page.isPresent() || size.isPresent()) {
+            int pageInt = page.orElse(1) - 1;
+            int sizeInt = size.orElse(DEFAULT_PAGE_SIZE);
+            missions =
+                    missionRepository.findMissionsBy(PageRequest.of(pageInt, sizeInt));
+            return new ResultsResponse<>(missions.getTotalElements(), missions.getTotalPages(), pageInt + 1,
+                                         sizeInt,
+                                         missions.getContent());
+        } else {
+            missions =
+                    missionRepository.findMissionsBy(Pageable.ofSize(DEFAULT_PAGE_SIZE));
+            return new ResultsResponse<>(missions.getTotalElements(), missions.getTotalPages(),
+                                         missions.getTotalPages() + 1,
+                                         DEFAULT_PAGE_SIZE, missions.getContent());
+        }
+    }
+
+    public void toggleMissionDelete(Long id) {
+        Mission mission = getMissionById(id);
+        mission.setDeleted(!mission.isDeleted());
+        missionRepository.saveAndFlush(mission);
+        searchSession.massIndexer().start();
+    }
+
+    public void approveMission(Long id) {
+        Mission mission = getMissionById(id);
+        mission.setApproved(true);
+        missionRepository.saveAndFlush(mission);
+        searchSession.massIndexer().start();
     }
 
 }

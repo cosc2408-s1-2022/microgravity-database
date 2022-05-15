@@ -28,7 +28,7 @@ public class ExperimentController {
         this.validationErrorService = validationErrorService;
     }
 
-    @GetMapping
+    @GetMapping("/paginated")
     public ResultsResponse<Experiment> getExperiments(@RequestParam Optional<Integer> page,
                                                       @RequestParam Optional<Integer> size) {
         return experimentService.getExperiments(page, size);

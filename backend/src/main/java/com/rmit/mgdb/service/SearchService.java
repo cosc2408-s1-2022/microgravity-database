@@ -51,6 +51,10 @@ public class SearchService {
         return searchEntity(params, User.class, USER_SEARCH_FIELDS);
     }
 
+    public ResultsResponse<Mission> searchMissions(Map<String, String> params) {
+        return searchEntity(params, Mission.class, MISSION_SEARCH_FIELDS);
+    }
+
     private <T> ResultsResponse<T> searchEntity(Map<String, String> params, Class<T> tClass, String[] fields) {
         validateParams(params);
 
@@ -129,7 +133,8 @@ public class SearchService {
                                                                             .matching(stringParam));
                                                            }
 
-                                                           if (resultTypeParam == ResultType.EXPERIMENT) {
+                                                           if (resultTypeParam == ResultType.EXPERIMENT ||
+                                                               resultTypeParam == ResultType.MISSION) {
                                                                b.must(s -> s.match().field("approved").matching(true));
                                                                b.must(s -> s.match().field("deleted").matching(false));
                                                            }

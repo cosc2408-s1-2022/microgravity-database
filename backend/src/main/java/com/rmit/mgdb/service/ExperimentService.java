@@ -69,6 +69,7 @@ public class ExperimentService {
             experiment.setId(id);
             experiment.setApproved(existingExperiment.isApproved());
             experiment.setDeleted(existingExperiment.isDeleted());
+            experiment.setCreatedAt(existingExperiment.getCreatedAt());
             experimentPersonService.removeAllExperimentPeople(id);
         }
         experiment.setTitle(experimentRequest.getTitle());

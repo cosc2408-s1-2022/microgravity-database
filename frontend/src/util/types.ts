@@ -81,9 +81,14 @@ export type Mission = {
   name: string;
   platform: Platform;
   launchDate: Date;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
+  experimentCount: number;
+  deleted: boolean;
+  approved: boolean;
   experiments: Experiment[];
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type ExperimentPerson = {
@@ -169,6 +174,6 @@ export type MissionResultsProps = {
   id: string | undefined;
   name: string | undefined;
   launchDate: Date;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
 };

@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class AddMissionRequest {
 
+    private Long id;
+
     @NotBlank(message = "Mission name must not be blank.")
     private String name;
 
