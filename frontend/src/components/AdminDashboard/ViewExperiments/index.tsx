@@ -188,6 +188,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
           variant='outlined'
           shape='rounded'
           color='secondary'
+          siblingCount={0}
           page={page || 1}
           onChange={handlePageChange}
         />

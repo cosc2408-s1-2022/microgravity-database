@@ -238,7 +238,7 @@ export default function AddExperiment() {
                   variant='outlined'
                 >
                   <Box display='flex' alignItems='center'>
-                    <Typography sx={{ p: 1, pl: 1.5 }}>Experiment Attachments</Typography>
+                    <Typography sx={{ m: 1.5 }}>Experiment Attachments</Typography>
                     <label htmlFor='add-attachment'>
                       <input
                         style={{ display: 'none' }}
@@ -254,14 +254,14 @@ export default function AddExperiment() {
                     </label>
                   </Box>
                   {experimentAttachments.length > 0 && (
-                    <Grid container spacing={2} p={2}>
+                    <Box display='flex' flexWrap='wrap' px={2}>
                       {experimentAttachments.map((file, index) =>
                         file.type.includes('image') ? (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={index}
-                            xs={3}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -270,7 +270,7 @@ export default function AddExperiment() {
                               variant='outlined'
                               component='img'
                               sx={{
-                                width: '100%',
+                                width: '10rem',
                                 height: '10rem',
                                 objectFit: 'cover',
                               }}
@@ -282,7 +282,7 @@ export default function AddExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(4px) brightness(60%)',
                               }}
@@ -293,13 +293,13 @@ export default function AddExperiment() {
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
                               {file.name}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ) : (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={index}
-                            xs={3}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -310,7 +310,7 @@ export default function AddExperiment() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                width: '100%',
+                                width: '10rem',
                                 height: '10rem',
                               }}
                             >
@@ -320,7 +320,7 @@ export default function AddExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(8px)',
                               }}
@@ -331,10 +331,10 @@ export default function AddExperiment() {
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
                               {file.name}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ),
                       )}
-                    </Grid>
+                    </Box>
                   )}
                 </Paper>
               </Grid>

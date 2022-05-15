@@ -301,14 +301,14 @@ export default function EditExperiment() {
                     </label>
                   </Box>
                   {(experimentAttachments.length > 0 || newExperimentAttachments.length > 0) && (
-                    <Grid container spacing={2} p={2}>
+                    <Box display='flex' flexWrap='wrap' px={2}>
                       {experimentAttachments.map((attachment) =>
                         attachment.mediaType.includes('image') ? (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={attachment.id}
-                            xs={3}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -329,7 +329,7 @@ export default function EditExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(4px) brightness(60%)',
                               }}
@@ -340,12 +340,12 @@ export default function EditExperiment() {
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
                               {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ) : (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={attachment.id}
-                            xs={3}
                             sx={{ position: 'relative' }}
                             display='flex'
                             flexDirection='column'
@@ -367,7 +367,7 @@ export default function EditExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(8px)',
                               }}
@@ -376,17 +376,17 @@ export default function EditExperiment() {
                               <DeleteOutlineRounded color='secondary' />
                             </IconButton>
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
-                              {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 1)}`}
+                              {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ),
                       )}
                       {newExperimentAttachments.map((file, index) =>
                         file.type.includes('image') ? (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={index}
-                            xs={3}
                             sx={{ position: 'relative' }}
                             display='flex'
                             flexDirection='column'
@@ -408,7 +408,7 @@ export default function EditExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(4px) brightness(60%)',
                               }}
@@ -419,12 +419,12 @@ export default function EditExperiment() {
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
                               {file.name}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ) : (
-                          <Grid
-                            item
+                          <Box
+                            m={2}
+                            ml={0}
                             key={index}
-                            xs={3}
                             sx={{ position: 'relative' }}
                             display='flex'
                             flexDirection='column'
@@ -446,7 +446,7 @@ export default function EditExperiment() {
                               sx={{
                                 position: 'absolute',
                                 right: '0.5rem',
-                                top: '1.5rem',
+                                top: '0.5rem',
                                 background: 'transparent',
                                 backdropFilter: 'blur(8px)',
                               }}
@@ -457,10 +457,10 @@ export default function EditExperiment() {
                             <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
                               {file.name}
                             </Typography>
-                          </Grid>
+                          </Box>
                         ),
                       )}
-                    </Grid>
+                    </Box>
                   )}
                 </Paper>
               </Grid>
