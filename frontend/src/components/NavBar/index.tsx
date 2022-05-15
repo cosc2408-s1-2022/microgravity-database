@@ -29,7 +29,7 @@ export default function NavBar() {
   };
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
   const [addMenuAnchor, setAddMenuAnchor] = useState<HTMLElement | null>(null);
   const open = Boolean(addMenuAnchor);
