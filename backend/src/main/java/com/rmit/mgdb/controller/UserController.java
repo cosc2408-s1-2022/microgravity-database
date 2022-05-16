@@ -1,11 +1,14 @@
 package com.rmit.mgdb.controller;
 
+import com.rmit.mgdb.model.Person;
 import com.rmit.mgdb.model.User;
 import com.rmit.mgdb.payload.AuthenticationRequest;
 import com.rmit.mgdb.payload.AuthenticationResponse;
+import com.rmit.mgdb.payload.RegisterPayload;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.security.JWTTokenProvider;
 import com.rmit.mgdb.service.CustomUserDetailsService;
+import com.rmit.mgdb.service.PersonService;
 import com.rmit.mgdb.service.UserService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import com.rmit.mgdb.validator.UserValidator;
@@ -28,6 +31,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final PersonService personService;
     private final CustomUserDetailsService userDetailsService;
     private final UserValidator userValidator;
     private final ValidationErrorService validationErrorService;
@@ -36,12 +40,14 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService,
+                          PersonService personService,
                           CustomUserDetailsService userDetailsService,
                           UserValidator userValidator,
                           ValidationErrorService validationErrorService,
                           AuthenticationManager authenticationManager,
                           JWTTokenProvider jwtTokenProvider) {
         this.userService = userService;
+        this.personService = personService;
         this.userDetailsService = userDetailsService;
         this.userValidator = userValidator;
         this.validationErrorService = validationErrorService;
@@ -53,7 +59,28 @@ public class UserController {
      * Register a new user.
      */
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterPayload payload, BindingResult result) {
+        // Only perform custom validation once the basic validations pass.
+        User user = payload.getUser();
+        Person person = payload.getPerson();
+        if (!result.hasErrors())
+            userValidator.validate(user, result);
+
+        ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
+        if (errorMap != null)
+            return errorMap;
+
+        user = userService.saveUser(user);
+        personService.savePerson(person);
+        String jwt = jwtTokenProvider.createToken(userDetailsService.loadUserByUsername(user.getUsername()));
+        return new ResponseEntity<>(new AuthenticationResponse(user, jwt), HttpStatus.CREATED);
+    }
+
+    /**
+     * Register a new user.
+     */
+    @PostMapping("/register/basic")
+    public ResponseEntity<?> registerBasic(@Valid @RequestBody User user, BindingResult result) {
         // Only perform custom validation once the basic validations pass.
         if (!result.hasErrors())
             userValidator.validate(user, result);
@@ -92,9 +119,14 @@ public class UserController {
      * Get the currently authenticated user or the user from the request's authentication token.
      */
     @GetMapping("/authenticated")
-    public ResponseEntity<?> getAuthenticated() throws Exception {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
+    public ResponseEntity<?> getAuthenticated() {
+        try {
+            UserDetails userDetails =
+                    (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return new ResponseEntity<>(userService.getUserByUsername(userDetails.getUsername()), HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/paginated")

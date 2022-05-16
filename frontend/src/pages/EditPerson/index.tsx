@@ -159,7 +159,7 @@ export default function EditPerson() {
               </Grid>
             </Grid>
           </Box>
-          <MessageSnackbar open={isError} message='Failed to add person.' severity='error' />
+          <MessageSnackbar open={isError} message='Failed to save person.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

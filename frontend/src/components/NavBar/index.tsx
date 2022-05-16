@@ -71,7 +71,7 @@ export default function NavBar() {
                     >
                       Advanced Search
                     </Button>
-                  ) : !['/login', '/register'].includes(location.pathname) ? (
+                  ) : !['/login', '/register', '/register/basic'].includes(location.pathname) ? (
                     <Button href='/search/advanced' variant='contained' sx={{ ml: 1 }}>
                       <ManageSearchRounded />
                     </Button>
@@ -95,20 +95,24 @@ export default function NavBar() {
                 {isLoggedInUserError ? (
                   matches ? (
                     <Box display='inline-flex' alignItems='center'>
-                      <Button
-                        variant='contained'
-                        href='/login'
-                        sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                      >
-                        Login
-                      </Button>
-                      <Button
-                        variant='contained'
-                        href='/register'
-                        sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                      >
-                        Register
-                      </Button>
+                      {location.pathname !== '/login' && (
+                        <Button
+                          variant='contained'
+                          href='/login'
+                          sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
+                        >
+                          Login
+                        </Button>
+                      )}
+                      {!location.pathname.includes('/register') && (
+                        <Button
+                          variant='contained'
+                          href='/register'
+                          sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
+                        >
+                          Register
+                        </Button>
+                      )}
                     </Box>
                   ) : (
                     <Box display='inline-flex' alignItems='center'>

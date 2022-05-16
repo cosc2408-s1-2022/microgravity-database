@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { Box, Container, Grid, Link, Typography } from '@mui/material';
-import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { AuthenticationResponse } from '../../util/types';
-import { Navigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import FormField from '../../components/FormField';
+import { AuthenticationResponse, UserRole } from '../../util/types';
+import { Navigate } from 'react-router-dom';
 import api from '../../util/api';
 import LoadingButton from '../../components/LoadingButton';
 
-export default function Login() {
+export default function RegisterBasic() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const passwordsMatchingError = password && password !== confirmPassword && 'Passwords must match.';
+  const passLengthValidation = (value: string) => {
+    // TODO Show strength but do not force.
+    // const re = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$`);
+    // return re.test(value);
+    return value.length >= 8;
+  };
+  const passwordRegex =
+    password &&
+    !passLengthValidation(password) &&
+    // 'Password has to have at least 8 characters with one special character eg. !@#$%*';
+    'Password has to have at least 8 characters';
 
   const { data, error, isSuccess, isLoading, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
-    'login',
+    'register',
     () => {
-      return api.post('/users/login', {
+      return api.post(`/users/register/basic`, {
         username: username,
         password: password,
+        role: UserRole.ROLE_USER,
       });
     },
   );
@@ -80,17 +95,16 @@ export default function Login() {
             }}
           >
             <Typography variant='h4' fontWeight='bold'>
-              Login
+              Register
             </Typography>
-            <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+            <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <FormField
                     required
-                    label='Username'
                     name='username'
+                    label='Username'
                     autoComplete='username'
-                    autoFocus
                     errors={error?.response?.data}
                     onChange={setUsername}
                   />
@@ -101,26 +115,54 @@ export default function Login() {
                     name='password'
                     label='Password'
                     type='password'
-                    autoComplete='current-password'
-                    errors={error?.response?.data}
+                    autoComplete='new-password'
+                    errors={
+                      passwordRegex
+                        ? {
+                            password: passwordRegex,
+                          }
+                        : undefined
+                    }
                     onChange={setPassword}
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <FormField
+                    required
+                    name='confirmPassword'
+                    label='Confirm Password'
+                    type='password'
+                    autoComplete='new-password'
+                    errors={
+                      passwordsMatchingError
+                        ? {
+                            confirmPassword: passwordsMatchingError,
+                          }
+                        : undefined
+                    }
+                    onChange={setConfirmPassword}
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <LoadingButton
-                    color='secondary'
+                    color='error'
                     type='submit'
                     fullWidth
                     variant='contained'
-                    sx={{ my: 1, '&.MuiButton-root': { color: 'white' } }}
+                    sx={{ my: 1 }}
                     loading={isLoading}
                   >
-                    Sign In
+                    Register
                   </LoadingButton>
                 </Grid>
                 <Grid item xs={12}>
+                  <Link href={'/login'} color='text.primary' sx={{ textDecoration: 'underline' }}>
+                    Already have an account? Login
+                  </Link>
+                </Grid>
+                <Grid item xs={12}>
                   <Link href={'/register'} color='text.primary' sx={{ textDecoration: 'underline' }}>
-                    Don't have an account? Register
+                    Register as a researcher instead?
                   </Link>
                 </Grid>
               </Grid>

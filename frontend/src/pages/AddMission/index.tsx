@@ -236,7 +236,7 @@ export default function AddMission() {
                 </Grid>
               </Grid>
             </Box>
-            <MessageSnackbar open={isMissionError} message='Failed to save mission.' severity='error' />
+            <MessageSnackbar open={isMissionError} message='Failed to add mission.' severity='error' />
           </Box>
         </Container>
       </LocalizationProvider>
