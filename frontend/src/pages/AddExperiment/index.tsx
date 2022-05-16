@@ -14,6 +14,7 @@ import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
 import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import ExperimentsPublication from "../../components/ExperimentPublications";
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -222,12 +223,7 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormField
-                  label='Experiment Publications'
-                  name='Experiment Publications'
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentPublications}
-                />
+                <ExperimentsPublication />
               </Grid>
             </Grid>
             <Autocomplete

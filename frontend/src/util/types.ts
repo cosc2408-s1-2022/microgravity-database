@@ -172,3 +172,23 @@ export type MissionResultsProps = {
   startDate: Date;
   endDate: Date;
 };
+
+export type ExperimentPublications = {
+  message: {
+    title: string;
+    journal: string;
+    volumeNumber: string;
+    issueNumber: string;
+    DOI: string;
+    journalDatabase: string;
+    url: string;
+    accessDate: Date;
+    yearPublished: Date;
+    authors: ExperimentPublicationsAuthors[];
+  };
+};
+
+export type ExperimentPublicationsAuthors = {
+  fistName: string;
+  lastName: string;
+};
