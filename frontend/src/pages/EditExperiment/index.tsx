@@ -21,6 +21,7 @@ import {
   Person,
   Role,
   SeoCode,
+  UserRole,
 } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
@@ -170,7 +171,7 @@ export default function EditExperiment() {
     isLoading: isExperimentLoading,
     isError: isExperimentError,
     mutate: mutateExperiment,
-  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () => {
+  } = useMutation<AxiosResponse<Experiment>, AxiosError>('saveExperiment', () => {
     const formData = new FormData();
     formData.append('id', experiment.id.toString());
     title && formData.append('title', title);
@@ -210,7 +211,7 @@ export default function EditExperiment() {
   }, [isExperimentSuccess, navigate]);
 
   return (
-    <AuthWrapper>
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
       <Container maxWidth='md' sx={{ mb: 3 }}>
         <Box
           sx={{
@@ -346,7 +347,7 @@ export default function EditExperiment() {
                             m={2}
                             ml={0}
                             key={attachment.id}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -357,7 +358,7 @@ export default function EditExperiment() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                width: '100%',
+                                width: '10rem',
                                 height: '10rem',
                               }}
                             >
@@ -387,7 +388,7 @@ export default function EditExperiment() {
                             m={2}
                             ml={0}
                             key={index}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -425,7 +426,7 @@ export default function EditExperiment() {
                             m={2}
                             ml={0}
                             key={index}
-                            sx={{ position: 'relative' }}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
                             display='flex'
                             flexDirection='column'
                             justifyContent='flex-start'
@@ -436,7 +437,7 @@ export default function EditExperiment() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                width: '100%',
+                                width: '10rem',
                                 height: '10rem',
                               }}
                             >
@@ -811,7 +812,7 @@ export default function EditExperiment() {
               Cancel
             </Button>
           </Box>
-          <MessageSnackbar open={isExperimentError} message='Failed to add experiment.' severity='error' />
+          <MessageSnackbar open={isExperimentError} message='Failed to save experiment.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

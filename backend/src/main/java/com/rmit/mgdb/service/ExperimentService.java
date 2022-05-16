@@ -6,7 +6,6 @@ import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
-import com.rmit.mgdb.repository.ExperimentAttachmentRepository;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.search.mapper.orm.Search;
@@ -38,7 +37,7 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
-    private final ExperimentAttachmentRepository experimentAttachmentRepository;
+    private final ExperimentAttachmentService experimentAttachmentService;
     private final MissionService missionService;
     private final ForCodeService forCodeService;
     private final SeoCodeService seoCodeService;
@@ -49,14 +48,14 @@ public class ExperimentService {
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
-                             ExperimentAttachmentRepository experimentAttachmentRepository,
+                             ExperimentAttachmentService experimentAttachmentService,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
-        this.experimentAttachmentRepository = experimentAttachmentRepository;
+        this.experimentAttachmentService = experimentAttachmentService;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
         this.seoCodeService = seoCodeService;
@@ -79,6 +78,7 @@ public class ExperimentService {
             experiment.setApproved(existingExperiment.isApproved());
             experiment.setDeleted(existingExperiment.isDeleted());
             experimentPersonService.removeAllExperimentPeople(id);
+            experimentAttachmentService.deleteAllByExperimentId(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setToa(experimentRequest.getToa());
@@ -129,18 +129,14 @@ public class ExperimentService {
                 experimentAttachment.setExperiment(experiment);
                 experimentAttachment.setMediaType(mediaType);
                 experimentAttachment.setFilename(finalFileName);
-                experimentAttachmentRepository.save(experimentAttachment);
+                experimentAttachmentService.save(experimentAttachment);
                 return experimentAttachment;
             }).toList());
         }
         Long[] experimentAttachmentIds = experimentRequest.getExperimentAttachmentIds();
         if (experimentAttachmentIds != null && experimentAttachmentIds.length > 0) {
             experimentAttachments.addAll(Arrays.stream(experimentRequest.getExperimentAttachmentIds())
-                                               .map(aLong -> {
-                                                   Optional<ExperimentAttachment> attachment =
-                                                           experimentAttachmentRepository.findById(aLong);
-                                                   return attachment.orElse(null);
-                                               }).toList());
+                                               .map(experimentAttachmentService::findById).toList());
         }
         experiment.setExperimentAttachments(experimentAttachments);
 
