@@ -1,5 +1,16 @@
-import { Autocomplete, Box, Button, Container, Grid, IconButton, Paper, TextField, Typography } from '@mui/material';
-import { AxiosError, AxiosResponse } from 'axios';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useReducer, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
@@ -12,9 +23,19 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import {
+  Experiment,
+  ExperimentPersonRequest,
+  ExperimentPublications,
+  ExperimentPublicationsAuthors,
+  ExperimentPublicationsParams,
+  ForCode,
+  Mission,
+  Person,
+  Role,
+  SeoCode,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
-import ExperimentsPublication from "../../components/ExperimentPublications";
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -76,14 +97,16 @@ export default function AddExperiment() {
   const [experimentAim, setExperimentAim] = useState<string>();
   const [experimentObjective, setExperimentObjective] = useState<string>();
   const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string>();
-  const [experimentPublications, setExperimentPublications] = useState<string>();
+  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublicationsParams>();
   const [mission, setMission] = useState<Mission | null>();
   const [forCode, setForCode] = useState<ForCode | null>();
   const [seoCode, setSeoCode] = useState<SeoCode | null>();
+
   type ExperimentPersonRequestEntry = {
     id: number;
     data: ExperimentPersonRequest;
   };
+
   const peopleReducer = (
     state: { uid: number; data: ExperimentPersonRequestEntry[] },
     action: { type: string; payload: ExperimentPersonRequestEntry },
@@ -145,6 +168,111 @@ export default function AddExperiment() {
       navigate('/home');
     }
   }, [isExperimentSuccess, navigate]);
+
+  const [doi, setDoi] = useState('');
+  const [manualButton, setManualButton] = useState(true);
+  const [doiButton, setDoiButton] = useState(true);
+  const [manualForm, setManualForm] = useState(false);
+  const [doiForm, setDoiForm] = useState(false);
+
+  const [doiDoi, setDoiDoi] = useState('');
+  const [doiTitle, setDoiTitle] = useState('');
+  const [doiJournal, setDoiJournal] = useState('');
+  const [doiVolumeNumber, setDoiVolumeNumber] = useState('');
+  const [doiIssueNumber, setDoiIssueNumber] = useState('');
+  const [doiJournalDatabase, setDoiJournalDatabase] = useState('');
+  const [doiPages, setDoiPages] = useState('');
+  const [doiUrl, setDoiUrl] = useState('');
+  const [doiAccessDate, setDoiAccessDate] = useState('');
+  const [doiYearPublished, setDoiYearPublished] = useState('');
+  const [doiAuthors, setDoiAuthors] = useState<ExperimentPublicationsAuthors[]>();
+  const [doiSuccess, setDoiSuccess] = useState(true);
+
+  const handleSetManual = () => {
+    setManualButton(false);
+    setManualForm(true);
+  };
+  const handleSetDoi = () => {
+    setDoiButton(false);
+    setDoiForm(true);
+  };
+
+  const handleClear = () => {
+    setDoiDoi('');
+    setDoiTitle('');
+    setDoiJournal('');
+    setDoiVolumeNumber('');
+    setDoiIssueNumber('');
+    setDoiJournalDatabase('');
+    setDoiPages('');
+    setDoiUrl('');
+    setDoiAccessDate('');
+    setDoiYearPublished('');
+    setDoiAuthors([]);
+  };
+
+  const { data, isError, isSuccess, mutate, isLoading } = useMutation<
+    AxiosResponse<ExperimentPublications>,
+    AxiosError
+  >(() => {
+    return axios.get(`https://api.crossref.org/works/${doi.toString()}`);
+  });
+
+  const handleGoBack = () => {
+    setManualButton(true);
+    setDoiButton(true);
+    setManualForm(false);
+    setDoiForm(false);
+    setDoiSuccess(false);
+    handleClear();
+  };
+
+  const handleFindDoi = async () => {
+    mutate();
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      setDoiForm(false);
+      setDoiDoi(data?.data?.message?.DOI);
+      setDoiTitle(data?.data?.message?.title);
+      setDoiJournal(data?.data?.message?.['container-title']);
+      setDoiVolumeNumber(data?.data?.message?.volume);
+      setDoiIssueNumber(data?.data?.message?.issue);
+      setDoiJournalDatabase(data?.data?.message?.publisher);
+      setDoiUrl(data?.data?.message?.URL);
+      setDoiPages(data?.data?.message?.page);
+      const date = new Date(data?.data?.message?.created?.['date-time']);
+      const convertedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+      setDoiAccessDate(convertedDate);
+      setDoiYearPublished(data?.data?.message?.issued?.['date-parts'][0][0]);
+      setDoiAuthors(
+        data?.data?.message?.author.map((author) => ({
+          given: author.given,
+          family: author.family,
+          sequence: author.sequence,
+        })),
+      );
+      setExperimentPublications({
+        doi: data?.data?.message?.DOI,
+        authors: data?.data?.message?.author.map((author) => ({
+          given: author.given,
+          family: author.family,
+          sequence: author.sequence,
+        })),
+        yearPublished: data?.data?.message?.issued?.['date-parts'],
+        title: data?.data?.message?.title,
+        journal: data?.data?.message?.['container-title'],
+        volumeNumber: data?.data?.message?.volume,
+        issueNumber: data?.data?.message?.issue,
+        pagesUsed: data?.data?.message?.page,
+        journalDatabase: data?.data?.message?.publisher,
+        url: data?.data?.message?.URL,
+        accessDate: data?.data?.message?.created?.['date-time'],
+      });
+      setDoiSuccess(true);
+    }
+  }, [isSuccess, data]);
 
   return (
     <AuthWrapper>
@@ -223,7 +351,331 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <ExperimentsPublication />
+                <Grid container alignContent='space-between' alignItems='center'>
+                  <Grid item sx={{ ml: 1 }}>
+                    <Typography>Experiment Publications</Typography>
+                  </Grid>
+                  {manualButton && doiButton ? (
+                    <>
+                      <Grid item sx={{ ml: 1 }}>
+                        <Button variant='contained' color='secondary' sx={{}} onClick={handleSetDoi}>
+                          Enter DOI
+                        </Button>
+                      </Grid>
+                      <Grid item sx={{ ml: 1 }}>
+                        <Button variant='contained' color='secondary' sx={{}} onClick={handleSetManual}>
+                          Enter Manually
+                        </Button>
+                      </Grid>
+                    </>
+                  ) : undefined}
+                </Grid>
+                {manualForm ? (
+                  <>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='doi'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='DOI'
+                          value={doiDoi}
+                          onChange={setDoi}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='title'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Title'
+                          value={doiTitle}
+                          onChange={setDoiTitle}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='journal'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Jornal'
+                          value={doiJournal}
+                          onChange={setDoiJournal}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='volumeNumber'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Volume Number'
+                          value={doiVolumeNumber}
+                          onChange={setDoiVolumeNumber}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='issueNumber'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Issue Number'
+                          value={doiIssueNumber}
+                          onChange={setDoiIssueNumber}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='journalDatabase'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Journal Database'
+                          value={doiJournalDatabase}
+                          onChange={setDoiJournalDatabase}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='url'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='URL'
+                          value={doiUrl}
+                          onChange={setDoiUrl}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='accessDate'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Access Date'
+                          value={doiAccessDate}
+                          onChange={setDoiAccessDate}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='yearPublished'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Year Published'
+                          value={doiYearPublished}
+                          onChange={setDoiYearPublished}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='authors'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Authors'
+                          value={doiAuthors}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='pagesUsed'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Pages'
+                          value={doiPages}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button variant='contained' fullWidth onClick={handleGoBack}>
+                          Go Back
+                        </Button>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button variant='contained' fullWidth onClick={handleClear}>
+                          Clear
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </>
+                ) : undefined}
+                {doiForm ? (
+                  <>
+                    <FormField
+                      autoFocus
+                      required
+                      label='DOI Name'
+                      placeholder='Type or paste the DOI Name :'
+                      name='DOI'
+                      onChange={setDoi}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>
+                            <LoadingButton
+                              loading={isLoading}
+                              variant='contained'
+                              color='secondary'
+                              sx={{ m: 1 }}
+                              size='small'
+                              onClick={handleFindDoi}
+                            >
+                              Search For DOI
+                            </LoadingButton>
+                            <Button variant='contained' size='small' onClick={handleGoBack}>
+                              Go Back
+                            </Button>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    {isError ? (
+                      <Typography color='red' sx={{ mt: 1 }}>
+                        DOI Not Found Try Again
+                      </Typography>
+                    ) : undefined}
+                  </>
+                ) : undefined}
+                {isSuccess && data && doiSuccess ? (
+                  <>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='doi'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='DOI'
+                          value={doiDoi}
+                          onChange={setDoi}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='title'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Title'
+                          value={doiTitle}
+                          onChange={setDoiTitle}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='journal'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Jornal'
+                          value={doiJournal}
+                          onChange={setDoiJournal}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='volumeNumber'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Volume Number'
+                          value={doiVolumeNumber}
+                          onChange={setDoiVolumeNumber}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='issueNumber'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Issue Number'
+                          value={doiIssueNumber}
+                          onChange={setDoiIssueNumber}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='journalDatabase'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Journal Database'
+                          value={doiJournalDatabase}
+                          onChange={setDoiJournalDatabase}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='url'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='URL'
+                          value={doiUrl}
+                          onChange={setDoiUrl}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='accessDate'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Access Date'
+                          value={doiAccessDate}
+                          onChange={setDoiAccessDate}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='yearPublished'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Year Published'
+                          value={doiYearPublished}
+                          onChange={setDoiYearPublished}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='authors'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Authors'
+                          value={doiAuthors}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormField
+                          name='pagesUsed'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Pages'
+                          value={doiPages}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button variant='contained' fullWidth onClick={handleGoBack}>
+                          Go Back
+                        </Button>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button variant='contained' fullWidth onClick={handleClear}>
+                          Clear
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </>
+                ) : undefined}
               </Grid>
             </Grid>
             <Autocomplete

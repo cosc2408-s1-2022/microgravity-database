@@ -176,19 +176,40 @@ export type MissionResultsProps = {
 export type ExperimentPublications = {
   message: {
     title: string;
-    journal: string;
-    volumeNumber: string;
-    issueNumber: string;
+    'container-title': string;
+    volume: string;
+    issue: string;
     DOI: string;
-    journalDatabase: string;
-    url: string;
-    accessDate: Date;
+    publisher: string;
+    URL: string;
+    page: string;
+    created: {
+      'date-time': string;
+    };
+    issued: {
+      'date-parts': string;
+    };
     yearPublished: Date;
-    authors: ExperimentPublicationsAuthors[];
+    author: ExperimentPublicationsAuthors[];
   };
 };
 
+export type ExperimentPublicationsParams = {
+  doi: string;
+  authors: ExperimentPublicationsAuthors[];
+  yearPublished: string;
+  title: string;
+  journal: string;
+  volumeNumber: string;
+  issueNumber: string;
+  pagesUsed: string;
+  journalDatabase: string;
+  url: string;
+  accessDate: string;
+};
+
 export type ExperimentPublicationsAuthors = {
-  fistName: string;
-  lastName: string;
+  given: string;
+  family: string;
+  sequence: string;
 };
