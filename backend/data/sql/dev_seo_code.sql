@@ -1,11 +1,23 @@
 INSERT INTO dev.seo_code (id, code, name)
 VALUES (1, '81', 'Defence');
 INSERT INTO dev.seo_code (id, code, name)
-VALUES (2, '82', 'Plant Production and Plant Primary Products');
+VALUES (
+    2,
+    '82',
+    'Plant Production and Plant Primary Products'
+  );
 INSERT INTO dev.seo_code (id, code, name)
-VALUES (3, '83', 'Animal Production and Animal Primary Products');
+VALUES (
+    3,
+    '83',
+    'Animal Production and Animal Primary Products'
+  );
 INSERT INTO dev.seo_code (id, code, name)
-VALUES (4, '84', 'Mineral Resources (excl. Energy Resources)');
+VALUES (
+    4,
+    '84',
+    'Mineral Resources (excl. Energy Resources)'
+  );
 INSERT INTO dev.seo_code (id, code, name)
 VALUES (5, '85', 'Energy');
 INSERT INTO dev.seo_code (id, code, name)
@@ -15,7 +27,11 @@ VALUES (7, '87', 'Construction');
 INSERT INTO dev.seo_code (id, code, name)
 VALUES (8, '88', 'Transport');
 INSERT INTO dev.seo_code (id, code, name)
-VALUES (9, '89', 'Information and Communication Services');
+VALUES (
+    9,
+    '89',
+    'Information and Communication Services'
+  );
 INSERT INTO dev.seo_code (id, code, name)
 VALUES (10, '90', 'Commercial Services and Tourism');
 INSERT INTO dev.seo_code (id, code, name)

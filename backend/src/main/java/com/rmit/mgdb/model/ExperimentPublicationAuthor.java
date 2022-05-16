@@ -13,7 +13,7 @@ import java.util.List;
 public class ExperimentPublicationAuthor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Author first name cannot be blank.")
