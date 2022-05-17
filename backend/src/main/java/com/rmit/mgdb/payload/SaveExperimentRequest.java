@@ -2,6 +2,7 @@ package com.rmit.mgdb.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,9 @@ public class SaveExperimentRequest {
 
     private String experimentObjective;
 
-    private String experimentModuleDrawing;
+    private MultipartFile[] experimentAttachmentFiles;
+
+    private Long[] experimentAttachmentIds;
 
     private String experimentPublications;
 

@@ -40,7 +40,8 @@ public class ExperimentController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody SaveExperimentRequest experimentRequest, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @ModelAttribute SaveExperimentRequest experimentRequest,
+                                  BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)
             return errorMap;

@@ -70,8 +70,7 @@ export default function AddMission() {
         <Container maxWidth='sm'>
           <Box
             sx={{
-              my: -2,
-              mt: 4,
+              my: 4,
               display: 'flex',
               flexDirection: 'column',
               height: 'auto',
@@ -82,7 +81,7 @@ export default function AddMission() {
             }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
+              <Typography variant='h3' fontWeight='bold' sx={{ mt: 1, mb: 3 }}>
                 Add Mission
               </Typography>
             </Box>

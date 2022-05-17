@@ -206,8 +206,8 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
           variant='outlined'
           shape='rounded'
           color='secondary'
-          page={page || 1}
           siblingCount={0}
+          page={page || 1}
           onChange={onPageChange}
         />
       </Grid>

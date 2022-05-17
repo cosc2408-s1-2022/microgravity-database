@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Logo from '../../logo_no_text.svg';
+import Logo from '../../asd-logo-no-text.svg';
 import { Box, Button, Container, Link, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PrimarySearch from '../PrimarySearch';
@@ -29,7 +28,7 @@ export default function NavBar() {
   };
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
   const [addMenuAnchor, setAddMenuAnchor] = useState<HTMLElement | null>(null);
   const open = Boolean(addMenuAnchor);
@@ -45,13 +44,8 @@ export default function NavBar() {
       <Toolbar>
         <Container maxWidth='lg'>
           <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <Box component={Link} display='inline-flex' alignItems='center' href='/home'>
-              <img src={Logo} id='logo' alt='RMIT LOGO' height={matches ? '32rem' : '40rem'} />
-              {matches && (
-                <Typography variant='h6' fontFamily='Roboto Slab' fontWeight='bold' sx={{ pl: 2 }}>
-                  Microgravity Database
-                </Typography>
-              )}
+            <Box component={Link} display='flex' alignItems='center' href='/home'>
+              <img src={Logo} id='navbar-logo' alt='Australian Space Database Logo' />
             </Box>
             {!isLoggedInUserLoading && (loggedInUser || isLoggedInUserError) && (
               <Box display='flex'>
