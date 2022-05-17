@@ -14,6 +14,8 @@ import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
 import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
+import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -74,8 +76,19 @@ export default function AddExperiment() {
   const [leadInstitution, setLeadInstitution] = useState<string>();
   const [experimentAim, setExperimentAim] = useState<string>();
   const [experimentObjective, setExperimentObjective] = useState<string>();
-  const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string>();
   const [experimentPublications, setExperimentPublications] = useState<string>();
+
+  const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
+  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.item(0);
+    if (file && ACCEPTED_ATTACHMENT_TYPES.includes(file.type)) {
+      setExperimentAttachments((prevState) => [...prevState, file]);
+    }
+  };
+  const removeFile = (index: number) => {
+    setExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
+  };
+
   const [mission, setMission] = useState<Mission | null>();
   const [forCode, setForCode] = useState<ForCode | null>();
   const [seoCode, setSeoCode] = useState<SeoCode | null>();
@@ -116,26 +129,32 @@ export default function AddExperiment() {
     isLoading: isExperimentLoading,
     isError: isExperimentError,
     mutate: mutateExperiment,
-  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () =>
-    api.post('/experiments/add', {
-      title,
-      toa,
-      leadInstitution,
-      experimentAim,
-      experimentObjective,
-      experimentModuleDrawing,
-      experimentPublications,
-      missionId: mission?.id,
-      forCodeId: forCode?.id,
-      seoCodeId: seoCode?.id,
-      experimentPersonRequests: peopleState.data.map((entry) => entry.data),
-    }),
-  );
-  console.log('forCodes', forCodes);
+  } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () => {
+    const formData = new FormData();
+    title && formData.append('title', title);
+    toa && formData.append('toa', toa);
+    leadInstitution && formData.append('leadInstitution', leadInstitution);
+    experimentAim && formData.append('experimentAim', experimentAim);
+    for (const attachment of experimentAttachments) {
+      formData.append('experimentAttachmentFiles[]', attachment);
+    }
+    experimentObjective && formData.append('experimentObjective', experimentObjective);
+    experimentPublications && formData.append('experimentPublications', experimentPublications);
+    mission?.id && formData.append('missionId', mission.id.toString());
+    forCode?.id && formData.append('forCodeId', forCode.id.toString());
+    seoCode?.id && formData.append('seoCodeId', seoCode.id.toString());
+    for (const i in peopleState.data) {
+      formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
+      formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
+    }
+
+    return api.post('/experiments/save', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('mission', mission);
     mutateExperiment();
   };
 
@@ -214,12 +233,110 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormField
-                  label='Experiment Module Drawing'
-                  name='experimentModuleDrawing'
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentModuleDrawing}
-                />
+                <Paper
+                  sx={{ width: '100%', border: '1px #c4c4c4 solid', display: 'flex', flexDirection: 'column' }}
+                  variant='outlined'
+                >
+                  <Box display='flex' alignItems='center'>
+                    <Typography sx={{ m: 1.5 }}>Experiment Attachments</Typography>
+                    <label htmlFor='add-attachment'>
+                      <input
+                        style={{ display: 'none' }}
+                        id='add-attachment'
+                        name='add-attachment'
+                        type='file'
+                        accept={ACCEPTED_ATTACHMENT_TYPES.join(',')}
+                        onChange={addFile}
+                      />
+                      <IconButton component='span'>
+                        <AttachFileRounded />
+                      </IconButton>
+                    </label>
+                  </Box>
+                  {experimentAttachments.length > 0 && (
+                    <Box display='flex' flexWrap='wrap' px={2}>
+                      {experimentAttachments.map((file, index) =>
+                        file.type.includes('image') ? (
+                          <Box
+                            m={2}
+                            ml={0}
+                            key={index}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              component='img'
+                              sx={{
+                                width: '10rem',
+                                height: '10rem',
+                                objectFit: 'cover',
+                              }}
+                              alt='Attachment Image'
+                              src={URL.createObjectURL(file)}
+                            />
+                            <IconButton
+                              size='small'
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '0.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(4px) brightness(60%)',
+                              }}
+                              onClick={() => removeFile(index)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {file.name}
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
+                            m={2}
+                            ml={0}
+                            key={index}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Paper
+                              variant='outlined'
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '10rem',
+                                height: '10rem',
+                              }}
+                            >
+                              <PictureAsPdfRounded fontSize='large' color='secondary' />
+                            </Paper>
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '0.5rem',
+                                background: 'transparent',
+                                backdropFilter: 'blur(8px)',
+                              }}
+                              onClick={() => removeFile(index)}
+                            >
+                              <DeleteOutlineRounded color='secondary' />
+                            </IconButton>
+                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
+                              {file.name}
+                            </Typography>
+                          </Box>
+                        ),
+                      )}
+                    </Box>
+                  )}
+                </Paper>
               </Grid>
               <Grid item xs={12}>
                 <FormField
@@ -229,65 +346,67 @@ export default function AddExperiment() {
                   onChange={setExperimentPublications}
                 />
               </Grid>
-            </Grid>
-            <Autocomplete
-              disablePortal
-              openText='Mission'
-              options={missions || []}
-              getOptionLabel={(option) => option.name}
-              loading={isMissionsLoading}
-              fullWidth
-              onChange={(_event, value) => {
-                if (experimentError?.response?.data !== undefined) {
-                  experimentError.response.data.missionId = '';
-                }
-                setMission(value);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  margin='normal'
-                  size='small'
+              <Grid item xs={12}>
+                <Autocomplete
+                  disablePortal
+                  openText='Mission'
+                  options={missions || []}
+                  getOptionLabel={(option) => option.name}
+                  loading={isMissionsLoading}
                   fullWidth
-                  color='secondary'
-                  error={isExperimentError && !!experimentError?.response?.data?.missionId}
-                  helperText={experimentError?.response?.data?.missionId}
-                  label='Mission'
+                  onChange={(_event, value) => {
+                    if (experimentError?.response?.data !== undefined) {
+                      experimentError.response.data.missionId = '';
+                    }
+                    setMission(value);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      margin='none'
+                      size='small'
+                      fullWidth
+                      color='secondary'
+                      error={isExperimentError && !!experimentError?.response?.data?.missionId}
+                      helperText={experimentError?.response?.data?.missionId}
+                      label='Mission'
+                    />
+                  )}
+                  renderOption={(props, option, { inputValue }) => {
+                    const matches = match(option.name, inputValue);
+                    const parts = parse(option.name, matches);
+                    return (
+                      <li {...props}>
+                        <div>
+                          {parts.map((part, index) => (
+                            <span
+                              key={index}
+                              style={{
+                                fontWeight: part.highlight ? 700 : 400,
+                              }}
+                            >
+                              {part.text}
+                            </span>
+                          ))}
+                        </div>
+                      </li>
+                    );
+                  }}
+                  noOptionsText={
+                    <Box display='flex' justifyContent='space-between' alignItems='center'>
+                      <Typography variant='body1' flexGrow={1}>
+                        No such missions found.
+                      </Typography>
+                      <Button variant='outlined' onClick={() => navigate('/addMission')} sx={{ textTransform: 'none' }}>
+                        <Typography variant='body1' color='primary'>
+                          Add a new mission?
+                        </Typography>
+                      </Button>
+                    </Box>
+                  }
                 />
-              )}
-              renderOption={(props, option, { inputValue }) => {
-                const matches = match(option.name, inputValue);
-                const parts = parse(option.name, matches);
-                return (
-                  <li {...props}>
-                    <div>
-                      {parts.map((part, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            fontWeight: part.highlight ? 700 : 400,
-                          }}
-                        >
-                          {part.text}
-                        </span>
-                      ))}
-                    </div>
-                  </li>
-                );
-              }}
-              noOptionsText={
-                <Box display='flex' justifyContent='space-between' alignItems='center'>
-                  <Typography variant='body1' flexGrow={1}>
-                    No such missions found.
-                  </Typography>
-                  <Button variant='outlined' onClick={() => navigate('/addMission')} sx={{ textTransform: 'none' }}>
-                    <Typography variant='body1' color='primary'>
-                      Add a new mission?
-                    </Typography>
-                  </Button>
-                </Box>
-              }
-            />
+              </Grid>
+            </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Autocomplete
@@ -388,7 +507,7 @@ export default function AddExperiment() {
                 />
               </Grid>
             </Grid>
-            <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
+            <Paper sx={{ width: '100%', mt: 1, border: '1px #c4c4c4 solid' }} variant='outlined'>
               <Box display='flex' alignItems='center'>
                 <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
                 <IconButton

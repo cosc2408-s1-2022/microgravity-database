@@ -53,4 +53,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public final ResponseEntity<?> handleInvalidExperimentAttachment(InvalidExperimentAttachmentException exception) {
+        InvalidExperimentAttachmentResponse exceptionResponse =
+                new InvalidExperimentAttachmentResponse(exception.getMessage(), exception.getFilename());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }

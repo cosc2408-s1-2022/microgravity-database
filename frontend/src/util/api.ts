@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const api = axios.create({
-  baseURL: backendUrl,
+  baseURL: BACKEND_URL,
 });
 
 api.interceptors.request.use(
