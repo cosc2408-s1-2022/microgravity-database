@@ -1,54 +1,43 @@
 import {
-  DeleteRounded,
-  DoneRounded,
-  EditRounded,
-  NewReleasesRounded,
-  RestartAltRounded,
   VerifiedSharp,
   WarningRounded,
+  NewReleasesRounded,
+  DoneRounded,
+  EditRounded,
+  RestartAltRounded,
+  DeleteRounded,
 } from '@mui/icons-material';
-import {
-  Link,
-  Box,
-  Button,
-  Grid,
-  Pagination,
-  Paper,
-  Typography,
-  Tooltip,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, Grid, Pagination, Paper, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../util/api';
-import { Experiment, ResultsResponse } from '../../../util/types';
+import { Person, ResultsResponse } from '../../../util/types';
 import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
 
-type ViewExperimentsProps = {
+type ViewPeopleProps = {
   page?: number;
   size?: number;
   searchString?: string;
   onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewExperiments({ page, size, searchString, onPageChange }: ViewExperimentsProps) {
+export default function ViewPeople({ page, size, searchString, onPageChange }: ViewPeopleProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [experiments, setExperiments] = useState<ResultsResponse<Experiment>>();
+  const [people, setPeople] = useState<ResultsResponse<Person>>();
   const {
-    data: experimentsData,
-    isSuccess: isExperimentsSuccess,
+    data: peopleData,
+    isSuccess: isPeopleSuccess,
     isLoading: hasPendingRequests,
-    isError: isExperimentsError,
-    refetch: refetchExperiments,
-  } = useQuery<AxiosResponse<ResultsResponse<Experiment>>>(
-    ['getExperiments', page, size, searchString],
+    isError: isPeopleError,
+    refetch: refetchPeople,
+  } = useQuery<AxiosResponse<ResultsResponse<Person>>>(
+    ['getPeople', page, size, searchString],
     ({ queryKey, signal }) => {
       const [, page, size, searchString] = queryKey;
       const params = new URLSearchParams();
@@ -58,8 +47,8 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
 
       const paramsEncoded = encodeURI(params.toString());
       const url = searchString
-        ? `/search?${paramsEncoded}`
-        : `/experiments/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
+        ? `/search/people?${paramsEncoded}`
+        : `/people/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
 
       return api.get(url, { signal });
     },
@@ -68,49 +57,49 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
     },
   );
   useEffect(() => {
-    if (hasPendingRequests) queryClient.cancelQueries('getExperiments');
-    refetchExperiments();
-  }, [refetchExperiments, page, size, searchString, hasPendingRequests, queryClient]);
+    if (hasPendingRequests) queryClient.cancelQueries('getPeople');
+    refetchPeople();
+  }, [refetchPeople, page, size, searchString, hasPendingRequests, queryClient]);
   useEffect(() => {
-    if (isExperimentsSuccess && experimentsData) {
-      setExperiments(experimentsData.data);
+    if (isPeopleSuccess && peopleData) {
+      setPeople(peopleData.data);
     }
-  }, [isExperimentsSuccess, experimentsData]);
+  }, [isPeopleSuccess, peopleData]);
 
   const {
     isLoading: isToggleDeleteLoading,
     isSuccess: isToggleDeleteSuccess,
-    mutate: toggleExperimentDelete,
-  } = useMutation('toggleExperimentDelete', (id: number) => api.post(`/experiments/${id}/toggleDelete`));
+    mutate: togglePersonDelete,
+  } = useMutation('togglePersonDelete', (id: number) => api.post(`/people/${id}/toggleDelete`));
   useEffect(() => {
     if (isToggleDeleteSuccess) {
-      refetchExperiments();
+      refetchPeople();
     }
-  }, [isToggleDeleteSuccess, refetchExperiments]);
+  }, [isToggleDeleteSuccess, refetchPeople]);
 
   const {
     isLoading: isApproveLoading,
     isSuccess: isApproveSuccess,
-    mutate: approveExperiment,
-  } = useMutation('approveExperiment', (id: number) => api.post(`/experiments/${id}/approve`));
+    mutate: approvePerson,
+  } = useMutation('approvePerson', (id: number) => api.post(`/people/${id}/approve`));
   useEffect(() => {
     if (isApproveSuccess) {
-      refetchExperiments();
+      refetchPeople();
     }
-  }, [isApproveSuccess, refetchExperiments]);
+  }, [isApproveSuccess, refetchPeople]);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Grid container spacing={2} mb={3}>
-      {experiments?.totalElements === 0 ? (
+      {people?.totalElements === 0 ? (
         <Grid item xs={12}>
           <CenteredNoneFound />
         </Grid>
       ) : (
-        experiments?.results.map((e) => (
-          <Grid item key={e.id} xs={12}>
+        people?.results.map((p) => (
+          <Grid item key={p.id} xs={12}>
             <Paper
               sx={{
                 display: 'flex',
@@ -121,33 +110,33 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
               }}
             >
               <Box display='flex' alignItems='center' flexGrow={1}>
-                {e.approved && !e.deleted ? (
-                  <Tooltip title='This experiment has been approved by an admin.'>
+                {p.approved && !p.deleted ? (
+                  <Tooltip title='This person has been approved by an admin.'>
                     <VerifiedSharp fontSize='medium' color='success' />
                   </Tooltip>
-                ) : e.deleted ? (
-                  <Tooltip title='This experiment has been deleted and will not be publicly visible.'>
+                ) : p.deleted ? (
+                  <Tooltip title='This person has been deleted and will not be publicly visible (including associated experiments).'>
                     <WarningRounded fontSize='medium' color='warning' />
                   </Tooltip>
                 ) : (
-                  <Tooltip title='This experiment requires approval.'>
+                  <Tooltip title='This person requires approval.'>
                     <NewReleasesRounded fontSize='medium' color='error' />
                   </Tooltip>
                 )}
-                <Link ml={1} href={`/experiment/${e.id}`}>
-                  <Typography variant='body2' fontWeight='bold' color={e.deleted ? 'text.secondary' : 'text.primary'}>
-                    {e.title} {e.deleted && ' (DELETED)'}
+                <Box ml={1}>
+                  <Typography variant='body2' fontWeight='bold' color={p.deleted ? 'text.secondary' : 'text.primary'}>
+                    {`${p.firstName} ${p.familyName}`} {p.deleted && ' (DELETED)'}
                   </Typography>
                   <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
-                    {e.mission.name} &bull; Added {moment(e.createdAt).fromNow()}
+                    {p.affiliation} &bull; Added {moment(p.createdAt).fromNow()}
                   </Typography>
-                </Link>
+                </Box>
               </Box>
               <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center' sx={{ width: '20rem' }}>
-                {!e.approved && !e.deleted && (
+                {!p.approved && !p.deleted && (
                   <Button
                     onClick={() => {
-                      approveExperiment(e.id);
+                      approvePerson(p.id);
                     }}
                     variant='contained'
                     color='primary'
@@ -164,8 +153,8 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 )}
                 <Button
                   onClick={() => {
-                    navigate('/admin/experiments/edit', {
-                      state: e,
+                    navigate('/admin/people/edit', {
+                      state: p,
                     });
                   }}
                   variant='contained'
@@ -181,7 +170,7 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 </Button>
                 <Button
                   onClick={() => {
-                    toggleExperimentDelete(e.id);
+                    togglePersonDelete(p.id);
                   }}
                   disabled={isToggleDeleteLoading}
                   variant='contained'
@@ -190,10 +179,10 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 >
                   {matches && (
                     <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                      {e.deleted ? 'Restore' : 'Delete'}
+                      {p.deleted ? 'Restore' : 'Delete'}
                     </Typography>
                   )}
-                  {e.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
+                  {p.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
                 </Button>
               </Box>
             </Paper>
@@ -202,21 +191,17 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
       )}
       <Grid item xs={12} display='flex' justifyContent='center'>
         <Pagination
-          count={experiments?.totalPages}
+          count={people?.totalPages}
           variant='outlined'
           shape='rounded'
           color='secondary'
-          siblingCount={0}
           page={page || 1}
+          siblingCount={0}
           onChange={onPageChange}
         />
       </Grid>
-      <MessageSnackbar
-        open={isExperimentsError}
-        message='Could not load experiments. Please try again.'
-        severity='error'
-      />
-      <MessageSnackbar open={isApproveSuccess} message='Experiment approved.' severity='success' />
+      <MessageSnackbar open={isPeopleError} message='Could not load people. Please try again.' severity='error' />
+      <MessageSnackbar open={isApproveSuccess} message='Person approved.' severity='success' />
     </Grid>
   );
 }

@@ -1,12 +1,14 @@
 package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -38,9 +40,19 @@ public class Mission {
 
     private Long experimentCount;
 
+    @GenericField
+    private boolean deleted;
+
+    @GenericField
+    private boolean approved;
+
+    private Date createdAt;
+
+    private Date updatedAt;
+
     @ManyToOne
     @IndexedEmbedded
-    @JsonIgnore
+    @JsonIgnoreProperties({"forCodes", "seoCodes"})
     private Platform platform;
 
     private String getLocalDateStringOrEmpty(LocalDate date) {
@@ -76,11 +88,13 @@ public class Mission {
 
     @PrePersist
     protected void onCreate() {
+        this.createdAt = new Date();
         synchroniseFields();
     }
 
     @PreUpdate
     protected void onUpdate() {
+        this.updatedAt = new Date();
         synchroniseFields();
     }
 

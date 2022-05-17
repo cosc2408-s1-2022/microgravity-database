@@ -1,54 +1,55 @@
 import {
-  DeleteRounded,
-  DoneRounded,
-  EditRounded,
-  NewReleasesRounded,
-  RestartAltRounded,
   VerifiedSharp,
   WarningRounded,
+  NewReleasesRounded,
+  DoneRounded,
+  EditRounded,
+  DeleteRounded,
+  RestartAltRounded,
 } from '@mui/icons-material';
 import {
-  Link,
   Box,
   Button,
   Grid,
+  Link,
   Pagination,
   Paper,
-  Typography,
   Tooltip,
-  useTheme,
+  Typography,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../util/api';
-import { Experiment, ResultsResponse } from '../../../util/types';
+import { ResultsResponse, Mission } from '../../../util/types';
 import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
+import lodash from 'lodash';
 
-type ViewExperimentsProps = {
+type ViewMissionProps = {
   page?: number;
   size?: number;
   searchString?: string;
   onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewExperiments({ page, size, searchString, onPageChange }: ViewExperimentsProps) {
+export default function ViewMissions({ page, size, searchString, onPageChange }: ViewMissionProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [experiments, setExperiments] = useState<ResultsResponse<Experiment>>();
+  const [missions, setMissions] = useState<ResultsResponse<Mission>>();
   const {
-    data: experimentsData,
-    isSuccess: isExperimentsSuccess,
+    data: missionsData,
+    isSuccess: isMissionsSuccess,
     isLoading: hasPendingRequests,
-    isError: isExperimentsError,
-    refetch: refetchExperiments,
-  } = useQuery<AxiosResponse<ResultsResponse<Experiment>>>(
-    ['getExperiments', page, size, searchString],
+    isError: isMissionsError,
+    refetch: refetchMissions,
+  } = useQuery<AxiosResponse<ResultsResponse<Mission>>>(
+    ['getMissions', page, size, searchString],
     ({ queryKey, signal }) => {
       const [, page, size, searchString] = queryKey;
       const params = new URLSearchParams();
@@ -58,8 +59,8 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
 
       const paramsEncoded = encodeURI(params.toString());
       const url = searchString
-        ? `/search?${paramsEncoded}`
-        : `/experiments/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
+        ? `/search/missions?${paramsEncoded}`
+        : `/missions/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
 
       return api.get(url, { signal });
     },
@@ -68,49 +69,49 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
     },
   );
   useEffect(() => {
-    if (hasPendingRequests) queryClient.cancelQueries('getExperiments');
-    refetchExperiments();
-  }, [refetchExperiments, page, size, searchString, hasPendingRequests, queryClient]);
+    if (hasPendingRequests) queryClient.cancelQueries('getMissions');
+    refetchMissions();
+  }, [refetchMissions, page, size, searchString, hasPendingRequests, queryClient]);
   useEffect(() => {
-    if (isExperimentsSuccess && experimentsData) {
-      setExperiments(experimentsData.data);
+    if (isMissionsSuccess && missionsData) {
+      setMissions(missionsData.data);
     }
-  }, [isExperimentsSuccess, experimentsData]);
+  }, [isMissionsSuccess, missionsData]);
 
   const {
     isLoading: isToggleDeleteLoading,
     isSuccess: isToggleDeleteSuccess,
-    mutate: toggleExperimentDelete,
-  } = useMutation('toggleExperimentDelete', (id: number) => api.post(`/experiments/${id}/toggleDelete`));
+    mutate: toggleMissionDelete,
+  } = useMutation('toggleMissionDelete', (id: number) => api.post(`/missions/${id}/toggleDelete`));
   useEffect(() => {
     if (isToggleDeleteSuccess) {
-      refetchExperiments();
+      refetchMissions();
     }
-  }, [isToggleDeleteSuccess, refetchExperiments]);
+  }, [isToggleDeleteSuccess, refetchMissions]);
 
   const {
     isLoading: isApproveLoading,
     isSuccess: isApproveSuccess,
-    mutate: approveExperiment,
-  } = useMutation('approveExperiment', (id: number) => api.post(`/experiments/${id}/approve`));
+    mutate: approveMission,
+  } = useMutation('approveMission', (id: number) => api.post(`/missions/${id}/approve`));
   useEffect(() => {
     if (isApproveSuccess) {
-      refetchExperiments();
+      refetchMissions();
     }
-  }, [isApproveSuccess, refetchExperiments]);
+  }, [isApproveSuccess, refetchMissions]);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Grid container spacing={2} mb={3}>
-      {experiments?.totalElements === 0 ? (
+      {missions?.totalElements === 0 ? (
         <Grid item xs={12}>
           <CenteredNoneFound />
         </Grid>
       ) : (
-        experiments?.results.map((e) => (
-          <Grid item key={e.id} xs={12}>
+        missions?.results.map((m) => (
+          <Grid item key={m.id} xs={12}>
             <Paper
               sx={{
                 display: 'flex',
@@ -121,33 +122,34 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
               }}
             >
               <Box display='flex' alignItems='center' flexGrow={1}>
-                {e.approved && !e.deleted ? (
-                  <Tooltip title='This experiment has been approved by an admin.'>
+                {m.approved && !m.deleted ? (
+                  <Tooltip title='This mission has been approved by an admin.'>
                     <VerifiedSharp fontSize='medium' color='success' />
                   </Tooltip>
-                ) : e.deleted ? (
-                  <Tooltip title='This experiment has been deleted and will not be publicly visible.'>
+                ) : m.deleted ? (
+                  <Tooltip title='This mission has been deleted and will not be publicly visible.'>
                     <WarningRounded fontSize='medium' color='warning' />
                   </Tooltip>
                 ) : (
-                  <Tooltip title='This experiment requires approval.'>
+                  <Tooltip title='This mission requires approval.'>
                     <NewReleasesRounded fontSize='medium' color='error' />
                   </Tooltip>
                 )}
-                <Link ml={1} href={`/experiment/${e.id}`}>
-                  <Typography variant='body2' fontWeight='bold' color={e.deleted ? 'text.secondary' : 'text.primary'}>
-                    {e.title} {e.deleted && ' (DELETED)'}
+                <Link ml={1} href={`/mission/${m.id}`}>
+                  <Typography variant='body2' fontWeight='bold' color={m.deleted ? 'text.secondary' : 'text.primary'}>
+                    {m.name} {m.deleted && ' (DELETED)'}
                   </Typography>
                   <Typography variant='body2' color='text.secondary' flexGrow={1} pr={2}>
-                    {e.mission.name} &bull; Added {moment(e.createdAt).fromNow()}
+                    {moment(m.launchDate).year()} &bull; {lodash(m.platform.name).startCase()} &bull; Added{' '}
+                    {moment(m.createdAt).fromNow()}
                   </Typography>
                 </Link>
               </Box>
               <Box display='flex' ml={2} justifyContent='flex-end' alignItems='center' sx={{ width: '20rem' }}>
-                {!e.approved && !e.deleted && (
+                {!m.approved && !m.deleted && (
                   <Button
                     onClick={() => {
-                      approveExperiment(e.id);
+                      approveMission(m.id);
                     }}
                     variant='contained'
                     color='primary'
@@ -164,8 +166,8 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 )}
                 <Button
                   onClick={() => {
-                    navigate('/admin/experiments/edit', {
-                      state: e,
+                    navigate('/admin/missions/edit', {
+                      state: m,
                     });
                   }}
                   variant='contained'
@@ -181,7 +183,7 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 </Button>
                 <Button
                   onClick={() => {
-                    toggleExperimentDelete(e.id);
+                    toggleMissionDelete(m.id);
                   }}
                   disabled={isToggleDeleteLoading}
                   variant='contained'
@@ -190,10 +192,10 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
                 >
                   {matches && (
                     <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                      {e.deleted ? 'Restore' : 'Delete'}
+                      {m.deleted ? 'Restore' : 'Delete'}
                     </Typography>
                   )}
-                  {e.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
+                  {m.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
                 </Button>
               </Box>
             </Paper>
@@ -202,21 +204,17 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
       )}
       <Grid item xs={12} display='flex' justifyContent='center'>
         <Pagination
-          count={experiments?.totalPages}
+          count={missions?.totalPages}
           variant='outlined'
           shape='rounded'
           color='secondary'
-          siblingCount={0}
           page={page || 1}
+          siblingCount={0}
           onChange={onPageChange}
         />
       </Grid>
-      <MessageSnackbar
-        open={isExperimentsError}
-        message='Could not load experiments. Please try again.'
-        severity='error'
-      />
-      <MessageSnackbar open={isApproveSuccess} message='Experiment approved.' severity='success' />
+      <MessageSnackbar open={isMissionsError} message='Could not load missions. Please try again.' severity='error' />
+      <MessageSnackbar open={isApproveSuccess} message='Mission approved.' severity='success' />
     </Grid>
   );
 }

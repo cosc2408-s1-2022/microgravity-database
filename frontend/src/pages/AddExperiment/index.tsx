@@ -160,7 +160,7 @@ export default function AddExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/home');
+      navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
 
@@ -169,8 +169,7 @@ export default function AddExperiment() {
       <Container maxWidth='md'>
         <Box
           sx={{
-            my: -2,
-            mt: 4,
+            my: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -181,7 +180,7 @@ export default function AddExperiment() {
           }}
         >
           <Box display='flex' flexDirection='column' alignItems='center'>
-            <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
+            <Typography variant='h3' fontWeight='bold' sx={{ mt: 1, mb: 3 }}>
               Add Experiment
             </Typography>
           </Box>
@@ -231,112 +230,6 @@ export default function AddExperiment() {
                   errors={experimentError?.response?.data}
                   onChange={setExperimentObjective}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Paper
-                  sx={{ width: '100%', border: '1px #c4c4c4 solid', display: 'flex', flexDirection: 'column' }}
-                  variant='outlined'
-                >
-                  <Box display='flex' alignItems='center'>
-                    <Typography sx={{ m: 1.5 }}>Experiment Attachments</Typography>
-                    <label htmlFor='add-attachment'>
-                      <input
-                        style={{ display: 'none' }}
-                        id='add-attachment'
-                        name='add-attachment'
-                        type='file'
-                        accept={ACCEPTED_ATTACHMENT_TYPES.join(',')}
-                        onChange={addFile}
-                      />
-                      <IconButton component='span'>
-                        <AttachFileRounded />
-                      </IconButton>
-                    </label>
-                  </Box>
-                  {experimentAttachments.length > 0 && (
-                    <Box display='flex' flexWrap='wrap' px={2}>
-                      {experimentAttachments.map((file, index) =>
-                        file.type.includes('image') ? (
-                          <Box
-                            m={2}
-                            ml={0}
-                            key={index}
-                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
-                            display='flex'
-                            flexDirection='column'
-                            justifyContent='flex-start'
-                          >
-                            <Paper
-                              variant='outlined'
-                              component='img'
-                              sx={{
-                                width: '10rem',
-                                height: '10rem',
-                                objectFit: 'cover',
-                              }}
-                              alt='Attachment Image'
-                              src={URL.createObjectURL(file)}
-                            />
-                            <IconButton
-                              size='small'
-                              sx={{
-                                position: 'absolute',
-                                right: '0.5rem',
-                                top: '0.5rem',
-                                background: 'transparent',
-                                backdropFilter: 'blur(4px) brightness(60%)',
-                              }}
-                              onClick={() => removeFile(index)}
-                            >
-                              <DeleteOutlineRounded color='secondary' />
-                            </IconButton>
-                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
-                              {file.name}
-                            </Typography>
-                          </Box>
-                        ) : (
-                          <Box
-                            m={2}
-                            ml={0}
-                            key={index}
-                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
-                            display='flex'
-                            flexDirection='column'
-                            justifyContent='flex-start'
-                          >
-                            <Paper
-                              variant='outlined'
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: '10rem',
-                                height: '10rem',
-                              }}
-                            >
-                              <PictureAsPdfRounded fontSize='large' color='secondary' />
-                            </Paper>
-                            <IconButton
-                              sx={{
-                                position: 'absolute',
-                                right: '0.5rem',
-                                top: '0.5rem',
-                                background: 'transparent',
-                                backdropFilter: 'blur(8px)',
-                              }}
-                              onClick={() => removeFile(index)}
-                            >
-                              <DeleteOutlineRounded color='secondary' />
-                            </IconButton>
-                            <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }} py={1}>
-                              {file.name}
-                            </Typography>
-                          </Box>
-                        ),
-                      )}
-                    </Box>
-                  )}
-                </Paper>
               </Grid>
               <Grid item xs={12}>
                 <FormField
@@ -397,266 +290,390 @@ export default function AddExperiment() {
                       <Typography variant='body1' flexGrow={1}>
                         No such missions found.
                       </Typography>
-                      <Button variant='outlined' onClick={() => navigate('/addMission')} sx={{ textTransform: 'none' }}>
-                        <Typography variant='body1' color='primary'>
-                          Add a new mission?
-                        </Typography>
+                      <Button variant='contained' color='secondary' onClick={() => navigate('/addMission')}>
+                        Add new?
                       </Button>
                     </Box>
                   }
                 />
               </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Autocomplete
-                  disablePortal
-                  openText='FOR Code'
-                  options={forCodes || []}
-                  getOptionLabel={(option) => option.name}
-                  fullWidth
-                  loading={isForCodesLoading}
-                  onChange={(_event, value) => {
-                    if (experimentError?.response?.data !== undefined) {
-                      experimentError.response.data.forCodeId = '';
-                    }
-                    setForCode(value);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      margin='normal'
-                      size='small'
-                      color='secondary'
-                      fullWidth
-                      error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
-                      helperText={experimentError?.response?.data?.forCodeId}
-                      label='FOR Code'
-                    />
-                  )}
-                  renderOption={(props, option, { inputValue }) => {
-                    const matches = match(option.name, inputValue);
-                    const parts = parse(option.name, matches);
-                    return (
-                      <li {...props}>
-                        <div>
-                          {parts.map((part, index) => (
-                            <span
-                              key={index}
-                              style={{
-                                fontWeight: part.highlight ? 700 : 400,
-                              }}
-                            >
-                              {part.text}
-                            </span>
-                          ))}
-                        </div>
-                      </li>
-                    );
-                  }}
-                  noOptionsText='No such FOR codes found.'
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Autocomplete
-                  disablePortal
-                  openText='SEO Code'
-                  options={seoCodes || []}
-                  getOptionLabel={(option) => option.name}
-                  fullWidth
-                  loading={isSeoCodesLoading}
-                  onChange={(_event, value) => {
-                    if (experimentError?.response?.data !== undefined) {
-                      experimentError.response.data.seoCodeId = '';
-                    }
-                    setSeoCode(value);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      margin='normal'
-                      size='small'
-                      color='secondary'
-                      fullWidth
-                      error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
-                      helperText={experimentError?.response?.data?.seoCodeId}
-                      label='SEO Code'
-                    />
-                  )}
-                  renderOption={(props, option, { inputValue }) => {
-                    const matches = match(option.name, inputValue);
-                    const parts = parse(option.name, matches);
-                    return (
-                      <li {...props}>
-                        <div>
-                          {parts.map((part, index) => (
-                            <span
-                              key={index}
-                              style={{
-                                fontWeight: part.highlight ? 700 : 400,
-                              }}
-                            >
-                              {part.text}
-                            </span>
-                          ))}
-                        </div>
-                      </li>
-                    );
-                  }}
-                  noOptionsText='No such SEO codes found.'
-                />
-              </Grid>
-            </Grid>
-            <Paper sx={{ width: '100%', mt: 1, border: '1px #c4c4c4 solid' }} variant='outlined'>
-              <Box display='flex' alignItems='center'>
-                <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
-                <IconButton
-                  onClick={() => {
-                    dispatchPeople({
-                      type: 'ADD',
-                      payload: { id: peopleState.uid, data: { personId: 0, roleId: 0 } },
-                    });
-                  }}
-                >
-                  <PersonAddRoundedIcon />
-                </IconButton>
-              </Box>
-              {peopleState.data.map((entry) => (
-                <Grid key={entry.id} container alignItems='center'>
-                  <Grid item xs={5} sx={{ pl: 1 }}>
-                    <Autocomplete
-                      disablePortal
-                      openText='Person'
-                      options={people || []}
-                      getOptionLabel={(option) => `${option.firstName} ${option.familyName}`}
-                      fullWidth
-                      loading={isPeopleLoading}
-                      onChange={(_event, value) => {
-                        if (value) {
-                          const payload = {
-                            id: entry.id,
-                            data: {
-                              personId: value.id,
-                              roleId: entry.data.roleId,
-                            },
-                          };
-                          dispatchPeople({ type: 'MODIFY', payload });
-                        }
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          margin='normal'
-                          size='small'
-                          color='secondary'
-                          fullWidth
-                          label='Person'
-                        />
-                      )}
-                      renderOption={(props, option, { inputValue }) => {
-                        const fullName = `${option.firstName} ${option.familyName}`;
-                        const matches = match(fullName, inputValue);
-                        const parts = parse(fullName, matches);
-                        return (
-                          <li {...props}>
-                            <div>
-                              {parts.map((part, index) => (
-                                <span
-                                  key={index}
-                                  style={{
-                                    fontWeight: part.highlight ? 700 : 400,
-                                  }}
-                                >
-                                  {part.text}
-                                </span>
-                              ))}
-                            </div>
-                          </li>
-                        );
-                      }}
-                      getOptionDisabled={(option: Person) =>
-                        peopleState.data.some((entry) => entry.data.personId === option.id)
+              <Grid container item spacing={2} xs={12}>
+                <Grid item xs={6}>
+                  <Autocomplete
+                    disablePortal
+                    openText='FOR Code'
+                    options={forCodes || []}
+                    getOptionLabel={(option) => option.name}
+                    fullWidth
+                    loading={isForCodesLoading}
+                    onChange={(_event, value) => {
+                      if (experimentError?.response?.data !== undefined) {
+                        experimentError.response.data.forCodeId = '';
                       }
-                      noOptionsText={
-                        <Box display='flex' justifyContent='space-between' alignItems='center'>
-                          <Typography variant='body1' flexGrow={1}>
-                            No such person found.
-                          </Typography>
-                          <Button
-                            variant='outlined'
-                            onClick={() => navigate('/addPerson')}
-                            sx={{ textTransform: 'none' }}
-                          >
-                            <Typography variant='body1'>Add a new person?</Typography>
-                          </Button>
-                        </Box>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={1} display='flex' justifyContent='center'>
-                    <Typography variant='body1'>as</Typography>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Autocomplete
-                      disablePortal
-                      openText='Role'
-                      options={roles || []}
-                      getOptionLabel={(option) => option.name}
-                      fullWidth
-                      loading={isRolesLoading}
-                      onChange={(_event, value) => {
-                        if (value) {
-                          const payload = {
-                            id: entry.id,
-                            data: {
-                              personId: entry.data.personId,
-                              roleId: value.id,
-                            },
-                          };
-                          dispatchPeople({ type: 'MODIFY', payload });
-                        }
-                      }}
-                      renderInput={(params) => (
-                        <TextField {...params} margin='normal' size='small' color='secondary' fullWidth label='Role' />
-                      )}
-                      renderOption={(props, option, { inputValue }) => {
-                        const matches = match(option.name, inputValue);
-                        const parts = parse(option.name, matches);
-                        return (
-                          <li {...props}>
-                            <div>
-                              {parts.map((part, index) => (
-                                <span
-                                  key={index}
-                                  style={{
-                                    fontWeight: part.highlight ? 700 : 400,
-                                  }}
-                                >
-                                  {part.text}
-                                </span>
-                              ))}
-                            </div>
-                          </li>
-                        );
-                      }}
-                      noOptionsText='No such roles found.'
-                    />
-                  </Grid>
-                  <Grid item xs={1} display='flex' justifyContent='center'>
-                    <IconButton
-                      onClick={() => {
-                        dispatchPeople({
-                          type: 'REMOVE',
-                          payload: { id: entry.id, data: entry.data },
-                        });
-                      }}
-                    >
-                      <PersonRemoveRoundedIcon />
-                    </IconButton>
-                  </Grid>
+                      setForCode(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        margin='none'
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
+                        helperText={experimentError?.response?.data?.forCodeId}
+                        label='FOR Code'
+                      />
+                    )}
+                    renderOption={(props, option, { inputValue }) => {
+                      const matches = match(option.name, inputValue);
+                      const parts = parse(option.name, matches);
+                      return (
+                        <li {...props}>
+                          <div>
+                            {parts.map((part, index) => (
+                              <span
+                                key={index}
+                                style={{
+                                  fontWeight: part.highlight ? 700 : 400,
+                                }}
+                              >
+                                {part.text}
+                              </span>
+                            ))}
+                          </div>
+                        </li>
+                      );
+                    }}
+                    noOptionsText='No such FOR codes found.'
+                  />
                 </Grid>
-              ))}
-            </Paper>
+                <Grid item xs={6}>
+                  <Autocomplete
+                    disablePortal
+                    openText='SEO Code'
+                    options={seoCodes || []}
+                    getOptionLabel={(option) => option.name}
+                    fullWidth
+                    loading={isSeoCodesLoading}
+                    onChange={(_event, value) => {
+                      if (experimentError?.response?.data !== undefined) {
+                        experimentError.response.data.seoCodeId = '';
+                      }
+                      setSeoCode(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        margin='none'
+                        size='small'
+                        color='secondary'
+                        fullWidth
+                        error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
+                        helperText={experimentError?.response?.data?.seoCodeId}
+                        label='SEO Code'
+                      />
+                    )}
+                    renderOption={(props, option, { inputValue }) => {
+                      const matches = match(option.name, inputValue);
+                      const parts = parse(option.name, matches);
+                      return (
+                        <li {...props}>
+                          <div>
+                            {parts.map((part, index) => (
+                              <span
+                                key={index}
+                                style={{
+                                  fontWeight: part.highlight ? 700 : 400,
+                                }}
+                              >
+                                {part.text}
+                              </span>
+                            ))}
+                          </div>
+                        </li>
+                      );
+                    }}
+                    noOptionsText='No such SEO codes found.'
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper sx={{ width: '100%', border: '1px #c4c4c4 solid' }} variant='outlined'>
+                    <Box display='flex' alignItems='center'>
+                      <Typography sx={{ p: 1, pl: 1.5 }}>Add People</Typography>
+                      <IconButton
+                        onClick={() => {
+                          dispatchPeople({
+                            type: 'ADD',
+                            payload: { id: peopleState.uid, data: { personId: 0, roleId: 0 } },
+                          });
+                        }}
+                      >
+                        <PersonAddRoundedIcon />
+                      </IconButton>
+                    </Box>
+                    {peopleState.data.map((entry) => (
+                      <Grid key={entry.id} container alignItems='center'>
+                        <Grid item xs={5} sx={{ pl: 1 }}>
+                          <Autocomplete
+                            disablePortal
+                            openText='Person'
+                            options={people || []}
+                            getOptionLabel={(option) => `${option.firstName} ${option.familyName}`}
+                            fullWidth
+                            loading={isPeopleLoading}
+                            onChange={(_event, value) => {
+                              if (value) {
+                                const payload = {
+                                  id: entry.id,
+                                  data: {
+                                    personId: value.id,
+                                    roleId: entry.data.roleId,
+                                  },
+                                };
+                                dispatchPeople({ type: 'MODIFY', payload });
+                              }
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                margin='normal'
+                                size='small'
+                                color='secondary'
+                                fullWidth
+                                label='Person'
+                              />
+                            )}
+                            renderOption={(props, option, { inputValue }) => {
+                              const fullName = `${option.firstName} ${option.familyName}`;
+                              const matches = match(fullName, inputValue);
+                              const parts = parse(fullName, matches);
+                              return (
+                                <li {...props}>
+                                  <div>
+                                    {parts.map((part, index) => (
+                                      <span
+                                        key={index}
+                                        style={{
+                                          fontWeight: part.highlight ? 700 : 400,
+                                        }}
+                                      >
+                                        {part.text}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </li>
+                              );
+                            }}
+                            getOptionDisabled={(option: Person) =>
+                              peopleState.data.some((entry) => entry.data.personId === option.id)
+                            }
+                            noOptionsText={
+                              <Box display='flex' justifyContent='space-between' alignItems='center'>
+                                <Typography variant='body1' flexGrow={1}>
+                                  No such person found.
+                                </Typography>
+                                <Button variant='contained' color='secondary' onClick={() => navigate('/addPerson')}>
+                                  Add new?{' '}
+                                </Button>
+                              </Box>
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={1} display='flex' justifyContent='center'>
+                          <Typography variant='body1'>as</Typography>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <Autocomplete
+                            disablePortal
+                            openText='Role'
+                            options={roles || []}
+                            getOptionLabel={(option) => option.name}
+                            fullWidth
+                            loading={isRolesLoading}
+                            onChange={(_event, value) => {
+                              if (value) {
+                                const payload = {
+                                  id: entry.id,
+                                  data: {
+                                    personId: entry.data.personId,
+                                    roleId: value.id,
+                                  },
+                                };
+                                dispatchPeople({ type: 'MODIFY', payload });
+                              }
+                            }}
+                            getOptionDisabled={(option: Role) =>
+                              peopleState.data.some(
+                                (entry) => entry.data.roleId === 1 && entry.data.roleId === option.id,
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                margin='normal'
+                                size='small'
+                                color='secondary'
+                                fullWidth
+                                label='Role'
+                              />
+                            )}
+                            renderOption={(props, option, { inputValue }) => {
+                              const matches = match(option.name, inputValue);
+                              const parts = parse(option.name, matches);
+                              return (
+                                <li {...props}>
+                                  <div>
+                                    {parts.map((part, index) => (
+                                      <span
+                                        key={index}
+                                        style={{
+                                          fontWeight: part.highlight ? 700 : 400,
+                                        }}
+                                      >
+                                        {part.text}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </li>
+                              );
+                            }}
+                            noOptionsText='No such roles found.'
+                          />
+                        </Grid>
+                        <Grid item xs={1} display='flex' justifyContent='center'>
+                          <IconButton
+                            onClick={() => {
+                              dispatchPeople({
+                                type: 'REMOVE',
+                                payload: { id: entry.id, data: entry.data },
+                              });
+                            }}
+                          >
+                            <PersonRemoveRoundedIcon />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    ))}
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper
+                    sx={{ width: '100%', border: '1px #c4c4c4 solid', display: 'flex', flexDirection: 'column' }}
+                    variant='outlined'
+                  >
+                    <Box display='flex' alignItems='center'>
+                      <Typography sx={{ p: 1, pl: 1.5 }}>Experiment Attachments</Typography>
+                      <label htmlFor='add-attachment'>
+                        <input
+                          style={{ display: 'none' }}
+                          id='add-attachment'
+                          name='add-attachment'
+                          type='file'
+                          accept={ACCEPTED_ATTACHMENT_TYPES.join(',')}
+                          onChange={addFile}
+                        />
+                        <IconButton component='span'>
+                          <AttachFileRounded />
+                        </IconButton>
+                      </label>
+                    </Box>
+                    {experimentAttachments.length > 0 && (
+                      <Box display='flex' flexWrap='wrap' px={2}>
+                        {experimentAttachments.map((file, index) =>
+                          file.type.includes('image') ? (
+                            <Box
+                              m={2}
+                              ml={0}
+                              key={index}
+                              sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                              display='flex'
+                              flexDirection='column'
+                              justifyContent='flex-start'
+                            >
+                              <Paper
+                                variant='outlined'
+                                component='img'
+                                sx={{
+                                  width: '10rem',
+                                  height: '10rem',
+                                  objectFit: 'cover',
+                                }}
+                                alt='Attachment Image'
+                                src={URL.createObjectURL(file)}
+                              />
+                              <IconButton
+                                size='small'
+                                sx={{
+                                  position: 'absolute',
+                                  right: '0.5rem',
+                                  top: '0.5rem',
+                                  background: 'transparent',
+                                  backdropFilter: 'blur(4px) brightness(60%)',
+                                }}
+                                onClick={() => removeFile(index)}
+                              >
+                                <DeleteOutlineRounded color='secondary' />
+                              </IconButton>
+                              <Typography
+                                whiteSpace='nowrap'
+                                textOverflow='ellipsis'
+                                sx={{ overflow: 'hidden' }}
+                                py={1}
+                              >
+                                {file.name}
+                              </Typography>
+                            </Box>
+                          ) : (
+                            <Box
+                              m={2}
+                              ml={0}
+                              key={index}
+                              sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                              display='flex'
+                              flexDirection='column'
+                              justifyContent='flex-start'
+                            >
+                              <Paper
+                                variant='outlined'
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  width: '10rem',
+                                  height: '10rem',
+                                }}
+                              >
+                                <PictureAsPdfRounded fontSize='large' color='secondary' />
+                              </Paper>
+                              <IconButton
+                                sx={{
+                                  position: 'absolute',
+                                  right: '0.5rem',
+                                  top: '0.5rem',
+                                  background: 'transparent',
+                                  backdropFilter: 'blur(8px)',
+                                }}
+                                onClick={() => removeFile(index)}
+                              >
+                                <DeleteOutlineRounded color='secondary' />
+                              </IconButton>
+                              <Typography
+                                whiteSpace='nowrap'
+                                textOverflow='ellipsis'
+                                sx={{ overflow: 'hidden' }}
+                                py={1}
+                              >
+                                {file.name}
+                              </Typography>
+                            </Box>
+                          ),
+                        )}
+                      </Box>
+                    )}
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
             <LoadingButton
               loading={isExperimentLoading}
               type='submit'

@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Logo from '../../logo_black.svg';
+import Logo from '../../asd-logo-no-text.svg';
 import { Box, Button, Container, Link, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PrimarySearch from '../PrimarySearch';
@@ -45,8 +44,8 @@ export default function NavBar() {
       <Toolbar>
         <Container maxWidth='lg'>
           <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <Box component={Link} display='inline-flex' alignItems='center' href='/home'>
-              <img src={Logo} id='logo' alt='RMIT LOGO' height={matches ? '50rem' : '50rem'} />
+            <Box component={Link} display='flex' alignItems='center' href='/home'>
+              <img src={Logo} id='navbar-logo' alt='Australian Space Database Logo' />
             </Box>
             {!isLoggedInUserLoading && (loggedInUser || isLoggedInUserError) && (
               <Box display='flex'>
@@ -66,7 +65,7 @@ export default function NavBar() {
                     >
                       Advanced Search
                     </Button>
-                  ) : !['/login', '/register'].includes(location.pathname) ? (
+                  ) : !['/login', '/register', '/register/basic'].includes(location.pathname) ? (
                     <Button href='/search/advanced' variant='contained' sx={{ ml: 1 }}>
                       <ManageSearchRounded />
                     </Button>
@@ -90,20 +89,24 @@ export default function NavBar() {
                 {isLoggedInUserError ? (
                   matches ? (
                     <Box display='inline-flex' alignItems='center'>
-                      <Button
-                        variant='contained'
-                        href='/login'
-                        sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                      >
-                        Login
-                      </Button>
-                      <Button
-                        variant='contained'
-                        href='/register'
-                        sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
-                      >
-                        Register
-                      </Button>
+                      {location.pathname !== '/login' && (
+                        <Button
+                          variant='contained'
+                          href='/login'
+                          sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
+                        >
+                          Login
+                        </Button>
+                      )}
+                      {!location.pathname.includes('/register') && (
+                        <Button
+                          variant='contained'
+                          href='/register'
+                          sx={{ minWidth: 'auto', ml: 1, whiteSpace: 'nowrap', height: '2.5rem' }}
+                        >
+                          Register
+                        </Button>
+                      )}
                     </Box>
                   ) : (
                     <Box display='inline-flex' alignItems='center'>

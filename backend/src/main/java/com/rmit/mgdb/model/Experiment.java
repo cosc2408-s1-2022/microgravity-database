@@ -54,6 +54,10 @@ public class Experiment {
     @GenericField
     private boolean approved;
 
+    private Date createdAt;
+
+    private Date updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "mission_id")
     @IndexedEmbedded
@@ -81,9 +85,6 @@ public class Experiment {
     @OneToMany(mappedBy = "experiment")
     @IndexedEmbedded
     private List<ExperimentPerson> people;
-
-    private Date createdAt;
-    private Date updatedAt;
 
     /**
      * Saves the timestamp of creation.

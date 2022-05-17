@@ -5,7 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
-import Register from './pages/Register';
+import RegisterBasic from './pages/RegisterBasic';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/HomePage';
 import BasicSearchPage from './pages/BasicSearch';
@@ -24,6 +24,11 @@ import Users from './pages/AdminDashboard/Users';
 import Experiments from './pages/AdminDashboard/Experiments';
 import AdminDashboard from './pages/AdminDashboard';
 import EditExperiment from './pages/EditExperiment';
+import Missions from './pages/AdminDashboard/Missions';
+import EditMission from './pages/EditMission';
+import People from './pages/AdminDashboard/People';
+import EditPerson from './pages/EditPerson';
+import Register from './pages/Register';
 
 // React 18 way of creating a root.
 const rootElement = document.getElementById('root') as Element;
@@ -44,6 +49,7 @@ root.render(
               <Route path='/home' element={<HomePage />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
+              <Route path='/register/basic' element={<RegisterBasic />} />
               <Route path='/search' element={<BasicSearchPage />} />
               <Route path='/search/advanced' element={<AdvancedSearchPage />} />
               <Route path='/addPerson' element={<AddPerson />} />
@@ -56,8 +62,12 @@ root.render(
               <Route path='/admin/dashboard' element={<AdminDashboard />}>
                 <Route path='users' element={<Users />} />
                 <Route path='experiments' element={<Experiments />} />
+                <Route path='missions' element={<Missions />} />
+                <Route path='people' element={<People />} />
               </Route>
               <Route path='/admin/experiments/edit' element={<EditExperiment />} />
+              <Route path='/admin/missions/edit' element={<EditMission />} />
+              <Route path='/admin/people/edit' element={<EditPerson />} />
             </Routes>
           </LocalizationProvider>
         </BrowserRouter>

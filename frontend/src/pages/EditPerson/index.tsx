@@ -1,29 +1,40 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
-import { AxiosError, AxiosResponse } from 'axios';
-import { FormEvent, useEffect, useState } from 'react';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { AxiosResponse, AxiosError } from 'axios';
+import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AuthWrapper from '../../components/AuthWrapper';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
-import api from '../../util/api';
-import { Person } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
-import AuthWrapper from '../../components/AuthWrapper';
+import api from '../../util/api';
+import { Person, UserRole } from '../../util/types';
 
-export default function AddPerson() {
+export default function EditPerson() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const person = location.state as Person;
+  if (!person) {
+    navigate('/', {
+      state: {
+        isError: true,
+        message: 'Person could not be found.',
+      },
+    });
+  }
 
-  const [firstName, setFirstName] = useState<string>();
-  const [familyName, setFamilyName] = useState<string>();
-  const [affiliation, setAffiliation] = useState<string>();
-  const [city, setCity] = useState<string>();
-  const [state, setState] = useState<string>();
-  const [country, setCountry] = useState<string>();
+  const [firstName, setFirstName] = useState<string>(person.firstName);
+  const [familyName, setFamilyName] = useState<string>(person.familyName);
+  const [affiliation, setAffiliation] = useState<string>(person.affiliation);
+  const [city, setCity] = useState<string>(person.city);
+  const [state, setState] = useState<string>(person.state);
+  const [country, setCountry] = useState<string>(person.country);
 
   const { error, isSuccess, isLoading, isError, mutate } = useMutation<AxiosResponse<Person>, AxiosError>(
-    'addPerson',
+    'savePerson',
     () =>
-      api.post('/people/add', {
+      api.post('/people/save', {
+        ...person,
         firstName,
         familyName,
         affiliation,
@@ -33,7 +44,7 @@ export default function AddPerson() {
       }),
   );
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     mutate();
   };
@@ -45,11 +56,12 @@ export default function AddPerson() {
   }, [isSuccess, navigate]);
 
   return (
-    <AuthWrapper>
+    <AuthWrapper role={UserRole.ROLE_ADMIN}>
       <Container maxWidth='sm'>
         <Box
           sx={{
-            my: 4,
+            my: -2,
+            mt: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -60,7 +72,7 @@ export default function AddPerson() {
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant='h3' fontWeight='bold' sx={{ mt: 1, mb: 3 }}>
+            <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
               Add Person
             </Typography>
           </Box>
@@ -75,6 +87,7 @@ export default function AddPerson() {
                   autoFocus
                   errors={error?.response?.data}
                   onChange={setFirstName}
+                  value={firstName}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -85,6 +98,7 @@ export default function AddPerson() {
                   autoComplete='family-name'
                   errors={error?.response?.data}
                   onChange={setFamilyName}
+                  value={familyName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -94,6 +108,7 @@ export default function AddPerson() {
                   autoComplete='organization'
                   errors={error?.response?.data}
                   onChange={setAffiliation}
+                  value={affiliation}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -103,6 +118,7 @@ export default function AddPerson() {
                   autoComplete='address-level2'
                   errors={error?.response?.data}
                   onChange={setCity}
+                  value={city}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,6 +128,7 @@ export default function AddPerson() {
                   autoComplete='address-level1'
                   errors={error?.response?.data}
                   onChange={setState}
+                  value={state}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -121,16 +138,28 @@ export default function AddPerson() {
                   autoComplete='country-name'
                   errors={error?.response?.data}
                   onChange={setCountry}
+                  value={country}
                 />
               </Grid>
               <Grid item xs={12}>
-                <LoadingButton loading={isLoading} type='submit' variant='contained' color='secondary' fullWidth>
-                  Add Person
-                </LoadingButton>
+                <Box display='flex' alignItems='center'>
+                  <LoadingButton
+                    sx={{ mr: 2 }}
+                    loading={isLoading}
+                    onClick={handleSubmit}
+                    variant='contained'
+                    color='secondary'
+                  >
+                    Save Changes
+                  </LoadingButton>
+                  <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
+                    Cancel
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </Box>
-          <MessageSnackbar open={isError} message='Failed to add person.' severity='error' />
+          <MessageSnackbar open={isError} message='Failed to save person.' severity='error' />
         </Box>
       </Container>
     </AuthWrapper>

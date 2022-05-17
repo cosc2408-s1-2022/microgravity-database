@@ -1,3 +1,4 @@
+import { ClearRounded, SearchRounded } from '@mui/icons-material';
 import {
   Container,
   Divider,
@@ -11,14 +12,13 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { ClearRounded, SearchRounded } from '@mui/icons-material';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import ViewPeople from '../../../components/AdminDashboard/ViewPeople';
 import AuthWrapper from '../../../components/AuthWrapper';
-import ViewExperiments from '../../../components/AdminDashboard/ViewExperiments';
 import { UserRole } from '../../../util/types';
-import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function Experiments() {
+export default function People() {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -105,7 +105,7 @@ export default function Experiments() {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            <ViewExperiments page={page} size={size} searchString={searchString} onPageChange={handlePageChange} />
+            <ViewPeople page={page} size={size} searchString={searchString} onPageChange={handlePageChange} />
           </Grid>
         </Grid>
       </Container>

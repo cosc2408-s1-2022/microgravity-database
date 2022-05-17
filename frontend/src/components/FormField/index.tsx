@@ -9,6 +9,7 @@ function FormField({ onChange, name, errors, ...rest }: FormFieldProps) {
     <TextField
       {...rest}
       name={name}
+      className='formfield'
       error={!!errors?.[name]}
       helperText={errors?.[name]}
       variant='outlined'
