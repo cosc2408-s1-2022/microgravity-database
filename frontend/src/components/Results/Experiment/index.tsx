@@ -24,7 +24,7 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
           {props.people.map((person) => (
             <Grid item key={person.person.id}>
               <Typography color='primary.dark' variant='body2' fontWeight='lighter'>
-                {`${person.person.familyName[0]}. ${person.person.firstName}`}
+                {`${person.person.firstName[0]}. ${person.person.familyName}`}
               </Typography>
             </Grid>
           ))}

@@ -1,5 +1,5 @@
 import PrimarySearch from '../../components/PrimarySearch';
-import { ReactComponent as Logo } from '../../logo_black.svg';
+import {ReactComponent as Logo} from '../../asd-logo-black.svg';
 import { Box, Container, Grid, Link, Typography } from '@mui/material';
 import { Platforms } from '../../util/types';
 import lodash from 'lodash';
@@ -20,8 +20,8 @@ export default function HomePage() {
           alignItems: 'center',
         }}
       >
-        <Grid item xs={12}>
-          <Logo className='logo' height={'12rem'} style={{ margin: '4rem 0' }} />
+        <Grid item display = 'flex' justifyContent = 'center' m={6} xs={12}>
+            <Logo className = 'logo' />
         </Grid>
         <Grid item xs={12}>
           <Grid container flexDirection='column' alignItems='center'>
