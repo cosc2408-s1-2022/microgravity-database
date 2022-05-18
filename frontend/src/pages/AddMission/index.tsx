@@ -3,7 +3,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
@@ -19,6 +19,7 @@ import MessageSnackbar from '../../components/MessageSnackbar';
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [platforms, setPlatforms] = useState<Platform[]>();
   const {
@@ -43,7 +44,7 @@ export default function AddMission() {
     isLoading: isMissionLoading,
     isError: isMissionError,
     mutate: mutateMission,
-  } = useMutation<AxiosResponse<Mission>, AxiosError>('saveMission', () =>
+  } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
     api.post('/missions/save', {
       name: name || '',
       launchDate: launchDate && moment(launchDate).year().toString(),
@@ -60,9 +61,10 @@ export default function AddMission() {
 
   useEffect(() => {
     if (isMissionSuccess) {
-      navigate(-1);
+      queryClient.invalidateQueries('getAllMissions');
+      navigate('/home');
     }
-  }, [isMissionSuccess, navigate]);
+  }, [isMissionSuccess, navigate, queryClient]);
 
   return (
     <AuthWrapper>

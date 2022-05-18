@@ -20,7 +20,7 @@ export default function HomePage() {
           alignItems: 'center',
         }}
       >
-        <Grid item xs={12} display='flex' sx={{ my: 4 }}>
+        <Grid item xs={12} display='flex' sx={{ my: 8 }}>
           <img src={Logo} id='homepage-logo' alt='Australian Space Database Logo' />
         </Grid>
         <Grid item xs={12}>

@@ -346,9 +346,9 @@ INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (10, true, '2022-04-01 00:00:00', false, '2007-01-01', 1, '2007-01-01', 'Drop Tower Bremen', '2007-01-01', null, 6);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (11, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', null, 1);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (12, true, '2022-04-01 00:00:00', false, '2015-01-01', 1, '2015-01-01', 'ISS Increment 64', '2015-01-01', null, 1);
-INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (13, true, '2022-04-01 00:00:00', false, '2017-01-01', 1, '2017-01-01', 'ISS Increment 67', '2017-01-01', null, 1);
-INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (14, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 68', '2020-01-01', null, 1);
-INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (15, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 63', '2020-01-01', null, 1);
+INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (13, true, '2022-04-01 00:00:00', false, '2017-01-01', 1, '2017-01-01', 'ISS Increment 66', '2017-01-01', null, 1);
+INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (14, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 67', '2020-01-01', null, 1);
+INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (15, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 68', '2020-01-01', null, 1);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (16, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 69', '2020-01-01', null, 1);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (17, true, '2022-04-01 00:00:00', false, '2020-01-01', 1, '2020-01-01', 'ISS Increment 70', '2020-01-01', null, 1);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (18, true, '2022-04-01 00:00:00', false, '2018-01-01', 1, '2018-01-01', 'ISS Increment 71', '2018-01-01', null, 1);
@@ -408,7 +408,7 @@ INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, e
 
 create table experiment_attachment
 (
-    id            bigint        not null
+    id            bigint auto_increment
         primary key,
     filename      varchar(1023) null,
     media_type    varchar(255)  null,

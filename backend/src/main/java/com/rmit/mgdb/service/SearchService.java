@@ -78,8 +78,10 @@ public class SearchService {
                                                                   .matching(stringParam))
                                                .must(m -> m.match().field("approved").matching(true))
                                                .must(m -> m.match().field("deleted").matching(false))
-
-                                        )
+                                               .must(m -> m.match().field("mission.approved").matching(true))
+                                               .must(m -> m.match().field("mission.deleted").matching(false))
+                                               .must(m -> m.match().field("people.person.approved").matching(true))
+                                               .must(m -> m.match().field("people.person.deleted").matching(false)))
                                   .fetch(page * size, size);
         } else {
             result = searchSession.search(tClass)
@@ -144,6 +146,10 @@ public class SearchService {
                                                            }
 
                                                            if (resultTypeParam == ResultType.EXPERIMENT) {
+                                                               b.must(s -> s.match().field("mission.approved")
+                                                                            .matching(true));
+                                                               b.must(s -> s.match().field("mission.deleted")
+                                                                            .matching(false));
                                                                b.must(s -> s.match().field("people.person.approved")
                                                                             .matching(true));
                                                                b.must(s -> s.match().field("people.person.deleted")

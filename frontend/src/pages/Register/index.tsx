@@ -112,7 +112,7 @@ export default function Register() {
             }}
           >
             <Typography variant='h4' fontWeight='bold'>
-              Register
+              Register Researcher
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>

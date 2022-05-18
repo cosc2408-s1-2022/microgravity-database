@@ -95,7 +95,7 @@ export default function RegisterBasic() {
             }}
           >
             <Typography variant='h4' fontWeight='bold'>
-              Register
+              Register User
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>

@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
@@ -12,6 +12,7 @@ import AuthWrapper from '../../components/AuthWrapper';
 
 export default function AddPerson() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [firstName, setFirstName] = useState<string>();
   const [familyName, setFamilyName] = useState<string>();
@@ -23,7 +24,7 @@ export default function AddPerson() {
   const { error, isSuccess, isLoading, isError, mutate } = useMutation<AxiosResponse<Person>, AxiosError>(
     'addPerson',
     () =>
-      api.post('/people/add', {
+      api.post('/people/save', {
         firstName,
         familyName,
         affiliation,
@@ -40,9 +41,10 @@ export default function AddPerson() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(-1);
+      queryClient.invalidateQueries('getAllPeople');
+      navigate('/home');
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigate, queryClient]);
 
   return (
     <AuthWrapper>
