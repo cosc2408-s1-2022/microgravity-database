@@ -20,7 +20,7 @@ export default function ViewExperiment() {
       setExperiment(data);
     }
   }, [isSuccess, data]);
-  
+
   return (
     <>
       {isLoading ? (
@@ -131,7 +131,23 @@ export default function ViewExperiment() {
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Publication
                   </Typography>
-                  {/*<Typography variant='body1'>{experiment?.experimentPublications || 'None'}</Typography>*/}
+                  {experiment?.experimentPublications.map((publication, i) => (
+                    <Box key={i} mb={2}>
+                      {publication.authors.map((person, i) => (
+                        <Typography sx={{ display: 'inline' }} key={i} variant={'body2'} fontWeight='bold'>
+                          {`${person.firstName.at(0)}. ${person.lastName}`}
+                          {i < publication.authors.length - 1 ? ', ' : ''}
+                        </Typography>
+                      ))}
+                      <Typography sx={{ display: 'inline' }} variant={'body2'}>
+                        , ({publication.yearPublished}), "{publication.title}",{' '}
+                        <Typography sx={{ display: 'inline', fontStyle: 'italic' }} variant={'body2'}>
+                          {publication.journal}, {publication.volumeNumber},{' '}
+                        </Typography>
+                        {publication.issueNumber}, DOI: {publication.doi}, pp. {publication.pagesUsed}.
+                      </Typography>
+                    </Box>
+                  ))}
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Lead Institution
                   </Typography>
