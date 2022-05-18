@@ -12,7 +12,16 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import {
+  Experiment,
+  ExperimentPersonRequest,
+  ExperimentPublications,
+  ForCode,
+  Mission,
+  Person,
+  Role,
+  SeoCode,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 
 // TODO Refactor into smaller sub-components.
@@ -87,7 +96,7 @@ export default function EditExperiment() {
   const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string | undefined>(
     experiment?.experimentModuleDrawing,
   );
-  const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
+  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublications[] | undefined>(
     experiment?.experimentPublications,
   );
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
@@ -255,9 +264,9 @@ export default function EditExperiment() {
                 <FormField
                   label='Experiment Publications'
                   name='experimentPublications'
-                  value={experimentPublications || ''}
+                  value={experimentPublications || null}
                   errors={experimentError?.response?.data}
-                  onChange={setExperimentPublications}
+                  // onChange={setExperimentPublications}
                 />
               </Grid>
             </Grid>

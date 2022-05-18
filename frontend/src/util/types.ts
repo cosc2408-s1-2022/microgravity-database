@@ -64,7 +64,7 @@ export type Experiment = {
   experimentAim: string;
   experimentObjective: string;
   experimentModuleDrawing: string;
-  experimentPublications: string;
+  experimentPublications: ExperimentPublications[];
   deleted: boolean;
   approved: boolean;
   mission: Mission;
@@ -173,7 +173,7 @@ export type MissionResultsProps = {
   endDate: Date;
 };
 
-export type ExperimentPublications = {
+export type ExperimentPublicationsResponse = {
   message: {
     title: string;
     'container-title': string;
@@ -190,13 +190,13 @@ export type ExperimentPublications = {
       'date-parts': string;
     };
     yearPublished: Date;
-    author: ExperimentPublicationsAuthors[];
+    author: ExperimentPublicationsAuthorsResponse[];
   };
 };
 
-export type ExperimentPublicationsParams = {
+export type ExperimentPublications = {
   doi: string;
-  authors: ExperimentPublicationsAuthors[];
+  authors: ExperimentPublicationsAuthor[];
   yearPublished: string;
   title: string;
   journal: string;
@@ -208,8 +208,12 @@ export type ExperimentPublicationsParams = {
   accessDate: string;
 };
 
-export type ExperimentPublicationsAuthors = {
+export type ExperimentPublicationsAuthor = {
+  firstName: string;
+  lastName: string;
+};
+
+export type ExperimentPublicationsAuthorsResponse = {
   given: string;
   family: string;
-  sequence: string;
 };
