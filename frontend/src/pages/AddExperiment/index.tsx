@@ -382,7 +382,7 @@ export default function AddExperiment() {
                           fullWidth
                           label='DOI'
                           value={doiDoi}
-                          onChange={setDoi}
+                          onChange={setDoiDoi}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -491,6 +491,7 @@ export default function AddExperiment() {
                           fullWidth
                           label='Pages'
                           value={doiPages}
+                          onChange={setDoiPages}
                         />
                       </Grid>
                       <Grid item xs={3}>
@@ -652,6 +653,7 @@ export default function AddExperiment() {
                           fullWidth
                           label='Pages'
                           value={doiPages}
+                          onChange={setDoiPages}
                         />
                       </Grid>
                       <Grid item xs={12}>
