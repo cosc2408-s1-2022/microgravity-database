@@ -1,6 +1,6 @@
 import PrimarySearch from '../../components/PrimarySearch';
 import Logo from '../../asd-logo-black.svg';
-import { Box, Container, Grid, Link, Typography } from '@mui/material';
+import { Box, Grid, Link, Typography } from '@mui/material';
 import { Platforms } from '../../util/types';
 import lodash from 'lodash';
 import MessageSnackbar from '../../components/MessageSnackbar';
@@ -10,25 +10,17 @@ export default function HomePage() {
   const { state } = useLocation() as { state: { isError: boolean; message: string } };
 
   return (
-    <Container maxWidth='md'>
-      <Grid
-        container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Grid item xs={12} display='flex' sx={{ my: 4 }}>
+    <Grid container justifyContent='center' height='100%'>
+      <Grid container direction='column' justifyContent='center' alignItems='center'>
+        <Grid item display='flex' sx={{ my: 8 }}>
           <img src={Logo} id='homepage-logo' alt='Australian Space Database Logo' />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item>
           <Grid container flexDirection='column' alignItems='center'>
-            <Grid item xs={12} style={{ width: '100%' }}>
+            <Grid item style={{ width: '100%' }}>
               <PrimarySearch />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
               <Box display='inline-flex'>
                 {Object.values(Platforms).map((platform) => (
                   <Link key={platform} href={`/search/advanced?platform=${platform}`} sx={{ m: 1 }}>
@@ -47,6 +39,6 @@ export default function HomePage() {
         message={state?.message || 'Sorry, something went wrong.'}
         severity='error'
       />
-    </Container>
+    </Grid>
   );
 }

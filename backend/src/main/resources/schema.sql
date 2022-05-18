@@ -1,4 +1,5 @@
 drop table if exists experiment_person;
+drop table if exists experiment_attachment;
 drop table if exists experiment;
 drop table if exists mission;
 drop table if exists person;
@@ -51,11 +52,15 @@ create table person
     id          bigint auto_increment
         primary key,
     affiliation varchar(255) null,
+    approved    bit          not null,
     city        varchar(255) null,
     country     varchar(255) null,
+    created_at  datetime(6)  null,
+    deleted     bit          not null,
     family_name varchar(255) null,
     first_name  varchar(255) null,
-    state       varchar(255) null
+    state       varchar(255) null,
+    updated_at  datetime(6)  null
 );
 
 create table platform
@@ -69,11 +74,15 @@ create table mission
 (
     id               bigint auto_increment
         primary key,
+    approved         bit          not null,
+    created_at       datetime(6)  null,
+    deleted          bit          not null,
     end_date         date         null,
     experiment_count bigint       null,
     launch_date      date         null,
     name             varchar(255) null,
     start_date       date         null,
+    updated_at       datetime(6)  null,
     platform_id      bigint       null,
     constraint FKs5lqnraym2fvbxvrkttcnnhgh
         foreign key (platform_id) references platform (id)
@@ -81,23 +90,22 @@ create table mission
 
 create table experiment
 (
-    id                        bigint auto_increment
+    id                      bigint auto_increment
         primary key,
-    approved                  bit           not null,
-    created_at                datetime(6)   null,
-    deleted                   bit           not null,
-    experiment_aim            varchar(1023) null,
-    experiment_module_drawing varchar(1023) null,
-    experiment_objective      varchar(1023) null,
-    experiment_publications   varchar(1023) null,
-    lead_institution          varchar(255)  null,
-    title                     varchar(255)  null,
-    toa                       varchar(255)  null,
-    updated_at                datetime(6)   null,
-    for_code_id               bigint        not null,
-    mission_id                bigint        not null,
-    platform_id               bigint        not null,
-    seo_code_id               bigint        not null,
+    approved                bit           not null,
+    created_at              datetime(6)   null,
+    deleted                 bit           not null,
+    experiment_aim          varchar(1023) null,
+    experiment_objective    varchar(1023) null,
+    experiment_publications varchar(1023) null,
+    lead_institution        varchar(255)  null,
+    title                   varchar(255)  null,
+    toa                     varchar(255)  null,
+    updated_at              datetime(6)   null,
+    for_code_id             bigint        not null,
+    mission_id              bigint        not null,
+    platform_id             bigint        not null,
+    seo_code_id             bigint        not null,
     constraint FKfngj6llveh6hcski9mjnjr7ft
         foreign key (seo_code_id) references seo_code (id),
     constraint FKgygeesbjm6430vcp7oqbj6i56
@@ -106,6 +114,17 @@ create table experiment
         foreign key (platform_id) references platform (id),
     constraint FKqaiemh670d1hykcnsmr52di4l
         foreign key (for_code_id) references for_code (id)
+);
+
+create table experiment_attachment
+(
+    id            bigint auto_increment
+        primary key,
+    filename      varchar(1023) null,
+    media_type    varchar(255)  null,
+    experiment_id bigint        null,
+    constraint FKg0a4dpinmvuixjko8t50rshjm
+        foreign key (experiment_id) references experiment (id)
 );
 
 create table experiment_person

@@ -160,7 +160,7 @@ export default function AddExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate(-1);
+      navigate('/home');
     }
   }, [isExperimentSuccess, navigate]);
 
@@ -290,7 +290,13 @@ export default function AddExperiment() {
                       <Typography variant='body1' flexGrow={1}>
                         No such missions found.
                       </Typography>
-                      <Button variant='contained' color='secondary' onClick={() => navigate('/addMission')}>
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        href='/addMission'
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
                         Add new?
                       </Button>
                     </Box>
@@ -303,7 +309,7 @@ export default function AddExperiment() {
                     disablePortal
                     openText='FOR Code'
                     options={forCodes || []}
-                    getOptionLabel={(option) => option.name}
+                    getOptionLabel={(option) => `${option.code} ${option.name}`}
                     fullWidth
                     loading={isForCodesLoading}
                     onChange={(_event, value) => {
@@ -325,8 +331,8 @@ export default function AddExperiment() {
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
-                      const matches = match(option.name, inputValue);
-                      const parts = parse(option.name, matches);
+                      const matches = match(`${option.code} ${option.name}`, inputValue);
+                      const parts = parse(`${option.code} ${option.name}`, matches);
                       return (
                         <li {...props}>
                           <div>
@@ -352,7 +358,7 @@ export default function AddExperiment() {
                     disablePortal
                     openText='SEO Code'
                     options={seoCodes || []}
-                    getOptionLabel={(option) => option.name}
+                    getOptionLabel={(option) => `${option.code} ${option.name}`}
                     fullWidth
                     loading={isSeoCodesLoading}
                     onChange={(_event, value) => {
@@ -374,8 +380,8 @@ export default function AddExperiment() {
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
-                      const matches = match(option.name, inputValue);
-                      const parts = parse(option.name, matches);
+                      const matches = match(`${option.code} ${option.name}`, inputValue);
+                      const parts = parse(`${option.code} ${option.name}`, matches);
                       return (
                         <li {...props}>
                           <div>
@@ -472,8 +478,14 @@ export default function AddExperiment() {
                                 <Typography variant='body1' flexGrow={1}>
                                   No such person found.
                                 </Typography>
-                                <Button variant='contained' color='secondary' onClick={() => navigate('/addPerson')}>
-                                  Add new?{' '}
+                                <Button
+                                  variant='contained'
+                                  color='secondary'
+                                  href='/addPerson'
+                                  target='_blank'
+                                  rel='noreferrer noopener'
+                                >
+                                  Add new?
                                 </Button>
                               </Box>
                             }

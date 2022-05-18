@@ -50,7 +50,7 @@ export default function RegisterBasic() {
   }
 
   return (
-    <>
+    <Grid container height='100%' alignItems='center' justifyContent='center'>
       <video
         autoPlay
         loop
@@ -95,7 +95,7 @@ export default function RegisterBasic() {
             }}
           >
             <Typography variant='h4' fontWeight='bold'>
-              Register
+              Register User
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -170,6 +170,6 @@ export default function RegisterBasic() {
           </Box>
         </Container>
       </div>
-    </>
+    </Grid>
   );
 }
