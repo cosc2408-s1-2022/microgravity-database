@@ -20,7 +20,7 @@ export default function ViewExperiment() {
       setExperiment(data);
     }
   }, [isSuccess, data]);
-
+  
   return (
     <>
       {isLoading ? (

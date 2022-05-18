@@ -97,7 +97,6 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
           <CenteredNoneFound />
         </Grid>
       ) : (
-        experiments?.results &&
         experiments?.results.map((e) => (
           <Grid item key={e.id} xs={12}>
             <Paper
