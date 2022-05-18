@@ -646,16 +646,6 @@ export default function AddExperiment() {
                       </Grid>
                       <Grid item xs={6}>
                         <FormField
-                          name='authors'
-                          size='small'
-                          color='secondary'
-                          fullWidth
-                          label='Authors'
-                          value={doiAuthors}
-                        />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <FormField
                           name='pagesUsed'
                           size='small'
                           color='secondary'
@@ -664,6 +654,17 @@ export default function AddExperiment() {
                           value={doiPages}
                         />
                       </Grid>
+                      <Grid item xs={12}>
+                        <FormField
+                          name='authors'
+                          size='small'
+                          color='secondary'
+                          fullWidth
+                          label='Authors'
+                          value={doiAuthors?.map((author) => author.family[0] + ' ' + author.given).join(', ')}
+                        />
+                      </Grid>
+
                       <Grid item xs={3}>
                         <Button variant='contained' fullWidth onClick={handleGoBack}>
                           Go Back
