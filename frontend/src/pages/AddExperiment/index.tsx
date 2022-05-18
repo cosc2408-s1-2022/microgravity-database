@@ -175,18 +175,30 @@ export default function AddExperiment() {
   const [manualForm, setManualForm] = useState(false);
   const [doiForm, setDoiForm] = useState(false);
 
-  const [doiDoi, setDoiDoi] = useState('');
-  const [doiTitle, setDoiTitle] = useState('');
-  const [doiJournal, setDoiJournal] = useState('');
-  const [doiVolumeNumber, setDoiVolumeNumber] = useState('');
-  const [doiIssueNumber, setDoiIssueNumber] = useState('');
-  const [doiJournalDatabase, setDoiJournalDatabase] = useState('');
-  const [doiPages, setDoiPages] = useState('');
-  const [doiUrl, setDoiUrl] = useState('');
-  const [doiAccessDate, setDoiAccessDate] = useState('');
-  const [doiYearPublished, setDoiYearPublished] = useState('');
-  const [doiAuthors, setDoiAuthors] = useState<ExperimentPublicationsAuthorsResponse[]>();
+  const [doiDoiAPI, setDoiDoiAPI] = useState('');
+  const [doiTitleAPI, setDoiTitleAPI] = useState('');
+  const [doiJournalAPI, setDoiJournalAPI] = useState('');
+  const [doiVolumeNumberAPI, setDoiVolumeNumberAPI] = useState('');
+  const [doiIssueNumberAPI, setDoiIssueNumberAPI] = useState('');
+  const [doiJournalDatabaseAPI, setDoiJournalDatabaseAPI] = useState('');
+  const [doiPagesAPI, setDoiPagesAPI] = useState('');
+  const [doiUrlAPI, setDoiUrlAPI] = useState('');
+  const [doiAccessDateAPI, setDoiAccessDateAPI] = useState('');
+  const [doiYearPublishedAPI, setDoiYearPublishedAPI] = useState('');
+  const [doiAuthorsAPI, setDoiAuthorsAPI] = useState<ExperimentPublicationsAuthorsResponse[]>();
   const [doiSuccess, setDoiSuccess] = useState(true);
+
+  const [doiDoiManual, setDoiDoiManual] = useState('');
+  const [doiTitleManual, setDoiTitleManual] = useState('');
+  const [doiJournalManual, setDoiJournalManual] = useState('');
+  const [doiVolumeNumberManual, setDoiVolumeNumberManual] = useState('');
+  const [doiIssueNumberManual, setDoiIssueNumberManual] = useState('');
+  const [doiJournalDatabaseManual, setDoiJournalDatabaseManual] = useState('');
+  const [doiPagesManual, setDoiPagesManual] = useState('');
+  const [doiUrlManual, setDoiUrlManual] = useState('');
+  const [doiAccessDateManual, setDoiAccessDateManual] = useState('');
+  const [doiYearPublishedManual, setDoiYearPublishedManual] = useState('');
+  const [doiAuthorsManual, setDoiAuthorsManual] = useState<string>();
 
   const handleSetManual = () => {
     setManualButton(false);
@@ -198,17 +210,28 @@ export default function AddExperiment() {
   };
 
   const handleClear = () => {
-    setDoiDoi('');
-    setDoiTitle('');
-    setDoiJournal('');
-    setDoiVolumeNumber('');
-    setDoiIssueNumber('');
-    setDoiJournalDatabase('');
-    setDoiPages('');
-    setDoiUrl('');
-    setDoiAccessDate('');
-    setDoiYearPublished('');
-    setDoiAuthors([]);
+    setDoiDoiAPI('');
+    setDoiTitleAPI('');
+    setDoiJournalAPI('');
+    setDoiVolumeNumberAPI('');
+    setDoiIssueNumberAPI('');
+    setDoiJournalDatabaseAPI('');
+    setDoiPagesAPI('');
+    setDoiUrlAPI('');
+    setDoiAccessDateAPI('');
+    setDoiYearPublishedAPI('');
+    setDoiAuthorsAPI([]);
+    setDoiDoiManual('');
+    setDoiTitleManual('');
+    setDoiJournalManual('');
+    setDoiVolumeNumberManual('');
+    setDoiIssueNumberManual('');
+    setDoiJournalDatabaseManual('');
+    setDoiPagesManual('');
+    setDoiUrlManual('');
+    setDoiAccessDateManual('');
+    setDoiYearPublishedManual('');
+    setDoiAuthorsManual('');
   };
 
   const { data, isError, isSuccess, mutate, isLoading } = useMutation<
@@ -234,19 +257,19 @@ export default function AddExperiment() {
   useEffect(() => {
     if (isSuccess && data) {
       setDoiForm(false);
-      setDoiDoi(data?.data?.message?.DOI);
-      setDoiTitle(data?.data?.message?.title);
-      setDoiJournal(data?.data?.message?.['container-title']);
-      setDoiVolumeNumber(data?.data?.message?.volume);
-      setDoiIssueNumber(data?.data?.message?.issue);
-      setDoiJournalDatabase(data?.data?.message?.publisher);
-      setDoiUrl(data?.data?.message?.URL);
-      setDoiPages(data?.data?.message?.page);
+      setDoiDoiAPI(data?.data?.message?.DOI);
+      setDoiTitleAPI(data?.data?.message?.title);
+      setDoiJournalAPI(data?.data?.message?.['container-title']);
+      setDoiVolumeNumberAPI(data?.data?.message?.volume);
+      setDoiIssueNumberAPI(data?.data?.message?.issue);
+      setDoiJournalDatabaseAPI(data?.data?.message?.publisher);
+      setDoiUrlAPI(data?.data?.message?.URL);
+      setDoiPagesAPI(data?.data?.message?.page);
       const date = new Date(data?.data?.message?.created?.['date-time']);
       const convertedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-      setDoiAccessDate(convertedDate);
-      setDoiYearPublished(data?.data?.message?.issued?.['date-parts'][0][0] as string);
-      setDoiAuthors(
+      setDoiAccessDateAPI(convertedDate);
+      setDoiYearPublishedAPI(data?.data?.message?.issued?.['date-parts'][0][0] as string);
+      setDoiAuthorsAPI(
         data?.data?.message?.author.map((author) => ({
           given: author.given,
           family: author.family,
@@ -274,6 +297,39 @@ export default function AddExperiment() {
       setDoiSuccess(true);
     }
   }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (manualButton) {
+      setExperimentPublications([
+        {
+          doi: doiDoiManual,
+          authors: doiAuthorsManual,
+          yearPublished: doiYearPublishedManual,
+          title: doiTitleManual,
+          journal: doiJournalManual,
+          volumeNumber: doiVolumeNumberManual,
+          issueNumber: doiIssueNumberManual,
+          pagesUsed: doiPagesManual,
+          journalDatabase: doiJournalDatabaseManual,
+          url: doiUrlManual,
+          accessDate: doiAccessDateManual,
+        },
+      ]);
+    }
+  }, [
+    doiAccessDateManual,
+    doiAuthorsManual,
+    doiDoiManual,
+    doiIssueNumberManual,
+    doiJournalDatabaseManual,
+    doiJournalManual,
+    doiPagesManual,
+    doiTitleManual,
+    doiUrlManual,
+    doiVolumeNumberManual,
+    doiYearPublishedManual,
+    manualButton,
+  ]);
 
   return (
     <AuthWrapper>
@@ -381,8 +437,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='DOI'
-                          value={doiDoi}
-                          onChange={setDoiDoi}
+                          value={doiDoiManual}
+                          onChange={setDoiDoiManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -392,8 +448,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Title'
-                          value={doiTitle}
-                          onChange={setDoiTitle}
+                          value={doiTitleManual}
+                          onChange={setDoiTitleManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -403,8 +459,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Jornal'
-                          value={doiJournal}
-                          onChange={setDoiJournal}
+                          value={doiJournalManual}
+                          onChange={setDoiJournalManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -414,8 +470,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Volume Number'
-                          value={doiVolumeNumber}
-                          onChange={setDoiVolumeNumber}
+                          value={doiVolumeNumberManual}
+                          onChange={setDoiVolumeNumberManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -425,8 +481,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Issue Number'
-                          value={doiIssueNumber}
-                          onChange={setDoiIssueNumber}
+                          value={doiIssueNumberManual}
+                          onChange={setDoiIssueNumberManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -436,8 +492,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Journal Database'
-                          value={doiJournalDatabase}
-                          onChange={setDoiJournalDatabase}
+                          value={doiJournalDatabaseManual}
+                          onChange={setDoiJournalDatabaseManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -447,8 +503,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='URL'
-                          value={doiUrl}
-                          onChange={setDoiUrl}
+                          value={doiUrlManual}
+                          onChange={setDoiUrlManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -458,8 +514,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Access Date'
-                          value={doiAccessDate}
-                          onChange={setDoiAccessDate}
+                          value={doiAccessDateManual}
+                          onChange={setDoiAccessDateManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -469,8 +525,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Year Published'
-                          value={doiYearPublished}
-                          onChange={setDoiYearPublished}
+                          value={doiYearPublishedManual}
+                          onChange={setDoiYearPublishedManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -480,7 +536,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Authors'
-                          value={doiAuthors}
+                          value={doiAuthorsManual}
+                          onChange={setDoiAuthorsManual}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -490,8 +547,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Pages'
-                          value={doiPages}
-                          onChange={setDoiPages}
+                          value={doiPagesManual}
+                          onChange={setDoiPagesManual}
                         />
                       </Grid>
                       <Grid item xs={3}>
@@ -553,7 +610,7 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='DOI'
-                          value={doiDoi}
+                          value={doiDoiAPI}
                           onChange={setDoi}
                         />
                       </Grid>
@@ -564,8 +621,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Title'
-                          value={doiTitle}
-                          onChange={setDoiTitle}
+                          value={doiTitleAPI}
+                          onChange={setDoiTitleAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -575,8 +632,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Jornal'
-                          value={doiJournal}
-                          onChange={setDoiJournal}
+                          value={doiJournalAPI}
+                          onChange={setDoiJournalAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -586,8 +643,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Volume Number'
-                          value={doiVolumeNumber}
-                          onChange={setDoiVolumeNumber}
+                          value={doiVolumeNumberAPI}
+                          onChange={setDoiVolumeNumberAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -597,8 +654,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Issue Number'
-                          value={doiIssueNumber}
-                          onChange={setDoiIssueNumber}
+                          value={doiIssueNumberAPI}
+                          onChange={setDoiIssueNumberAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -608,8 +665,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Journal Database'
-                          value={doiJournalDatabase}
-                          onChange={setDoiJournalDatabase}
+                          value={doiJournalDatabaseAPI}
+                          onChange={setDoiJournalDatabaseAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -619,8 +676,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='URL'
-                          value={doiUrl}
-                          onChange={setDoiUrl}
+                          value={doiUrlAPI}
+                          onChange={setDoiUrlAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -630,8 +687,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Access Date'
-                          value={doiAccessDate}
-                          onChange={setDoiAccessDate}
+                          value={doiAccessDateAPI}
+                          onChange={setDoiAccessDateAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -641,8 +698,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Year Published'
-                          value={doiYearPublished}
-                          onChange={setDoiYearPublished}
+                          value={doiYearPublishedAPI}
+                          onChange={setDoiYearPublishedAPI}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -652,8 +709,8 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Pages'
-                          value={doiPages}
-                          onChange={setDoiPages}
+                          value={doiPagesAPI}
+                          onChange={setDoiPagesAPI}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -663,7 +720,7 @@ export default function AddExperiment() {
                           color='secondary'
                           fullWidth
                           label='Authors'
-                          value={doiAuthors?.map((author) => author.family[0] + ' ' + author.given).join(', ')}
+                          value={doiAuthorsAPI?.map((author) => author.family[0] + ' ' + author.given).join(', ')}
                         />
                       </Grid>
 
