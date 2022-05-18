@@ -1157,7 +1157,7 @@ create table experiment_publication
 (
     id               bigint auto_increment
         primary key,
-    access_date      date          null,
+    access_date      varchar(255)  null,
     doi              varchar(255)  null,
     issue_number     varchar(255)  null,
     journal          varchar(1023) null,
@@ -1166,10 +1166,20 @@ create table experiment_publication
     title            varchar(1023) null,
     url              varchar(1023) null,
     volume_number    varchar(255)  null,
-    year_published   date          null,
+    year_published   varchar(255)  null,
     experiment_id    bigint        null,
     constraint FKbu0k1t8r9min47m1s26p2ho4t
         foreign key (experiment_id) references experiment (id)
+);
+
+create table publication_author
+(
+    publication_id bigint not null,
+    author_id      bigint not null,
+    constraint FKg942a597vajs5b8v8r8ecj9su
+        foreign key (publication_id) references experiment_publication (id),
+    constraint FKs2kspjpjhf4cgxq5uunrury3m
+        foreign key (author_id) references experiment_publication_author (id)
 );
 
 create table platform_for_code
