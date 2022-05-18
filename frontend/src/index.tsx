@@ -2,7 +2,7 @@ import './index.css';
 import Login from './pages/Login';
 import * as ReactDOMClient from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
 import RegisterBasic from './pages/RegisterBasic';
@@ -43,32 +43,34 @@ root.render(
       <CssBaseline>
         <BrowserRouter>
           <LocalizationProvider dateAdapter={AdapterMoment}>
-            <NavBar />
-            <Routes>
-              <Route path='/' element={<Navigate to='/home' />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/register/basic' element={<RegisterBasic />} />
-              <Route path='/search' element={<BasicSearchPage />} />
-              <Route path='/search/advanced' element={<AdvancedSearchPage />} />
-              <Route path='/addPerson' element={<AddPerson />} />
-              <Route path='/addMission' element={<AddMission />} />
-              <Route path='/addExperiment' element={<AddExperiment />} />
-              <Route path='/experiment/:id' element={<ViewExperiment />} />
-              <Route path='/mission/:id' element={<ViewMission />} />
-              <Route path='/forCode/:id' element={<ViewForCode />} />
-              <Route path='/seoCode/:id' element={<ViewSeoCode />} />
-              <Route path='/admin/dashboard' element={<AdminDashboard />}>
-                <Route path='users' element={<Users />} />
-                <Route path='experiments' element={<Experiments />} />
-                <Route path='missions' element={<Missions />} />
-                <Route path='people' element={<People />} />
-              </Route>
-              <Route path='/admin/experiments/edit' element={<EditExperiment />} />
-              <Route path='/admin/missions/edit' element={<EditMission />} />
-              <Route path='/admin/people/edit' element={<EditPerson />} />
-            </Routes>
+            <Grid height='100vh' display='flex' direction='column'>
+              <NavBar />
+              <Routes>
+                <Route path='/' element={<Navigate to='/home' />} />
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/register/basic' element={<RegisterBasic />} />
+                <Route path='/search' element={<BasicSearchPage />} />
+                <Route path='/search/advanced' element={<AdvancedSearchPage />} />
+                <Route path='/addPerson' element={<AddPerson />} />
+                <Route path='/addMission' element={<AddMission />} />
+                <Route path='/addExperiment' element={<AddExperiment />} />
+                <Route path='/experiment/:id' element={<ViewExperiment />} />
+                <Route path='/mission/:id' element={<ViewMission />} />
+                <Route path='/forCode/:id' element={<ViewForCode />} />
+                <Route path='/seoCode/:id' element={<ViewSeoCode />} />
+                <Route path='/admin/dashboard' element={<AdminDashboard />}>
+                  <Route path='users' element={<Users />} />
+                  <Route path='experiments' element={<Experiments />} />
+                  <Route path='missions' element={<Missions />} />
+                  <Route path='people' element={<People />} />
+                </Route>
+                <Route path='/admin/experiments/edit' element={<EditExperiment />} />
+                <Route path='/admin/missions/edit' element={<EditMission />} />
+                <Route path='/admin/people/edit' element={<EditPerson />} />
+              </Routes>
+            </Grid>
           </LocalizationProvider>
         </BrowserRouter>
       </CssBaseline>

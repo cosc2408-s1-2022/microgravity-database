@@ -67,7 +67,7 @@ export default function Register() {
   }, [data, isSuccess, navigate]);
 
   return (
-    <>
+    <Grid container height='100%' alignItems='center' justifyContent='center'>
       <video
         autoPlay
         loop
@@ -244,6 +244,6 @@ export default function Register() {
           </Box>
         </Container>
       </div>
-    </>
+    </Grid>
   );
 }

@@ -35,7 +35,7 @@ export default function Login() {
   }
 
   return (
-    <>
+    <Grid container height='100%' alignItems='center' justifyContent='center'>
       <video
         autoPlay
         loop
@@ -128,6 +128,6 @@ export default function Login() {
           </Box>
         </Container>
       </div>
-    </>
+    </Grid>
   );
 }
