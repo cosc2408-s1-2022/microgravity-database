@@ -203,7 +203,12 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormField label='TOA' name='toa' errors={experimentError?.response?.data} onChange={setToa} />
+                <FormField
+                  label='Type of Activity (TOA)'
+                  name='toa'
+                  errors={experimentError?.response?.data}
+                  onChange={setToa}
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormField

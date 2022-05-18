@@ -13,7 +13,6 @@ public class SearchFieldConstants {
             "leadInstitution",
             "experimentAim",
             "experimentObjective",
-            "experimentModuleDrawing",
             "experimentPublications",
             "mission.name",
             "mission.launchDateString",
