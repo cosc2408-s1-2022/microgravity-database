@@ -1,5 +1,6 @@
 package com.rmit.mgdb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -26,7 +27,7 @@ public class ExperimentPublication {
                inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<ExperimentPublicationAuthor> authors;
 
-    private LocalDate yearPublished;
+    private String yearPublished;
 
     @NotBlank(message = "Title cannot be blank.")
     @Length(max = 1023)
@@ -48,10 +49,11 @@ public class ExperimentPublication {
     @Length(max = 1023)
     private String url;
 
-    private LocalDate accessDate;
+    private String accessDate;
 
     @ManyToOne
     @JoinColumn(name = "experiment_id")
+    @JsonIgnore
     private Experiment experiment;
 
 }

@@ -27,8 +27,8 @@ import {
   Experiment,
   ExperimentPersonRequest,
   ExperimentPublications,
-  ExperimentPublicationsAuthors,
-  ExperimentPublicationsParams,
+  ExperimentPublicationsAuthorsResponse,
+  ExperimentPublicationsResponse,
   ForCode,
   Mission,
   Person,
@@ -97,7 +97,7 @@ export default function AddExperiment() {
   const [experimentAim, setExperimentAim] = useState<string>();
   const [experimentObjective, setExperimentObjective] = useState<string>();
   const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string>();
-  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublicationsParams>();
+  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublications[]>();
   const [mission, setMission] = useState<Mission | null>();
   const [forCode, setForCode] = useState<ForCode | null>();
   const [seoCode, setSeoCode] = useState<SeoCode | null>();
@@ -185,7 +185,7 @@ export default function AddExperiment() {
   const [doiUrl, setDoiUrl] = useState('');
   const [doiAccessDate, setDoiAccessDate] = useState('');
   const [doiYearPublished, setDoiYearPublished] = useState('');
-  const [doiAuthors, setDoiAuthors] = useState<ExperimentPublicationsAuthors[]>();
+  const [doiAuthors, setDoiAuthors] = useState<ExperimentPublicationsAuthorsResponse[]>();
   const [doiSuccess, setDoiSuccess] = useState(true);
 
   const handleSetManual = () => {
@@ -212,7 +212,7 @@ export default function AddExperiment() {
   };
 
   const { data, isError, isSuccess, mutate, isLoading } = useMutation<
-    AxiosResponse<ExperimentPublications>,
+    AxiosResponse<ExperimentPublicationsResponse>,
     AxiosError
   >(() => {
     return axios.get(`https://api.crossref.org/works/${doi.toString()}`);
@@ -245,31 +245,32 @@ export default function AddExperiment() {
       const date = new Date(data?.data?.message?.created?.['date-time']);
       const convertedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
       setDoiAccessDate(convertedDate);
-      setDoiYearPublished(data?.data?.message?.issued?.['date-parts'][0][0]);
+      setDoiYearPublished(data?.data?.message?.issued?.['date-parts'][0][0] as string);
       setDoiAuthors(
         data?.data?.message?.author.map((author) => ({
           given: author.given,
           family: author.family,
-          sequence: author.sequence,
         })),
       );
-      setExperimentPublications({
-        doi: data?.data?.message?.DOI,
-        authors: data?.data?.message?.author.map((author) => ({
-          given: author.given,
-          family: author.family,
-          sequence: author.sequence,
-        })),
-        yearPublished: data?.data?.message?.issued?.['date-parts'],
-        title: data?.data?.message?.title,
-        journal: data?.data?.message?.['container-title'],
-        volumeNumber: data?.data?.message?.volume,
-        issueNumber: data?.data?.message?.issue,
-        pagesUsed: data?.data?.message?.page,
-        journalDatabase: data?.data?.message?.publisher,
-        url: data?.data?.message?.URL,
-        accessDate: data?.data?.message?.created?.['date-time'],
-      });
+
+      setExperimentPublications([
+        {
+          doi: data?.data?.message?.DOI,
+          authors: data?.data?.message?.author.map((author) => ({
+            firstName: author.given,
+            lastName: author.family,
+          })),
+          yearPublished: data?.data?.message?.issued?.['date-parts'][0][0] as string,
+          title: data?.data?.message?.title[0],
+          journal: data?.data?.message?.['container-title'][0],
+          volumeNumber: data?.data?.message?.volume,
+          issueNumber: data?.data?.message?.issue,
+          pagesUsed: data?.data?.message?.page,
+          journalDatabase: data?.data?.message?.publisher,
+          url: data?.data?.message?.URL,
+          accessDate: convertedDate,
+        },
+      ]);
       setDoiSuccess(true);
     }
   }, [isSuccess, data]);

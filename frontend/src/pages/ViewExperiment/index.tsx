@@ -107,7 +107,11 @@ export default function ViewExperiment() {
               </Grid>
               <Grid item xs={12}>
                 <Card
-                  sx={{ p: 2, mt: 3, boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
+                  sx={{
+                    p: 2,
+                    mt: 3,
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                  }}
                 >
                   <Typography variant='h5' fontWeight='bold'>
                     Researchers
@@ -127,7 +131,7 @@ export default function ViewExperiment() {
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Publication
                   </Typography>
-                  <Typography variant='body1'>{experiment?.experimentPublications || 'None'}</Typography>
+                  {/*<Typography variant='body1'>{experiment?.experimentPublications || 'None'}</Typography>*/}
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Lead Institution
                   </Typography>

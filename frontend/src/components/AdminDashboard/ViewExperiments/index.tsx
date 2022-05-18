@@ -7,7 +7,7 @@ import {
   WarningRounded,
 } from '@mui/icons-material';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
-import { Link, Box, Button, Grid, Pagination, Paper, Typography, Tooltip } from '@mui/material';
+import { Box, Button, Grid, Link, Pagination, Paper, Tooltip, Typography } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -97,6 +97,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
           <CenteredNoneFound />
         </Grid>
       ) : (
+        experiments?.results &&
         experiments?.results.map((e) => (
           <Grid item key={e.id} xs={12}>
             <Paper

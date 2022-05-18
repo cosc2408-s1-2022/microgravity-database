@@ -108,6 +108,7 @@ public class ExperimentService {
                     publication.setAuthors(
                             authors.stream().map(experimentPublicationAuthorRepository::saveAndFlush).toList());
 
+                publication.setExperiment(experiment);
                 return experimentPublicationRepository.saveAndFlush(publication);
             }).toList());
         }
