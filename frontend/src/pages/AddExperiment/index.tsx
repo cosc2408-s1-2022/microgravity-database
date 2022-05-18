@@ -12,14 +12,25 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import { Experiment, ExperimentPersonRequest, ForCode, Mission, Person, Role, SeoCode, Toa } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
+import moment from 'moment';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
   const navigate = useNavigate();
+
+  const [toas, setToas] = useState<Toa[]>();
+  const {
+    data: toasData,
+    isSuccess: isToasSuccess,
+    isLoading: isToasLoading,
+  } = useQuery<AxiosResponse<Toa[]>, AxiosError>('getAllToas', () => api.get('/toas'));
+  useEffect(() => {
+    if (isToasSuccess && toasData) setToas(toasData.data);
+  }, [isToasSuccess, toasData]);
 
   const [missions, setMissions] = useState<Mission[]>();
   const {
@@ -72,7 +83,6 @@ export default function AddExperiment() {
   }, [isRolesSuccess, rolesData]);
 
   const [title, setTitle] = useState<string>();
-  const [toa, setToa] = useState<string>();
   const [leadInstitution, setLeadInstitution] = useState<string>();
   const [experimentAim, setExperimentAim] = useState<string>();
   const [experimentObjective, setExperimentObjective] = useState<string>();
@@ -89,6 +99,7 @@ export default function AddExperiment() {
     setExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
   };
 
+  const [toa, setToa] = useState<Toa | null>();
   const [mission, setMission] = useState<Mission | null>();
   const [forCode, setForCode] = useState<ForCode | null>();
   const [seoCode, setSeoCode] = useState<SeoCode | null>();
@@ -132,7 +143,6 @@ export default function AddExperiment() {
   } = useMutation<AxiosResponse<Experiment>, AxiosError>('addExperiment', () => {
     const formData = new FormData();
     title && formData.append('title', title);
-    toa && formData.append('toa', toa);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
     experimentAim && formData.append('experimentAim', experimentAim);
     for (const attachment of experimentAttachments) {
@@ -140,9 +150,10 @@ export default function AddExperiment() {
     }
     experimentObjective && formData.append('experimentObjective', experimentObjective);
     experimentPublications && formData.append('experimentPublications', experimentPublications);
-    mission?.id && formData.append('missionId', mission.id.toString());
-    forCode?.id && formData.append('forCodeId', forCode.id.toString());
-    seoCode?.id && formData.append('seoCodeId', seoCode.id.toString());
+    toa && formData.append('toaId', toa.id.toString());
+    mission && formData.append('missionId', mission.id.toString());
+    forCode && formData.append('forCodeId', forCode.id.toString());
+    seoCode && formData.append('seoCodeId', seoCode.id.toString());
     for (const i in peopleState.data) {
       formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
       formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
@@ -203,11 +214,53 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormField
-                  label='Type of Activity (TOA)'
-                  name='toa'
-                  errors={experimentError?.response?.data}
-                  onChange={setToa}
+                <Autocomplete
+                  disablePortal
+                  openText='Type of Activity (ToA)'
+                  options={toas || []}
+                  getOptionLabel={(option) => option.name}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  fullWidth
+                  loading={isToasLoading}
+                  onChange={(_event, value) => {
+                    if (experimentError?.response?.data !== undefined) {
+                      experimentError.response.data.toaId = '';
+                    }
+                    setToa(value);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      margin='none'
+                      size='small'
+                      color='secondary'
+                      fullWidth
+                      error={isExperimentError && !!experimentError?.response?.data?.toaId}
+                      helperText={experimentError?.response?.data?.toaId}
+                      label='Type of Activity (ToA)'
+                    />
+                  )}
+                  renderOption={(props, option, { inputValue }) => {
+                    const matches = match(option.name, inputValue);
+                    const parts = parse(option.name, matches);
+                    return (
+                      <li {...props}>
+                        <div>
+                          {parts.map((part, index) => (
+                            <span
+                              key={index}
+                              style={{
+                                fontWeight: part.highlight ? 700 : 400,
+                              }}
+                            >
+                              {part.text}
+                            </span>
+                          ))}
+                        </div>
+                      </li>
+                    );
+                  }}
+                  noOptionsText='No such ToA found.'
                 />
               </Grid>
               <Grid item xs={6}>
@@ -249,8 +302,9 @@ export default function AddExperiment() {
                   disablePortal
                   openText='Mission'
                   options={missions || []}
-                  getOptionLabel={(option) => option.name}
                   loading={isMissionsLoading}
+                  getOptionLabel={(option) => `${option.name} (${moment(option.launchDate).year()})`}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   fullWidth
                   onChange={(_event, value) => {
                     if (experimentError?.response?.data !== undefined) {
@@ -271,8 +325,8 @@ export default function AddExperiment() {
                     />
                   )}
                   renderOption={(props, option, { inputValue }) => {
-                    const matches = match(option.name, inputValue);
-                    const parts = parse(option.name, matches);
+                    const matches = match(`${option.name} (${moment(option.launchDate).year()})`, inputValue);
+                    const parts = parse(`${option.name} (${moment(option.launchDate).year()})`, matches);
                     return (
                       <li {...props}>
                         <div>
@@ -312,9 +366,10 @@ export default function AddExperiment() {
                 <Grid item xs={6}>
                   <Autocomplete
                     disablePortal
-                    openText='FOR Code'
+                    openText='Field of Research (FoR)'
                     options={forCodes || []}
                     getOptionLabel={(option) => `${option.code} ${option.name}`}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     fullWidth
                     loading={isForCodesLoading}
                     onChange={(_event, value) => {
@@ -332,7 +387,7 @@ export default function AddExperiment() {
                         fullWidth
                         error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
                         helperText={experimentError?.response?.data?.forCodeId}
-                        label='FOR Code'
+                        label='Field of Research (FoR)'
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
@@ -355,15 +410,16 @@ export default function AddExperiment() {
                         </li>
                       );
                     }}
-                    noOptionsText='No such FOR codes found.'
+                    noOptionsText='No such FoR found.'
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <Autocomplete
                     disablePortal
-                    openText='SEO Code'
+                    openText='Socio-Economic Objective (SEO)'
                     options={seoCodes || []}
                     getOptionLabel={(option) => `${option.code} ${option.name}`}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     fullWidth
                     loading={isSeoCodesLoading}
                     onChange={(_event, value) => {
@@ -381,7 +437,7 @@ export default function AddExperiment() {
                         fullWidth
                         error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
                         helperText={experimentError?.response?.data?.seoCodeId}
-                        label='SEO Code'
+                        label='Socio-Economic Objective (SEO)'
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
@@ -404,7 +460,7 @@ export default function AddExperiment() {
                         </li>
                       );
                     }}
-                    noOptionsText='No such SEO codes found.'
+                    noOptionsText='No such SEO found.'
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -429,7 +485,10 @@ export default function AddExperiment() {
                             disablePortal
                             openText='Person'
                             options={people || []}
-                            getOptionLabel={(option) => `${option.firstName} ${option.familyName}`}
+                            getOptionLabel={(option) =>
+                              `${option.firstName} ${option.familyName} (${option.affiliation})`
+                            }
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
                             fullWidth
                             loading={isPeopleLoading}
                             onChange={(_event, value) => {
@@ -455,7 +514,7 @@ export default function AddExperiment() {
                               />
                             )}
                             renderOption={(props, option, { inputValue }) => {
-                              const fullName = `${option.firstName} ${option.familyName}`;
+                              const fullName = `${option.firstName} ${option.familyName} (${option.affiliation})`;
                               const matches = match(fullName, inputValue);
                               const parts = parse(fullName, matches);
                               return (
@@ -504,7 +563,9 @@ export default function AddExperiment() {
                             disablePortal
                             openText='Role'
                             options={roles || []}
+                            value={roles?.find((r) => r.id === entry.data.roleId) || null}
                             getOptionLabel={(option) => option.name}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
                             fullWidth
                             loading={isRolesLoading}
                             onChange={(_event, value) => {

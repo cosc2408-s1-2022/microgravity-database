@@ -58,7 +58,7 @@ export type AuthenticationResponse = {
 export type Experiment = {
   id: number;
   title: string;
-  toa: string;
+  toa: Toa;
   leadInstitution: string;
   principalInvestigator: string;
   experimentAim: string;
@@ -74,6 +74,11 @@ export type Experiment = {
   people: ExperimentPerson[];
   createdAt: Date;
   updatedAt?: Date;
+};
+
+export type Toa = {
+  id: number;
+  name: string;
 };
 
 export type ExperimentAttachment = {

@@ -1,5 +1,5 @@
 import FormField from '../FormField';
-import { Grid, GridProps } from '@mui/material';
+import { GridProps } from '@mui/material';
 import { SearchField } from '../../util/types';
 import React from 'react';
 
@@ -12,10 +12,16 @@ export default function SelectElement(
   },
 ) {
   return (
-    <Grid item>
-      <FormField select name={props.name} label={props.label} value={props.value} onChange={props.callback}>
-        {props.children}
-      </FormField>
-    </Grid>
+    <FormField
+      fullWidth
+      margin='normal'
+      select
+      name={props.name}
+      label={props.label}
+      value={props.value}
+      onChange={props.callback}
+    >
+      {props.children}
+    </FormField>
   );
 }

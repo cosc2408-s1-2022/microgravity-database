@@ -17,7 +17,6 @@ public class SaveExperimentRequest {
     private String title;
 
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-    private String toa;
 
     private String leadInstitution;
 
@@ -30,6 +29,9 @@ public class SaveExperimentRequest {
     private Long[] experimentAttachmentIds;
 
     private String experimentPublications;
+
+    @NotNull(message = "Type of Activity must be specified.")
+    private Long toaId;
 
     @NotNull(message = "Experiments must belong to a mission.")
     private Long missionId;
