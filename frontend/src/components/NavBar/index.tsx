@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Logo from '../../asd-logo-no-text.svg';
+import Logo from '../../asd-logo-navbar.svg';
 import { Box, Button, Container, Link, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PrimarySearch from '../PrimarySearch';
