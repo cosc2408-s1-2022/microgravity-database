@@ -1,6 +1,6 @@
 INSERT INTO prod.user (id, created_at, password, role, updated_at, username)
 INSERT INTO prod.user (id, created_at, password, role, updated_at, username)
-VALUES (1, '2022-04-29 03:18:51.646000', '$2a$10$4tOAKmoIAe09I6B/YIIZ7Odip.JCx9VpQ9n/ssMS/8llChhe96Fc6', 'ROLE_ADMIN',
+VALUES (1, '2022-04-29 03:18:51.646000', '$2a$10$GGAvjGnEHmjQ4cpFJj05hebLcMo3.eNuCCG3gNrV8If7oUHxR4kTq', 'ROLE_ADMIN',
         null, 'admin');
 
 INSERT INTO prod.role (id, name)
