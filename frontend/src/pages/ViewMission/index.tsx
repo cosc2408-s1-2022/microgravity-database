@@ -23,6 +23,8 @@ export default function ViewMission() {
     }
   }, [isSuccess, data]);
 
+  console.log(mission);
+
   return isLoading ? (
     <Box display='flex' justifyContent='center' alignItems='center'>
       <CircularProgress size={24} color='primary' />
@@ -44,9 +46,15 @@ export default function ViewMission() {
         <Typography variant='h6' sx={{ pr: 1 }}>
           {lodash(mission?.platform.name).startCase()}
         </Typography>
-        <Typography variant='body1' sx={{ pr: 1 }} color='GrayText'>{`${moment(mission?.startDate).year()} - ${moment(
-          mission?.endDate,
-        ).year()}`}</Typography>
+        <Typography variant='body1' sx={{ pr: 1 }} color='GrayText'>
+          {mission?.startDate && mission?.endDate
+            ? `${moment(mission.startDate).year()} - ${moment(mission.endDate).year()}`
+            : mission?.startDate
+            ? `${moment(mission.startDate).year()} - Present`
+            : mission?.endDate
+            ? `Unknown - ${moment(mission.endDate).year()}`
+            : ''}
+        </Typography>
       </Paper>
       <Paper
         sx={{

@@ -127,9 +127,9 @@ export default function AdvancedSearchPage() {
   return (
     <Container maxWidth='lg'>
       <Grid container direction='column' height='100vh' wrap='nowrap'>
-        <Grid container direction='row' wrap='nowrap' flexGrow={1}>
-          <AdvancedSearch searchState={searchState} container item md={3} />
-          <Grid container item direction='column' alignItems='center'>
+        <Grid container item direction='row' wrap='nowrap' flexGrow={1} xs={12}>
+          <AdvancedSearch searchState={searchState} container item md={4} xs={6} />
+          <Grid container item direction='column' alignItems='center' md={8} xs={6}>
             {resultsElement}
             {pages > 1 ? (
               <Grid item my={2}>

@@ -43,6 +43,7 @@ public class ExperimentService {
     private final SeoCodeService seoCodeService;
     private final PersonService personService;
     private final RoleService roleService;
+    private final ToaService toaService;
     private final ExperimentPersonService experimentPersonService;
 
     @Autowired
@@ -51,6 +52,7 @@ public class ExperimentService {
                              ExperimentAttachmentService experimentAttachmentService,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
+                             ToaService toaService,
                              ExperimentPersonService experimentPersonService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
@@ -61,6 +63,7 @@ public class ExperimentService {
         this.seoCodeService = seoCodeService;
         this.personService = personService;
         this.roleService = roleService;
+        this.toaService = toaService;
         this.experimentPersonService = experimentPersonService;
     }
 
@@ -82,7 +85,7 @@ public class ExperimentService {
             experimentAttachmentService.deleteAllByExperimentId(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
-        experiment.setToa(experimentRequest.getToa());
+        experiment.setToa(toaService.getToaById(experimentRequest.getToaId()));
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
         experiment.setExperimentAim(experimentRequest.getExperimentAim());
         experiment.setExperimentObjective(experimentRequest.getExperimentObjective());

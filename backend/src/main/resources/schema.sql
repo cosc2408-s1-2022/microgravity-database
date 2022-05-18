@@ -8,6 +8,7 @@ drop table if exists for_code;
 drop table if exists platform_seo_code;
 drop table if exists seo_code;
 drop table if exists platform;
+drop table if exists toa;
 drop table if exists role;
 drop table if exists user;
 
@@ -88,6 +89,13 @@ create table mission
         foreign key (platform_id) references platform (id)
 );
 
+create table toa
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
 create table experiment
 (
     id                      bigint auto_increment
@@ -100,16 +108,18 @@ create table experiment
     experiment_publications varchar(1023) null,
     lead_institution        varchar(255)  null,
     title                   varchar(255)  null,
-    toa                     varchar(255)  null,
     updated_at              datetime(6)   null,
     for_code_id             bigint        not null,
     mission_id              bigint        not null,
     platform_id             bigint        not null,
     seo_code_id             bigint        not null,
+    toa_id                  bigint        not null,
     constraint FKfngj6llveh6hcski9mjnjr7ft
         foreign key (seo_code_id) references seo_code (id),
     constraint FKgygeesbjm6430vcp7oqbj6i56
         foreign key (mission_id) references mission (id),
+    constraint FKjikfxojmw5kwckcnhpdle3566
+        foreign key (toa_id) references toa (id),
     constraint FKmhtqqtjv2v0vr3dawwqsemmm0
         foreign key (platform_id) references platform (id),
     constraint FKqaiemh670d1hykcnsmr52di4l

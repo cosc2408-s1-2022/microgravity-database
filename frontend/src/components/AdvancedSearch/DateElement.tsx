@@ -1,4 +1,4 @@
-import { Grid, GridProps, TextField } from '@mui/material';
+import { GridProps, TextField } from '@mui/material';
 import { SearchField } from '../../util/types';
 import React from 'react';
 import moment, { Moment } from 'moment';
@@ -23,17 +23,15 @@ export default function DateElement(
   };
 
   return (
-    <Grid item>
-      <DatePicker
-        disabled={props.disabled}
-        views={['year']}
-        label={props.label}
-        value={props.value || null}
-        minDate={props.min}
-        maxDate={props.max || moment()}
-        onChange={(e: Moment | null) => handleDateChange(e)}
-        renderInput={(params) => <TextField size='small' fullWidth {...params} color='secondary' />}
-      />
-    </Grid>
+    <DatePicker
+      disabled={props.disabled}
+      views={['year']}
+      label={props.label}
+      value={props.value || null}
+      minDate={props.min}
+      maxDate={props.max || moment()}
+      onChange={(e: Moment | null) => handleDateChange(e)}
+      renderInput={(params) => <TextField size='small' margin='normal' fullWidth {...params} color='secondary' />}
+    />
   );
 }

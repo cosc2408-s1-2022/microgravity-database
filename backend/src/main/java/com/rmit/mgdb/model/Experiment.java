@@ -28,9 +28,6 @@ public class Experiment {
     private String title;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    private String toa;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String leadInstitution;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
@@ -57,6 +54,12 @@ public class Experiment {
     private Date createdAt;
 
     private Date updatedAt;
+
+    @IndexedEmbedded
+    @ManyToOne
+    @JoinColumn(name = "toa_id")
+    @NotNull
+    private Toa toa;
 
     @ManyToOne
     @JoinColumn(name = "mission_id")

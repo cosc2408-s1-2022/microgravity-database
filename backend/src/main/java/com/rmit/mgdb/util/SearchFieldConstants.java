@@ -9,7 +9,7 @@ public class SearchFieldConstants {
 
     public static final String[] EXPERIMENT_SEARCH_FIELDS = {
             "title",
-            "toa",
+            "toa.name",
             "leadInstitution",
             "experimentAim",
             "experimentObjective",

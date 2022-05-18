@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Card, CircularProgress, Container, Grid, Link, Paper, Typography } from '@mui/material';
+import { Box, Card, CircularProgress, Container, Divider, Grid, Link, Paper, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import lodash from 'lodash';
@@ -16,15 +16,7 @@ export default function ViewExperiment() {
     const [, id] = queryKey;
     return getExperiment({ id });
   });
-  const ColoredLine = () => (
-    <hr
-      style={{
-        color: '#cc0808',
-        backgroundColor: '#cc0808',
-        height: 5,
-      }}
-    />
-  );
+  const ColoredLine = () => <Divider sx={{ my: 2, backgroundColor: '#cc0808', border: 'solid 2px #cc0808' }} />;
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -95,21 +87,21 @@ export default function ViewExperiment() {
                     >
                       <Link href={`/forCode/${experiment?.forCode.id}`}>
                         <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
-                          Field of Research
+                          Field of Research (FoR)
                         </Typography>
                         <Typography variant='body1'>{experiment?.forCode.name}</Typography>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          FOR Classification
+                          Classification
                         </Typography>
                         <Typography variant='body1'>{experiment?.forCode.code}</Typography>
                       </Link>
                       <Link href={`/seoCode/${experiment?.seoCode.id}`}>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          Socio-Economic Objective
+                          Socio-Economic Objective (SEO)
                         </Typography>
                         <Typography variant='body1'>{experiment?.seoCode.name}</Typography>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          SEO Classification
+                          Classification
                         </Typography>
                         <Typography variant='body1'>{experiment?.seoCode.code}</Typography>
                       </Link>
@@ -151,7 +143,7 @@ export default function ViewExperiment() {
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Type of Activity (ToA)
                   </Typography>
-                  <Typography variant='body1'>{experiment?.toa}</Typography>
+                  <Typography variant='body1'>{experiment?.toa.name}</Typography>
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Aim
                   </Typography>

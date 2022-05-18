@@ -21,11 +21,13 @@ import {
   Person,
   Role,
   SeoCode,
+  Toa,
   UserRole,
 } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
+import moment from 'moment';
 
 // TODO Refactor into smaller sub-components.
 export default function EditExperiment() {
@@ -40,6 +42,16 @@ export default function EditExperiment() {
       },
     });
   }
+
+  const [toas, setToas] = useState<Toa[]>();
+  const {
+    data: toasData,
+    isSuccess: isToasSuccess,
+    isLoading: isToasLoading,
+  } = useQuery<AxiosResponse<Toa[]>, AxiosError>('getAllToas', () => api.get('/toas'));
+  useEffect(() => {
+    if (isToasSuccess && toasData) setToas(toasData.data);
+  }, [isToasSuccess, toasData]);
 
   const [missions, setMissions] = useState<Mission[]>();
   const {
@@ -92,10 +104,12 @@ export default function EditExperiment() {
   }, [isRolesSuccess, rolesData]);
 
   const [title, setTitle] = useState<string | undefined>(experiment?.title);
-  const [toa, setToa] = useState<string | undefined>(experiment?.toa);
   const [leadInstitution, setLeadInstitution] = useState<string | undefined>(experiment?.leadInstitution);
   const [experimentAim, setExperimentAim] = useState<string | undefined>(experiment?.experimentAim);
   const [experimentObjective, setExperimentObjective] = useState<string | undefined>(experiment?.experimentObjective);
+  const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
+    experiment?.experimentPublications,
+  );
 
   const [experimentAttachments, setExperimentAttachments] = useState<ExperimentAttachment[]>(
     experiment.experimentAttachments,
@@ -114,9 +128,7 @@ export default function EditExperiment() {
     setExperimentAttachments((prevState) => prevState.filter((attachment) => attachment.id !== id));
   };
 
-  const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
-    experiment?.experimentPublications,
-  );
+  const [toa, setToa] = useState<Toa | null>(experiment?.toa || null);
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
   const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
@@ -175,7 +187,6 @@ export default function EditExperiment() {
     const formData = new FormData();
     formData.append('id', experiment.id.toString());
     title && formData.append('title', title);
-    toa && formData.append('toa', toa);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
     experimentAim && formData.append('experimentAim', experimentAim);
     for (const id of experimentAttachments.map((attachment) => attachment.id.toString())) {
@@ -186,9 +197,10 @@ export default function EditExperiment() {
     }
     experimentObjective && formData.append('experimentObjective', experimentObjective);
     experimentPublications && formData.append('experimentPublications', experimentPublications);
-    mission?.id && formData.append('missionId', mission.id.toString());
-    forCode?.id && formData.append('forCodeId', forCode.id.toString());
-    seoCode?.id && formData.append('seoCodeId', seoCode.id.toString());
+    toa && formData.append('toaId', toa.id.toString());
+    mission && formData.append('missionId', mission.id.toString());
+    forCode && formData.append('forCodeId', forCode.id.toString());
+    seoCode && formData.append('seoCodeId', seoCode.id.toString());
     for (const i in peopleState.data) {
       formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
       formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
@@ -209,6 +221,8 @@ export default function EditExperiment() {
       navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
+
+  console.log(toa);
 
   return (
     <AuthWrapper role={UserRole.ROLE_ADMIN}>
@@ -249,7 +263,55 @@ export default function EditExperiment() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormField label='TOA' name='toa' errors={experimentError?.response?.data} onChange={setToa} />
+                <Autocomplete
+                  disablePortal
+                  openText='Type of Activity (ToA)'
+                  options={toas || []}
+                  getOptionLabel={(option) => option.name}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  fullWidth
+                  value={toa}
+                  loading={isToasLoading}
+                  onChange={(_event, value) => {
+                    if (experimentError?.response?.data !== undefined) {
+                      experimentError.response.data.toaId = '';
+                    }
+                    setToa(value);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      margin='none'
+                      size='small'
+                      color='secondary'
+                      fullWidth
+                      error={isExperimentError && !!experimentError?.response?.data?.toaId}
+                      helperText={experimentError?.response?.data?.toaId}
+                      label='Type of Activity (ToA)'
+                    />
+                  )}
+                  renderOption={(props, option, { inputValue }) => {
+                    const matches = match(option.name, inputValue);
+                    const parts = parse(option.name, matches);
+                    return (
+                      <li {...props}>
+                        <div>
+                          {parts.map((part, index) => (
+                            <span
+                              key={index}
+                              style={{
+                                fontWeight: part.highlight ? 700 : 400,
+                              }}
+                            >
+                              {part.text}
+                            </span>
+                          ))}
+                        </div>
+                      </li>
+                    );
+                  }}
+                  noOptionsText='No such ToA found.'
+                />{' '}
               </Grid>
               <Grid item xs={6}>
                 <FormField
@@ -295,9 +357,9 @@ export default function EditExperiment() {
                   openText='Mission'
                   options={missions || []}
                   value={mission}
-                  isOptionEqualToValue={(option, value) => option.name === value.name}
-                  getOptionLabel={(option) => option.name}
                   loading={isMissionsLoading}
+                  getOptionLabel={(option) => `${option.name} (${moment(option.launchDate).year()})`}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   fullWidth
                   onChange={(_event, value) => {
                     if (experimentError?.response?.data !== undefined) {
@@ -318,8 +380,8 @@ export default function EditExperiment() {
                     />
                   )}
                   renderOption={(props, option, { inputValue }) => {
-                    const matches = match(option.name, inputValue);
-                    const parts = parse(option.name, matches);
+                    const matches = match(`${option.name} (${moment(option.launchDate).year()})`, inputValue);
+                    const parts = parse(`${option.name} (${moment(option.launchDate).year()})`, matches);
                     return (
                       <li {...props}>
                         <div>
@@ -342,7 +404,13 @@ export default function EditExperiment() {
                       <Typography variant='body1' flexGrow={1}>
                         No such missions found.
                       </Typography>
-                      <Button variant='contained' color='secondary' onClick={() => navigate('/addMission')}>
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        href='/addMission'
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
                         Add new?
                       </Button>
                     </Box>
@@ -353,11 +421,11 @@ export default function EditExperiment() {
                 <Grid item xs={6}>
                   <Autocomplete
                     disablePortal
-                    openText='FOR Code'
+                    openText='Field of Research (FoR)'
                     options={forCodes || []}
-                    getOptionLabel={(option) => option.name}
+                    getOptionLabel={(option) => `${option.code} ${option.name}`}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     value={forCode}
-                    isOptionEqualToValue={(option, value) => option.name === value.name}
                     fullWidth
                     loading={isForCodesLoading}
                     onChange={(_event, value) => {
@@ -375,12 +443,12 @@ export default function EditExperiment() {
                         fullWidth
                         error={isExperimentError && !!experimentError?.response?.data?.forCodeId}
                         helperText={experimentError?.response?.data?.forCodeId}
-                        label='FOR Code'
+                        label='Field of Research (FoR)'
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
-                      const matches = match(option.name, inputValue);
-                      const parts = parse(option.name, matches);
+                      const matches = match(`${option.code} ${option.name}`, inputValue);
+                      const parts = parse(`${option.code} ${option.name}`, matches);
                       return (
                         <li {...props}>
                           <div>
@@ -398,17 +466,17 @@ export default function EditExperiment() {
                         </li>
                       );
                     }}
-                    noOptionsText='No such FOR codes found.'
+                    noOptionsText='No such FoR found.'
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <Autocomplete
                     disablePortal
-                    openText='SEO Code'
+                    openText='Socio-Economic Objective (SEO)'
                     options={seoCodes || []}
-                    getOptionLabel={(option) => option.name}
+                    getOptionLabel={(option) => `${option.code} ${option.name}`}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     value={seoCode}
-                    isOptionEqualToValue={(option, value) => option.name === value.name}
                     fullWidth
                     loading={isSeoCodesLoading}
                     onChange={(_event, value) => {
@@ -426,7 +494,7 @@ export default function EditExperiment() {
                         fullWidth
                         error={isExperimentError && !!experimentError?.response?.data?.seoCodeId}
                         helperText={experimentError?.response?.data?.seoCodeId}
-                        label='SEO Code'
+                        label='Socio-Economic Objective (SEO)'
                       />
                     )}
                     renderOption={(props, option, { inputValue }) => {
@@ -449,7 +517,7 @@ export default function EditExperiment() {
                         </li>
                       );
                     }}
-                    noOptionsText='No such SEO codes found.'
+                    noOptionsText='No such SEO found.'
                   />
                 </Grid>
               </Grid>
@@ -475,8 +543,10 @@ export default function EditExperiment() {
                           disablePortal
                           openText='Person'
                           options={people || []}
-                          getOptionLabel={(option) => `${option.firstName} ${option.familyName}`}
                           value={people?.find((p) => p.id === entry.data.personId) || null}
+                          getOptionLabel={(option) =>
+                            `${option.firstName} ${option.familyName} (${option.affiliation})`
+                          }
                           isOptionEqualToValue={(option, value) => option.id === value.id}
                           fullWidth
                           loading={isPeopleLoading}
@@ -503,7 +573,7 @@ export default function EditExperiment() {
                             />
                           )}
                           renderOption={(props, option, { inputValue }) => {
-                            const fullName = `${option.firstName} ${option.familyName}`;
+                            const fullName = `${option.firstName} ${option.familyName} (${option.affiliation})`;
                             const matches = match(fullName, inputValue);
                             const parts = parse(fullName, matches);
                             return (
@@ -531,7 +601,13 @@ export default function EditExperiment() {
                               <Typography variant='body1' flexGrow={1}>
                                 No such person found.
                               </Typography>
-                              <Button variant='contained' color='secondary' onClick={() => navigate('/addPerson')}>
+                              <Button
+                                variant='contained'
+                                color='secondary'
+                                href='/addPerson'
+                                target='_blank'
+                                rel='noreferrer noopener'
+                              >
                                 Add new?
                               </Button>
                             </Box>
@@ -546,8 +622,8 @@ export default function EditExperiment() {
                           disablePortal
                           openText='Role'
                           options={roles || []}
-                          getOptionLabel={(option) => option.name}
                           value={roles?.find((r) => r.id === entry.data.roleId) || null}
+                          getOptionLabel={(option) => option.name}
                           isOptionEqualToValue={(option, value) => option.id === value.id}
                           fullWidth
                           loading={isRolesLoading}
