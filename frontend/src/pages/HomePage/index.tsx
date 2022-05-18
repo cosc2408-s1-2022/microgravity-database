@@ -10,7 +10,7 @@ export default function HomePage() {
   const { state } = useLocation() as { state: { isError: boolean; message: string } };
 
   return (
-    <Grid container justifyContent='center' height='100%'>
+    <Grid container justifyContent='center' height='60%'>
       <Grid container direction='column' justifyContent='center' alignItems='center'>
         <Grid item display='flex' sx={{ my: 8 }}>
           <img src={Logo} id='homepage-logo' alt='Australian Space Database Logo' />
