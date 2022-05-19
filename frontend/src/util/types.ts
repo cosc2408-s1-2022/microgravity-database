@@ -113,9 +113,16 @@ export type ExperimentPerson = {
 };
 
 export type ExperimentPersonRequest = {
-  personId: number;
-  roleId: number;
+  personId?: number;
+  roleId?: number;
 };
+
+export type ExperimentPersonRequestEntry = {
+  id: number;
+  data: ExperimentPersonRequest;
+};
+
+export type PeopleReducerState = { uid: number; data: ExperimentPersonRequestEntry[] };
 
 export type Platform = {
   id: number;
