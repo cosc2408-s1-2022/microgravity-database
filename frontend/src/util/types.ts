@@ -199,3 +199,10 @@ export type MissionResultsProps = {
   startDate?: Date;
   endDate?: Date;
 };
+
+export type CaptchaResponse = {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  error_codes?: string[];
+};

@@ -27,6 +27,7 @@ import MissionSelector from '../../components/Experiment/MissionSelector';
 import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
 import PeopleSelector from '../../components/Experiment/PeopleSelector';
 import { usePeopleReducer } from '../../util/hooks';
+import Captcha from '../../components/Captcha';
 
 export default function EditExperiment() {
   const navigate = useNavigate();
@@ -117,6 +118,7 @@ export default function EditExperiment() {
     });
   });
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     mutateExperiment();
@@ -408,11 +410,15 @@ export default function EditExperiment() {
                   )}
                 </Paper>
               </Grid>
+              <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                <Captcha onComplete={setIsCaptchaComplete} />
+              </Grid>
             </Grid>
           </Box>
           <Box display='flex' alignItems='center' mt={3}>
             <LoadingButton
               sx={{ mr: 2 }}
+              disabled={!isCaptchaComplete}
               loading={isExperimentLoading}
               onClick={handleSubmit}
               variant='contained'

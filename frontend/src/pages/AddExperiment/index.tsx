@@ -18,6 +18,7 @@ import PeopleSelector from '../../components/Experiment/PeopleSelector';
 import { usePeopleReducer } from '../../util/hooks';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
+import Captcha from '../../components/Captcha';
 
 export default function AddExperiment() {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ export default function AddExperiment() {
     setExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
   };
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutateExperiment();
@@ -282,8 +284,12 @@ export default function AddExperiment() {
                   )}
                 </Paper>
               </Grid>
+              <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                <Captcha onComplete={setIsCaptchaComplete} />
+              </Grid>
             </Grid>
             <LoadingButton
+              disabled={!isCaptchaComplete}
               loading={isExperimentLoading}
               type='submit'
               variant='contained'

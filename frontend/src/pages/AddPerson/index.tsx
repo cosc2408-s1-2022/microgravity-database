@@ -9,6 +9,7 @@ import api from '../../util/api';
 import { Person } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import AuthWrapper from '../../components/AuthWrapper';
+import Captcha from '../../components/Captcha';
 
 export default function AddPerson() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function AddPerson() {
       }),
   );
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutate();
@@ -125,8 +127,18 @@ export default function AddPerson() {
                   onChange={setCountry}
                 />
               </Grid>
+              <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                <Captcha onComplete={setIsCaptchaComplete} />
+              </Grid>
               <Grid item xs={12}>
-                <LoadingButton loading={isLoading} type='submit' variant='contained' color='secondary' fullWidth>
+                <LoadingButton
+                  disabled={!isCaptchaComplete}
+                  loading={isLoading}
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                  fullWidth
+                >
                   Add Person
                 </LoadingButton>
               </Grid>

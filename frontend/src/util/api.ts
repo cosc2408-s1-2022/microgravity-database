@@ -16,6 +16,10 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('authToken');
+    }
+
     Promise.reject(error);
   },
 );

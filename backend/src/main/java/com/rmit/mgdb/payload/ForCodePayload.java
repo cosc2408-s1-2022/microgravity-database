@@ -23,7 +23,7 @@ public class ForCodePayload {
         this.id = forCode.getId();
         this.code = forCode.getCode();
         this.name = forCode.getName();
-        this.experiments = forCode.getExperiments();
+        this.experiments = forCode.getExperiments().stream().filter(e -> e.isApproved() && !e.isDeleted()).toList();
     }
 
 }
