@@ -15,6 +15,7 @@ import parse from 'autosuggest-highlight/parse';
 import AuthWrapper from '../../components/AuthWrapper';
 import { Mission, Platform } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import Captcha from '../../components/Captcha';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
@@ -54,6 +55,7 @@ export default function AddMission() {
     }),
   );
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     !endDateError && mutateMission();
@@ -224,8 +226,12 @@ export default function AddMission() {
                     noOptionsText='No such platforms found.'
                   />
                 </Grid>
+                <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                  <Captcha onComplete={setIsCaptchaComplete} />
+                </Grid>
                 <Grid item xs={12}>
                   <LoadingButton
+                    disabled={!isCaptchaComplete}
                     loading={isMissionLoading}
                     type='submit'
                     variant='contained'

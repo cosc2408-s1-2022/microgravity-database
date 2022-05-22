@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../../components/AuthWrapper';
+import Captcha from '../../components/Captcha';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import MessageSnackbar from '../../components/MessageSnackbar';
@@ -63,6 +64,7 @@ export default function EditMission() {
     }),
   );
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     !endDateError && mutateMission();
@@ -235,10 +237,14 @@ export default function EditMission() {
                     noOptionsText='No such platforms found.'
                   />
                 </Grid>
+                <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                  <Captcha onComplete={setIsCaptchaComplete} />
+                </Grid>
                 <Grid item xs={12}>
                   <Box display='flex' alignItems='center'>
                     <LoadingButton
                       sx={{ mr: 2 }}
+                      disabled={!isCaptchaComplete}
                       loading={isMissionLoading}
                       onClick={handleSubmit}
                       variant='contained'

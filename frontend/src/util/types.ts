@@ -113,9 +113,16 @@ export type ExperimentPerson = {
 };
 
 export type ExperimentPersonRequest = {
-  personId: number;
-  roleId: number;
+  personId?: number;
+  roleId?: number;
 };
+
+export type ExperimentPersonRequestEntry = {
+  id: number;
+  data: ExperimentPersonRequest;
+};
+
+export type PeopleReducerState = { uid: number; data: ExperimentPersonRequestEntry[] };
 
 export type Platform = {
   id: number;
@@ -191,4 +198,11 @@ export type MissionResultsProps = {
   launchDate: Date;
   startDate?: Date;
   endDate?: Date;
+};
+
+export type CaptchaResponse = {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  error_codes?: string[];
 };
