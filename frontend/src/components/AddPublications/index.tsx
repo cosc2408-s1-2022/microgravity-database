@@ -47,7 +47,7 @@ export default function AddPublications(publicationsProps: PublicationsPropsInte
         </IconButton>
       </Box>
       {publicationsState.data.map((entry) => {
-        const newErrors = Object.fromEntries(
+        const publicationErrors = Object.fromEntries(
           Object.entries(errors || {})
             // Filter out errors only for this specific publication entry
             .filter(([key]) => new RegExp(`experimentPublications\\[${entry.id}].*`).test(key))
@@ -59,7 +59,7 @@ export default function AddPublications(publicationsProps: PublicationsPropsInte
             key={entry.id}
             id={entry.id}
             data={entry.data}
-            errors={newErrors}
+            errors={publicationErrors}
             handlePublicationRemove={() => {
               dispatchPublications({
                 type: 'REMOVE',
