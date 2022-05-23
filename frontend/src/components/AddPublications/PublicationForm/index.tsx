@@ -1,12 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, IconButton, Typography } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useReducer } from 'react';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -41,7 +33,7 @@ export default function PublicationForm(formProps: formPropsInterface) {
     yearPublished: '',
     authors: [],
   };
-  const [publication, dispatch] = useReducer(publicationReducer, initialState);
+  const [publication, dispatch] = useReducer(publicationReducer, formProps.data || initialState);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     dispatch({ type: 'MODIFY', payload: { ...publication, [event.target.name]: event.target.value } });
@@ -106,7 +98,7 @@ export default function PublicationForm(formProps: formPropsInterface) {
       </AccordionSummary>
       <AccordionDetails>
         <Grid container spacing={1}>
-          <Grid container item height='fit-content' xs={6} spacing={1} wrap="nowrap">
+          <Grid container item height='fit-content' xs={6} spacing={1} wrap='nowrap'>
             <Grid item display='flex' flexGrow={1}>
               <FormField
                 name='doi'

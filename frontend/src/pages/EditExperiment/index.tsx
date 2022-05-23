@@ -12,17 +12,11 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import {
-  Experiment,
-  ExperimentPublication,
-  ForCode,
-  Mission,
-  Person,
-  Role,
-  SeoCode,
-} from '../../util/types';
+import { Experiment, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import peopleReducer from '../../util/reducers/PeopleReducer';
+import publicationsReducer from '../../util/reducers/PublicationsReducer';
+import AddPublications from '../../components/AddPublications';
 
 // TODO Refactor into smaller sub-components.
 export default function EditExperiment() {
@@ -96,9 +90,6 @@ export default function EditExperiment() {
   const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string | undefined>(
     experiment?.experimentModuleDrawing,
   );
-  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublication[] | undefined>(
-    experiment?.experimentPublications,
-  );
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
   const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
@@ -118,6 +109,15 @@ export default function EditExperiment() {
   initialState.uid = uid;
   const [peopleState, dispatchPeople] = useReducer(peopleReducer, initialState);
 
+  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, {
+    uid: 0,
+    data:
+      experiment?.experimentPublications.map((publication) => ({
+        id: uid++,
+        data: { ...publication },
+      })),
+  });
+
   const {
     error: experimentError,
     isSuccess: isExperimentSuccess,
@@ -133,10 +133,10 @@ export default function EditExperiment() {
       experimentAim,
       experimentObjective,
       experimentModuleDrawing,
-      experimentPublications,
       missionId: mission?.id,
       forCodeId: forCode?.id,
       seoCodeId: seoCode?.id,
+      experimentPublications: publicationsState.data.map((entry) => entry.data),
       experimentPersonRequests: peopleState.data.map((entry) => entry.data),
     }),
   );
@@ -229,15 +229,6 @@ export default function EditExperiment() {
                   value={experimentModuleDrawing || ''}
                   errors={experimentError?.response?.data}
                   onChange={setExperimentModuleDrawing}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormField
-                  label='Experiment Publications'
-                  name='experimentPublications'
-                  value={experimentPublications || null}
-                  errors={experimentError?.response?.data}
-                  // onChange={setExperimentPublications}
                 />
               </Grid>
             </Grid>
@@ -405,6 +396,12 @@ export default function EditExperiment() {
                 />
               </Grid>
             </Grid>
+            {/* Publication entries */}
+            <AddPublications
+              publicationsState={publicationsState}
+              dispatchPublications={dispatchPublications}
+              errors={experimentError?.response?.data}
+            />
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
               <Box display='flex' alignItems='center'>
                 <Typography sx={{ p: 1, pl: 1.5 }}>Edit People</Typography>
