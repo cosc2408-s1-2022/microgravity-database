@@ -5,7 +5,8 @@ const publicationReducer = (state: ExperimentPublication, action: { type: string
     case 'MODIFY': {
       return action.payload;
     }
-    default: return state;
+    default:
+      return state;
   }
 };
 

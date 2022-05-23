@@ -5,8 +5,6 @@ import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
-import com.rmit.mgdb.repository.ExperimentPublicationAuthorRepository;
-import com.rmit.mgdb.repository.ExperimentPublicationRepository;
 import com.rmit.mgdb.repository.ExperimentRepository;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -32,8 +30,7 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
-    private final ExperimentPublicationRepository experimentPublicationRepository;
-    private final ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository;
+    private final ExperimentPublicationService experimentPublicationService;
     private final MissionService missionService;
     private final ForCodeService forCodeService;
     private final SeoCodeService seoCodeService;
@@ -44,16 +41,14 @@ public class ExperimentService {
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
-                             ExperimentPublicationRepository experimentPublicationRepository,
-                             ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository,
+                             ExperimentPublicationService experimentPublicationService,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
                              ExperimentPersonService experimentPersonService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
-        this.experimentPublicationRepository = experimentPublicationRepository;
-        this.experimentPublicationAuthorRepository = experimentPublicationAuthorRepository;
+        this.experimentPublicationService = experimentPublicationService;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
         this.seoCodeService = seoCodeService;
@@ -76,6 +71,7 @@ public class ExperimentService {
             experiment.setApproved(existingExperiment.isApproved());
             experiment.setDeleted(existingExperiment.isDeleted());
             experimentPersonService.removeAllExperimentPeople(id);
+            experimentPublicationService.removeAllExperimentPublications(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setToa(experimentRequest.getToa());
@@ -106,10 +102,10 @@ public class ExperimentService {
                 List<ExperimentPublicationAuthor> authors = publication.getAuthors();
                 if (authors != null && authors.size() > 0)
                     publication.setAuthors(
-                            authors.stream().map(experimentPublicationAuthorRepository::saveAndFlush).toList());
+                            authors.stream().map(experimentPublicationService::saveExperimentPublicationAuthor).toList());
 
                 publication.setExperiment(experiment);
-                return experimentPublicationRepository.saveAndFlush(publication);
+                return experimentPublicationService.saveExperimentPublication(publication);
             }).toList());
         }
 

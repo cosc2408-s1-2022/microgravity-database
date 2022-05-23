@@ -43,10 +43,7 @@ export default function PublicationForm(formProps: formPropsInterface) {
     dispatch({ type: 'MODIFY', payload: initialState });
   };
 
-  const { data, isError, isSuccess, mutate, isLoading } = useMutation<
-    AxiosResponse<ExperimentPublicationsResponse>,
-    AxiosError
-  >(() => {
+  const { data, mutate, isLoading } = useMutation<AxiosResponse<ExperimentPublicationsResponse>, AxiosError>(() => {
     return axios.get(`https://api.crossref.org/works/${publication.doi.toString()}`);
   });
 
@@ -78,14 +75,14 @@ export default function PublicationForm(formProps: formPropsInterface) {
         },
       });
     }
-  }, [isSuccess]);
+  }, [data]);
 
   useEffect(() => {
     formProps.handlePublicationEdit(publication);
-  }, [publication]);
+  }, [formProps, publication]);
 
   return (
-    <Accordion>
+    <Accordion sx={{ p: 0 }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
         <Grid item display='flex' flexGrow={1} alignItems='center'>
           <Typography>{formProps.data.title || 'Untitled Publication'}</Typography>
@@ -98,7 +95,7 @@ export default function PublicationForm(formProps: formPropsInterface) {
       </AccordionSummary>
       <AccordionDetails>
         <Grid container spacing={1}>
-          <Grid container item height='fit-content' xs={6} spacing={1} wrap='nowrap'>
+          <Grid container item height='fit-content' xs={12} spacing={1} wrap='nowrap'>
             <Grid item display='flex' flexGrow={1}>
               <FormField
                 name='doi'
@@ -233,13 +230,10 @@ export default function PublicationForm(formProps: formPropsInterface) {
               value={publication.authors?.map((author) => author.lastName[0] + '. ' + author.firstName).join(', ')}
             />
           </Grid>
-
-          <Grid item display='flex'>
-            <Button variant='contained' fullWidth onClick={handleClear}>
-              Clear
-            </Button>
-          </Grid>
         </Grid>
+        <Button sx={{ mt: 2, width: '50%' }} variant='contained' onClick={handleClear}>
+          Clear
+        </Button>
       </AccordionDetails>
     </Accordion>
   );

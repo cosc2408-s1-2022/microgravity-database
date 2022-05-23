@@ -1,14 +1,4 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, Container, Grid, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useReducer, useState } from 'react';
@@ -22,14 +12,7 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import {
-  Experiment, ExperimentPersonRequestEntry,
-  ForCode,
-  Mission,
-  Person,
-  Role,
-  SeoCode,
-} from '../../util/types';
+import { Experiment, ExperimentPersonRequestEntry, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import publicationsReducer from '../../util/reducers/PublicationsReducer';
 import AddPublications from '../../components/AddPublications';
@@ -79,8 +62,8 @@ export default function AddExperiment() {
   }, [isPeopleSuccess, peopleData]);
 
   const peopleReducer = (
-      state: { uid: number; data: ExperimentPersonRequestEntry[] },
-      action: { type: string; payload: ExperimentPersonRequestEntry },
+    state: { uid: number; data: ExperimentPersonRequestEntry[] },
+    action: { type: string; payload: ExperimentPersonRequestEntry },
   ) => {
     switch (action.type) {
       case 'ADD': {
@@ -104,7 +87,6 @@ export default function AddExperiment() {
       }
     }
   };
-
 
   const [roles, setRoles] = useState<Role[]>();
   const {
@@ -399,9 +381,9 @@ export default function AddExperiment() {
             </Grid>
             {/* Publication entries */}
             <AddPublications
-                publicationsState={publicationsState}
-                dispatchPublications={dispatchPublications}
-                errors={experimentError?.response?.data}
+              publicationsState={publicationsState}
+              dispatchPublications={dispatchPublications}
+              errors={experimentError?.response?.data}
             />
             {/* Person entries */}
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>

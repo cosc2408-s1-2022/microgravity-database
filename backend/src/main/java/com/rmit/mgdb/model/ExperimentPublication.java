@@ -21,7 +21,7 @@ public class ExperimentPublication {
     private Long id;
 
     @Valid
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "publication_author",
                joinColumns = @JoinColumn(name = "publication_id"),
                inverseJoinColumns = @JoinColumn(name = "author_id"))
