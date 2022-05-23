@@ -12,9 +12,8 @@ import match from 'autosuggest-highlight/match';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
+import {Experiment, ExperimentPersonRequestEntry, ForCode, Mission, Person, Role, SeoCode} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
-import peopleReducer from '../../util/reducers/PeopleReducer';
 import publicationsReducer from '../../util/reducers/PublicationsReducer';
 import AddPublications from '../../components/AddPublications';
 
@@ -71,6 +70,34 @@ export default function EditExperiment() {
   useEffect(() => {
     if (isPeopleSuccess && peopleData) setPeople(peopleData.data);
   }, [isPeopleSuccess, peopleData]);
+
+  const peopleReducer = (
+      state: { uid: number; data: ExperimentPersonRequestEntry[] },
+      action: { type: string; payload: ExperimentPersonRequestEntry },
+  ) => {
+    switch (action.type) {
+      case 'ADD': {
+        return { uid: state.uid + 1, data: [...state.data, action.payload] };
+      }
+      case 'REMOVE': {
+        return { uid: state.uid, data: state.data.filter((entry) => entry.id !== action.payload.id) };
+      }
+      case 'MODIFY': {
+        return {
+          uid: state.uid,
+          data: state.data.map((entry) => {
+            if (entry.id === action.payload.id) return action.payload;
+
+            return entry;
+          }),
+        };
+      }
+      default: {
+        return state;
+      }
+    }
+  };
+
 
   const [roles, setRoles] = useState<Role[]>();
   const {
