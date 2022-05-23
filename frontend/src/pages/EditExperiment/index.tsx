@@ -14,8 +14,7 @@ import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import AuthWrapper from '../../components/AuthWrapper';
 import {
   Experiment,
-  ExperimentPersonRequest,
-  ExperimentPublications,
+  ExperimentPublication,
   ForCode,
   Mission,
   Person,
@@ -23,6 +22,7 @@ import {
   SeoCode,
 } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import peopleReducer from '../../util/reducers/PeopleReducer';
 
 // TODO Refactor into smaller sub-components.
 export default function EditExperiment() {
@@ -96,42 +96,12 @@ export default function EditExperiment() {
   const [experimentModuleDrawing, setExperimentModuleDrawing] = useState<string | undefined>(
     experiment?.experimentModuleDrawing,
   );
-  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublications[] | undefined>(
+  const [experimentPublications, setExperimentPublications] = useState<ExperimentPublication[] | undefined>(
     experiment?.experimentPublications,
   );
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
   const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
-  type ExperimentPersonRequestEntry = {
-    id: number;
-    data: ExperimentPersonRequest;
-  };
-  const peopleReducer = (
-    state: { uid: number; data: ExperimentPersonRequestEntry[] },
-    action: { type: string; payload: ExperimentPersonRequestEntry },
-  ) => {
-    switch (action.type) {
-      case 'ADD': {
-        return { uid: state.uid + 1, data: [...state.data, action.payload] };
-      }
-      case 'REMOVE': {
-        return { uid: state.uid, data: state.data.filter((entry) => entry.id !== action.payload.id) };
-      }
-      case 'MODIFY': {
-        return {
-          uid: state.uid,
-          data: state.data.map((entry) => {
-            if (entry.id === action.payload.id) return action.payload;
-
-            return entry;
-          }),
-        };
-      }
-      default: {
-        return state;
-      }
-    }
-  };
 
   let uid = 0;
   const initialState = {
@@ -147,6 +117,7 @@ export default function EditExperiment() {
   };
   initialState.uid = uid;
   const [peopleState, dispatchPeople] = useReducer(peopleReducer, initialState);
+
   const {
     error: experimentError,
     isSuccess: isExperimentSuccess,

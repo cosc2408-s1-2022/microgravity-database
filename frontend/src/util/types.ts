@@ -64,7 +64,7 @@ export type Experiment = {
   experimentAim: string;
   experimentObjective: string;
   experimentModuleDrawing: string;
-  experimentPublications: ExperimentPublications[];
+  experimentPublications: ExperimentPublication[];
   deleted: boolean;
   approved: boolean;
   mission: Mission;
@@ -99,6 +99,11 @@ export type ExperimentPerson = {
 export type ExperimentPersonRequest = {
   personId: number;
   roleId: number;
+};
+
+export type ExperimentPersonRequestEntry = {
+  id: number;
+  data: ExperimentPersonRequest;
 };
 
 export type Platform = {
@@ -194,7 +199,7 @@ export type ExperimentPublicationsResponse = {
   };
 };
 
-export type ExperimentPublications = {
+export type ExperimentPublication = {
   doi: string;
   authors: ExperimentPublicationsAuthor[];
   yearPublished: string;
@@ -206,6 +211,11 @@ export type ExperimentPublications = {
   journalDatabase: string;
   url: string;
   accessDate: string;
+};
+
+export type ExperimentPublicationEntry = {
+  id: number;
+  data: ExperimentPublication;
 };
 
 export type ExperimentPublicationsAuthor = {
