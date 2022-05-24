@@ -17,10 +17,10 @@ public class ExperimentPublicationAuthor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Author first name cannot be blank.")
+    @NotBlank(message = "First name cannot be blank.")
     private String firstName;
 
-    @NotBlank(message = "Author last name cannot be blank.")
+    @NotBlank(message = "Last name cannot be blank.")
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")

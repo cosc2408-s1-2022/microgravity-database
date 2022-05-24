@@ -15,7 +15,7 @@ import AuthWrapper from '../../components/AuthWrapper';
 import { Experiment, ExperimentPersonRequestEntry, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import publicationsReducer from '../../util/reducers/PublicationsReducer';
-import AddPublications from '../../components/AddPublications';
+import PublicationsForm from '../../components/Experiment/PublicationsForm';
 
 // TODO Refactor into smaller sub-components.
 export default function AddExperiment() {
@@ -77,7 +77,6 @@ export default function AddExperiment() {
           uid: state.uid,
           data: state.data.map((entry) => {
             if (entry.id === action.payload.id) return action.payload;
-
             return entry;
           }),
         };
@@ -380,9 +379,9 @@ export default function AddExperiment() {
               </Grid>
             </Grid>
             {/* Publication entries */}
-            <AddPublications
-              publicationsState={publicationsState}
-              dispatchPublications={dispatchPublications}
+            <PublicationsForm
+              state={publicationsState}
+              dispatch={dispatchPublications}
               errors={experimentError?.response?.data}
             />
             {/* Person entries */}
@@ -393,7 +392,7 @@ export default function AddExperiment() {
                   onClick={() => {
                     dispatchPeople({
                       type: 'ADD',
-                      payload: { id: peopleState.uid, data: { personId: 0, roleId: 0 } },
+                      payload: { id: peopleState.uid, data: { personId: undefined, roleId: undefined } },
                     });
                   }}
                 >

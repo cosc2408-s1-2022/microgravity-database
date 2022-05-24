@@ -15,7 +15,7 @@ import AuthWrapper from '../../components/AuthWrapper';
 import { Experiment, ExperimentPersonRequestEntry, ForCode, Mission, Person, Role, SeoCode } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import publicationsReducer from '../../util/reducers/PublicationsReducer';
-import AddPublications from '../../components/AddPublications';
+import PublicationsForm from '../../components/Experiment/PublicationsForm';
 
 // TODO Refactor into smaller sub-components.
 export default function EditExperiment() {
@@ -121,27 +121,29 @@ export default function EditExperiment() {
   const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
 
   let uid = 0;
-  const initialState = {
+  const initialPeopleState = {
     uid: 0,
-    data:
-      experiment?.people.map((person) => ({
-        id: uid++,
-        data: {
-          roleId: person.role.id,
-          personId: person.id.personId,
-        },
-      })) || [],
+    data: experiment?.people.map((person) => ({
+      id: uid++,
+      data: {
+        roleId: person.role.id,
+        personId: person.id.personId,
+      },
+    })),
   };
-  initialState.uid = uid;
-  const [peopleState, dispatchPeople] = useReducer(peopleReducer, initialState);
+  initialPeopleState.uid = uid;
+  const [peopleState, dispatchPeople] = useReducer(peopleReducer, initialPeopleState);
 
-  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, {
+  uid = 0;
+  const initialPublicationState = {
     uid: 0,
     data: experiment?.experimentPublications.map((publication) => ({
       id: uid++,
       data: { ...publication },
     })),
-  });
+  };
+  initialPublicationState.uid = uid;
+  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, initialPublicationState);
 
   const {
     error: experimentError,
@@ -422,9 +424,9 @@ export default function EditExperiment() {
               </Grid>
             </Grid>
             {/* Publication entries */}
-            <AddPublications
-              publicationsState={publicationsState}
-              dispatchPublications={dispatchPublications}
+            <PublicationsForm
+              state={publicationsState}
+              dispatch={dispatchPublications}
               errors={experimentError?.response?.data}
             />
             <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>

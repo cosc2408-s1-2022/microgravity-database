@@ -16,7 +16,8 @@ public class ExperimentPublicationService {
     private final ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository;
 
     @Autowired
-    public ExperimentPublicationService(ExperimentPublicationRepository experimentPublicationRepository, ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository) {
+    public ExperimentPublicationService(ExperimentPublicationRepository experimentPublicationRepository,
+                                        ExperimentPublicationAuthorRepository experimentPublicationAuthorRepository) {
         this.experimentPublicationRepository = experimentPublicationRepository;
         this.experimentPublicationAuthorRepository = experimentPublicationAuthorRepository;
     }
@@ -25,7 +26,8 @@ public class ExperimentPublicationService {
         return experimentPublicationRepository.saveAndFlush(experimentPublication);
     }
 
-    public ExperimentPublicationAuthor saveExperimentPublicationAuthor(ExperimentPublicationAuthor experimentPublicationAuthor) {
+    public ExperimentPublicationAuthor saveExperimentPublicationAuthor(
+            ExperimentPublicationAuthor experimentPublicationAuthor) {
         return experimentPublicationAuthorRepository.saveAndFlush(experimentPublicationAuthor);
     }
 

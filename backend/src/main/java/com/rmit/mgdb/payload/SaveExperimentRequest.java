@@ -40,6 +40,7 @@ public class SaveExperimentRequest {
     @NotNull(message = "Experiments must have an SEO code specified.")
     private Long seoCodeId;
 
+    @Valid
     private SaveExperimentPersonRequest[] experimentPersonRequests;
 
 }

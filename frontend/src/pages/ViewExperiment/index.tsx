@@ -116,54 +116,70 @@ export default function ViewExperiment() {
                   <Typography variant='h5' fontWeight='bold'>
                     Researchers
                   </Typography>
-                  {experiment?.people.map((person, i) => (
-                    <Box key={i} mb={2}>
-                      <Typography variant={'body1'} fontWeight='bold'>
-                        {`${person.person.familyName.at(0)}. ${person.person.firstName}`}
-                      </Typography>
-                      <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
-                      <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
-                      <Typography
-                        variant={'body2'}
-                      >{`${person.person.city}, ${person.person.state}, ${person.person.country}`}</Typography>
-                    </Box>
-                  ))}
-                  <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
-                    Experiment Publication
-                  </Typography>
-                  {experiment?.experimentPublications.map((publication, i) => (
-                    <Box key={i} mb={2}>
-                      {publication.authors.map((person, i) => (
-                        <Typography sx={{ display: 'inline' }} key={i} variant={'body2'} fontWeight='bold'>
-                          {`${person.firstName.at(0)}. ${person.lastName}`}
-                          {i < publication.authors.length - 1 ? ', ' : ''}
+                  {experiment?.people && experiment?.people.length ? (
+                    experiment?.people.map((person, i) => (
+                      <Box key={i} mb={2}>
+                        <Typography variant={'body1'} fontWeight='bold'>
+                          {`${person.person.familyName.at(0)}. ${person.person.firstName}`}
                         </Typography>
-                      ))}
-                      <Typography sx={{ display: 'inline' }} variant={'body2'}>
-                        , ({publication.yearPublished}), "{publication.title}",{' '}
-                        <Typography sx={{ display: 'inline', fontStyle: 'italic' }} variant={'body2'}>
-                          {publication.journal}, {publication.volumeNumber},{' '}
-                        </Typography>
-                        {publication.issueNumber}, DOI: {publication.doi}, pp. {publication.pagesUsed}.
-                      </Typography>
-                    </Box>
-                  ))}
+                        <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
+                        <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
+                        <Typography
+                          variant={'body2'}
+                        >{`${person.person.city}, ${person.person.state}, ${person.person.country}`}</Typography>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography variant='body1'>None found.</Typography>
+                  )}
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Lead Institution
                   </Typography>
-                  <Typography variant='body1'>{experiment?.leadInstitution}</Typography>
+                  <Typography variant='body1'>{experiment?.leadInstitution || 'Not specified.'}</Typography>
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Type of Activity (ToA)
                   </Typography>
-                  <Typography variant='body1'>{experiment?.toa}</Typography>
+                  <Typography variant='body1'>{experiment?.toa || 'Not specified.'}</Typography>
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Aim
                   </Typography>
-                  <Typography variant='body1'>{experiment?.experimentAim}</Typography>
+                  <Typography variant='body1'>{experiment?.experimentAim || 'Not specified.'}</Typography>
                   <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Objective
                   </Typography>
-                  <Typography variant='body1'>{experiment?.experimentObjective}</Typography>
+                  <Typography variant='body1'>{experiment?.experimentObjective || 'Not specified.'}</Typography>
+                  <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                    Publications
+                  </Typography>
+                  {experiment?.experimentPublications && experiment?.experimentPublications.length > 0 ? (
+                    experiment.experimentPublications.map((publication, i) => (
+                      <Box display='flex' key={i}>
+                        <Box mr={1}>
+                          <Typography sx={{ display: 'inline' }} variant='body2'>{`[${i + 1}]`}</Typography>
+                        </Box>
+                        <Box>
+                          {publication.authors &&
+                            publication.authors.length > 0 &&
+                            publication.authors.map((person, i) => (
+                              <Typography sx={{ display: 'inline' }} key={i} variant='body2' fontWeight='bold'>
+                                {`${person.firstName.at(0)}. ${person.lastName}, `}
+                              </Typography>
+                            ))}
+                          <Typography sx={{ display: 'inline' }} variant={'body2'}>
+                            {`(${publication.yearPublished}), "${publication.title}", `}
+                          </Typography>
+                          <Typography sx={{ display: 'inline', fontStyle: 'italic' }} variant={'body2'}>
+                            {`${publication.journal}, ${publication.volumeNumber}, `}
+                          </Typography>
+                          <Typography sx={{ display: 'inline' }} variant={'body2'}>
+                            {`${publication.issueNumber}, DOI: ${publication.doi}, pp. ${publication.pagesUsed}.`}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography variant='body1'>None found.</Typography>
+                  )}
                 </Card>
               </Grid>
             </Grid>

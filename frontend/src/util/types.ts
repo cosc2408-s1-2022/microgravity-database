@@ -97,8 +97,8 @@ export type ExperimentPerson = {
 };
 
 export type ExperimentPersonRequest = {
-  personId: number;
-  roleId: number;
+  personId?: number;
+  roleId?: number;
 };
 
 export type ExperimentPersonRequestEntry = {
@@ -178,7 +178,31 @@ export type MissionResultsProps = {
   endDate: Date;
 };
 
-export type ExperimentPublicationsResponse = {
+export type ExperimentPublication = {
+  doi?: string;
+  authors: ExperimentPublicationAuthor[];
+  yearPublished?: string;
+  title: string;
+  journal?: string;
+  volumeNumber?: string;
+  issueNumber?: string;
+  pagesUsed?: string;
+  journalDatabase?: string;
+  url?: string;
+  accessDate?: string;
+};
+
+export type ExperimentPublicationAuthor = {
+  firstName: string;
+  lastName: string;
+};
+
+export type ExperimentPublicationEntry = {
+  id: number;
+  data: ExperimentPublication;
+};
+
+export type ExperimentPublicationResponse = {
   message: {
     title: string;
     'container-title': string;
@@ -195,35 +219,11 @@ export type ExperimentPublicationsResponse = {
       'date-parts': string;
     };
     yearPublished: Date;
-    author: ExperimentPublicationsAuthorsResponse[];
+    author: ExperimentPublicationsAuthorResponse[];
   };
 };
 
-export type ExperimentPublication = {
-  doi: string;
-  authors: ExperimentPublicationsAuthor[];
-  yearPublished: string;
-  title: string;
-  journal: string;
-  volumeNumber: string;
-  issueNumber: string;
-  pagesUsed: string;
-  journalDatabase: string;
-  url: string;
-  accessDate: string;
-};
-
-export type ExperimentPublicationEntry = {
-  id: number;
-  data: ExperimentPublication;
-};
-
-export type ExperimentPublicationsAuthor = {
-  firstName: string;
-  lastName: string;
-};
-
-export type ExperimentPublicationsAuthorsResponse = {
+export type ExperimentPublicationsAuthorResponse = {
   given: string;
   family: string;
 };

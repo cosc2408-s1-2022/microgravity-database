@@ -10,7 +10,7 @@ const publicationsReducer = (
     }
     case 'REMOVE': {
       return {
-        uid: --state.uid,
+        uid: state.uid,
         data: state.data.filter((entry) => entry.id !== action.payload.id),
       };
     }

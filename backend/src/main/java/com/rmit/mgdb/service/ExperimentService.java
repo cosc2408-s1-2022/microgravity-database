@@ -102,7 +102,8 @@ public class ExperimentService {
                 List<ExperimentPublicationAuthor> authors = publication.getAuthors();
                 if (authors != null && authors.size() > 0)
                     publication.setAuthors(
-                            authors.stream().map(experimentPublicationService::saveExperimentPublicationAuthor).toList());
+                            authors.stream().map(experimentPublicationService::saveExperimentPublicationAuthor)
+                                   .toList());
 
                 publication.setExperiment(experiment);
                 return experimentPublicationService.saveExperimentPublication(publication);
