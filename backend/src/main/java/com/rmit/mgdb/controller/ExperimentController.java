@@ -28,19 +28,21 @@ public class ExperimentController {
         this.validationErrorService = validationErrorService;
     }
 
-    @GetMapping
-    public ResultsResponse<Experiment> getExperiments(@RequestParam Optional<Integer> page,
-                                                      @RequestParam Optional<Integer> size) {
-        return experimentService.getExperiments(page, size);
-    }
-
     @GetMapping("/get")
     public ResponseEntity<Experiment> getById(@RequestParam Long id) {
         return new ResponseEntity<>(experimentService.getExperimentById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@Valid @RequestBody SaveExperimentRequest experimentRequest, BindingResult result) {
+    @GetMapping("/paginated")
+    public ResultsResponse<Experiment> getExperiments(@RequestParam Optional<Integer> page,
+                                                      @RequestParam Optional<Integer> size) {
+        return experimentService.getExperiments(page, size);
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@Valid @ModelAttribute SaveExperimentRequest experimentRequest,
+                                  @RequestParam String captchaResponse,
+                                  BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)
             return errorMap;

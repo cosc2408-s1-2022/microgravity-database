@@ -11,26 +11,51 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ClearRounded, SearchRounded } from '@mui/icons-material';
 import AuthWrapper from '../../../components/AuthWrapper';
 import ViewExperiments from '../../../components/AdminDashboard/ViewExperiments';
 import { UserRole } from '../../../util/types';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Experiments() {
-  const [size, setSize] = useState<number>();
-  const [searchString, setSearchString] = useState<string>();
-  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setSearchString(e.target.value);
-  };
-  const handleSearchInputClick = () => {
-    if (searchString) {
-      setSearchString(undefined);
-    }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const pageParam = searchParams.get('page');
+  const sizeParam = searchParams.get('size');
+  const searchStringParam = searchParams.get('string');
+
+  const [page, setPage] = useState<number | undefined>(pageParam ? Number(pageParam) : undefined);
+  const [size, setSize] = useState<number | undefined>(sizeParam ? Number(sizeParam) : undefined);
+  const [searchString, setSearchString] = useState<string | undefined>(searchStringParam ?? undefined);
+  const handlePageChange = (_e: ChangeEvent<unknown>, page: number) => {
+    setPage(page);
   };
   const handleSizeChange = (e: SelectChangeEvent<string | number>) => {
     setSize(e.target.value as number);
   };
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setSearchString(e.target.value);
+    setPage(undefined);
+  };
+  const handleSearchInputClick = () => {
+    if (searchString) {
+      setSearchString(undefined);
+      setPage(undefined);
+    }
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    page && params.append('page', page.toString());
+    size && params.append('size', size.toString());
+    searchString && params.append('string', searchString);
+
+    const paramsEncoded = encodeURI(params.toString());
+    paramsEncoded && navigate(`?${paramsEncoded}`);
+  }, [page, size, searchString, navigate]);
 
   return (
     <AuthWrapper role={UserRole.ROLE_ADMIN}>
@@ -80,7 +105,7 @@ export default function Experiments() {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            <ViewExperiments size={size} searchString={searchString} />
+            <ViewExperiments page={page} size={size} searchString={searchString} onPageChange={handlePageChange} />
           </Grid>
         </Grid>
       </Container>

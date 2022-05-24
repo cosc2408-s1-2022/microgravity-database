@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
@@ -9,9 +9,11 @@ import api from '../../util/api';
 import { Person } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import AuthWrapper from '../../components/AuthWrapper';
+import Captcha from '../../components/Captcha';
 
 export default function AddPerson() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [firstName, setFirstName] = useState<string>();
   const [familyName, setFamilyName] = useState<string>();
@@ -23,7 +25,7 @@ export default function AddPerson() {
   const { error, isSuccess, isLoading, isError, mutate } = useMutation<AxiosResponse<Person>, AxiosError>(
     'addPerson',
     () =>
-      api.post('/people/add', {
+      api.post('/people/save', {
         firstName,
         familyName,
         affiliation,
@@ -33,6 +35,7 @@ export default function AddPerson() {
       }),
   );
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutate();
@@ -40,17 +43,17 @@ export default function AddPerson() {
 
   useEffect(() => {
     if (isSuccess) {
+      queryClient.invalidateQueries('getAllPeople');
       navigate('/home');
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigate, queryClient]);
 
   return (
     <AuthWrapper>
       <Container maxWidth='sm'>
         <Box
           sx={{
-            my: -2,
-            mt: 4,
+            my: 4,
             display: 'flex',
             flexDirection: 'column',
             height: 'auto',
@@ -61,7 +64,7 @@ export default function AddPerson() {
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
+            <Typography variant='h3' fontWeight='bold' sx={{ mt: 1, mb: 3 }}>
               Add Person
             </Typography>
           </Box>
@@ -124,8 +127,18 @@ export default function AddPerson() {
                   onChange={setCountry}
                 />
               </Grid>
+              <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                <Captcha onComplete={setIsCaptchaComplete} />
+              </Grid>
               <Grid item xs={12}>
-                <LoadingButton loading={isLoading} type='submit' variant='contained' color='secondary' fullWidth>
+                <LoadingButton
+                  disabled={!isCaptchaComplete}
+                  loading={isLoading}
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                  fullWidth
+                >
                   Add Person
                 </LoadingButton>
               </Grid>

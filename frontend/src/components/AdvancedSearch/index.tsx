@@ -1,4 +1,4 @@
-import { Button, Grid, GridProps, MenuItem } from '@mui/material';
+import { Box, Button, Grid, GridProps, MenuItem } from '@mui/material';
 import { Platforms, ResultType, SearchState } from '../../util/types';
 import React, { useState } from 'react';
 import FormField from '../FormField';
@@ -49,50 +49,59 @@ export default function AdvancedSearch({ searchState, ...gridProps }: AdvSearchP
   };
 
   return (
-    <Grid {...gridProps} bgcolor='primary.light'>
-      <Grid component='form' onSubmit={handleSubmit} container item direction='column' padding={5} spacing={3}>
-        <Grid item>
-          <FormField value={string} name='searchString' label='Keyword(s)' onChange={handleSearchStringChange} />
-        </Grid>
+    <Grid {...gridProps} bgcolor='primary.light' display='flex' justifyContent='center'>
+      <Grid item xs={12}>
+        <Box
+          component='form'
+          onSubmit={handleSubmit}
+          p={5}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='flex-start'
+        >
+          <FormField
+            value={string}
+            margin='normal'
+            name='searchString'
+            label='Keyword(s)'
+            onChange={handleSearchStringChange}
+          />
+          <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
+            <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
+            <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
+            <MenuItem value={ResultType.FOR_CODE}>Field of Research (FoR)</MenuItem>
+            <MenuItem value={ResultType.SEO_CODE}>Socio-Economic Objective (SEO)</MenuItem>
+          </SelectElement>
+          <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
+            <MenuItem value={Platforms.SPACE_STATION}>Space Station</MenuItem>
+            <MenuItem value={Platforms.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
+            <MenuItem value={Platforms.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
+            <MenuItem value={Platforms.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
+            <MenuItem value={Platforms.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
+            <MenuItem value={Platforms.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
+          </SelectElement>
+          <DateElement
+            disabled={resultType !== ResultType.MISSION}
+            label='Start Date'
+            value={startDate}
+            callback={setStartDate}
+          />
 
-        <SelectElement name='resultType' label='Result Type' value={resultType} callback={handleResultTypeChange}>
-          <MenuItem value={ResultType.EXPERIMENT}>Experiment</MenuItem>
-          <MenuItem value={ResultType.MISSION}>Mission</MenuItem>
-          <MenuItem value={ResultType.FOR_CODE}>FOR Code</MenuItem>
-          <MenuItem value={ResultType.SEO_CODE}>SEO Code</MenuItem>
-        </SelectElement>
-
-        <SelectElement name='platform' label='Platform' value={platform} callback={handlePlatformChange}>
-          <MenuItem value={Platforms.SPACE_STATION}>Space Station</MenuItem>
-          <MenuItem value={Platforms.SPACE_SHUTTLE}>Space Shuttle</MenuItem>
-          <MenuItem value={Platforms.RETRIEVABLE_CAPSULE}>Retrievable Capsule</MenuItem>
-          <MenuItem value={Platforms.SOUNDING_ROCKET}>Sounding Rocket</MenuItem>
-          <MenuItem value={Platforms.PARABOLIC_FLIGHT}>Parabolic Flight</MenuItem>
-          <MenuItem value={Platforms.GROUND_BASED_FACILITY}>Ground Based Facility</MenuItem>
-        </SelectElement>
-
-        <DateElement
-          disabled={resultType !== ResultType.MISSION}
-          label='Start Date'
-          value={startDate}
-          callback={setStartDate}
-        />
-        <DateElement
-          disabled={resultType !== ResultType.MISSION}
-          label='End Date'
-          value={endDate}
-          min={moment(startDate)}
-          callback={setEndDate}
-        />
-
-        <Grid container item justifyContent='space-between'>
-          <Button fullWidth type='submit' variant='contained'>
+          <DateElement
+            disabled={resultType !== ResultType.MISSION}
+            label='End Date'
+            value={endDate}
+            min={moment(startDate)}
+            callback={setEndDate}
+          />
+          <Button sx={{ mt: 2 }} fullWidth type='submit' variant='contained'>
             Refine Search
           </Button>
           <Button sx={{ mt: 2 }} fullWidth onClick={handleReset}>
             Reset
           </Button>
-        </Grid>
+        </Box>
       </Grid>
     </Grid>
   );

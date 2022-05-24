@@ -1,6 +1,7 @@
 package com.rmit.mgdb.exception;
 
 import com.rmit.mgdb.payload.*;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -51,6 +52,18 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 new ExperimentPersonAlreadyExistsResponse(exception.getMessage(), exception.getExperimentId(),
                                                           exception.getPersonId(), exception.getRoleId());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleInvalidExperimentAttachment(InvalidExperimentAttachmentException exception) {
+        InvalidExperimentAttachmentResponse exceptionResponse =
+                new InvalidExperimentAttachmentResponse(exception.getMessage(), exception.getFilename());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleJwtException(JwtException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
 }

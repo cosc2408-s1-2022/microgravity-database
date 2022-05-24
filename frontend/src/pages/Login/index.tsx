@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationResponse } from '../../util/types';
 import { Navigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import api from '../../util/api';
+import LoadingButton from '../../components/LoadingButton';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
+  const { data, error, isSuccess, isLoading, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'login',
     () => {
       return api.post('/users/login', {
@@ -34,7 +35,7 @@ export default function Login() {
   }
 
   return (
-    <>
+    <Grid container height='100%' alignItems='center' justifyContent='center'>
       <video
         autoPlay
         loop
@@ -106,15 +107,16 @@ export default function Login() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    color='error'
+                  <LoadingButton
+                    color='secondary'
                     type='submit'
                     fullWidth
                     variant='contained'
-                    sx={{ mt: 1, mb: 2, '&.MuiButton-root': { color: 'white' } }}
+                    sx={{ my: 1, '&.MuiButton-root': { color: 'white' } }}
+                    loading={isLoading}
                   >
                     Sign In
-                  </Button>
+                  </LoadingButton>
                 </Grid>
                 <Grid item xs={12}>
                   <Link href={'/register'} color='text.primary' sx={{ textDecoration: 'underline' }}>
@@ -126,6 +128,6 @@ export default function Login() {
           </Box>
         </Container>
       </div>
-    </>
+    </Grid>
   );
 }

@@ -3,11 +3,23 @@ import {
   DoneRounded,
   EditRounded,
   NewReleasesRounded,
+  RestartAltRounded,
   VerifiedSharp,
   WarningRounded,
 } from '@mui/icons-material';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
-import { Box, Button, Grid, Link, Pagination, Paper, Tooltip, Typography } from '@mui/material';
+import {
+  Link,
+  Box,
+  Button,
+  Grid,
+  Pagination,
+  Paper,
+  Typography,
+  Tooltip,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -19,19 +31,17 @@ import CenteredNoneFound from '../../CenteredNoneFound';
 import MessageSnackbar from '../../MessageSnackbar';
 
 type ViewExperimentsProps = {
+  page?: number;
   size?: number;
   searchString?: string;
+  onPageChange: (_e: ChangeEvent<unknown>, page: number) => void;
 };
 
-export default function ViewExperiments({ size, searchString }: ViewExperimentsProps) {
+export default function ViewExperiments({ page, size, searchString, onPageChange }: ViewExperimentsProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [experiments, setExperiments] = useState<ResultsResponse<Experiment>>();
-  const [page, setPage] = useState<number>();
-  const handlePageChange = (_e: ChangeEvent<unknown>, page: number) => {
-    setPage(page);
-  };
   const {
     data: experimentsData,
     isSuccess: isExperimentsSuccess,
@@ -50,7 +60,7 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
       const paramsEncoded = encodeURI(params.toString());
       const url = searchString
         ? `/search?${paramsEncoded}`
-        : `/experiments${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
+        : `/experiments/paginated${paramsEncoded !== '' ? `?${paramsEncoded}` : ''}`;
 
       return api.get(url, { signal });
     },
@@ -89,6 +99,9 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
       refetchExperiments();
     }
   }, [isApproveSuccess, refetchExperiments]);
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Grid container spacing={2} mb={3}>
@@ -141,11 +154,13 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                     variant='contained'
                     color='primary'
                     disabled={isApproveLoading}
-                    sx={{ mr: 1, width: '7rem' }}
+                    sx={matches ? { mr: 1, width: '7rem' } : { mr: 1 }}
                   >
-                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                      Approve
-                    </Typography>
+                    {matches && (
+                      <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                        Approve
+                      </Typography>
+                    )}
                     <DoneRounded fontSize='small' />
                   </Button>
                 )}
@@ -157,11 +172,13 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                   }}
                   variant='contained'
                   color='primary'
-                  sx={{ mr: 1, width: '5rem' }}
+                  sx={matches ? { mr: 1, width: '5rem' } : { mr: 1 }}
                 >
-                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                    Edit
-                  </Typography>
+                  {matches && (
+                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                      Edit
+                    </Typography>
+                  )}
                   <EditRounded fontSize='small' />
                 </Button>
                 <Button
@@ -171,12 +188,14 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
                   disabled={isToggleDeleteLoading}
                   variant='contained'
                   color='primary'
-                  sx={{ width: '7rem' }}
+                  sx={matches ? { mr: 1, width: '7rem' } : { mr: 1 }}
                 >
-                  <Typography variant='body1' color='primary' textTransform='none' mr={1}>
-                    {e.deleted ? 'Restore' : 'Delete'}
-                  </Typography>
-                  {e.deleted ? <RestartAltRoundedIcon fontSize='small' /> : <DeleteRounded fontSize='small' />}
+                  {matches && (
+                    <Typography variant='body1' color='primary' textTransform='none' mr={1}>
+                      {e.deleted ? 'Restore' : 'Delete'}
+                    </Typography>
+                  )}
+                  {e.deleted ? <RestartAltRounded fontSize='small' /> : <DeleteRounded fontSize='small' />}
                 </Button>
               </Box>
             </Paper>
@@ -189,15 +208,11 @@ export default function ViewExperiments({ size, searchString }: ViewExperimentsP
           variant='outlined'
           shape='rounded'
           color='secondary'
+          siblingCount={0}
           page={page || 1}
-          onChange={handlePageChange}
+          onChange={onPageChange}
         />
       </Grid>
-      <MessageSnackbar
-        open={isExperimentsError}
-        message='Could not load experiments. Please try again.'
-        severity='error'
-      />
       <MessageSnackbar
         open={isExperimentsError}
         message='Could not load experiments. Please try again.'

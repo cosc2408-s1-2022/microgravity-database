@@ -28,9 +28,6 @@ public class Experiment {
     private String title;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    private String toa;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String leadInstitution;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
@@ -41,10 +38,8 @@ public class Experiment {
     @Length(max = 1023)
     private String experimentObjective;
 
-    // TODO Fields "experimentModuleDrawing" and "experimentPublications" might be collection types.
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
-    private String experimentModuleDrawing;
+    @OneToMany(mappedBy = "experiment")
+    private List<ExperimentAttachment> experimentAttachments;
 
     @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL)
     private List<ExperimentPublication> experimentPublications;
@@ -54,6 +49,16 @@ public class Experiment {
 
     @GenericField
     private boolean approved;
+
+    private Date createdAt;
+
+    private Date updatedAt;
+
+    @IndexedEmbedded
+    @ManyToOne
+    @JoinColumn(name = "toa_id")
+    @NotNull
+    private Toa toa;
 
     @ManyToOne
     @JoinColumn(name = "mission_id")
@@ -82,9 +87,6 @@ public class Experiment {
     @OneToMany(mappedBy = "experiment")
     @IndexedEmbedded
     private List<ExperimentPerson> people;
-
-    private Date createdAt;
-    private Date updatedAt;
 
     /**
      * Saves the timestamp of creation.

@@ -3,6 +3,7 @@ package com.rmit.mgdb.payload;
 import com.rmit.mgdb.model.ExperimentPublication;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -18,7 +19,6 @@ public class SaveExperimentRequest {
     private String title;
 
     // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-    private String toa;
 
     private String leadInstitution;
 
@@ -26,10 +26,15 @@ public class SaveExperimentRequest {
 
     private String experimentObjective;
 
-    private String experimentModuleDrawing;
+    private MultipartFile[] experimentAttachmentFiles;
+
+    private Long[] experimentAttachmentIds;
 
     @Valid
     private ExperimentPublication[] experimentPublications;
+
+    @NotNull(message = "Type of Activity must be specified.")
+    private Long toaId;
 
     @NotNull(message = "Experiments must belong to a mission.")
     private Long missionId;

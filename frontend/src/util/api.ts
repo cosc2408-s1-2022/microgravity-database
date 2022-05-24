@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const api = axios.create({
-  baseURL: backendUrl,
+  baseURL: BACKEND_URL,
 });
 
 api.interceptors.request.use(
@@ -16,6 +16,10 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('authToken');
+    }
+
     Promise.reject(error);
   },
 );

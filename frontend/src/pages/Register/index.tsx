@@ -1,22 +1,28 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
-import { AuthenticationResponse, UserRole } from '../../util/types';
-import { Navigate } from 'react-router-dom';
+import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
+import { AuthenticationResponse, UserRole } from '../../util/types';
 
 export default function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+
+  const [firstName, setFirstName] = useState<string>();
+  const [familyName, setFamilyName] = useState<string>();
+  const [affiliation, setAffiliation] = useState<string>();
+  const [city, setCity] = useState<string>();
+  const [state, setState] = useState<string>();
+  const [country, setCountry] = useState<string>();
+
+  const [username, setUsername] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
   const passwordsMatchingError = password && password !== confirmPassword && 'Passwords must match.';
   const passLengthValidation = (value: string) => {
-    // TODO Show strength but do not force.
-    // const re = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$`);
-    // return re.test(value);
     return value.length >= 8;
   };
   const passwordRegex =
@@ -25,13 +31,23 @@ export default function Register() {
     // 'Password has to have at least 8 characters with one special character eg. !@#$%*';
     'Password has to have at least 8 characters';
 
-  const { data, error, isSuccess, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
+  const { data, error, isSuccess, isLoading, mutate } = useMutation<AxiosResponse<AuthenticationResponse>, AxiosError>(
     'register',
     () => {
       return api.post(`/users/register`, {
-        username: username,
-        password: password,
-        role: UserRole.ROLE_USER,
+        user: {
+          username: username,
+          password: password,
+          role: UserRole.ROLE_USER,
+        },
+        person: {
+          firstName,
+          familyName,
+          affiliation,
+          city,
+          state,
+          country,
+        },
       });
     },
   );
@@ -41,15 +57,17 @@ export default function Register() {
     mutate();
   };
 
-  if (isSuccess && data) {
-    // Add token to localstorage for persistence
-    const authToken: string = data?.data.jwt;
-    localStorage.setItem('authToken', authToken);
-    return <Navigate to='/home' />;
-  }
+  useEffect(() => {
+    if (isSuccess && data) {
+      // Add token to localstorage for persistence
+      const authToken: string = data?.data.jwt;
+      localStorage.setItem('authToken', authToken);
+      navigate('/home');
+    }
+  }, [data, isSuccess, navigate]);
 
   return (
-    <>
+    <Grid container height='100%' alignItems='center' justifyContent='center'>
       <video
         autoPlay
         loop
@@ -88,16 +106,37 @@ export default function Register() {
               alignItems: 'center',
               height: 'auto',
               width: 'auto',
-              bgcolor: '#FAEBEFFF',
+              bgcolor: '#faebefff',
               p: 3,
               borderRadius: '16px',
             }}
           >
             <Typography variant='h4' fontWeight='bold'>
-              Register
+              Register Researcher
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <FormField
+                    required
+                    label='First Name'
+                    name='firstName'
+                    autoComplete='first-name'
+                    autoFocus
+                    errors={error?.response?.data}
+                    onChange={setFirstName}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormField
+                    required
+                    label='Family Name'
+                    name='familyName'
+                    autoComplete='family-name'
+                    errors={error?.response?.data}
+                    onChange={setFamilyName}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <FormField
                     required
@@ -106,6 +145,42 @@ export default function Register() {
                     autoComplete='username'
                     errors={error?.response?.data}
                     onChange={setUsername}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormField
+                    label='Affiliation'
+                    name='affiliation'
+                    autoComplete='organization'
+                    errors={error?.response?.data}
+                    onChange={setAffiliation}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormField
+                    label='City'
+                    name='city'
+                    autoComplete='address-level2'
+                    errors={error?.response?.data}
+                    onChange={setCity}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormField
+                    label='State'
+                    name='state'
+                    autoComplete='address-level1'
+                    errors={error?.response?.data}
+                    onChange={setState}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormField
+                    label='Country'
+                    name='country'
+                    autoComplete='country-name'
+                    errors={error?.response?.data}
+                    onChange={setCountry}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -142,21 +217,33 @@ export default function Register() {
                     onChange={setConfirmPassword}
                   />
                 </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Button color='error' type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-                  Register
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Link href={'/login'} color='text.primary' sx={{ textDecoration: 'underline' }}>
-                  Already have an account? Login
-                </Link>
+                <Grid item xs={12}>
+                  <LoadingButton
+                    color='secondary'
+                    type='submit'
+                    fullWidth
+                    variant='contained'
+                    sx={{ my: 1 }}
+                    loading={isLoading}
+                  >
+                    Register
+                  </LoadingButton>
+                </Grid>
+                <Grid item xs={12}>
+                  <Link href={'/login'} color='text.primary' sx={{ textDecoration: 'underline' }}>
+                    Already have an account? Login
+                  </Link>
+                </Grid>
+                <Grid item xs={12}>
+                  <Link href={'/register/basic'} color='text.primary' sx={{ textDecoration: 'underline' }}>
+                    Do not wish to register as a researcher?
+                  </Link>
+                </Grid>
               </Grid>
             </Box>
           </Box>
         </Container>
       </div>
-    </>
+    </Grid>
   );
 }

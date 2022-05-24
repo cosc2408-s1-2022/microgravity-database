@@ -1,4 +1,4 @@
-import { Grid, GridProps, Link, Typography } from '@mui/material';
+import { Box, Grid, GridProps, Link, Typography } from '@mui/material';
 import moment from 'moment';
 import { MissionResultsProps } from '../../../util/types';
 
@@ -13,31 +13,32 @@ export default function MissionResult(props: GridProps & MissionResultsProps) {
       padding={3}
       alignItems='baseline'
     >
-      <Grid container item direction='column' md={3} marginRight={5}>
-        <Grid item>
+      <Box display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
+        <Box>
+          <Typography display={'inline'}>Mission Name: </Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
-            <Typography display={'inline'}> Mission Name : </Typography> {props.name}
+            {props.name}
           </Typography>
-        </Grid>
-        <Grid item>
-          <Typography display={'inline'}>Start Date : </Typography>
+        </Box>
+        <Box>
+          <Typography display={'inline'}>Start Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {moment(props.startDate).year()}
+            {props.startDate ? moment(props.startDate).year() : 'Not Specified'}
           </Typography>
-        </Grid>
-        <Grid item>
-          <Typography display={'inline'}>End Date : </Typography>
+        </Box>
+        <Box>
+          <Typography display={'inline'}>End Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {moment(props.endDate).year()}
+            {props.endDate ? moment(props.endDate).year() : 'Not Specified'}
           </Typography>
-        </Grid>
-        <Grid item>
-          <Typography display={'inline'}>Launch Date : </Typography>
+        </Box>
+        <Box>
+          <Typography display={'inline'}>Launch Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
             {moment(props.launchDate).year()}
           </Typography>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Grid>
   );
 }

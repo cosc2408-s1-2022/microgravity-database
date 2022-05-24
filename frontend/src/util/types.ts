@@ -58,13 +58,13 @@ export type AuthenticationResponse = {
 export type Experiment = {
   id: number;
   title: string;
-  toa: string;
+  toa: Toa;
   leadInstitution: string;
   principalInvestigator: string;
   experimentAim: string;
   experimentObjective: string;
-  experimentModuleDrawing: string;
   experimentPublications: ExperimentPublication[];
+  experimentAttachments: ExperimentAttachment[];
   deleted: boolean;
   approved: boolean;
   mission: Mission;
@@ -76,14 +76,30 @@ export type Experiment = {
   updatedAt?: Date;
 };
 
+export type Toa = {
+  id: number;
+  name: string;
+};
+
+export type ExperimentAttachment = {
+  id: number;
+  mediaType: 'image/jpeg' | 'image/png' | 'application/pdf';
+  filename: string;
+};
+
 export type Mission = {
   id: number;
   name: string;
   platform: Platform;
   launchDate: Date;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
+  experimentCount: number;
+  deleted: boolean;
+  approved: boolean;
   experiments: Experiment[];
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type ExperimentPerson = {
@@ -105,6 +121,8 @@ export type ExperimentPersonRequestEntry = {
   id: number;
   data: ExperimentPersonRequest;
 };
+
+export type PeopleReducerState = { uid: number; data: ExperimentPersonRequestEntry[] };
 
 export type Platform = {
   id: number;
@@ -133,6 +151,10 @@ export type Person = {
   country: string;
   affiliation: string;
   role: Role;
+  deleted: boolean;
+  approved: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type Page<T> = {
@@ -174,8 +196,15 @@ export type MissionResultsProps = {
   id: string | undefined;
   name: string | undefined;
   launchDate: Date;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
+};
+
+export type CaptchaResponse = {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  error_codes?: string[];
 };
 
 export type ExperimentPublication = {

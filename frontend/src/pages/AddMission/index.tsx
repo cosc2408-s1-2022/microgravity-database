@@ -1,9 +1,9 @@
-import { Alert, Autocomplete, Box, Container, Grid, Snackbar, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Container, Grid, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
@@ -14,10 +14,13 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import AuthWrapper from '../../components/AuthWrapper';
 import { Mission, Platform } from '../../util/types';
+import MessageSnackbar from '../../components/MessageSnackbar';
+import Captcha from '../../components/Captcha';
 
 // TODO Refactor into smaller sub-components.
 export default function AddMission() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [platforms, setPlatforms] = useState<Platform[]>();
   const {
@@ -43,7 +46,7 @@ export default function AddMission() {
     isError: isMissionError,
     mutate: mutateMission,
   } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
-    api.post('/missions/add', {
+    api.post('/missions/save', {
       name: name || '',
       launchDate: launchDate && moment(launchDate).year().toString(),
       startDate: startDate && moment(startDate).year().toString(),
@@ -52,26 +55,18 @@ export default function AddMission() {
     }),
   );
 
+  const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     !endDateError && mutateMission();
   };
 
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-  const handleErrorSnackbarClose = () => {
-    setErrorSnackbarOpen(false);
-  };
-  useEffect(() => {
-    if (isMissionError) {
-      setErrorSnackbarOpen(true);
-    }
-  }, [isMissionError]);
-
   useEffect(() => {
     if (isMissionSuccess) {
+      queryClient.invalidateQueries('getAllMissions');
       navigate('/home');
     }
-  }, [isMissionSuccess, navigate]);
+  }, [isMissionSuccess, navigate, queryClient]);
 
   return (
     <AuthWrapper>
@@ -79,8 +74,7 @@ export default function AddMission() {
         <Container maxWidth='sm'>
           <Box
             sx={{
-              my: -2,
-              mt: 4,
+              my: 4,
               display: 'flex',
               flexDirection: 'column',
               height: 'auto',
@@ -91,7 +85,7 @@ export default function AddMission() {
             }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
+              <Typography variant='h3' fontWeight='bold' sx={{ mt: 1, mb: 3 }}>
                 Add Mission
               </Typography>
             </Box>
@@ -232,8 +226,12 @@ export default function AddMission() {
                     noOptionsText='No such platforms found.'
                   />
                 </Grid>
+                <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
+                  <Captcha onComplete={setIsCaptchaComplete} />
+                </Grid>
                 <Grid item xs={12}>
                   <LoadingButton
+                    disabled={!isCaptchaComplete}
                     loading={isMissionLoading}
                     type='submit'
                     variant='contained'
@@ -245,11 +243,7 @@ export default function AddMission() {
                 </Grid>
               </Grid>
             </Box>
-            <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose}>
-              <Alert severity='error' onClose={handleErrorSnackbarClose}>
-                Failed to add mission.
-              </Alert>
-            </Snackbar>
+            <MessageSnackbar open={isMissionError} message='Failed to add mission.' severity='error' />
           </Box>
         </Container>
       </LocalizationProvider>

@@ -23,7 +23,7 @@ public class SeoCodePayload {
         this.id = seoCode.getId();
         this.code = seoCode.getCode();
         this.name = seoCode.getName();
-        this.experiments = seoCode.getExperiments();
+        this.experiments = seoCode.getExperiments().stream().filter(e -> e.isApproved() && !e.isDeleted()).toList();
     }
 
 }
