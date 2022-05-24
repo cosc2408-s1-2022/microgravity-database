@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -53,16 +53,19 @@ export default function EditMission() {
     isLoading: isMissionLoading,
     isError: isMissionError,
     mutate: mutateMission,
-  } = useMutation<AxiosResponse<Mission>, AxiosError>('saveMission', () =>
-    api.post('/missions/save', {
+  } = useMutation<AxiosResponse<Mission>, AxiosError>('saveMission', () => {
+    const launchDateString = launchDate && moment(launchDate).format('YYYY-MM-DD');
+    const startDateString = startDate && moment(startDate).format('YYYY-MM-DD');
+    const endDateString = endDate && moment(endDate).format('YYYY-MM-DD');
+    return api.post('/missions/save', {
       id: mission.id,
       name: name || '',
-      launchDate: launchDate && moment(launchDate).year().toString(),
-      startDate: startDate && moment(startDate).year().toString(),
-      endDate: endDate && moment(endDate).year().toString(),
+      launchDate: launchDateString === 'Invalid date' ? null : launchDateString,
+      startDate: startDateString === 'Invalid date' ? null : startDateString,
+      endDate: endDateString === 'Invalid date' ? null : endDateString,
       platformId: platform?.id,
-    }),
-  );
+    });
+  });
 
   const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
@@ -111,9 +114,9 @@ export default function EditMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='Launch Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={launchDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -134,9 +137,9 @@ export default function EditMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='Start Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={startDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -161,9 +164,9 @@ export default function EditMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='End Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={endDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -240,22 +243,24 @@ export default function EditMission() {
                 <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                   <Captcha onComplete={setIsCaptchaComplete} />
                 </Grid>
-                <Grid item xs={12}>
-                  <Box display='flex' alignItems='center'>
-                    <LoadingButton
-                      sx={{ mr: 2 }}
-                      disabled={!isCaptchaComplete}
-                      loading={isMissionLoading}
-                      onClick={handleSubmit}
-                      variant='contained'
-                      color='secondary'
-                    >
-                      Save Changes
-                    </LoadingButton>
-                    <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
-                      Cancel
-                    </Button>
-                  </Box>
+                <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                  <LoadingButton
+                    sx={{ mr: 2, width: '50%' }}
+                    disabled={!isCaptchaComplete}
+                    loading={isMissionLoading}
+                    onClick={handleSubmit}
+                    variant='contained'
+                    color='secondary'
+                  >
+                    Save Changes
+                  </LoadingButton>
+                  <Button
+                    sx={{ backgroundColor: 'gray', width: '50%' }}
+                    variant='contained'
+                    onClick={() => navigate(-1)}
+                  >
+                    Cancel
+                  </Button>
                 </Grid>
               </Grid>
             </Box>

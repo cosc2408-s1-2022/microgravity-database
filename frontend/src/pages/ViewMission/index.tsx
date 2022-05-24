@@ -23,8 +23,6 @@ export default function ViewMission() {
     }
   }, [isSuccess, data]);
 
-  console.log(mission);
-
   return isLoading ? (
     <Box display='flex' justifyContent='center' alignItems='center'>
       <CircularProgress size={24} color='primary' />
@@ -41,19 +39,22 @@ export default function ViewMission() {
         }}
       >
         <Typography variant='h4' fontWeight='bold'>
-          {`${mission?.name} (${moment(mission?.launchDate).year()})`}
+          {`${mission?.name}`}
         </Typography>
         <Typography variant='h6' sx={{ pr: 1 }}>
           {lodash(mission?.platform.name).startCase()}
         </Typography>
         <Typography variant='body1' sx={{ pr: 1 }} color='GrayText'>
           {mission?.startDate && mission?.endDate
-            ? `${moment(mission.startDate).year()} - ${moment(mission.endDate).year()}`
+            ? `${moment(mission.startDate).format('MMMM YYYY')} - ${moment(mission.endDate).format('MMMM YYYY')}`
             : mission?.startDate
-            ? `${moment(mission.startDate).year()} - Present`
+            ? `${moment(mission.startDate).format('MMMM YYYY')} - Present`
             : mission?.endDate
-            ? `Unknown - ${moment(mission.endDate).year()}`
+            ? `Unknown - ${moment(mission.endDate).format('MMMM YYYY')}`
             : ''}
+        </Typography>
+        <Typography variant='body1' mt={4}>
+          {`Launched ${moment(mission?.launchDate).format('MMMM Do YYYY')} (${moment(mission?.launchDate).fromNow()}).`}
         </Typography>
       </Paper>
       <Paper

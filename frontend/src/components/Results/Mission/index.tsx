@@ -23,19 +23,19 @@ export default function MissionResult(props: GridProps & MissionResultsProps) {
         <Box>
           <Typography display={'inline'}>Start Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.startDate ? moment(props.startDate).year() : 'Not Specified'}
+            {props.startDate ? moment(props.startDate).format('MMMM Do YYYY') : 'Not Specified'}
           </Typography>
         </Box>
         <Box>
           <Typography display={'inline'}>End Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.endDate ? moment(props.endDate).year() : 'Not Specified'}
+            {props.endDate ? moment(props.endDate).format('MMMM Do YYYY') : 'Not Specified'}
           </Typography>
         </Box>
         <Box>
           <Typography display={'inline'}>Launch Date: </Typography>
           <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {moment(props.launchDate).year()}
+            {moment(props.launchDate).format('MMMM Do YYYY')}
           </Typography>
         </Box>
       </Box>

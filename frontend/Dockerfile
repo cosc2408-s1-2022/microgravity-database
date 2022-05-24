@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY tsconfig.json .
 COPY yarn.lock .
-RUN yarn install
+RUN yarn install --check-files
 COPY . .
 RUN yarn build
 

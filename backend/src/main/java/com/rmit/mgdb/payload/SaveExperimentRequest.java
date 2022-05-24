@@ -39,7 +39,7 @@ public class SaveExperimentRequest {
     @NotNull(message = "Experiments must belong to a mission.")
     private Long missionId;
 
-    @NotNull(message = "Experiments must have an FOR code specified.")
+    @NotNull(message = "Experiments must have an FoR code specified.")
     private Long forCodeId;
 
     @NotNull(message = "Experiments must have an SEO code specified.")

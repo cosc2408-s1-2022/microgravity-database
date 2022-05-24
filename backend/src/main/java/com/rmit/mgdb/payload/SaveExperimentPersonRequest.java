@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class SaveExperimentPersonRequest {
 
-    @NotNull(message = "Person cannot be blank")
+    @NotNull(message = "Person cannot be blank.")
     private Long personId;
-    @NotNull(message = "Role cannot be blank")
+    @NotNull(message = "Role cannot be blank.")
     private Long roleId;
 
 }

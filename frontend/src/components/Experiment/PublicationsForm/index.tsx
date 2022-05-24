@@ -46,7 +46,7 @@ export default function PublicationsForm({ state, dispatch, errors }: Publicatio
   );
 
   return (
-    <Paper sx={{ width: '100%', mt: 2, border: '1px #c4c4c4 solid' }} variant='outlined'>
+    <Paper sx={{ width: '100%', border: '1px #c4c4c4 solid' }} variant='outlined'>
       <Box display='flex' alignItems='center'>
         <Typography sx={{ p: 1, pl: 1.5 }}>Add Publications</Typography>
         <IconButton onClick={addPublication}>

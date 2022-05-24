@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Container, Grid, TextField, Typography } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
@@ -45,15 +45,20 @@ export default function AddMission() {
     isLoading: isMissionLoading,
     isError: isMissionError,
     mutate: mutateMission,
-  } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () =>
-    api.post('/missions/save', {
+  } = useMutation<AxiosResponse<Mission>, AxiosError>('addMission', () => {
+    const launchDateString = launchDate && moment(launchDate).format('YYYY-MM-DD');
+    const startDateString = startDate && moment(startDate).format('YYYY-MM-DD');
+    const endDateString = endDate && moment(endDate).format('YYYY-MM-DD');
+    return api.post('/missions/save', {
       name: name || '',
-      launchDate: launchDate && moment(launchDate).year().toString(),
-      startDate: startDate && moment(startDate).year().toString(),
-      endDate: endDate && moment(endDate).year().toString(),
+      launchDate: launchDateString === 'Invalid date' ? null : launchDateString,
+      startDate: startDateString === 'Invalid date' ? null : startDateString,
+      endDate: endDateString === 'Invalid date' ? null : endDateString,
       platformId: platform?.id,
-    }),
-  );
+    });
+  });
+
+  console.log(moment(launchDate).format('YYYY-MM-DD') || 'BRUH');
 
   const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -101,9 +106,9 @@ export default function AddMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='Launch Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={launchDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -124,9 +129,9 @@ export default function AddMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='Start Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={startDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -151,9 +156,9 @@ export default function AddMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
+                  <DesktopDatePicker
                     label='End Date'
-                    views={['year']}
+                    views={['year', 'month', 'day']}
                     value={endDate}
                     onChange={(value) => {
                       if (missionError?.response?.data !== undefined) {
@@ -229,14 +234,14 @@ export default function AddMission() {
                 <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                   <Captcha onComplete={setIsCaptchaComplete} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} display='flex' justifyContent='center'>
                   <LoadingButton
                     disabled={!isCaptchaComplete}
                     loading={isMissionLoading}
                     type='submit'
                     variant='contained'
                     color='secondary'
-                    fullWidth
+                    sx={{ width: '75%' }}
                   >
                     Add Mission
                   </LoadingButton>

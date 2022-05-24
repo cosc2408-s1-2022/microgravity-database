@@ -86,7 +86,6 @@ export default function PublicationForm({ index, entry, onModify, onRemove, erro
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    console.log(event.target.name, event.target.value);
     setPublication({
       ...publication,
       [event.target.name.substring(event.target.name.indexOf('.') + 1)]: event.target.value,
@@ -146,8 +145,6 @@ export default function PublicationForm({ index, entry, onModify, onRemove, erro
   useEffect(() => {
     onModify({ id: entry.id, data: publication });
   }, [entry.id, onModify, publication]);
-
-  console.log(errors);
 
   return (
     <Accordion sx={{ my: 0 }}>

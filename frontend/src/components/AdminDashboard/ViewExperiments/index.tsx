@@ -7,7 +7,6 @@ import {
   VerifiedSharp,
   WarningRounded,
 } from '@mui/icons-material';
-import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import {
   Link,
   Box,
