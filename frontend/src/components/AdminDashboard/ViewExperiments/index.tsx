@@ -109,6 +109,7 @@ export default function ViewExperiments({ page, size, searchString, onPageChange
           <CenteredNoneFound />
         </Grid>
       ) : (
+        experiments?.results &&
         experiments?.results.map((e) => (
           <Grid item key={e.id} xs={12}>
             <Paper

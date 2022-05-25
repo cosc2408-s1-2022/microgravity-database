@@ -26,7 +26,7 @@ public class ForCodeService {
 
     public ForCode getForCodeById(Long id) {
         return forCodeRepository.findById(id)
-                                .orElseThrow(() -> new NotFoundException("FOR code could not be found.", id));
+                                .orElseThrow(() -> new NotFoundException("FoR code could not be found.", id));
     }
 
     public ForCodePayload getForCodePayloadById(Long id) {

@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import { useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
@@ -11,6 +11,7 @@ import AuthWrapper from '../../components/AuthWrapper';
 import {
   Experiment,
   ExperimentAttachment,
+  ExperimentPublicationAuthor,
   ForCode,
   Mission,
   PeopleReducerState,
@@ -19,13 +20,15 @@ import {
   UserRole,
 } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
+import publicationsReducer from '../../util/reducers/PublicationsReducer';
+import PublicationsForm from '../../components/Experiment/PublicationsForm';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import ToaSelector from '../../components/Experiment/ToaSelector';
 import ForCodeSelector from '../../components/Experiment/ForCodeSelector';
 import MissionSelector from '../../components/Experiment/MissionSelector';
 import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
-import PeopleSelector from '../../components/Experiment/PeopleSelector';
+import PeopleForm from '../../components/Experiment/PeopleForm';
 import { usePeopleReducer } from '../../util/hooks';
 import Captcha from '../../components/Captcha';
 
@@ -46,9 +49,6 @@ export default function EditExperiment() {
   const [leadInstitution, setLeadInstitution] = useState<string | undefined>(experiment?.leadInstitution);
   const [experimentAim, setExperimentAim] = useState<string | undefined>(experiment?.experimentAim);
   const [experimentObjective, setExperimentObjective] = useState<string | undefined>(experiment?.experimentObjective);
-  const [experimentPublications, setExperimentPublications] = useState<string | undefined>(
-    experiment?.experimentPublications,
-  );
   const [experimentAttachments, setExperimentAttachments] = useState<ExperimentAttachment[]>(
     experiment.experimentAttachments,
   );
@@ -69,20 +69,31 @@ export default function EditExperiment() {
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
   const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
+
   let uid = 0;
-  const initialState: PeopleReducerState = {
+  const initialPeopleState: PeopleReducerState = {
     uid: 0,
-    data:
-      experiment?.people.map((person) => ({
-        id: uid++,
-        data: {
-          roleId: person.role.id,
-          personId: person.id.personId,
-        },
-      })) || [],
+    data: experiment?.people.map((person) => ({
+      id: uid++,
+      data: {
+        roleId: person.role.id,
+        personId: person.id.personId,
+      },
+    })),
   };
-  initialState.uid = uid;
-  const [peopleState, dispatchPeople] = usePeopleReducer(initialState);
+  initialPeopleState.uid = uid;
+  const [peopleState, dispatchPeople] = usePeopleReducer(initialPeopleState);
+
+  uid = 0;
+  const initialPublicationState = {
+    uid: 0,
+    data: experiment?.experimentPublications.map((publication) => ({
+      id: uid++,
+      data: { ...publication },
+    })),
+  };
+  initialPublicationState.uid = uid;
+  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, initialPublicationState);
 
   const {
     error: experimentError,
@@ -103,14 +114,27 @@ export default function EditExperiment() {
       formData.append('experimentAttachmentFiles[]', file);
     }
     experimentObjective && formData.append('experimentObjective', experimentObjective);
-    experimentPublications && formData.append('experimentPublications', experimentPublications);
     toa && formData.append('toaId', toa.id.toString());
     mission && formData.append('missionId', mission.id.toString());
     forCode && formData.append('forCodeId', forCode.id.toString());
     seoCode && formData.append('seoCodeId', seoCode.id.toString());
     for (const i in peopleState.data) {
-      formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
-      formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
+      Object.entries(peopleState.data[i].data).forEach(([key, value]) => {
+        value && formData.append(`experimentPersonRequests[${i}].${key}`, value.toString());
+      });
+    }
+    for (const i in publicationsState.data) {
+      Object.entries(publicationsState.data[i].data).forEach(([key, value]) => {
+        if (key === 'authors') {
+          for (const j in value as ExperimentPublicationAuthor[]) {
+            Object.entries(value[j]).forEach(([k, v]) => {
+              v && formData.append(`experimentPublications[${i}].authors[${j}].${k}`, v.toString());
+            });
+          }
+        } else {
+          value && formData.append(`experimentPublications[${i}].${key}`, value.toString());
+        }
+      });
     }
 
     return api.post('/experiments/save', formData, {
@@ -129,8 +153,6 @@ export default function EditExperiment() {
       navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
-
-  console.log(toa);
 
   return (
     <AuthWrapper role={UserRole.ROLE_ADMIN}>
@@ -203,15 +225,6 @@ export default function EditExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormField
-                  label='Experiment Publications'
-                  name='experimentPublications'
-                  value={experimentPublications || ''}
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentPublications}
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <MissionSelector value={mission} dispatch={setMission} errors={experimentError?.response?.data} />
               </Grid>
               <Grid container item spacing={2} xs={12}>
@@ -223,7 +236,14 @@ export default function EditExperiment() {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <PeopleSelector state={peopleState} dispatch={dispatchPeople} />
+                <PeopleForm state={peopleState} dispatch={dispatchPeople} />
+              </Grid>
+              <Grid item xs={12}>
+                <PublicationsForm
+                  state={publicationsState}
+                  dispatch={dispatchPublications}
+                  errors={experimentError?.response?.data}
+                />
               </Grid>
               <Grid item xs={12}>
                 <Paper

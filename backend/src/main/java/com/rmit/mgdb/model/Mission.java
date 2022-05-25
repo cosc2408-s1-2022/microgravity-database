@@ -59,7 +59,7 @@ public class Mission {
         if (date == null)
             return "";
 
-        return String.valueOf(date.getYear());
+        return date.toString();
     }
 
     @Transient

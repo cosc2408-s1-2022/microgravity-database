@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Card, CircularProgress, Container, Divider, Grid, Link, Paper, Typography } from '@mui/material';
+import { Box, Card, CircularProgress, Container, Grid, Link, Paper, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import lodash from 'lodash';
@@ -8,6 +8,7 @@ import { Experiment } from '../../util/types';
 import moment from 'moment';
 import { BACKEND_URL } from '../../util/api';
 import { PictureAsPdfRounded } from '@mui/icons-material';
+import ColoredLine from '../../components/ColoredLine';
 
 export default function ViewExperiment() {
   const id = useParams().id as unknown as string;
@@ -16,7 +17,6 @@ export default function ViewExperiment() {
     const [, id] = queryKey;
     return getExperiment({ id });
   });
-  const ColoredLine = () => <Divider sx={{ my: 2, backgroundColor: '#cc0808', border: 'solid 2px #cc0808' }} />;
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -117,22 +117,26 @@ export default function ViewExperiment() {
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
                     Researchers
                   </Typography>
-                  {experiment?.people.map((person, i) => (
-                    <Box key={i} mb={2}>
-                      <Typography variant={'body1'} fontWeight='bold'>
-                        {`${person.person.firstName} ${person.person.familyName}`}
-                      </Typography>
-                      <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
-                      <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
-                      <Typography
-                        variant={'body2'}
-                      >{`${person.person.city}, ${person.person.state}, ${person.person.country}`}</Typography>
-                    </Box>
-                  ))}
+                  {experiment?.people && experiment?.people.length ? (
+                    experiment?.people.map((person, i) => (
+                      <Box key={i} mb={2}>
+                        <Typography variant={'body1'} fontWeight='bold'>
+                          {`${person.person.familyName.at(0)}. ${person.person.firstName}`}
+                        </Typography>
+                        <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
+                        <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>
+                        <Typography
+                          variant={'body2'}
+                        >{`${person.person.city}, ${person.person.state}, ${person.person.country}`}</Typography>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography variant='body1'>None found.</Typography>
+                  )}
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Lead Institution
                   </Typography>
-                  <Typography variant='body1'>{experiment?.leadInstitution}</Typography>
+                  <Typography variant='body1'>{experiment?.leadInstitution || 'Not specified.'}</Typography>
                 </Card>
                 <ColoredLine />
               </Grid>
@@ -143,94 +147,126 @@ export default function ViewExperiment() {
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Type of Activity (ToA)
                   </Typography>
-                  <Typography variant='body1'>{experiment?.toa.name}</Typography>
+                  <Typography variant='body1'>{experiment?.toa.name || 'Not specified.'}</Typography>
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Aim
                   </Typography>
-                  <Typography variant='body1'>{experiment?.experimentAim}</Typography>
+                  <Typography variant='body1'>{experiment?.experimentAim || 'Not specified.'}</Typography>
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Objective
                   </Typography>
-                  <Typography variant='body1'>{experiment?.experimentObjective}</Typography>
-                  {experiment?.experimentAttachments && experiment?.experimentAttachments.length > 0 && (
-                    <>
-                      <Typography variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
-                        Experiment Attachments
-                      </Typography>
-                      <Box display='flex' flexWrap='wrap'>
-                        {experiment.experimentAttachments.map((attachment) =>
-                          attachment.mediaType.includes('image') ? (
-                            <Box
-                              m={2}
-                              ml={0}
-                              key={attachment.id}
-                              sx={{ position: 'relative', width: '10rem', height: '12rem' }}
-                              display='flex'
-                              flexDirection='column'
-                              justifyContent='flex-start'
-                            >
-                              <Link
-                                href={`${BACKEND_URL}/images/${attachment.filename}`}
-                                target='_blank'
-                                rel='noreferrer noopener'
-                              >
-                                <Paper
-                                  variant='outlined'
-                                  component='img'
-                                  sx={{
-                                    width: '10rem',
-                                    height: '10rem',
-                                    objectFit: 'cover',
-                                  }}
-                                  alt='Attachment Image'
-                                  src={`${BACKEND_URL}/images/${attachment.filename}`}
-                                />
-                                <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }}>
-                                  {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
-                                </Typography>
-                              </Link>
-                            </Box>
-                          ) : (
-                            <Box
-                              m={2}
-                              ml={0}
-                              key={attachment.id}
-                              sx={{ position: 'relative', width: '10rem', height: '12rem' }}
-                              display='flex'
-                              flexDirection='column'
-                              justifyContent='flex-start'
-                            >
-                              <Link
-                                href={`${BACKEND_URL}/documents/${attachment.filename}`}
-                                target='_blank'
-                                rel='noreferrer'
-                              >
-                                <Paper
-                                  variant='outlined'
-                                  sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    width: '10rem',
-                                    height: '10rem',
-                                  }}
-                                >
-                                  <PictureAsPdfRounded fontSize='large' color='secondary' />
-                                </Paper>
-                                <Typography
-                                  whiteSpace='nowrap'
-                                  textOverflow='ellipsis'
-                                  sx={{ overflow: 'hidden' }}
-                                  py={1}
-                                >
-                                  {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
-                                </Typography>
-                              </Link>
-                            </Box>
-                          ),
-                        )}
+                  <Typography variant='body1'>{experiment?.experimentObjective || 'Not specified.'}</Typography>
+                  <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                    Experiment Publications
+                  </Typography>
+                  {experiment?.experimentPublications && experiment?.experimentPublications.length > 0 ? (
+                    experiment.experimentPublications.map((publication, i) => (
+                      <Box display='flex' key={i}>
+                        <Box mr={1}>
+                          <Typography sx={{ display: 'inline' }} variant='body2'>{`[${i + 1}]`}</Typography>
+                        </Box>
+                        <Box>
+                          {publication.authors &&
+                            publication.authors.length > 0 &&
+                            publication.authors.map((person, i) => (
+                              <Typography sx={{ display: 'inline' }} key={i} variant='body2' fontWeight='bold'>
+                                {`${person.firstName.at(0)}. ${person.lastName}, `}
+                              </Typography>
+                            ))}
+                          <Typography sx={{ display: 'inline' }} variant={'body2'}>
+                            {`(${publication.yearPublished}), "${publication.title}", `}
+                          </Typography>
+                          <Typography sx={{ display: 'inline', fontStyle: 'italic' }} variant={'body2'}>
+                            {`${publication.journal}, ${publication.volumeNumber}, `}
+                          </Typography>
+                          <Typography sx={{ display: 'inline' }} variant={'body2'}>
+                            {`${publication.issueNumber}, DOI: ${publication.doi}, pp. ${publication.pagesUsed}.`}
+                          </Typography>
+                        </Box>
                       </Box>
-                    </>
+                    ))
+                  ) : (
+                    <Typography variant='body1'>None found.</Typography>
+                  )}
+                  <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
+                    Experiment Attachments
+                  </Typography>
+                  {experiment?.experimentAttachments && experiment?.experimentAttachments.length > 0 ? (
+                    <Box display='flex' flexWrap='wrap'>
+                      {experiment.experimentAttachments.map((attachment) =>
+                        attachment.mediaType.includes('image') ? (
+                          <Box
+                            m={2}
+                            ml={0}
+                            key={attachment.id}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Link
+                              href={`${BACKEND_URL}/images/${attachment.filename}`}
+                              target='_blank'
+                              rel='noreferrer noopener'
+                            >
+                              <Paper
+                                variant='outlined'
+                                component='img'
+                                sx={{
+                                  width: '10rem',
+                                  height: '10rem',
+                                  objectFit: 'cover',
+                                }}
+                                alt='Attachment Image'
+                                src={`${BACKEND_URL}/images/${attachment.filename}`}
+                              />
+                              <Typography whiteSpace='nowrap' textOverflow='ellipsis' sx={{ overflow: 'hidden' }}>
+                                {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
+                              </Typography>
+                            </Link>
+                          </Box>
+                        ) : (
+                          <Box
+                            m={2}
+                            ml={0}
+                            key={attachment.id}
+                            sx={{ position: 'relative', width: '10rem', height: '12rem' }}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='flex-start'
+                          >
+                            <Link
+                              href={`${BACKEND_URL}/documents/${attachment.filename}`}
+                              target='_blank'
+                              rel='noreferrer'
+                            >
+                              <Paper
+                                variant='outlined'
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  width: '10rem',
+                                  height: '10rem',
+                                }}
+                              >
+                                <PictureAsPdfRounded fontSize='large' color='secondary' />
+                              </Paper>
+                              <Typography
+                                whiteSpace='nowrap'
+                                textOverflow='ellipsis'
+                                sx={{ overflow: 'hidden' }}
+                                py={1}
+                              >
+                                {`${attachment.filename.substring(attachment.filename.indexOf('DT') + 2)}`}
+                              </Typography>
+                            </Link>
+                          </Box>
+                        ),
+                      )}
+                    </Box>
+                  ) : (
+                    <Typography variant='body1'>None found.</Typography>
                   )}
                 </Card>
               </Grid>

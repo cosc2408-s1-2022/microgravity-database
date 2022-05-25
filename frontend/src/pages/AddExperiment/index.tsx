@@ -1,24 +1,34 @@
 import { Box, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ForCode, Mission, PeopleReducerState, SeoCode, Toa } from '../../util/types';
+import {
+  Experiment,
+  ExperimentPublicationAuthor,
+  ForCode,
+  Mission,
+  PeopleReducerState,
+  SeoCode,
+  Toa,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import ToaSelector from '../../components/Experiment/ToaSelector';
 import MissionSelector from '../../components/Experiment/MissionSelector';
 import ForCodeSelector from '../../components/Experiment/ForCodeSelector';
 import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
-import PeopleSelector from '../../components/Experiment/PeopleSelector';
+import PeopleForm from '../../components/Experiment/PeopleForm';
 import { usePeopleReducer } from '../../util/hooks';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import Captcha from '../../components/Captcha';
+import publicationsReducer from '../../util/reducers/PublicationsReducer';
+import PublicationsForm from '../../components/Experiment/PublicationsForm';
 
 export default function AddExperiment() {
   const navigate = useNavigate();
@@ -27,7 +37,6 @@ export default function AddExperiment() {
   const [leadInstitution, setLeadInstitution] = useState<string>();
   const [experimentAim, setExperimentAim] = useState<string>();
   const [experimentObjective, setExperimentObjective] = useState<string>();
-  const [experimentPublications, setExperimentPublications] = useState<string>();
   const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
   const [toa, setToa] = useState<Toa | null>(null);
   const [mission, setMission] = useState<Mission | null>(null);
@@ -35,6 +44,7 @@ export default function AddExperiment() {
   const [seoCode, setSeoCode] = useState<SeoCode | null>(null);
   const initialState: PeopleReducerState = { uid: 0, data: [] };
   const [peopleState, dispatchPeople] = usePeopleReducer(initialState);
+  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, { uid: 0, data: [] });
 
   const {
     error: experimentError,
@@ -51,14 +61,27 @@ export default function AddExperiment() {
       formData.append('experimentAttachmentFiles[]', attachment);
     }
     experimentObjective && formData.append('experimentObjective', experimentObjective);
-    experimentPublications && formData.append('experimentPublications', experimentPublications);
     toa && formData.append('toaId', toa.id.toString());
     mission && formData.append('missionId', mission.id.toString());
     forCode && formData.append('forCodeId', forCode.id.toString());
     seoCode && formData.append('seoCodeId', seoCode.id.toString());
     for (const i in peopleState.data) {
-      formData.append(`experimentPersonRequests[${i}].personId`, JSON.stringify(peopleState.data[i].data.personId));
-      formData.append(`experimentPersonRequests[${i}].roleId`, JSON.stringify(peopleState.data[i].data.roleId));
+      Object.entries(peopleState.data[i].data).forEach(([key, value]) => {
+        formData.append(`experimentPersonRequests[${i}].${key}`, value?.toString() || '');
+      });
+    }
+    for (const i in publicationsState.data) {
+      Object.entries(publicationsState.data[i].data).forEach(([key, value]) => {
+        if (key === 'authors') {
+          for (const j in value as ExperimentPublicationAuthor[]) {
+            Object.entries(value[j]).forEach(([k, v]) => {
+              v && formData.append(`experimentPublications[${i}].authors[${j}].${k}`, v?.toString() || '');
+            });
+          }
+        } else {
+          value && formData.append(`experimentPublications[${i}].${key}`, value?.toString() || '');
+        }
+      });
     }
 
     return api.post('/experiments/save', formData, {
@@ -157,14 +180,6 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormField
-                  label='Experiment Publications'
-                  name='Experiment Publications'
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentPublications}
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <MissionSelector value={mission} dispatch={setMission} errors={experimentError?.response?.data} />
               </Grid>
               <Grid container item spacing={2} xs={12}>
@@ -176,7 +191,14 @@ export default function AddExperiment() {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <PeopleSelector state={peopleState} dispatch={dispatchPeople} />
+                <PeopleForm state={peopleState} dispatch={dispatchPeople} errors={experimentError?.response?.data} />
+              </Grid>
+              <Grid item xs={12}>
+                <PublicationsForm
+                  state={publicationsState}
+                  dispatch={dispatchPublications}
+                  errors={experimentError?.response?.data}
+                />
               </Grid>
               <Grid item xs={12}>
                 <Paper

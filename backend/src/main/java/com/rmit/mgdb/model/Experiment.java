@@ -41,9 +41,8 @@ public class Experiment {
     @OneToMany(mappedBy = "experiment")
     private List<ExperimentAttachment> experimentAttachments;
 
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
-    private String experimentPublications;
+    @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL)
+    private List<ExperimentPublication> experimentPublications;
 
     @GenericField
     private boolean deleted;

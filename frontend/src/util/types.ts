@@ -63,8 +63,8 @@ export type Experiment = {
   principalInvestigator: string;
   experimentAim: string;
   experimentObjective: string;
+  experimentPublications: ExperimentPublication[];
   experimentAttachments: ExperimentAttachment[];
-  experimentPublications: string;
   deleted: boolean;
   approved: boolean;
   mission: Mission;
@@ -205,4 +205,54 @@ export type CaptchaResponse = {
   challenge_ts?: string;
   hostname?: string;
   error_codes?: string[];
+};
+
+export type ExperimentPublication = {
+  doi?: string;
+  authors: ExperimentPublicationAuthor[];
+  yearPublished?: string;
+  title: string;
+  journal?: string;
+  volumeNumber?: string;
+  issueNumber?: string;
+  pagesUsed?: string;
+  journalDatabase?: string;
+  url?: string;
+  accessDate?: string;
+};
+
+export type ExperimentPublicationAuthor = {
+  firstName: string;
+  lastName: string;
+};
+
+export type ExperimentPublicationEntry = {
+  id: number;
+  data: ExperimentPublication;
+};
+
+export type ExperimentPublicationResponse = {
+  message: {
+    title: string;
+    'container-title': string;
+    volume: string;
+    issue: string;
+    DOI: string;
+    publisher: string;
+    URL: string;
+    page: string;
+    created: {
+      'date-time': string;
+    };
+    issued: {
+      'date-parts': string;
+    };
+    yearPublished: Date;
+    author: ExperimentPublicationsAuthorResponse[];
+  };
+};
+
+export type ExperimentPublicationsAuthorResponse = {
+  given: string;
+  family: string;
 };

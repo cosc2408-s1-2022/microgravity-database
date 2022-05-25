@@ -41,7 +41,6 @@ public class ExperimentController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @ModelAttribute SaveExperimentRequest experimentRequest,
-                                  @RequestParam String captchaResponse,
                                   BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)

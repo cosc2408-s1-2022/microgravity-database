@@ -130,14 +130,14 @@ export default function AddPerson() {
               <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                 <Captcha onComplete={setIsCaptchaComplete} />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} display='flex' justifyContent='center'>
                 <LoadingButton
                   disabled={!isCaptchaComplete}
                   loading={isLoading}
                   type='submit'
                   variant='contained'
                   color='secondary'
-                  fullWidth
+                  sx={{ width: '75%' }}
                 >
                   Add Person
                 </LoadingButton>

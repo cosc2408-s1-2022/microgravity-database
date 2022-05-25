@@ -1,14 +1,17 @@
+drop table if exists platform_seo_code;
+drop table if exists platform_for_code;
 drop table if exists experiment_person;
+drop table if exists publication_author;
+drop table if exists experiment_publication_author;
+drop table if exists experiment_publication;
 drop table if exists experiment_attachment;
 drop table if exists experiment;
-drop table if exists mission;
-drop table if exists person;
-drop table if exists platform_for_code;
-drop table if exists for_code;
-drop table if exists platform_seo_code;
-drop table if exists seo_code;
-drop table if exists platform;
 drop table if exists toa;
+drop table if exists mission;
+drop table if exists platform;
+drop table if exists person;
+drop table if exists seo_code;
+drop table if exists for_code;
 drop table if exists role;
 drop table if exists user;
 
@@ -135,6 +138,43 @@ create table experiment_attachment
     experiment_id bigint        null,
     constraint FKg0a4dpinmvuixjko8t50rshjm
         foreign key (experiment_id) references experiment (id)
+);
+
+create table experiment_publication
+(
+    id               bigint auto_increment
+        primary key,
+    access_date      varchar(255)  null,
+    doi              varchar(255)  null,
+    issue_number     varchar(255)  null,
+    journal          varchar(1023) null,
+    journal_database varchar(255)  null,
+    pages_used       varchar(255)  null,
+    title            varchar(1023) null,
+    url              varchar(1023) null,
+    volume_number    varchar(255)  null,
+    year_published   varchar(255)  null,
+    experiment_id    bigint        null,
+    constraint FKbu0k1t8r9min47m1s26p2ho4t
+        foreign key (experiment_id) references experiment (id)
+);
+
+create table experiment_publication_author
+(
+    id         bigint auto_increment
+        primary key,
+    first_name varchar(255) null,
+    last_name  varchar(255) null
+);
+
+create table publication_author
+(
+    publication_id bigint not null,
+    author_id      bigint not null,
+    constraint FKg942a597vajs5b8v8r8ecj9su
+        foreign key (publication_id) references experiment_publication (id),
+    constraint FKs2kspjpjhf4cgxq5uunrury3m
+        foreign key (author_id) references experiment_publication_author (id)
 );
 
 create table experiment_person

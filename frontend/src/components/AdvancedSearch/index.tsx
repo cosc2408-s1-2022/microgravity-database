@@ -61,7 +61,7 @@ export default function AdvancedSearch({ searchState, ...gridProps }: AdvSearchP
           alignItems='flex-start'
         >
           <FormField
-            value={string}
+            value={string || ''}
             margin='normal'
             name='searchString'
             label='Keyword(s)'

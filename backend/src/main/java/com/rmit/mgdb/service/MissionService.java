@@ -19,7 +19,6 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,9 +69,7 @@ public class MissionService {
         }
         mission.setName(missionRequest.getName());
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("yyyy")
-                .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .appendPattern("yyyy-MM-dd")
                 .toFormatter();
         mission.setLaunchDate(LocalDate.parse(missionRequest.getLaunchDate(), formatter));
         String startDate = missionRequest.getStartDate();

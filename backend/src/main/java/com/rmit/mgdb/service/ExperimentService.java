@@ -37,6 +37,7 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
+    private final ExperimentPublicationService experimentPublicationService;
     private final ExperimentAttachmentService experimentAttachmentService;
     private final MissionService missionService;
     private final ForCodeService forCodeService;
@@ -49,6 +50,7 @@ public class ExperimentService {
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
+                             ExperimentPublicationService experimentPublicationService,
                              ExperimentAttachmentService experimentAttachmentService,
                              MissionService missionService, ForCodeService forCodeService,
                              SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
@@ -57,6 +59,7 @@ public class ExperimentService {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
+        this.experimentPublicationService = experimentPublicationService;
         this.experimentAttachmentService = experimentAttachmentService;
         this.missionService = missionService;
         this.forCodeService = forCodeService;
@@ -82,6 +85,7 @@ public class ExperimentService {
             experiment.setDeleted(existingExperiment.isDeleted());
             experiment.setCreatedAt(existingExperiment.getCreatedAt());
             experimentPersonService.removeAllExperimentPeople(id);
+            experimentPublicationService.removeAllExperimentPublications(id);
             experimentAttachmentService.deleteAllByExperimentId(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
@@ -89,7 +93,6 @@ public class ExperimentService {
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
         experiment.setExperimentAim(experimentRequest.getExperimentAim());
         experiment.setExperimentObjective(experimentRequest.getExperimentObjective());
-        experiment.setExperimentPublications(experimentRequest.getExperimentPublications());
         Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
         experiment.setMission(mission);
         experiment.setPlatform(mission.getPlatform());
@@ -103,6 +106,20 @@ public class ExperimentService {
                 Person person = personService.getPersonById(personRequest.getPersonId());
                 Role role = roleService.getRoleById(personRequest.getRoleId());
                 return experimentPersonService.addExperimentPerson(experiment, person, role);
+            }).toList());
+        }
+
+        ExperimentPublication[] publications = experimentRequest.getExperimentPublications();
+        if (publications != null && publications.length > 0) {
+            experiment.setExperimentPublications(Arrays.stream(publications).map(publication -> {
+                List<ExperimentPublicationAuthor> authors = publication.getAuthors();
+                if (authors != null && authors.size() > 0)
+                    publication.setAuthors(
+                            authors.stream().map(experimentPublicationService::saveExperimentPublicationAuthor)
+                                   .toList());
+
+                publication.setExperiment(experiment);
+                return experimentPublicationService.saveExperimentPublication(publication);
             }).toList());
         }
 

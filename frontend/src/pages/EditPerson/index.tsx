@@ -146,22 +146,20 @@ export default function EditPerson() {
               <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                 <Captcha onComplete={setIsCaptchaComplete} />
               </Grid>
-              <Grid item xs={12}>
-                <Box display='flex' alignItems='center'>
-                  <LoadingButton
-                    sx={{ mr: 2 }}
-                    disabled={!isCaptchaComplete}
-                    loading={isLoading}
-                    onClick={handleSubmit}
-                    variant='contained'
-                    color='secondary'
-                  >
-                    Save Changes
-                  </LoadingButton>
-                  <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
-                    Cancel
-                  </Button>
-                </Box>
+              <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
+                <LoadingButton
+                  sx={{ mr: 2, width: '50%' }}
+                  disabled={!isCaptchaComplete}
+                  loading={isLoading}
+                  onClick={handleSubmit}
+                  variant='contained'
+                  color='secondary'
+                >
+                  Save Changes
+                </LoadingButton>
+                <Button sx={{ backgroundColor: 'gray', width: '50%' }} variant='contained' onClick={() => navigate(-1)}>
+                  Cancel
+                </Button>
               </Grid>
             </Grid>
           </Box>
