@@ -9,15 +9,10 @@ import { Box, Button, Grid, IconButton, Paper, Typography } from '@mui/material'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import {
-  ExperimentPublication,
-  ExperimentPublicationAuthor,
-  ExperimentPublicationEntry,
-  ExperimentPublicationResponse,
-} from '../../../../util/types';
-import FormField from '../../../FormField';
-import LoadingButton from '../../../LoadingButton';
-import MessageSnackbar from '../../../MessageSnackbar';
+import { Publication, Author, ExperimentPublicationEntry, PublicationAPIResponse } from '../../../util/types';
+import FormField from '../../FormField';
+import LoadingButton from '../../LoadingButton';
+import MessageSnackbar from '../../MessageSnackbar';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -64,11 +59,11 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 }));
 
 export default function PublicationForm({ index, entry, onModify, onRemove, errors }: PublicationItemProps) {
-  const initialPublicationState: ExperimentPublication = {
+  const initialPublicationState: Publication = {
     title: '',
     authors: [],
   };
-  const [publication, setPublication] = useState<ExperimentPublication>(entry.data);
+  const [publication, setPublication] = useState<Publication>(entry.data);
 
   const {
     data: queryData,
@@ -76,7 +71,7 @@ export default function PublicationForm({ index, entry, onModify, onRemove, erro
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<AxiosResponse<ExperimentPublicationResponse>, AxiosError>(
+  } = useQuery<AxiosResponse<PublicationAPIResponse>, AxiosError>(
     ['doiQuery', entry.data.doi],
     ({ queryKey }) => {
       const [, doi] = queryKey;
@@ -136,7 +131,7 @@ export default function PublicationForm({ index, entry, onModify, onRemove, erro
     newAuthors.splice(index, 1);
     setPublication({ ...publication, authors: newAuthors });
   };
-  const modifyAuthor = (index: number, author: ExperimentPublicationAuthor) => {
+  const modifyAuthor = (index: number, author: Author) => {
     const newAuthors = [...publication.authors];
     newAuthors[index] = author;
     setPublication({ ...publication, authors: newAuthors });

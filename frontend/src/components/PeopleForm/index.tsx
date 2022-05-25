@@ -15,8 +15,8 @@ import parse from 'autosuggest-highlight/parse';
 import { AxiosResponse, AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import api from '../../../util/api';
-import { ExperimentPersonRequestEntry, Person, Role } from '../../../util/types';
+import api from '../../util/api';
+import { ExperimentPersonRequestEntry, Person, Role } from '../../util/types';
 
 type PeopleFormProps = Omit<TextFieldProps, 'onChange'> & {
   state: { uid: number; data: ExperimentPersonRequestEntry[] };
@@ -131,7 +131,7 @@ export default function PeopleForm({ state, dispatch, errors }: PeopleFormProps)
                 noOptionsText={
                   <Box display='flex' justifyContent='space-between' alignItems='center'>
                     <Typography variant='body1' flexGrow={1}>
-                      No such person found.
+                      None found.
                     </Typography>
                     <Button
                       variant='contained'
@@ -209,7 +209,7 @@ export default function PeopleForm({ state, dispatch, errors }: PeopleFormProps)
                     </li>
                   );
                 }}
-                noOptionsText='No such roles found.'
+                noOptionsText='None found.'
               />
             </Grid>
             <Grid item xs={1} display='flex' justifyContent='center'>

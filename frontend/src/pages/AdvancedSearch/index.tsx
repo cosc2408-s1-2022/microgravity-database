@@ -77,7 +77,7 @@ export default function AdvancedSearchPage() {
           <ExperimentResult
             key={item.id}
             id={item.id.toString()}
-            objective={item.experimentObjective}
+            objective={item.experimentObjectives}
             title={item.title}
             people={item.people}
             mission={item.mission}

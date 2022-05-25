@@ -76,6 +76,10 @@ public class Experiment {
     @IndexedEmbedded
     private SeoCode seoCode;
 
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
+    private String spacecraft;
+
     @ManyToOne
     @JoinColumn(name = "subsystem_id")
     @IndexedEmbedded
@@ -84,13 +88,9 @@ public class Experiment {
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     @Length(max = 1023)
-    private String spacecraft;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
     private String payload;
 
-    private Long testSubjectsCount;
+    private Long testSubjectCount;
 
     @ManyToOne
     @JoinColumn(name = "area_id")
@@ -105,10 +105,10 @@ public class Experiment {
     private TestSubjectType testSubjectType;
 
     @GenericField
-    private boolean deleted;
+    private boolean approved;
 
     @GenericField
-    private boolean approved;
+    private boolean deleted;
 
     private Date createdAt;
 

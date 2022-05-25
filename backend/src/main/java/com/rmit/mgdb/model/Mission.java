@@ -41,10 +41,10 @@ public class Mission {
     private Long experimentCount;
 
     @GenericField
-    private boolean deleted;
+    private boolean approved;
 
     @GenericField
-    private boolean approved;
+    private boolean deleted;
 
     private Date createdAt;
 

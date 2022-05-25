@@ -120,7 +120,7 @@ public class ExperimentService {
             }
             experiment.setPayload(experimentRequest.getPayload());
         } else if (experiment.getActivity().getName().equals(Activities.HUMAN_SPACEFLIGHT.string)) {
-            experiment.setTestSubjectsCount(experimentRequest.getTestSubjectsCount());
+            experiment.setTestSubjectCount(experimentRequest.getTestSubjectCount());
             experiment.setArea(areaService.getAreaById(experimentRequest.getAreaId()));
             experiment.setTestSubjectType(
                     testSubjectTypeService.getTestSubjectTypeById(experimentRequest.getTestSubjectTypeId()));
@@ -152,7 +152,7 @@ public class ExperimentService {
         }
 
         List<Attachment> attachments = new ArrayList<>();
-        MultipartFile[] experimentAttachmentFiles = experimentRequest.getExperimentAttachmentFiles();
+        MultipartFile[] experimentAttachmentFiles = experimentRequest.getAttachmentFiles();
         if (experimentAttachmentFiles != null && experimentAttachmentFiles.length > 0) {
             attachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
                 String originalFileName = Objects.requireNonNull(file.getOriginalFilename());
@@ -183,9 +183,9 @@ public class ExperimentService {
             }).toList());
         }
 
-        Long[] experimentAttachmentIds = experimentRequest.getExperimentAttachmentIds();
+        Long[] experimentAttachmentIds = experimentRequest.getAttachmentIds();
         if (experimentAttachmentIds != null && experimentAttachmentIds.length > 0) {
-            attachments.addAll(Arrays.stream(experimentRequest.getExperimentAttachmentIds())
+            attachments.addAll(Arrays.stream(experimentRequest.getAttachmentIds())
                                      .map(experimentAttachmentService::findById).toList());
         }
         experiment.setAttachments(attachments);

@@ -47,7 +47,7 @@ export default function BasicSearchPage() {
           key={item.id}
           id={item.id.toString()}
           title={item.title}
-          objective={item.experimentObjective}
+          objective={item.experimentObjectives}
           people={item.people}
           mission={item.mission}
           bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}

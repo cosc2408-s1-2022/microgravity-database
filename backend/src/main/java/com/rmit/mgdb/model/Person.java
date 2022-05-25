@@ -52,10 +52,10 @@ public class Person {
     private String phone;
 
     @GenericField
-    private boolean deleted;
+    private boolean approved;
 
     @GenericField
-    private boolean approved;
+    private boolean deleted;
 
     private Date createdAt;
 

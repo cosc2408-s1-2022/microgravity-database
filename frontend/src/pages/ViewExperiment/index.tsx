@@ -76,36 +76,88 @@ export default function ViewExperiment() {
                     </Card>
                   </Grid>
                   <Grid item xs={12} md={6} display='flex'>
-                    <Card
-                      sx={{
-                        p: 2,
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-                      }}
-                    >
-                      <Link href={`/forCode/${experiment?.forCode.id}`}>
+                    {experiment?.activity.name === 'Scientific Research' ? (
+                      <Card
+                        sx={{
+                          p: 2,
+                          width: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                        }}
+                      >
                         <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
-                          Field of Research (FoR)
+                          Type of Activity (ToA)
                         </Typography>
-                        <Typography variant='body1'>{experiment?.forCode.name}</Typography>
+                        <Typography variant='body1'>{experiment?.toa?.name}</Typography>
+                        <Link href={`/forCode/${experiment?.forCode?.id}`}>
+                          <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
+                            Field of Research (FoR)
+                          </Typography>
+                          <Typography variant='body1'>{experiment?.forCode?.name}</Typography>
+                          <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
+                            Classification
+                          </Typography>
+                          <Typography variant='body1'>{experiment?.forCode?.code}</Typography>
+                        </Link>
+                        <Link href={`/seoCode/${experiment?.seoCode?.id}`}>
+                          <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
+                            Socio-Economic Objective (SEO)
+                          </Typography>
+                          <Typography variant='body1'>{experiment?.seoCode?.name}</Typography>
+                          <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
+                            Classification
+                          </Typography>
+                          <Typography variant='body1'>{experiment?.seoCode?.code}</Typography>
+                        </Link>
+                      </Card>
+                    ) : experiment?.activity.name === 'Industry' ? (
+                      <Card
+                        sx={{
+                          p: 2,
+                          width: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                        }}
+                      >
+                        <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
+                          Spacecraft
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.spacecraft}</Typography>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          Classification
+                          Subsystem
                         </Typography>
-                        <Typography variant='body1'>{experiment?.forCode.code}</Typography>
-                      </Link>
-                      <Link href={`/seoCode/${experiment?.seoCode.id}`}>
+                        <Typography variant='body1'>{experiment?.subsystem?.name}</Typography>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          Socio-Economic Objective (SEO)
+                          Payload
                         </Typography>
-                        <Typography variant='body1'>{experiment?.seoCode.name}</Typography>
+                        <Typography variant='body1'>{experiment?.payload}</Typography>
+                      </Card>
+                    ) : experiment?.activity.name === 'Human Spaceflight' ? (
+                      <Card
+                        sx={{
+                          p: 2,
+                          width: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                        }}
+                      >
+                        <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold'>
+                          Number of Test Subjects
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.testSubjectCount}</Typography>
                         <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
-                          Classification
+                          Area
                         </Typography>
-                        <Typography variant='body1'>{experiment?.seoCode.code}</Typography>
-                      </Link>
-                    </Card>
+                        <Typography variant='body1'>{experiment?.area?.name}</Typography>
+                        <Typography style={{ color: '#cc0808' }} mt={2} variant='h5' fontWeight='bold'>
+                          Test Subject Type
+                        </Typography>
+                        <Typography variant='body1'>{experiment?.testSubjectType?.name}</Typography>
+                      </Card>
+                    ) : undefined}
                   </Grid>
                 </Grid>
                 <ColoredLine />
@@ -145,22 +197,14 @@ export default function ViewExperiment() {
                   sx={{ p: 2, mt: 3, boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
                 >
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
-                    Type of Activity (ToA)
+                    Experiment Objectives
                   </Typography>
-                  <Typography variant='body1'>{experiment?.toa.name || 'Not specified.'}</Typography>
-                  <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
-                    Experiment Aim
-                  </Typography>
-                  <Typography variant='body1'>{experiment?.experimentAim || 'Not specified.'}</Typography>
-                  <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
-                    Experiment Objective
-                  </Typography>
-                  <Typography variant='body1'>{experiment?.experimentObjective || 'Not specified.'}</Typography>
+                  <Typography variant='body1'>{experiment?.experimentObjectives || 'Not specified.'}</Typography>
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Publications
                   </Typography>
-                  {experiment?.experimentPublications && experiment?.experimentPublications.length > 0 ? (
-                    experiment.experimentPublications.map((publication, i) => (
+                  {experiment?.publications && experiment?.publications.length > 0 ? (
+                    experiment.publications.map((publication, i) => (
                       <Box display='flex' key={i}>
                         <Box mr={1}>
                           <Typography sx={{ display: 'inline' }} variant='body2'>{`[${i + 1}]`}</Typography>
@@ -191,9 +235,9 @@ export default function ViewExperiment() {
                   <Typography style={{ color: '#cc0808' }} variant='h5' fontWeight='bold' sx={{ mt: 2 }}>
                     Experiment Attachments
                   </Typography>
-                  {experiment?.experimentAttachments && experiment?.experimentAttachments.length > 0 ? (
+                  {experiment?.attachments && experiment?.attachments.length > 0 ? (
                     <Box display='flex' flexWrap='wrap'>
-                      {experiment.experimentAttachments.map((attachment) =>
+                      {experiment.attachments.map((attachment) =>
                         attachment.mediaType.includes('image') ? (
                           <Box
                             m={2}

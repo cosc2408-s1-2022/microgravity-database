@@ -5,6 +5,7 @@ import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentRequest;
 import com.rmit.mgdb.service.ExperimentService;
 import com.rmit.mgdb.service.ValidationErrorService;
+import com.rmit.mgdb.validator.SaveExperimentRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,15 @@ import java.util.Optional;
 public class ExperimentController {
 
     private final ExperimentService experimentService;
+    private final SaveExperimentRequestValidator validator;
     private final ValidationErrorService validationErrorService;
 
     @Autowired
     public ExperimentController(ExperimentService experimentService,
+                                SaveExperimentRequestValidator validator,
                                 ValidationErrorService validationErrorService) {
         this.experimentService = experimentService;
+        this.validator = validator;
         this.validationErrorService = validationErrorService;
     }
 
@@ -42,6 +46,7 @@ public class ExperimentController {
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @ModelAttribute SaveExperimentRequest experimentRequest,
                                   BindingResult result) {
+        validator.validate(experimentRequest, result);
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)
             return errorMap;

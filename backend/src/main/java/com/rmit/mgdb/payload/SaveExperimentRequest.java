@@ -18,7 +18,7 @@ public class SaveExperimentRequest {
     @NotBlank(message = "Experiments must have a title.")
     private String title;
 
-    @NotBlank(message = "Lead institution must be specified..")
+    @NotBlank(message = "Lead institution must be specified.")
     private String leadInstitution;
 
     @NotNull(message = "Experiments must belong to a mission.")
@@ -32,9 +32,9 @@ public class SaveExperimentRequest {
     @Valid
     private Publication[] publications;
 
-    private MultipartFile[] experimentAttachmentFiles;
+    private MultipartFile[] attachmentFiles;
 
-    private Long[] experimentAttachmentIds;
+    private Long[] attachmentIds;
 
     @NotNull(message = "Activity must be specified.")
     private Long activityId;
@@ -51,7 +51,7 @@ public class SaveExperimentRequest {
 
     private String payload;
 
-    private Long testSubjectsCount;
+    private Long testSubjectCount;
 
     private Long areaId;
 

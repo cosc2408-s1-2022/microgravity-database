@@ -1,7 +1,7 @@
 import { LibraryAdd } from '@mui/icons-material';
 import { Box, IconButton, Paper, TextFieldProps, Typography } from '@mui/material';
 import { useCallback } from 'react';
-import { ExperimentPublicationEntry } from '../../../util/types';
+import { ExperimentPublicationEntry } from '../../util/types';
 import PublicationForm from './PublicationForm';
 
 type PublicationsProps = Omit<TextFieldProps, 'onChange'> & {

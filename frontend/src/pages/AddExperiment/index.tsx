@@ -1,4 +1,4 @@
-import { Box, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -8,18 +8,27 @@ import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import AuthWrapper from '../../components/AuthWrapper';
-import { Experiment, ExperimentPublicationAuthor, ForCode, Mission, SeoCode, Toa } from '../../util/types';
+import {
+  Experiment,
+  Author,
+  ForCode,
+  Mission,
+  SeoCode,
+  Toa,
+  Subsystem,
+  Area,
+  TestSubjectType,
+  Activity,
+} from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
-import ToaSelector from '../../components/Experiment/ToaSelector';
-import MissionSelector from '../../components/Experiment/MissionSelector';
-import ForCodeSelector from '../../components/Experiment/ForCodeSelector';
-import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
-import PeopleForm from '../../components/Experiment/PeopleForm';
+import PeopleForm from '../../components/PeopleForm';
 import { usePeopleReducer, usePublicationsReducer } from '../../util/hooks';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import Captcha from '../../components/Captcha';
-import PublicationsForm from '../../components/Experiment/PublicationsForm';
+import PublicationsForm from '../../components/PublicationsForm';
+import AutocompleteSelector from '../../components/AutocompleteSelector';
+import moment from 'moment';
 
 export default function AddExperiment() {
   const navigate = useNavigate();
@@ -31,10 +40,22 @@ export default function AddExperiment() {
   const [peopleState, dispatchPeople] = usePeopleReducer({ uid: 0, data: [] });
   const [publicationsState, dispatchPublications] = usePublicationsReducer({ uid: 0, data: [] });
   const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
+  const [activity, setActivity] = useState<Activity | null>(null);
 
+  // Scientific Research
   const [toa, setToa] = useState<Toa | null>(null);
   const [forCode, setForCode] = useState<ForCode | null>(null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(null);
+
+  // Industry
+  const [spacecraft, setSpacecraft] = useState<string>();
+  const [subsystem, setSubsystem] = useState<Subsystem | null>(null);
+  const [payload, setPayload] = useState<string>();
+
+  // Human Spaceflight
+  const [testSubjectCount, setTestSubjectCount] = useState<number>();
+  const [area, setArea] = useState<Area | null>(null);
+  const [testSubjectType, setTestSubjectType] = useState<TestSubjectType | null>(null);
 
   const {
     error: experimentError,
@@ -46,23 +67,35 @@ export default function AddExperiment() {
     const formData = new FormData();
     title && formData.append('title', title);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
-    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
-    for (const attachment of experimentAttachments) {
-      formData.append('experimentAttachmentFiles[]', attachment);
-    }
-    toa && formData.append('toaId', toa.id.toString());
     mission && formData.append('missionId', mission.id.toString());
+    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
+    activity && formData.append('activityId', activity.id.toString());
+
+    // Scientific Research
+    toa && formData.append('toaId', toa.id.toString());
     forCode && formData.append('forCodeId', forCode.id.toString());
     seoCode && formData.append('seoCodeId', seoCode.id.toString());
+
+    // Industry
+    spacecraft && formData.append('spacecraft', spacecraft);
+    subsystem && formData.append('subsystem', subsystem.id.toString());
+    payload && formData.append('payload', payload);
+
+    // Human Spaceflight
+    testSubjectCount && formData.append('testSubjectCount', testSubjectCount.toString());
+    area && formData.append('areaId', area.id.toString());
+    testSubjectType && formData.append('testSubjectTypeId', testSubjectType.id.toString());
+
     for (const i in peopleState.data) {
       Object.entries(peopleState.data[i].data).forEach(([key, value]) => {
         formData.append(`experimentPersonRequests[${i}].${key}`, value?.toString() || '');
       });
     }
+
     for (const i in publicationsState.data) {
       Object.entries(publicationsState.data[i].data).forEach(([key, value]) => {
         if (key === 'authors') {
-          for (const j in value as ExperimentPublicationAuthor[]) {
+          for (const j in value as Author[]) {
             Object.entries(value[j]).forEach(([k, v]) => {
               v && formData.append(`experimentPublications[${i}].authors[${j}].${k}`, v?.toString() || '');
             });
@@ -71,6 +104,10 @@ export default function AddExperiment() {
           value && formData.append(`experimentPublications[${i}].${key}`, value?.toString() || '');
         }
       });
+    }
+
+    for (const attachment of experimentAttachments) {
+      formData.append('experimentAttachmentFiles[]', attachment);
     }
 
     return api.post('/experiments/save', formData, {
@@ -94,6 +131,22 @@ export default function AddExperiment() {
     event.preventDefault();
     mutateExperiment();
   };
+
+  useEffect(() => {
+    if (experimentError?.response?.data) {
+      experimentError.response.data.toaId = '';
+      experimentError.response.data.forCodeId = '';
+      experimentError.response.data.seoCodeId = '';
+
+      experimentError.response.data.spacecraft = '';
+      experimentError.response.data.subsystemId = '';
+      experimentError.response.data.payload = '';
+
+      experimentError.response.data.testSubjectCount = '';
+      experimentError.response.data.areaId = '';
+      experimentError.response.data.testSubjectTypeId = '';
+    }
+  }, [experimentError, activity]);
 
   useEffect(() => {
     if (isExperimentSuccess) {
@@ -140,16 +193,42 @@ export default function AddExperiment() {
                   onChange={setTitle}
                 />
               </Grid>
-              <Grid item xs={6}>
-                <ToaSelector value={toa} dispatch={setToa} errors={experimentError?.response?.data} />
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormField
                   label='Lead Institution'
                   name='leadInstitution'
                   required
                   errors={experimentError?.response?.data}
                   onChange={setLeadInstitution}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <AutocompleteSelector<Mission>
+                  name='missionId'
+                  label='Mission'
+                  value={mission}
+                  dispatch={setMission}
+                  errors={experimentError?.response?.data}
+                  queryKey='getAllMissions'
+                  queryFn={() => api.get('/missions')}
+                  matchFn={(option) => `${option.name} (${moment(option.launchDate).year()})`}
+                  equalityFn={(option, value) => option.id === value.id}
+                  noOptionsComponent={
+                    <Box display='flex' justifyContent='space-between' alignItems='center'>
+                      <Typography variant='body1' flexGrow={1}>
+                        No such missions found.
+                      </Typography>
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        href='/addMission'
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
+                        Add new?
+                      </Button>
+                    </Box>
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -163,16 +242,138 @@ export default function AddExperiment() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <MissionSelector value={mission} dispatch={setMission} errors={experimentError?.response?.data} />
+                <AutocompleteSelector<Activity>
+                  name='activityId'
+                  label='Activity'
+                  value={activity}
+                  dispatch={setActivity}
+                  errors={experimentError?.response?.data}
+                  queryKey='getAllActivities'
+                  queryFn={() => api.get('/activities')}
+                  matchFn={(option) => option.name}
+                  equalityFn={(option, value) => option.id === value.id}
+                />
               </Grid>
-              <Grid container item spacing={2} xs={12}>
-                <Grid item xs={6}>
-                  <ForCodeSelector value={forCode} dispatch={setForCode} errors={experimentError?.response?.data} />
-                </Grid>
-                <Grid item xs={6}>
-                  <SeoCodeSelector value={seoCode} dispatch={setSeoCode} errors={experimentError?.response?.data} />
-                </Grid>
-              </Grid>
+              {activity &&
+                (activity.name === 'Scientific Research' ? (
+                  <Grid container item xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<Toa>
+                        name='toaId'
+                        label='Type of Activity (ToA)'
+                        value={toa}
+                        dispatch={setToa}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllToas'
+                        queryFn={() => api.get('/toas')}
+                        matchFn={(option) => option.name}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<ForCode>
+                        name='forCodeId'
+                        label='Field of Research (FoR)'
+                        value={forCode}
+                        dispatch={setForCode}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllForCodes'
+                        queryFn={() => api.get('/forCodes')}
+                        matchFn={(option) => `${option.code} ${option.name}`}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<SeoCode>
+                        name='seoCodeId'
+                        label='Socio-Economic Objective (SEO)'
+                        value={seoCode}
+                        dispatch={setSeoCode}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllSeoCodes'
+                        queryFn={() => api.get('/seoCodes')}
+                        matchFn={(option) => `${option.code} ${option.name}`}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                  </Grid>
+                ) : activity.name === 'Industry' ? (
+                  <Grid container item xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                      <FormField
+                        label='Spacecraft'
+                        name='spacecraft'
+                        required
+                        errors={experimentError?.response?.data}
+                        onChange={setSpacecraft}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<Subsystem>
+                        name='subsystemId'
+                        label='Subsystem'
+                        value={subsystem}
+                        dispatch={setSubsystem}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllSubsystems'
+                        queryFn={() => api.get('/subsystems')}
+                        matchFn={(option) => option.name}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormField
+                        label='Payload'
+                        name='payload'
+                        required
+                        errors={experimentError?.response?.data}
+                        onChange={setPayload}
+                      />
+                    </Grid>
+                  </Grid>
+                ) : activity.name === 'Human Spaceflight' ? (
+                  <Grid container item xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                      <FormField
+                        label='Number of Test Subjects'
+                        name='testSubjectCount'
+                        type='number'
+                        required
+                        errors={experimentError?.response?.data}
+                        onChange={(value) => {
+                          const numericValue = Number(value);
+                          if (numericValue) setTestSubjectCount(numericValue);
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<Area>
+                        name='areaId'
+                        label='Area'
+                        value={area}
+                        dispatch={setArea}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllAreas'
+                        queryFn={() => api.get('/areas')}
+                        matchFn={(option) => option.name}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AutocompleteSelector<TestSubjectType>
+                        name='testSubjectTypeId'
+                        label='Test Subject Type'
+                        value={testSubjectType}
+                        dispatch={setTestSubjectType}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllTestSubjectTypes'
+                        queryFn={() => api.get('/testSubjectTypes')}
+                        matchFn={(option) => option.name}
+                        equalityFn={(option, value) => option.id === value.id}
+                      />
+                    </Grid>
+                  </Grid>
+                ) : undefined)}
               <Grid item xs={12}>
                 <PeopleForm state={peopleState} dispatch={dispatchPeople} errors={experimentError?.response?.data} />
               </Grid>
@@ -189,7 +390,7 @@ export default function AddExperiment() {
                   variant='outlined'
                 >
                   <Box display='flex' alignItems='center'>
-                    <Typography sx={{ p: 1, pl: 1.5 }}>Experiment Attachments</Typography>
+                    <Typography sx={{ p: 1, pl: 1.5 }}>Add Attachments</Typography>
                     <label htmlFor='add-attachment'>
                       <input
                         style={{ display: 'none' }}
