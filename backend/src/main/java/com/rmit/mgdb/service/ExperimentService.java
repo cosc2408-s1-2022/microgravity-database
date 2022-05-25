@@ -2,6 +2,7 @@ package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.InvalidExperimentAttachmentException;
 import com.rmit.mgdb.exception.NotFoundException;
+import com.rmit.mgdb.model.Activity.Activities;
 import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import com.rmit.mgdb.payload.SaveExperimentPersonRequest;
@@ -37,37 +38,48 @@ public class ExperimentService {
     private final SearchSession searchSession;
 
     private final ExperimentRepository experimentRepository;
-    private final ExperimentPublicationService experimentPublicationService;
-    private final ExperimentAttachmentService experimentAttachmentService;
     private final MissionService missionService;
-    private final ForCodeService forCodeService;
-    private final SeoCodeService seoCodeService;
     private final PersonService personService;
     private final RoleService roleService;
-    private final ToaService toaService;
     private final ExperimentPersonService experimentPersonService;
+    private final ExperimentPublicationService experimentPublicationService;
+    private final ExperimentAttachmentService experimentAttachmentService;
+    private final ActivityService activityService;
+    private final ToaService toaService;
+    private final ForCodeService forCodeService;
+    private final SeoCodeService seoCodeService;
+    private final SubsystemService subsystemService;
+    private final AreaService areaService;
+    private final TestSubjectTypeService testSubjectTypeService;
 
     @Autowired
     public ExperimentService(EntityManager entityManager,
                              ExperimentRepository experimentRepository,
+                             MissionService missionService, PersonService personService,
+                             RoleService roleService,
+                             ExperimentPersonService experimentPersonService,
                              ExperimentPublicationService experimentPublicationService,
                              ExperimentAttachmentService experimentAttachmentService,
-                             MissionService missionService, ForCodeService forCodeService,
-                             SeoCodeService seoCodeService, PersonService personService, RoleService roleService,
-                             ToaService toaService,
-                             ExperimentPersonService experimentPersonService) {
+                             ActivityService activityService, ToaService toaService,
+                             ForCodeService forCodeService, SeoCodeService seoCodeService,
+                             SubsystemService subsystemService, AreaService areaService,
+                             TestSubjectTypeService testSubjectTypeService) {
         this.entityManager = entityManager;
         this.searchSession = Search.session(entityManager);
         this.experimentRepository = experimentRepository;
-        this.experimentPublicationService = experimentPublicationService;
-        this.experimentAttachmentService = experimentAttachmentService;
         this.missionService = missionService;
-        this.forCodeService = forCodeService;
-        this.seoCodeService = seoCodeService;
         this.personService = personService;
         this.roleService = roleService;
-        this.toaService = toaService;
         this.experimentPersonService = experimentPersonService;
+        this.experimentPublicationService = experimentPublicationService;
+        this.experimentAttachmentService = experimentAttachmentService;
+        this.activityService = activityService;
+        this.toaService = toaService;
+        this.forCodeService = forCodeService;
+        this.seoCodeService = seoCodeService;
+        this.subsystemService = subsystemService;
+        this.areaService = areaService;
+        this.testSubjectTypeService = testSubjectTypeService;
     }
 
     public Experiment getExperimentById(Long id) {
@@ -89,15 +101,31 @@ public class ExperimentService {
             experimentAttachmentService.deleteAllByExperimentId(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
-        experiment.setToa(toaService.getToaById(experimentRequest.getToaId()));
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
-        experiment.setExperimentAim(experimentRequest.getExperimentAim());
-        experiment.setExperimentObjective(experimentRequest.getExperimentObjective());
         Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
         experiment.setMission(mission);
         experiment.setPlatform(mission.getPlatform());
-        experiment.setForCode(forCodeService.getForCodeById(experimentRequest.getForCodeId()));
-        experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
+        experiment.setExperimentObjectives(experimentRequest.getExperimentObjectives());
+        experiment.setActivity(activityService.getActivityById(experimentRequest.getActivityId()));
+
+        if (experiment.getActivity().getName().equals(Activities.SCIENTIFIC_RESEARCH.string)) {
+            experiment.setToa(toaService.getToaById(experimentRequest.getToaId()));
+            experiment.setForCode(forCodeService.getForCodeById(experimentRequest.getForCodeId()));
+            experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
+        } else if (experiment.getActivity().getName().equals(Activities.INDUSTRY.string)) {
+            experiment.setSpacecraft(experimentRequest.getSpacecraft());
+            Long subsystemId = experimentRequest.getSubsystemId();
+            if (subsystemId != null) {
+                experiment.setSubsystem(subsystemService.getSubsystemById(subsystemId));
+            }
+            experiment.setPayload(experimentRequest.getPayload());
+        } else if (experiment.getActivity().getName().equals(Activities.HUMAN_SPACEFLIGHT.string)) {
+            experiment.setTestSubjectsCount(experimentRequest.getTestSubjectsCount());
+            experiment.setArea(areaService.getAreaById(experimentRequest.getAreaId()));
+            experiment.setTestSubjectType(
+                    testSubjectTypeService.getTestSubjectTypeById(experimentRequest.getTestSubjectTypeId()));
+        }
+
         experimentRepository.saveAndFlush(experiment);
 
         SaveExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
@@ -109,10 +137,10 @@ public class ExperimentService {
             }).toList());
         }
 
-        ExperimentPublication[] publications = experimentRequest.getExperimentPublications();
+        Publication[] publications = experimentRequest.getPublications();
         if (publications != null && publications.length > 0) {
-            experiment.setExperimentPublications(Arrays.stream(publications).map(publication -> {
-                List<ExperimentPublicationAuthor> authors = publication.getAuthors();
+            experiment.setPublications(Arrays.stream(publications).map(publication -> {
+                List<Author> authors = publication.getAuthors();
                 if (authors != null && authors.size() > 0)
                     publication.setAuthors(
                             authors.stream().map(experimentPublicationService::saveExperimentPublicationAuthor)
@@ -123,10 +151,10 @@ public class ExperimentService {
             }).toList());
         }
 
-        List<ExperimentAttachment> experimentAttachments = new ArrayList<>();
+        List<Attachment> attachments = new ArrayList<>();
         MultipartFile[] experimentAttachmentFiles = experimentRequest.getExperimentAttachmentFiles();
         if (experimentAttachmentFiles != null && experimentAttachmentFiles.length > 0) {
-            experimentAttachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
+            attachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
                 String originalFileName = Objects.requireNonNull(file.getOriginalFilename());
                 String fileExtension = FilenameUtils.getExtension(originalFileName);
                 if (originalFileName.isEmpty() || fileExtension.isEmpty())
@@ -146,20 +174,21 @@ public class ExperimentService {
                     throw new InvalidExperimentAttachmentException("Could not create file.", originalFileName);
                 }
 
-                ExperimentAttachment experimentAttachment = new ExperimentAttachment();
-                experimentAttachment.setExperiment(experiment);
-                experimentAttachment.setMediaType(mediaType);
-                experimentAttachment.setFilename(finalFileName);
-                experimentAttachmentService.save(experimentAttachment);
-                return experimentAttachment;
+                Attachment attachment = new Attachment();
+                attachment.setExperiment(experiment);
+                attachment.setMediaType(mediaType);
+                attachment.setFilename(finalFileName);
+                experimentAttachmentService.save(attachment);
+                return attachment;
             }).toList());
         }
+
         Long[] experimentAttachmentIds = experimentRequest.getExperimentAttachmentIds();
         if (experimentAttachmentIds != null && experimentAttachmentIds.length > 0) {
-            experimentAttachments.addAll(Arrays.stream(experimentRequest.getExperimentAttachmentIds())
-                                               .map(experimentAttachmentService::findById).toList());
+            attachments.addAll(Arrays.stream(experimentRequest.getExperimentAttachmentIds())
+                                     .map(experimentAttachmentService::findById).toList());
         }
-        experiment.setExperimentAttachments(experimentAttachments);
+        experiment.setAttachments(attachments);
 
         searchSession.massIndexer().start();
         return experiment;

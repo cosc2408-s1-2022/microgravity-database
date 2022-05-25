@@ -8,6 +8,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericFie
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,13 @@ public class Person {
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String country;
+
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Email(message = "Not a valid email address.")
+    private String email;
+
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    private String phone;
 
     @GenericField
     private boolean deleted;

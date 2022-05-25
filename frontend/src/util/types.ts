@@ -124,6 +124,8 @@ export type ExperimentPersonRequestEntry = {
 
 export type PeopleReducerState = { uid: number; data: ExperimentPersonRequestEntry[] };
 
+export type PublicationsReducerState = { uid: number; data: ExperimentPublicationEntry[] };
+
 export type Platform = {
   id: number;
   name: string;

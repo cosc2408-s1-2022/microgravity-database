@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class ExperimentPublicationAuthor {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,6 @@ public class ExperimentPublicationAuthor {
 
     @ManyToMany(mappedBy = "authors")
     @JsonIgnore
-    private List<ExperimentPublication> experimentPublications;
+    private List<Publication> publications;
 
 }

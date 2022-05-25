@@ -1,33 +1,24 @@
 import { Box, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import AuthWrapper from '../../components/AuthWrapper';
-import {
-  Experiment,
-  ExperimentPublicationAuthor,
-  ForCode,
-  Mission,
-  PeopleReducerState,
-  SeoCode,
-  Toa,
-} from '../../util/types';
+import { Experiment, ExperimentPublicationAuthor, ForCode, Mission, SeoCode, Toa } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import ToaSelector from '../../components/Experiment/ToaSelector';
 import MissionSelector from '../../components/Experiment/MissionSelector';
 import ForCodeSelector from '../../components/Experiment/ForCodeSelector';
 import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
 import PeopleForm from '../../components/Experiment/PeopleForm';
-import { usePeopleReducer } from '../../util/hooks';
+import { usePeopleReducer, usePublicationsReducer } from '../../util/hooks';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import Captcha from '../../components/Captcha';
-import publicationsReducer from '../../util/reducers/PublicationsReducer';
 import PublicationsForm from '../../components/Experiment/PublicationsForm';
 
 export default function AddExperiment() {
@@ -35,16 +26,15 @@ export default function AddExperiment() {
 
   const [title, setTitle] = useState<string>();
   const [leadInstitution, setLeadInstitution] = useState<string>();
-  const [experimentAim, setExperimentAim] = useState<string>();
-  const [experimentObjective, setExperimentObjective] = useState<string>();
-  const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
-  const [toa, setToa] = useState<Toa | null>(null);
   const [mission, setMission] = useState<Mission | null>(null);
+  const [experimentObjectives, setExperimentObjectives] = useState<string>();
+  const [peopleState, dispatchPeople] = usePeopleReducer({ uid: 0, data: [] });
+  const [publicationsState, dispatchPublications] = usePublicationsReducer({ uid: 0, data: [] });
+  const [experimentAttachments, setExperimentAttachments] = useState<File[]>([]);
+
+  const [toa, setToa] = useState<Toa | null>(null);
   const [forCode, setForCode] = useState<ForCode | null>(null);
   const [seoCode, setSeoCode] = useState<SeoCode | null>(null);
-  const initialState: PeopleReducerState = { uid: 0, data: [] };
-  const [peopleState, dispatchPeople] = usePeopleReducer(initialState);
-  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, { uid: 0, data: [] });
 
   const {
     error: experimentError,
@@ -56,11 +46,10 @@ export default function AddExperiment() {
     const formData = new FormData();
     title && formData.append('title', title);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
-    experimentAim && formData.append('experimentAim', experimentAim);
+    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
     for (const attachment of experimentAttachments) {
       formData.append('experimentAttachmentFiles[]', attachment);
     }
-    experimentObjective && formData.append('experimentObjective', experimentObjective);
     toa && formData.append('toaId', toa.id.toString());
     mission && formData.append('missionId', mission.id.toString());
     forCode && formData.append('forCodeId', forCode.id.toString());
@@ -146,6 +135,7 @@ export default function AddExperiment() {
                   autoFocus
                   label='Title'
                   name='title'
+                  required
                   errors={experimentError?.response?.data}
                   onChange={setTitle}
                 />
@@ -157,26 +147,19 @@ export default function AddExperiment() {
                 <FormField
                   label='Lead Institution'
                   name='leadInstitution'
+                  required
                   errors={experimentError?.response?.data}
                   onChange={setLeadInstitution}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormField
-                  label='Experiment Aim'
-                  name='experimentAim'
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentAim}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormField
-                  label='Experiment Objective'
-                  name='experimentObjective'
+                  label='Experiment Objectives'
+                  name='experimentObjectives'
                   multiline
                   minRows={4}
                   errors={experimentError?.response?.data}
-                  onChange={setExperimentObjective}
+                  onChange={setExperimentObjectives}
                 />
               </Grid>
               <Grid item xs={12}>

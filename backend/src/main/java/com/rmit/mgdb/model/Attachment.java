@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Getter
 @Setter
-public class ExperimentAttachment {
+public class Attachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

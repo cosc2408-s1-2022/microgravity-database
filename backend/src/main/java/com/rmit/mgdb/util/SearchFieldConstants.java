@@ -9,27 +9,31 @@ public class SearchFieldConstants {
 
     public static final String[] EXPERIMENT_SEARCH_FIELDS = {
             "title",
-            "toa.name",
             "leadInstitution",
-            "experimentAim",
-            "experimentObjective",
-            "experimentPublications",
             "mission.name",
             "mission.launchDateString",
             "mission.startDateString",
             "mission.endDateString",
             "platform.name",
-            "forCode.code",
-            "forCode.name",
-            "seoCode.code",
-            "seoCode.name",
+            "experimentObjectives",
             "people.role.name",
             "people.person.firstName",
             "people.person.familyName",
             "people.person.affiliation",
             "people.person.city",
             "people.person.state",
-            "people.person.country"
+            "people.person.country",
+            "activity.name",
+            "toa.name",
+            "forCode.code",
+            "forCode.name",
+            "seoCode.code",
+            "seoCode.name",
+            "subsystem.name",
+            "spacecraft",
+            "payload",
+            "area.name",
+            "testSubjectType.name"
     };
 
     public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform.name";

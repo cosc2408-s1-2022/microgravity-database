@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class ExperimentPublication {
+public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class ExperimentPublication {
     @JoinTable(name = "publication_author",
                joinColumns = @JoinColumn(name = "publication_id"),
                inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<ExperimentPublicationAuthor> authors;
+    private List<Author> authors;
 
     private String yearPublished;
 

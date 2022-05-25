@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class AddMissionRequest {
+public class SaveMissionRequest {
 
     private Long id;
 

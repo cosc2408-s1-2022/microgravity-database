@@ -1,9 +1,9 @@
 package com.rmit.mgdb.controller;
 
 import com.rmit.mgdb.model.Mission;
-import com.rmit.mgdb.payload.AddMissionRequest;
 import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.payload.ResultsResponse;
+import com.rmit.mgdb.payload.SaveMissionRequest;
 import com.rmit.mgdb.service.MissionService;
 import com.rmit.mgdb.service.ValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class MissionController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody AddMissionRequest missionRequest, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @RequestBody SaveMissionRequest missionRequest, BindingResult result) {
         ResponseEntity<?> errorMap = validationErrorService.mapValidationErrors(result);
         if (errorMap != null)
             return errorMap;

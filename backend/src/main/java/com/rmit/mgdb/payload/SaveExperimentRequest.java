@@ -1,6 +1,6 @@
 package com.rmit.mgdb.payload;
 
-import com.rmit.mgdb.model.ExperimentPublication;
+import com.rmit.mgdb.model.Publication;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,34 +18,43 @@ public class SaveExperimentRequest {
     @NotBlank(message = "Experiments must have a title.")
     private String title;
 
-    // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
-
+    @NotBlank(message = "Lead institution must be specified..")
     private String leadInstitution;
 
-    private String experimentAim;
+    @NotNull(message = "Experiments must belong to a mission.")
+    private Long missionId;
 
-    private String experimentObjective;
+    private String experimentObjectives;
+
+    @Valid
+    private SaveExperimentPersonRequest[] experimentPersonRequests;
+
+    @Valid
+    private Publication[] publications;
 
     private MultipartFile[] experimentAttachmentFiles;
 
     private Long[] experimentAttachmentIds;
 
-    @Valid
-    private ExperimentPublication[] experimentPublications;
+    @NotNull(message = "Activity must be specified.")
+    private Long activityId;
 
-    @NotNull(message = "Type of Activity must be specified.")
     private Long toaId;
 
-    @NotNull(message = "Experiments must belong to a mission.")
-    private Long missionId;
-
-    @NotNull(message = "Experiments must have an FoR code specified.")
     private Long forCodeId;
 
-    @NotNull(message = "Experiments must have an SEO code specified.")
     private Long seoCodeId;
 
-    @Valid
-    private SaveExperimentPersonRequest[] experimentPersonRequests;
+    private Long subsystemId;
+
+    private String spacecraft;
+
+    private String payload;
+
+    private Long testSubjectsCount;
+
+    private Long areaId;
+
+    private Long testSubjectTypeId;
 
 }

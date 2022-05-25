@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, IconButton, Paper, Typography } from '@mui/material';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as React from 'react';
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
@@ -15,12 +15,12 @@ import {
   ForCode,
   Mission,
   PeopleReducerState,
+  PublicationsReducerState,
   SeoCode,
   Toa,
   UserRole,
 } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
-import publicationsReducer from '../../util/reducers/PublicationsReducer';
 import PublicationsForm from '../../components/Experiment/PublicationsForm';
 import { ACCEPTED_ATTACHMENT_TYPES } from '../../util/constants';
 import { AttachFileRounded, DeleteOutlineRounded, PictureAsPdfRounded } from '@mui/icons-material';
@@ -29,7 +29,7 @@ import ForCodeSelector from '../../components/Experiment/ForCodeSelector';
 import MissionSelector from '../../components/Experiment/MissionSelector';
 import SeoCodeSelector from '../../components/Experiment/SeoCodeSelector';
 import PeopleForm from '../../components/Experiment/PeopleForm';
-import { usePeopleReducer } from '../../util/hooks';
+import { usePeopleReducer, usePublicationsReducer } from '../../util/hooks';
 import Captcha from '../../components/Captcha';
 
 export default function EditExperiment() {
@@ -47,29 +47,8 @@ export default function EditExperiment() {
 
   const [title, setTitle] = useState<string | undefined>(experiment?.title);
   const [leadInstitution, setLeadInstitution] = useState<string | undefined>(experiment?.leadInstitution);
-  const [experimentAim, setExperimentAim] = useState<string | undefined>(experiment?.experimentAim);
-  const [experimentObjective, setExperimentObjective] = useState<string | undefined>(experiment?.experimentObjective);
-  const [experimentAttachments, setExperimentAttachments] = useState<ExperimentAttachment[]>(
-    experiment.experimentAttachments,
-  );
-  const [newExperimentAttachments, setNewExperimentAttachments] = useState<File[]>([]);
-  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.item(0);
-    if (file && ACCEPTED_ATTACHMENT_TYPES.includes(file.type)) {
-      setNewExperimentAttachments((prevState) => [...prevState, file]);
-    }
-  };
-  const removeFile = (index: number) => {
-    setNewExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
-  };
-  const removeAttachment = (id: number) => {
-    setExperimentAttachments((prevState) => prevState.filter((attachment) => attachment.id !== id));
-  };
-  const [toa, setToa] = useState<Toa | null>(experiment?.toa || null);
   const [mission, setMission] = useState<Mission | null>(experiment?.mission || null);
-  const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
-  const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
-
+  const [experimentObjectives, setExperimentObjectives] = useState<string | undefined>(experiment?.experimentObjective);
   let uid = 0;
   const initialPeopleState: PeopleReducerState = {
     uid: 0,
@@ -83,9 +62,8 @@ export default function EditExperiment() {
   };
   initialPeopleState.uid = uid;
   const [peopleState, dispatchPeople] = usePeopleReducer(initialPeopleState);
-
   uid = 0;
-  const initialPublicationState = {
+  const initialPublicationState: PublicationsReducerState = {
     uid: 0,
     data: experiment?.experimentPublications.map((publication) => ({
       id: uid++,
@@ -93,7 +71,15 @@ export default function EditExperiment() {
     })),
   };
   initialPublicationState.uid = uid;
-  const [publicationsState, dispatchPublications] = useReducer(publicationsReducer, initialPublicationState);
+  const [publicationsState, dispatchPublications] = usePublicationsReducer(initialPublicationState);
+  const [experimentAttachments, setExperimentAttachments] = useState<ExperimentAttachment[]>(
+    experiment.experimentAttachments,
+  );
+  const [newExperimentAttachments, setNewExperimentAttachments] = useState<File[]>([]);
+
+  const [toa, setToa] = useState<Toa | null>(experiment?.toa || null);
+  const [forCode, setForCode] = useState<ForCode | null>(experiment?.forCode || null);
+  const [seoCode, setSeoCode] = useState<SeoCode | null>(experiment?.seoCode || null);
 
   const {
     error: experimentError,
@@ -106,14 +92,13 @@ export default function EditExperiment() {
     formData.append('id', experiment.id.toString());
     title && formData.append('title', title);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
-    experimentAim && formData.append('experimentAim', experimentAim);
+    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
     for (const id of experimentAttachments.map((attachment) => attachment.id.toString())) {
       formData.append('experimentAttachmentIds[]', id);
     }
     for (const file of newExperimentAttachments) {
       formData.append('experimentAttachmentFiles[]', file);
     }
-    experimentObjective && formData.append('experimentObjective', experimentObjective);
     toa && formData.append('toaId', toa.id.toString());
     mission && formData.append('missionId', mission.id.toString());
     forCode && formData.append('forCodeId', forCode.id.toString());
@@ -146,6 +131,19 @@ export default function EditExperiment() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     mutateExperiment();
+  };
+
+  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.item(0);
+    if (file && ACCEPTED_ATTACHMENT_TYPES.includes(file.type)) {
+      setNewExperimentAttachments((prevState) => [...prevState, file]);
+    }
+  };
+  const removeFile = (index: number) => {
+    setNewExperimentAttachments((prevState) => prevState.filter((_, i) => i !== index));
+  };
+  const removeAttachment = (id: number) => {
+    setExperimentAttachments((prevState) => prevState.filter((attachment) => attachment.id !== id));
   };
 
   useEffect(() => {
@@ -206,22 +204,13 @@ export default function EditExperiment() {
               </Grid>
               <Grid item xs={12}>
                 <FormField
-                  label='Experiment Aim'
-                  name='experimentAim'
-                  value={experimentAim || ''}
-                  errors={experimentError?.response?.data}
-                  onChange={setExperimentAim}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormField
-                  label='Experiment Objective'
-                  name='experimentObjective'
-                  value={experimentObjective || ''}
+                  label='Experiment Objectives'
+                  name='experimentObjectives'
+                  value={experimentObjectives || ''}
                   multiline
                   minRows={4}
                   errors={experimentError?.response?.data}
-                  onChange={setExperimentObjective}
+                  onChange={setExperimentObjectives}
                 />
               </Grid>
               <Grid item xs={12}>
