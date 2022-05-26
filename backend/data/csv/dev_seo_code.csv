@@ -19,260 +19,133 @@
 27,27,TRANSPORT
 28,28,EXPANDING KNOWLEDGE
 1001,1001,Environmentally sustainable animal production
-1001,1001,Environmentally sustainable animal production
-1002,1002,Fisheries - aquaculture
 1002,1002,Fisheries - aquaculture
 1003,1003,Fisheries - wild caught
-1003,1003,Fisheries - wild caught
-1004,1004,Livestock raising
 1004,1004,Livestock raising
 1005,1005,"Pasture, browse and fodder crops"
-1005,1005,"Pasture, browse and fodder crops"
-1006,1006,Primary products from animals
 1006,1006,Primary products from animals
 1099,1099,Other animal production
 1099,1099,Other animal production and animal primary products
 1101,1101,Environmentally sustainable commercial services and tourism
-1101,1101,Environmentally sustainable commercial services and tourism
-1102,1102,Financial services
 1102,1102,Financial services
 1103,1103,"Property, business support services and trade"
-1103,1103,"Property, business support services and trade"
-1104,1104,Tourism services
 1104,1104,Tourism services
 1105,1105,Water and waste services
-1105,1105,Water and waste services
-1199,1199,Other commercial services and tourism
 1199,1199,Other commercial services and tourism
 1201,1201,Building management and services
-1201,1201,Building management and services
-1202,1202,Construction design
 1202,1202,Construction design
 1203,1203,Construction materials performance and processes
-1203,1203,Construction materials performance and processes
-1204,1204,Construction planning
 1204,1204,Construction planning
 1205,1205,Construction processes
-1205,1205,Construction processes
-1206,1206,Environmentally sustainable construction activities
 1206,1206,Environmentally sustainable construction activities
 1299,1299,Other construction
-1299,1299,Other construction
-1301,1301,Arts
 1301,1301,Arts
 1302,1302,Communication
-1302,1302,Communication
-1303,1303,Ethics
 1303,1303,Ethics
 1304,1304,Heritage
-1304,1304,Heritage
-1305,1305,Religion
 1305,1305,Religion
 1306,1306,"Sport, exercise and recreation"
-1306,1306,"Sport, exercise and recreation"
-1307,1307,Understanding past societies
 1307,1307,Understanding past societies
 1399,1399,Other culture and society
-1399,1399,Other culture and society
-1401,1401,Defence
 1401,1401,Defence
 1501,1501,International trade policy
-1501,1501,International trade policy
-1502,1502,Macroeconomics
 1502,1502,Macroeconomics
 1503,1503,Management and productivity
-1503,1503,Management and productivity
-1504,1504,Measurement standards and calibration services
 1504,1504,Measurement standards and calibration services
 1505,1505,Microeconomics
-1505,1505,Microeconomics
-1599,1599,Other economic framework
 1599,1599,Other economic framework
 1601,1601,Learner and learning
-1601,1601,Learner and learning
-1602,1602,Schools and learning environments
 1602,1602,Schools and learning environments
 1603,1603,Teaching and curriculum
-1603,1603,Teaching and curriculum
-1699,1699,Other education and training
 1699,1699,Other education and training
 1701,1701,Energy efficiency
-1701,1701,Energy efficiency
-1702,1702,Energy exploration
 1702,1702,Energy exploration
 1703,1703,"Energy storage, distribution and supply"
-1703,1703,"Energy storage, distribution and supply"
-1704,1704,Energy transformation
 1704,1704,Energy transformation
 1705,1705,Environmentally sustainable energy activities
-1705,1705,Environmentally sustainable energy activities
-1706,1706,Mining and extraction of energy resources
 1706,1706,Mining and extraction of energy resources
 1707,1707,Processing of energy sources
-1707,1707,Processing of energy sources
-1708,1708,Renewable energy
 1708,1708,Renewable energy
 1799,1799,Other energy
-1799,1799,Other energy
-1801,1801,"Air quality, atmosphere and weather"
 1801,1801,"Air quality, atmosphere and weather"
 1802,1802,Coastal and estuarine systems and management
-1802,1802,Coastal and estuarine systems and management
-1803,1803,"Fresh, ground and surface water systems and management"
 1803,1803,"Fresh, ground and surface water systems and management"
 1804,1804,Management of Antarctic and Southern Ocean environments
-1804,1804,Management of Antarctic and Southern Ocean environments
-1805,1805,Marine systems and management
 1805,1805,Marine systems and management
 1806,1806,Terrestrial systems and management
-1806,1806,Terrestrial systems and management
-1899,1899,Other environmental management 
 1899,1899,Other environmental management 
 1901,1901,Adaptation to climate change
-1901,1901,Adaptation to climate change
-1902,1902,"Environmental policy, legislation and standards"
 1902,1902,"Environmental policy, legislation and standards"
 1903,1903,Mitigation of climate change
-1903,1903,Mitigation of climate change
-1904,1904,Natural hazards
 1904,1904,Natural hazards
 1905,1905,Understanding climate change
-1905,1905,Understanding climate change
-1999,1999,"Other environmental policy, climate change and natural hazards"
 1999,1999,"Other environmental policy, climate change and natural hazards"
 2001,2001,Clinical health
-2001,2001,Clinical health
-2002,2002,Evaluation of health and support services
 2002,2002,Evaluation of health and support services
 2003,2003,Provision of health and support services
-2003,2003,Provision of health and support services
-2004,2004,Public health (excl. specific population health)
 2004,2004,Public health (excl. specific population health)
 2005,2005,Specific population health (excl. Indigenous health)
-2005,2005,Specific population health (excl. Indigenous health)
-2099,2099,Other health
 2099,2099,Other health
 2101,2101,Aboriginal and Torres Strait Islander community services
-2101,2101,Aboriginal and Torres Strait Islander community services
-2102,2102,Aboriginal and Torres Strait Islander education
 2102,2102,Aboriginal and Torres Strait Islander education
 2103,2103,Aboriginal and Torres Strait Islander health
-2103,2103,Aboriginal and Torres Strait Islander health
-2104,2104,Aboriginal and Torres Strait Islander heritage and culture
 2104,2104,Aboriginal and Torres Strait Islander heritage and culture
 2105,2105,Ngā ratonga hapori Māori (Māori community services)
-2105,2105,Ngā ratonga hapori Māori (Māori community services)
-2106,2106,Mātauranga Māori (Māori education)
 2106,2106,Mātauranga Māori (Māori education)
 2107,2107,Te hauora (hauora Māori) (Māori health)
-2107,2107,Te hauora (hauora Māori) (Māori health)
-2108,2108,Te tuku ihotanga me te ahurea Māori (Māori heritage and culture)
 2108,2108,Te tuku ihotanga me te ahurea Māori (Māori heritage and culture)
 2109,2109,Pacific Peoples community services
-2109,2109,Pacific Peoples community services
-2110,2110,Pacific Peoples education
 2110,2110,Pacific Peoples education
 2111,2111,Pacific Peoples health
-2111,2111,Pacific Peoples health
-2112,2112,Pacific Peoples heritage and culture
 2112,2112,Pacific Peoples heritage and culture
 2199,2199,Other Indigenous
-2199,2199,Other Indigenous
-2201,2201,"Communication technologies, systems and services"
 2201,2201,"Communication technologies, systems and services"
 2202,2202,Environmentally sustainable information and communication services
-2202,2202,Environmentally sustainable information and communication services
-2203,2203,Information services
 2203,2203,Information services
 2204,2204,"Information systems, technologies and services"
-2204,2204,"Information systems, technologies and services"
-2205,2205,Media services
 2205,2205,Media services
 2299,2299,Other information and communication services
-2299,2299,Other information and communication services
-2301,2301,Community services
 2301,2301,Community services
 2302,2302,Government and politics
-2302,2302,Government and politics
-2303,2303,International relations
 2303,2303,International relations
 2304,2304,Justice and the law
-2304,2304,Justice and the law
-2305,2305,Work and labour market
 2305,2305,Work and labour market
 2399,2399,"Other law, politics and community services"
-2399,2399,"Other law, politics and community services"
-2401,2401,Agricultural chemicals
 2401,2401,Agricultural chemicals
 2402,2402,Basic metal products
-2402,2402,Basic metal products
-2403,2403,"Ceramics, glass and industrial mineral products"
 2403,2403,"Ceramics, glass and industrial mineral products"
 2404,2404,"Computer, electronic and communication equipment"
-2404,2404,"Computer, electronic and communication equipment"
-2405,2405,Dairy products
 2405,2405,Dairy products
 2406,2406,Environmentally sustainable manufacturing activities
-2406,2406,Environmentally sustainable manufacturing activities
-2407,2407,Fabricated metal products
 2407,2407,Fabricated metal products
 2408,2408,Human pharmaceutical products
-2408,2408,Human pharmaceutical products
-2409,2409,Industrial chemicals and related products
 2409,2409,Industrial chemicals and related products
 2410,2410,Instrumentation
-2410,2410,Instrumentation
-2411,2411,"Leather products, fibre processing and textiles"
 2411,2411,"Leather products, fibre processing and textiles"
 2412,2412,Machinery and equipment
-2412,2412,Machinery and equipment
-2413,2413,Processed food products and beverages (excl. dairy products)
 2413,2413,Processed food products and beverages (excl. dairy products)
 2414,2414,"Processed non-food agriculture products (excl. wood, paper and fibre)"
-2414,2414,"Processed non-food agriculture products (excl. wood, paper and fibre)"
-2415,2415,Transport equipment
 2415,2415,Transport equipment
 2416,2416,Veterinary pharmaceutical products
-2416,2416,Veterinary pharmaceutical products
-2417,2417,"Wood, wood products and paper"
 2417,2417,"Wood, wood products and paper"
 2499,2499,Other manufacturing
-2499,2499,Other manufacturing
-2501,2501,Environmentally sustainable mineral resource activities
 2501,2501,Environmentally sustainable mineral resource activities
 2502,2502,First stage treatment of minerals
-2502,2502,First stage treatment of minerals
-2503,2503,Mineral exploration
 2503,2503,Mineral exploration
 2504,2504,Primary mining and extraction of minerals
-2504,2504,Primary mining and extraction of minerals
-2599,2599,Other mineral resources (excl. energy resources)
 2599,2599,Other mineral resources (excl. energy resources)
 2601,2601,Environmentally sustainable plant production
-2601,2601,Environmentally sustainable plant production
-2602,2602,Forestry
 2602,2602,Forestry
 2603,2603,Grains and seeds
-2603,2603,Grains and seeds
-2604,2604,Harvesting and packaging of plant products
 2604,2604,Harvesting and packaging of plant products
 2605,2605,Horticultural crops
-2605,2605,Horticultural crops
-2606,2606,Industrial crops
 2606,2606,Industrial crops
 2699,2699,Other plant production and plant primary products
-2699,2699,Other plant production and plant primary products
-2701,2701,Aerospace transport
 2701,2701,Aerospace transport
 2702,2702,Environmentally sustainable transport activities
-2702,2702,Environmentally sustainable transport activities
-2703,2703,Ground transport
 2703,2703,Ground transport
 2704,2704,Water transport
-2704,2704,Water transport
 2799,2799,Other transport
-2799,2799,Other transport
-2801,2801,Expanding knowledge
 2801,2801,Expanding knowledge
 100101,100101,Management of gaseous waste from animal production (excl. greenhouse gases)
 100102,100102,Management of liquid waste from animal production (excl. water)
@@ -1114,204 +987,3 @@
 280121,280121,Expanding knowledge in psychology
 280122,280122,Expanding knowledge in creative arts and writing studies
 280123,280123,Expanding knowledge in human society
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
