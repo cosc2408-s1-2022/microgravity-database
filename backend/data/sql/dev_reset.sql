@@ -1,19 +1,23 @@
-drop table if exists platform_seo_code;
-drop table if exists platform_for_code;
-drop table if exists experiment_person;
-drop table if exists publication_author;
-drop table if exists experiment_publication_author;
-drop table if exists experiment_publication;
-drop table if exists experiment_attachment;
-drop table if exists experiment;
-drop table if exists toa;
-drop table if exists mission;
-drop table if exists platform;
-drop table if exists person;
-drop table if exists seo_code;
-drop table if exists for_code;
-drop table if exists role;
-drop table if exists user;
+drop table if exists dev.platform_seo_code;
+drop table if exists dev.platform_for_code;
+drop table if exists dev.experiment_person;
+drop table if exists dev.publication_author;
+drop table if exists dev.author;
+drop table if exists dev.publication;
+drop table if exists dev.attachment;
+drop table if exists dev.experiment;
+drop table if exists dev.mission;
+drop table if exists dev.platform;
+drop table if exists dev.role;
+drop table if exists dev.person;
+drop table if exists dev.test_subject_type;
+drop table if exists dev.area;
+drop table if exists dev.subsystem;
+drop table if exists dev.seo_code;
+drop table if exists dev.for_code;
+drop table if exists dev.toa;
+drop table if exists dev.activity;
+drop table if exists dev.user;
 
 create table user
 (
@@ -50,19 +54,28 @@ INSERT INTO dev.user (id, created_at, password, role, updated_at, username)
 VALUES (7, '2022-04-29 03:18:51.646000', '$2a$10$aeVxu6M9tLt0kAAjs63XKuPKdVvYE1Q5b20DzE3RystkolgjBxyJO', 'ROLE_ADMIN',
         null, 'admin');
 
-create table role
+create table activity
 (
     id   bigint auto_increment
         primary key,
     name varchar(255) null
 );
 
-INSERT INTO dev.role (id, name)
-VALUES (1, 'Principal Investigator');
-INSERT INTO dev.role (id, name)
-VALUES (2, 'Researcher');
-INSERT INTO dev.role (id, name)
-VALUES (3, 'Flight Engineer');
+INSERT INTO dev.activity (id, name) VALUES (1, 'Scientific Research');
+INSERT INTO dev.activity (id, name) VALUES (2, 'Industry');
+INSERT INTO dev.activity (id, name) VALUES (3, 'Human Spaceflight');
+
+create table toa
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
+INSERT INTO dev.toa (id, name) VALUES (1, 'Pure Basic Research');
+INSERT INTO dev.toa (id, name) VALUES (2, 'Strategic Basic Research');
+INSERT INTO dev.toa (id, name) VALUES (3, 'Applied Research');
+INSERT INTO dev.toa (id, name) VALUES (4, 'Experimental Development');
 
 create table for_code
 (
@@ -252,6 +265,45 @@ VALUES (16, '96', 'Environment');
 INSERT INTO dev.seo_code (id, code, name)
 VALUES (17, '97', 'Expanding Knowledge');
 
+create table subsystem
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
+INSERT INTO dev.subsystem (id, name) VALUES (1, 'Power');
+INSERT INTO dev.subsystem (id, name) VALUES (2, 'Thermal');
+INSERT INTO dev.subsystem (id, name) VALUES (3, 'Communications');
+INSERT INTO dev.subsystem (id, name) VALUES (4, 'Data');
+INSERT INTO dev.subsystem (id, name) VALUES (5, 'Propulsion');
+INSERT INTO dev.subsystem (id, name) VALUES (6, 'Attitude Determination');
+INSERT INTO dev.subsystem (id, name) VALUES (7, 'Mechanical');
+
+create table area
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
+INSERT INTO dev.area (id, name) VALUES (1, 'Food Science');
+INSERT INTO dev.area (id, name) VALUES (2, 'Physiology');
+INSERT INTO dev.area (id, name) VALUES (3, 'Space Medicine');
+INSERT INTO dev.area (id, name) VALUES (4, 'Wearables');
+INSERT INTO dev.area (id, name) VALUES (5, 'Space Suits');
+
+create table test_subject_type
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
+INSERT INTO dev.test_subject_type (id, name) VALUES (1, 'Mission Astronaut');
+INSERT INTO dev.test_subject_type (id, name) VALUES (2, 'Trainee Astronaut');
+INSERT INTO dev.test_subject_type (id, name) VALUES (3, 'Researchers');
+
 create table person
 (
     id          bigint auto_increment
@@ -262,43 +314,59 @@ create table person
     country     varchar(255) null,
     created_at  datetime(6)  null,
     deleted     bit          not null,
+    email       varchar(255) null,
     family_name varchar(255) null,
     first_name  varchar(255) null,
+    phone       varchar(255) null,
     state       varchar(255) null,
     updated_at  datetime(6)  null
 );
 
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (1, 'RMIT', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, 'Iles', 'Gail', 'Victoria', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (2, 'RMIT HIVE', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, 'Florent', 'Nicholas', 'Victoria', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (3, 'RMIT HIVE', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, 'Kirby', 'James', 'Victoria', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (4, 'Baylor College of Medicine ', true, 'Copenhagen', 'Denmark', '2022-05-01 00:00:00', false, 'Norsk', 'Peter', 'Copenhagen', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (5, 'NL Agency', true, 'Amsterdam', 'Netherlands', '2022-05-01 00:00:00', false, 'Dieckmann', 'Matthias', 'North Holland', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (6, 'University of Hamburg', true, 'Hamburg', 'Germany', '2022-05-01 00:00:00', false, 'Dierks', 'Karsten', 'Northern Germany', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (7, 'Sorbonne University', true, 'Paris ', 'France', '2022-05-01 00:00:00', false, 'Driss-Ecole', 'Dominique', 'Île-de-France', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (8, 'University of Brest', true, 'Morlaix', 'France', '2022-05-01 00:00:00', false, 'Prieur', 'Daniel', 'Btitanny', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (9, 'University of Freiburg', true, 'Breisgau', 'Germany', '2022-05-01 00:00:00', false, 'Dold', 'Pit', 'Baden-Württemberg', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (10, 'Darmstadt University of Technology', true, 'Darmstadt', 'Germany', '2022-05-01 00:00:00', false, 'Scherer', 'Gerhard ', 'Southern Germany', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (11, 'Institute of Biology II (Botany), University of Freiburg', true, 'Breisgau', 'Germany', '2022-05-01 00:00:00', false, 'Palme', 'Klaus ', 'Baden-Württemberg', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (12, 'ESTEC for HE Space Operations', true, 'Amsterdam', 'Netherlands', '2022-05-01 00:00:00', false, 'Demets', 'Rene', 'North Holland', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (13, 'University of Hamburg', true, 'Hamburh', 'Germany', '2022-05-01 00:00:00', false, 'Wunderlich', 'Rainer', 'Northern Germany', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (14, 'European Academy of Sciences and Arts', true, 'Homburg', 'Germany', '2022-05-01 00:00:00', false, 'Fecht', 'Hans-Jorg', 'Saarland', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (15, 'European College of Sport Science(ECSS)', true, 'Cologn', 'Germany', '2022-05-01 00:00:00', false, 'Schneider', 'Stefan', 'North Rhine-Westphalia', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (16, 'Space Research Institute, USSR Academy of Sciences', true, 'Moscow', 'Russia', '2022-05-01 00:00:00', false, 'Vedernikov', 'Andrei', 'Western Russia', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (17, 'Airbus Defence and Space', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, 'Steimle', 'Christian', 'Western Germany', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (18, 'DISI and DEI Department', true, 'Bologna', 'Italy', '2022-05-01 00:00:00', false, 'Bartolini', 'Andrea', 'Emilia-Romagna region', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (19, 'University of Lyon', true, 'Lyon', 'France', '2022-05-01 00:00:00', false, 'Clement', 'Gilles', 'Auvergne-Rhône-Alpes', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (20, 'European Space Agency', true, 'Eriangen', 'Germany', '2022-05-01 00:00:00', false, 'Witt', 'Johannes', 'Bavaria', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (21, 'German Aerosapce Center', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, 'Lohofer', 'George', 'Western Germany', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (22, 'Graz University of Technology', true, 'Styria', 'Austria', '2022-05-01 00:00:00', false, 'Pottlacher', 'George', 'Southern Austria', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (23, 'University of California', true, 'Los Angeles', 'USA', '2022-05-01 00:00:00', false, 'Horvath', 'Steve', 'California', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (24, 'CSIR-Central Salt and Marine Chemicals Research Institute', true, 'Bhavnagar', 'India', '2022-05-01 00:00:00', false, 'Raj', 'Savan', 'Gujarat', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (25, 'School of Physics and Astronomy at the University of Edinburgh', true, 'London', 'England', '2022-05-01 00:00:00', false, 'Cockell', 'Charles', 'South-East England', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (26, 'Integrative Neuroscience and Cognition Center', true, 'Paris', 'France', '2022-05-01 00:00:00', false, 'Mcintyre', 'Joe', 'North-Central of France', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (27, 'University of Padova', true, 'Padua', 'Italy', '2022-05-01 00:00:00', false, 'Tagliabue', 'Mariaelena', 'Veneto', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (28, 'CNES', true, 'Toulouse', 'France', '2022-05-01 00:00:00', false, 'Mignot', 'Jean', 'Southern France', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (29, 'MEDES - Institute for Space Medicine and Physiology', true, 'Toulouse', 'France', '2022-05-01 00:00:00', false, 'Llodra-Perez', 'Anais', 'Occitanie', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (30, 'NASA Engineering & Safety Center', true, 'Purdue', 'USA', '2022-05-01 00:00:00', false, 'Bauer', 'Frank', 'Indiana', null);
-INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, family_name, first_name, state, updated_at) VALUES (31, 'European Spacen Agency', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, 'Armborst', 'Lukas', 'Western Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (1, 'RMIT', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, null, 'Iles', 'Gail', null, 'Victoria', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (2, 'RMIT HIVE', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, null, 'Florent', 'Nicholas', null, 'Victoria', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (3, 'RMIT HIVE', true, 'Melbourne', 'Australia', '2022-05-01 00:00:00', false, null, 'Kirby', 'James', null, 'Victoria', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (4, 'Baylor College of Medicine ', true, 'Copenhagen', 'Denmark', '2022-05-01 00:00:00', false, null, 'Norsk', 'Peter', null, 'Copenhagen', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (5, 'NL Agency', true, 'Amsterdam', 'Netherlands', '2022-05-01 00:00:00', false, null, 'Dieckmann', 'Matthias', null, 'North Holland', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (6, 'University of Hamburg', true, 'Hamburg', 'Germany', '2022-05-01 00:00:00', false, null, 'Dierks', 'Karsten', null, 'Northern Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (7, 'Sorbonne University', true, 'Paris ', 'France', '2022-05-01 00:00:00', false, null, 'Driss-Ecole', 'Dominique', null, 'Île-de-France', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (8, 'University of Brest', true, 'Morlaix', 'France', '2022-05-01 00:00:00', false, null, 'Prieur', 'Daniel', null, 'Btitanny', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (9, 'University of Freiburg', true, 'Breisgau', 'Germany', '2022-05-01 00:00:00', false, null, 'Dold', 'Pit', null, 'Baden-Württemberg', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (10, 'Darmstadt University of Technology', true, 'Darmstadt', 'Germany', '2022-05-01 00:00:00', false, null, 'Scherer', 'Gerhard ', null, 'Southern Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (11, 'Institute of Biology II (Botany), University of Freiburg', true, 'Breisgau', 'Germany', '2022-05-01 00:00:00', false, null, 'Palme', 'Klaus ', null, 'Baden-Württemberg', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (12, 'ESTEC for HE Space Operations', true, 'Amsterdam', 'Netherlands', '2022-05-01 00:00:00', false, null, 'Demets', 'Rene', null, 'North Holland', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (13, 'University of Hamburg', true, 'Hamburh', 'Germany', '2022-05-01 00:00:00', false, null, 'Wunderlich', 'Rainer', null, 'Northern Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (14, 'European Academy of Sciences and Arts', true, 'Homburg', 'Germany', '2022-05-01 00:00:00', false, null, 'Fecht', 'Hans-Jorg', null, 'Saarland', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (15, 'European College of Sport Science(ECSS)', true, 'Cologn', 'Germany', '2022-05-01 00:00:00', false, null, 'Schneider', 'Stefan', null, 'North Rhine-Westphalia', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (16, 'Space Research Institute, USSR Academy of Sciences', true, 'Moscow', 'Russia', '2022-05-01 00:00:00', false, null, 'Vedernikov', 'Andrei', null, 'Western Russia', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (17, 'Airbus Defence and Space', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, null, 'Steimle', 'Christian', null, 'Western Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (18, 'DISI and DEI Department', true, 'Bologna', 'Italy', '2022-05-01 00:00:00', false, null, 'Bartolini', 'Andrea', null, 'Emilia-Romagna region', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (19, 'University of Lyon', true, 'Lyon', 'France', '2022-05-01 00:00:00', false, null, 'Clement', 'Gilles', null, 'Auvergne-Rhône-Alpes', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (20, 'European Space Agency', true, 'Eriangen', 'Germany', '2022-05-01 00:00:00', false, null, 'Witt', 'Johannes', null, 'Bavaria', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (21, 'German Aerosapce Center', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, null, 'Lohofer', 'George', null, 'Western Germany', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (22, 'Graz University of Technology', true, 'Styria', 'Austria', '2022-05-01 00:00:00', false, null, 'Pottlacher', 'George', null, 'Southern Austria', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (23, 'University of California', true, 'Los Angeles', 'USA', '2022-05-01 00:00:00', false, null, 'Horvath', 'Steve', null, 'California', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (24, 'CSIR-Central Salt and Marine Chemicals Research Institute', true, 'Bhavnagar', 'India', '2022-05-01 00:00:00', false, null, 'Raj', 'Savan', null, 'Gujarat', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (25, 'School of Physics and Astronomy at the University of Edinburgh', true, 'London', 'England', '2022-05-01 00:00:00', false, null, 'Cockell', 'Charles', null, 'South-East England', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (26, 'Integrative Neuroscience and Cognition Center', true, 'Paris', 'France', '2022-05-01 00:00:00', false, null, 'Mcintyre', 'Joe', null, 'North-Central of France', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (27, 'University of Padova', true, 'Padua', 'Italy', '2022-05-01 00:00:00', false, null, 'Tagliabue', 'Mariaelena', null, 'Veneto', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (28, 'CNES', true, 'Toulouse', 'France', '2022-05-01 00:00:00', false, null, 'Mignot', 'Jean', null, 'Southern France', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (29, 'MEDES - Institute for Space Medicine and Physiology', true, 'Toulouse', 'France', '2022-05-01 00:00:00', false, null, 'Llodra-Perez', 'Anais', null, 'Occitanie', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (30, 'NASA Engineering & Safety Center', true, 'Purdue', 'USA', '2022-05-01 00:00:00', false, null, 'Bauer', 'Frank', null, 'Indiana', null);
+INSERT INTO dev.person (id, affiliation, approved, city, country, created_at, deleted, email, family_name, first_name, phone, state, updated_at) VALUES (31, 'European Spacen Agency', true, 'Aachen', 'Germany', '2022-05-01 00:00:00', false, null, 'Armborst', 'Lukas', null, 'Western Germany', null);
+
+create table role
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(255) null
+);
+
+INSERT INTO dev.role (id, name)
+VALUES (1, 'Principal Investigator');
+INSERT INTO dev.role (id, name)
+VALUES (2, 'Researcher');
+INSERT INTO dev.role (id, name)
+VALUES (3, 'Flight Engineer');
 
 create table platform
 (
@@ -360,71 +428,72 @@ INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (20, true, '2022-04-01 00:00:00', false, '2014-01-01', 1, '2014-01-01', 'ISS Increment 73', '2014-01-01', null, 1);
 INSERT INTO dev.mission (id, approved, created_at, deleted, end_date, experiment_count, launch_date, name, start_date, updated_at, platform_id) VALUES (21, true, '2022-04-01 00:00:00', false, '2019-01-01', 1, '2019-01-01', 'ISS Increment 74', '2019-01-01', null, 1);
 
-create table toa
-(
-    id   bigint auto_increment
-        primary key,
-    name varchar(255) null
-);
-
-INSERT INTO dev.toa (id, name) VALUES (1, 'Pure Basic Research');
-INSERT INTO dev.toa (id, name) VALUES (2, 'Strategic Basic Research');
-INSERT INTO dev.toa (id, name) VALUES (3, 'Applied Research');
-INSERT INTO dev.toa (id, name) VALUES (4, 'Experimental Development');
-
 create table experiment
 (
-    id                      bigint auto_increment
+    id                    bigint auto_increment
         primary key,
-    approved                bit           not null,
-    created_at              datetime(6)   null,
-    deleted                 bit           not null,
-    experiment_aim          varchar(1023) null,
-    experiment_objective    varchar(1023) null,
-    experiment_publications varchar(1023) null,
-    lead_institution        varchar(255)  null,
-    title                   varchar(255)  null,
-    updated_at              datetime(6)   null,
-    for_code_id             bigint        not null,
-    mission_id              bigint        not null,
-    platform_id             bigint        not null,
-    seo_code_id             bigint        not null,
-    toa_id                  bigint        not null,
+    approved              bit           not null,
+    created_at            datetime(6)   null,
+    deleted               bit           not null,
+    experiment_objectives varchar(1023) null,
+    lead_institution      varchar(255)  null,
+    payload               varchar(1023) null,
+    spacecraft            varchar(1023) null,
+    test_subject_count    bigint        null,
+    title                 varchar(255)  null,
+    updated_at            datetime(6)   null,
+    activity_id           bigint        not null,
+    area_id               bigint        null,
+    for_code_id           bigint        null,
+    mission_id            bigint        not null,
+    platform_id           bigint        not null,
+    seo_code_id           bigint        null,
+    subsystem_id          bigint        null,
+    test_subject_type_id  bigint        null,
+    toa_id                bigint        null,
+    constraint FK7ijpx4m1q9ramxthh9rvjnl5i
+        foreign key (area_id) references area (id),
+    constraint FKa5dtlslln7y3ffff5xnytotfb
+        foreign key (subsystem_id) references subsystem (id),
+    constraint FKe10ehdoytkcjmxmihbksx4o2y
+        foreign key (activity_id) references activity (id),
     constraint FKfngj6llveh6hcski9mjnjr7ft
         foreign key (seo_code_id) references seo_code (id),
     constraint FKgygeesbjm6430vcp7oqbj6i56
         foreign key (mission_id) references mission (id),
     constraint FKjikfxojmw5kwckcnhpdle3566
         foreign key (toa_id) references toa (id),
+    constraint FKk79oehu9wu86ovdresbnuokyk
+        foreign key (test_subject_type_id) references test_subject_type (id),
     constraint FKmhtqqtjv2v0vr3dawwqsemmm0
         foreign key (platform_id) references platform (id),
     constraint FKqaiemh670d1hykcnsmr52di4l
         foreign key (for_code_id) references for_code (id)
 );
 
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (1, true, '2022-05-04 13:09:05', false, 'To investigate the relationship between the environment condition and the formation of the agglomerates ', 'Develop a single mean field theory for the condesation phenomena of the magnetic particles', null, 'RMIT', 'Self-agglomeration of a ferrofluid in microgravity', 1, null, 2, 1, 1, 2);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (2, true, '2022-05-04 13:09:05', false, 'To investigate the relationship between the microgravity and renal fluids excretion in humans', 'Increased urine output during the first periods of space flight has been reported in many astronauts and considered as an adaptive mechanism to cephalad fluid shift. During German-MIR-92 mission and D2-Spacelab mission the renal output of sodium and fluid', 'DAMEC Research Center Copenhagen DENMARK', 'DAMEC Research Center Copenhagen DENMARK', 'Influence of microgravity on renal fluid excretion in humans', 3, null, 6, 2, 1, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (3, true, '2022-05-04 13:09:05', false, 'To investigate the relationship between Dynamic Light Scattering and chaterization of biomolecules', 'Crystal growth is in essence particle size increase as a function of time, and it is therefore important to investigate on inherent visco-elastic properties, or cluster sizes of such sample solutions. The crystallisation of biological   macromolecules in ', 'ESA''s Technology and Research Program', 'ESA-ESTEC,  Dierks & Partner Systemtechnik', 'Characterization of selected biomolecules by Dynamic Light Scattering in the course of the STS-95 mission preparation', 2, null, 2, 3, 2, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (4, true, '2022-05-04 13:09:05', false, 'To investigate the relationship between the polarity of lential root statocytes and the microgravity environment', 'Previous space experiments have shown that the polarity of lentil root statocytes was modified in microgravity (Perbal G. and Driss-Ecole D, 1989). The nucleus was slightly displaced toward the cell center and the amyloplasts were located in the proximal ', 'Université Pierre et Marie Curie Laboratoire CEMV', 'Université Pierre et Marie Curie Laboratoire CEMV', 'The cytoskeleton of the Lentil root statocyte', 4, null, 7, 4, 2, 2);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (5, false, '2022-05-04 13:09:05', false, 'To investigate the enhancements of newly developed hardware', 'Perform space experiments during a short mission life (generally up to 2 weeks)', 'The Russian Space Agency, Roskosmos', 'University of Brest', 'Highrad', 4, null, 5, 5, 3, 16);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (6, false, '2022-05-04 13:09:05', false, 'To investigate the relatinship between crystallisation of CdTe and related compounds.', 'Cadmium telluride (CdTe) and related compounds are promising materials for radiation sensors and photorefractive devices. Their commercial use is still limited owing to the problems in growing them. This MAP project is a close collaboration of scientists ', 'University of Freiburg', 'University of Freiburg', 'Crystallisation of CdTe and related compounds', 4, null, 2, 6, 3, 4);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (7, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between the direction of gravity vector and root growth of plants', 'In the SPARC experiment a close look will be taken at these auxin-transporting proteins: AUX and PIN. It is envisaged that in the absence of gravity, the auxintransporting proteins will change their position. This process will be explored by exposing seed', 'European Space Research and Technology Centre', 'ESA-ESTEC', 'SPARC - Specialized Phospholipase A, and Re-localization in auxin-transporting Cells in micro-g', 3, null, 2, 7, 4, 4);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (8, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between the modelling of thermo-physical property data of liquid metals and the solidification process', 'To perform high precision viscosity, surface tension and specific heat capacity measurements of an industrial Fe-alloy.', 'Institut für Mikro und Nanomaterialien Universität Ulm Abt. Werkstoffe der Elektrotechnik', 'Institut für Mikro und Nanomaterialien Universität Ulm Abt. Werkstoffe der Elektrotechnik', 'High precision thermo-physical property data of liquid metals for modeling of industrial solidification processes', 4, null, 2, 8, 4, 6);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (9, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between the impact of gravity on human cerebral perfusion and neurocognitive performance.  ', 'Within this study we would like to investigate, that is a correlation between cerebrovascular auroregulation and neurocognitive performance during changed gravity conditions and  an effect of age on these mechanisms.', 'Deutsche Sporthochschule Köln Institut für Bewegungs- und Neurowissenschaft Zentrum für integrative Physiologie im Weltraum', 'Deutsche Sporthochschule Köln Institut für Bewegungs- und Neurowissenschaft Zentrum für integrative Physiologie im Weltraum', 'Cerebrovascular autoregulation as a determinant for neurocognitive performance', 2, null, 6, 9, 5, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (10, false, '2022-05-04 13:09:05', false, 'To investigate the the relationship betweengas the force in the direction and the temperature gradient ', 'The 61st ESA Parabolic Flight Campaign took place from 1 September to 12 September 2014 and was conducted from Bordeaux-Mérignac airport in France. While the first week was dedicated to the preparation of the experiments and the experiment integration int', 'Université Libre de Bruxelles Microgravity Research Center', 'Université Libre de Bruxelles Microgravity Research Center', 'ICAPS-IPE - Interactions in Cosmic and Atmospheric Particle Systems - ICAPS Precursor Experiments', 3, null, 4, 10, 6, 16);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (11, false, '2022-05-04 13:09:05', false, 'To investigate the new external payload platform which capable of hosting multiple external payloads on the ISS (International Space Station).', 'The Bartolomeo external payload facility will extend the infrastructure and capability of the ISS by 12 additional external sites fitting the expectations of the market. It enables the hosting of external payloads in low-Earth orbit, on-board the Internat', 'European space laboratory Columbus.', 'Airbus Defence and Space Location Ottobrunn', 'Bartolomeo - Commercial', 2, null, 15, 11, 1, 9);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (12, false, '2022-05-04 13:09:05', false, 'To investigate the life of astronauts on board during mission', 'ESA EPO Task List is a series of educational videos about life on the ISS. Different astronauts explain during their respective mission certain aspects of their stay on board. Often they are accompanied by ''Paxi'' - ESA''s mascot for kids. They use Paxi as ', 'ESA-ESTEC Directorate of Human Spaceflight and Exploration Education Office', 'ESA-ESTEC Directorate of Human Spaceflight and Exploration Education Office', 'EPO Task List', 1, null, 13, 12, 1, 13);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (13, false, '2022-05-04 13:09:05', false, 'To investigate the judgements of durations of the crewmembers during their stay on baord the ISS', 'Judgments of durations in seconds, minutes, hours, and days will be recorded in crewmembers throughout their stay on board the ISS and compared with pre- and post-flight baselines. It is hypothesized that time duration is underestimated by astronauts in o', 'Lyon Neuroscience Research Center INSERM U1028 - Impact Team', 'Lyon Neuroscience Research Center', 'TIME - Time Perception in Microgravity', 2, null, 16, 13, 1, 9);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (14, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between the robustness of improved technology and its capability to monitor gaseous compounds simultaneously', 'Demonstrate the robustness of the improved technology at the ISS in a representative operational environment: ISS as a test bed for technologies for future exploration. Develop small European niches in the area of life support based on state of the art te', 'European Space Agency', 'ESA-ESTEC', 'ANITA-2 - ANalyzing InTerferometer for ambient Air', 4, null, 10, 14, 1, 9);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (15, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between electrical resistivity of molten metals and dependence on the temperature', 'ELECTRICAL RESISTIVITY project is dedicated to measuring electrical resistivity of molten metals. The aim of the project is to determine the resistivity dependence on the temperature. This dependence can then  be further used to indirectly determine therm', 'Graz University of Technology Institute of Experimental Physics', 'Graz University of Technology Institute of Experimental Physics', 'RESISTIVITY - Electrical Resistivity Measurements of High Temperature Metallic Melts, Batch 2', 3, null, 2, 15, 1, 4);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (16, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between DNA damage caused by low earth orbit radiation and age-related epigenetic changes in humans including the epigenetic clock', 'he effect of long-term living in space on physical ageing, such as loss of bone density is well-documented. The effect on the innate process of ageing however, is not known. This important question has remained largely unanswered because until now, there ', 'Public Health England (PHE) Cellular Biology', 'Oslo University Hospital Department of Molecular Microbiologya, University of California Department of Human Genetics', 'DNAmAGE - Effects of prolonged spaceflight on DNA methylation age', 4, null, 6, 16, 1, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (17, false, '2022-05-04 13:09:05', false, 'To investigate the relationship of the effects of altered gravity on the rock/microbe/liquid system as a whole', 'The interaction between microbes and rocks in a medium phase can be affected by reduced gravity in more than one way. The reduction of thermal convection in low-gravity, and its absence in microgravity, will minimize the natural stirring in liquids and ga', 'UK Centre for Astrobiology University of Edinburgh', 'UK Centre for Astrobiology University of Edinburgh', 'BioAsteroid', 4, null, 6, 17, 1, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (18, false, '2022-05-04 13:09:05', false, 'To investigate the relationship between the microgravity environment of lower orbit and the coordiante frames of reference used in nervous system', 'The purpose of this proposed research is to better understand how the CNS integrates information from different sensory modalities, encoded in different reference frames, in order to coordinate the hand with the visual environment. More specifically, we w', 'French National Centre for Scientific Research', 'CNRS UMR 8119 Université Paris Descartes', 'GRASP - Gravitational References for Sensorimotor Performance: Reaching and Grasping', 3, null, 11, 18, 1, 12);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (19, false, '2022-05-04 13:09:05', false, 'To investigate  the foreseen behaviour of fluids under microgravity.', 'The objectives of this experiment are to correct mathematical models of fluid sloshing provided by CFD tools;  To derive predictive models for future sloshing  under different operational conditions; To observe the fluid covering all the internal surface ', 'CNES France', 'France''s space agency CNES User Support and Operation Centre CADMOS', 'FLUIDICS: FLUId DynamICs in Space (CNES National Contribution)', 1, null, 2, 19, 1, 4);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (20, false, '2022-05-04 13:09:05', false, 'To inspire an interest in science, technology, engineering and math (STEM) subjects and in STEM careers among young people', 'Amateur Radio on the International Space Station (ARISS) inspires students, worldwide, to pursue interests and careers in science, technology, engineering and math through amateur radio communications opportunities with the International Space Station (IS', 'ARISS - Amateur Radio on the International Space Station', 'ARISS - Amateur Radio on the International Space Station', 'ARISS - Amateur Radio on the International Space Station', 2, null, 13, 20, 1, 13);
-INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_aim, experiment_objective, experiment_publications, lead_institution, title, toa_id, updated_at, for_code_id, mission_id, platform_id, seo_code_id) VALUES (21, false, '2022-05-04 13:09:05', false, 'To investigate the cybersecurity enhancement for future space mission ', 'Cryptography ICE Cube is a compact experiment aimed at enhancing cybersecurity for future space missions. It is testing two related approaches to encryption for non rad-hardened systems to make encryption-based secure communication feasible for space miss', 'European Space Agency', 'ESA-ESTEC', 'CryptIC - Cryptography ICE Cube#5', 3, null, 10, 21, 1, 9);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (1, true, '2022-05-01 00:00:00', false, 'Develop a single mean field theory for the condesation phenomena of the magnetic particles', 'RMIT', null, null, null, 'Self-agglomeration of a ferrofluid in microgravity', null, 1, null, 2, 1, 1, 2, null, null, 1);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (2, true, '2022-05-01 00:00:00', false, 'Increased urine output during the first periods of space flight has been reported in many astronauts and considered as an adaptive mechanism to cephalad fluid shift. During German-MIR-92 mission and D2-Spacelab mission the renal output of sodium and fluid', 'DAMEC Research Center Copenhagen DENMARK', null, null, null, 'Influence of microgravity on renal fluid excretion in humans', null, 1, null, 6, 2, 1, 12, null, null, 3);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (3, true, '2022-05-01 00:00:00', false, 'Crystal growth is in essence particle size increase as a function of time, and it is therefore important to investigate on inherent visco-elastic properties, or cluster sizes of such sample solutions. The crystallisation of biological   macromolecules in ', 'ESA-ESTEC,  Dierks & Partner Systemtechnik', null, null, null, 'Characterization of selected biomolecules by Dynamic Light Scattering in the course of the STS-95 mission preparation', null, 1, null, 2, 3, 2, 12, null, null, 2);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (4, true, '2022-05-01 00:00:00', false, 'Previous space experiments have shown that the polarity of lentil root statocytes was modified in microgravity (Perbal G. and Driss-Ecole D, 1989). The nucleus was slightly displaced toward the cell center and the amyloplasts were located in the proximal ', 'Université Pierre et Marie Curie Laboratoire CEMV', null, null, null, 'The cytoskeleton of the Lentil root statocyte', null, 1, null, 7, 4, 2, 2, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (5, true, '2022-05-01 00:00:00', false, 'Perform space experiments during a short mission life (generally up to 2 weeks)', 'University of Brest', null, null, null, 'Highrad', null, 1, null, 5, 5, 3, 16, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (6, true, '2022-05-01 00:00:00', false, 'Cadmium telluride (CdTe) and related compounds are promising materials for radiation sensors and photorefractive devices. Their commercial use is still limited owing to the problems in growing them. This MAP project is a close collaboration of scientists ', 'University of Freiburg', null, null, null, 'Crystallisation of CdTe and related compounds', null, 1, null, 2, 6, 3, 4, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (7, true, '2022-05-01 00:00:00', false, 'In the SPARC experiment a close look will be taken at these auxin-transporting proteins: AUX and PIN. It is envisaged that in the absence of gravity, the auxintransporting proteins will change their position. This process will be explored by exposing seed', 'ESA-ESTEC', null, null, null, 'SPARC - Specialized Phospholipase A, and Re-localization in auxin-transporting Cells in micro-g', null, 1, null, 2, 7, 4, 4, null, null, 3);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (8, true, '2022-05-01 00:00:00', false, 'To perform high precision viscosity, surface tension and specific heat capacity measurements of an industrial Fe-alloy.', 'Institut für Mikro und Nanomaterialien Universität Ulm Abt. Werkstoffe der Elektrotechnik', null, null, null, 'High precision thermo-physical property data of liquid metals for modeling of industrial solidification processes', null, 1, null, 2, 8, 4, 6, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (9, true, '2022-05-01 00:00:00', false, 'Within this study we would like to investigate, that is a correlation between cerebrovascular auroregulation and neurocognitive performance during changed gravity conditions and  an effect of age on these mechanisms.', 'Deutsche Sporthochschule Köln Institut für Bewegungs- und Neurowissenschaft Zentrum für integrative Physiologie im Weltraum', null, null, null, 'Cerebrovascular autoregulation as a determinant for neurocognitive performance', null, 1, null, 6, 9, 5, 12, null, null, 2);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (10, true, '2022-05-01 00:00:00', false, 'The 61st ESA Parabolic Flight Campaign took place from 1 September to 12 September 2014 and was conducted from Bordeaux-Mérignac airport in France. While the first week was dedicated to the preparation of the experiments and the experiment integration int', 'Université Libre de Bruxelles Microgravity Research Center', null, null, null, 'ICAPS-IPE - Interactions in Cosmic and Atmospheric Particle Systems - ICAPS Precursor Experiments', null, 1, null, 4, 10, 6, 16, null, null, 3);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (11, true, '2022-05-01 00:00:00', false, 'The Bartolomeo external payload facility will extend the infrastructure and capability of the ISS by 12 additional external sites fitting the expectations of the market. It enables the hosting of external payloads in low-Earth orbit, on-board the Internat', 'Airbus Defence and Space Location Ottobrunn', null, null, null, 'Bartolomeo - Commercial', null, 1, null, 15, 11, 1, 9, null, null, 2);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (12, true, '2022-05-01 00:00:00', false, 'ESA EPO Task List is a series of educational videos about life on the ISS. Different astronauts explain during their respective mission certain aspects of their stay on board. Often they are accompanied by ''Paxi'' - ESA''s mascot for kids. They use Paxi as ', 'ESA-ESTEC Directorate of Human Spaceflight and Exploration Education Office', null, null, null, 'EPO Task List', null, 1, null, 13, 12, 1, 13, null, null, 1);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (13, true, '2022-05-01 00:00:00', false, 'Judgments of durations in seconds, minutes, hours, and days will be recorded in crewmembers throughout their stay on board the ISS and compared with pre- and post-flight baselines. It is hypothesized that time duration is underestimated by astronauts in o', 'Lyon Neuroscience Research Center', null, null, null, 'TIME - Time Perception in Microgravity', null, 1, null, 16, 13, 1, 9, null, null, 2);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (14, true, '2022-05-01 00:00:00', false, 'Demonstrate the robustness of the improved technology at the ISS in a representative operational environment: ISS as a test bed for technologies for future exploration. Develop small European niches in the area of life support based on state of the art te', 'ESA-ESTEC', null, null, null, 'ANITA-2 - ANalyzing InTerferometer for ambient Air', null, 1, null, 10, 14, 1, 9, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (15, true, '2022-05-01 00:00:00', false, 'ELECTRICAL RESISTIVITY project is dedicated to measuring electrical resistivity of molten metals. The aim of the project is to determine the resistivity dependence on the temperature. This dependence can then  be further used to indirectly determine therm', 'Graz University of Technology Institute of Experimental Physics', null, null, null, 'RESISTIVITY - Electrical Resistivity Measurements of High Temperature Metallic Melts, Batch 2', null, 1, null, 2, 15, 1, 4, null, null, 3);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (16, true, '2022-05-01 00:00:00', false, 'he effect of long-term living in space on physical ageing, such as loss of bone density is well-documented. The effect on the innate process of ageing however, is not known. This important question has remained largely unanswered because until now, there ', 'Oslo University Hospital Department of Molecular Microbiologya, University of California Department of Human Genetics', null, null, null, 'DNAmAGE - Effects of prolonged spaceflight on DNA methylation age', null, 1, null, 6, 16, 1, 12, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (17, true, '2022-05-01 00:00:00', false, 'The interaction between microbes and rocks in a medium phase can be affected by reduced gravity in more than one way. The reduction of thermal convection in low-gravity, and its absence in microgravity, will minimize the natural stirring in liquids and ga', 'UK Centre for Astrobiology University of Edinburgh', null, null, null, 'BioAsteroid', null, 1, null, 6, 17, 1, 12, null, null, 4);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (18, true, '2022-05-01 00:00:00', false, 'The purpose of this proposed research is to better understand how the CNS integrates information from different sensory modalities, encoded in different reference frames, in order to coordinate the hand with the visual environment. More specifically, we w', 'CNRS UMR 8119 Université Paris Descartes', null, null, null, 'GRASP - Gravitational References for Sensorimotor Performance: Reaching and Grasping', null, 1, null, 11, 18, 1, 12, null, null, 3);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (19, true, '2022-05-01 00:00:00', false, 'The objectives of this experiment are to correct mathematical models of fluid sloshing provided by CFD tools;  To derive predictive models for future sloshing  under different operational conditions; To observe the fluid covering all the internal surface ', 'France''s space agency CNES User Support and Operation Centre CADMOS', null, null, null, 'FLUIDICS: FLUId DynamICs in Space (CNES National Contribution)', null, 1, null, 2, 19, 1, 4, null, null, 1);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (20, true, '2022-05-01 00:00:00', false, 'Amateur Radio on the International Space Station (ARISS) inspires students, worldwide, to pursue interests and careers in science, technology, engineering and math through amateur radio communications opportunities with the International Space Station (IS', 'ARISS - Amateur Radio on the International Space Station', null, null, null, 'ARISS - Amateur Radio on the International Space Station', null, 1, null, 13, 20, 1, 13, null, null, 2);
+INSERT INTO dev.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload, spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id, mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id) VALUES (21, true, '2022-05-01 00:00:00', false, 'Cryptography ICE Cube is a compact experiment aimed at enhancing cybersecurity for future space missions. It is testing two related approaches to encryption for non rad-hardened systems to make encryption-based secure communication feasible for space miss', 'ESA-ESTEC', null, null, null, 'CryptIC - Cryptography ICE Cube#5', null, 1, null, 10, 21, 1, 9, null, null, 3);
 
-create table experiment_attachment
+create table attachment
 (
     id            bigint auto_increment
         primary key,
@@ -435,7 +504,7 @@ create table experiment_attachment
         foreign key (experiment_id) references experiment (id)
 );
 
-create table experiment_publication
+create table publication
 (
     id               bigint auto_increment
         primary key,
@@ -454,7 +523,7 @@ create table experiment_publication
         foreign key (experiment_id) references experiment (id)
 );
 
-create table experiment_publication_author
+create table author
 (
     id         bigint auto_increment
         primary key,
@@ -467,9 +536,9 @@ create table publication_author
     publication_id bigint not null,
     author_id      bigint not null,
     constraint FKg942a597vajs5b8v8r8ecj9su
-        foreign key (publication_id) references experiment_publication (id),
+        foreign key (publication_id) references publication (id),
     constraint FKs2kspjpjhf4cgxq5uunrury3m
-        foreign key (author_id) references experiment_publication_author (id)
+        foreign key (author_id) references author (id)
 );
 
 create table experiment_person

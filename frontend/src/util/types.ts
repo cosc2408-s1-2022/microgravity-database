@@ -64,8 +64,8 @@ export type Person = {
   state: string;
   country: string;
   affiliation: string;
-  email: string;
-  phone: string;
+  email?: string;
+  phone?: string;
   role: Role;
   approved: boolean;
   deleted: boolean;

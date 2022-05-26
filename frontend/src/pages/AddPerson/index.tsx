@@ -10,6 +10,8 @@ import { Person } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import AuthWrapper from '../../components/AuthWrapper';
 import Captcha from '../../components/Captcha';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/high-res.css';
 
 export default function AddPerson() {
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ export default function AddPerson() {
   const [city, setCity] = useState<string>();
   const [state, setState] = useState<string>();
   const [country, setCountry] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [phone, setPhone] = useState<string>();
 
   const { error, isSuccess, isLoading, isError, mutate } = useMutation<AxiosResponse<Person>, AxiosError>(
     'addPerson',
@@ -32,6 +36,8 @@ export default function AddPerson() {
         city,
         state,
         country,
+        email,
+        phone,
       }),
   );
 
@@ -125,6 +131,35 @@ export default function AddPerson() {
                   autoComplete='country-name'
                   errors={error?.response?.data}
                   onChange={setCountry}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormField
+                  label='Email'
+                  name='email'
+                  autoComplete='email'
+                  errors={error?.response?.data}
+                  onChange={setEmail}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <PhoneInput
+                  country='au'
+                  onChange={setPhone}
+                  placeholder='Phone'
+                  disableCountryCode={true}
+                  inputProps={{
+                    autoComplete: 'tel',
+                  }}
+                  inputStyle={{
+                    width: '100%',
+                    height: '2.5rem',
+                    fontSize: '1rem',
+                    backgroundColor: '#F7F5F8',
+                    borderRadius: '4px',
+                    border: '1px #c4c4c4 solid',
+                  }}
+                  buttonStyle={{ borderRadius: '4px', border: '1px #c4c4c4 solid' }}
                 />
               </Grid>
               <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>

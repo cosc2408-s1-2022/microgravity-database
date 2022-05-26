@@ -24,7 +24,7 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
           {props.people.map((person) => (
             <Grid item key={person.person.id}>
               <Typography color='primary.dark' variant='body2' fontWeight='lighter'>
-                {`${person.person.firstName[0]}. ${person.person.familyName}`}
+                {`${person.person.firstName.at(0)}. ${person.person.familyName}`}
               </Typography>
             </Grid>
           ))}
@@ -39,9 +39,18 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
         </Grid>
         <Grid item>
           <Typography display={'inline'}>Experiment Objective: </Typography>
-          <Typography display={'inline'} color={'primary.dark'} variant={'body1'}>
-            {props.objective &&
-              (props.objective.substring(0, props.objective.indexOf('.')) || props.objective).concat('...')}
+          <Typography
+            display={'inline'}
+            color={'primary.dark'}
+            variant={'body1'}
+            // whiteSpace='nowrap'
+            // textOverflow='ellipsis'
+            // sx={{ overflow: 'hidden' }}
+            py={1}
+          >
+            {props.objective
+              ? (props.objective.substring(0, props.objective.indexOf('.')) || props.objective).concat('...')
+              : 'Not specified'}
           </Typography>
         </Grid>
       </Grid>

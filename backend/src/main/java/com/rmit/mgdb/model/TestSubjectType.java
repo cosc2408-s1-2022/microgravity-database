@@ -3,6 +3,7 @@ package com.rmit.mgdb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import javax.persistence.*;
@@ -18,9 +19,10 @@ public class TestSubjectType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String name;
 
-    @OneToMany(mappedBy = "subsystem", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "testSubjectType", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Experiment> experiments;
 

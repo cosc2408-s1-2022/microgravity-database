@@ -128,7 +128,7 @@ public class ExperimentService {
 
         experimentRepository.saveAndFlush(experiment);
 
-        SaveExperimentPersonRequest[] personRequests = experimentRequest.getExperimentPersonRequests();
+        SaveExperimentPersonRequest[] personRequests = experimentRequest.getPersonRequests();
         if (personRequests != null && personRequests.length > 0) {
             experiment.setPeople(Arrays.stream(personRequests).map(personRequest -> {
                 Person person = personService.getPersonById(personRequest.getPersonId());

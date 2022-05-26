@@ -61,9 +61,9 @@ public class Experiment {
     @NotNull
     private Activity activity;
 
-    @IndexedEmbedded
     @ManyToOne
     @JoinColumn(name = "toa_id")
+    @IndexedEmbedded
     private Toa toa;
 
     @ManyToOne
@@ -83,7 +83,6 @@ public class Experiment {
     @ManyToOne
     @JoinColumn(name = "subsystem_id")
     @IndexedEmbedded
-    @NotNull
     private Subsystem subsystem;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
@@ -95,13 +94,11 @@ public class Experiment {
     @ManyToOne
     @JoinColumn(name = "area_id")
     @IndexedEmbedded
-    @NotNull
     private Area area;
 
     @ManyToOne
     @JoinColumn(name = "test_subject_type_id")
     @IndexedEmbedded
-    @NotNull
     private TestSubjectType testSubjectType;
 
     @GenericField

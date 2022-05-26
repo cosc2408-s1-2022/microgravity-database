@@ -29,8 +29,8 @@ public class SearchFieldConstants {
             "forCode.name",
             "seoCode.code",
             "seoCode.name",
-            "subsystem.name",
             "spacecraft",
+            "subsystem.name",
             "payload",
             "area.name",
             "testSubjectType.name"

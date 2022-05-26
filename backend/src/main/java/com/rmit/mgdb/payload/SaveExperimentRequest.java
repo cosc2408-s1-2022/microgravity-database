@@ -27,7 +27,7 @@ public class SaveExperimentRequest {
     private String experimentObjectives;
 
     @Valid
-    private SaveExperimentPersonRequest[] experimentPersonRequests;
+    private SaveExperimentPersonRequest[] personRequests;
 
     @Valid
     private Publication[] publications;

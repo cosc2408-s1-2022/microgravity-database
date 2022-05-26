@@ -105,7 +105,7 @@ export default function EditExperiment() {
     title && formData.append('title', title);
     mission && formData.append('missionId', mission.id.toString());
     leadInstitution && formData.append('leadInstitution', leadInstitution);
-    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
+    experimentObjectives && formData.append('experimentObjectives', experimentObjectives);
     activity && formData.append('activityId', activity.id.toString());
 
     // Scientific Research
@@ -115,7 +115,7 @@ export default function EditExperiment() {
 
     // Industry
     spacecraft && formData.append('spacecraft', spacecraft);
-    subsystem && formData.append('subsystem', subsystem.id.toString());
+    subsystem && formData.append('subsystemId', subsystem.id.toString());
     payload && formData.append('payload', payload);
 
     // Human Spaceflight
@@ -125,7 +125,7 @@ export default function EditExperiment() {
 
     for (const i in peopleState.data) {
       Object.entries(peopleState.data[i].data).forEach(([key, value]) => {
-        value && formData.append(`experimentPersonRequests[${i}].${key}`, value.toString());
+        value && formData.append(`personRequests[${i}].${key}`, value.toString());
       });
     }
 
@@ -134,20 +134,20 @@ export default function EditExperiment() {
         if (key === 'authors') {
           for (const j in value as Author[]) {
             Object.entries(value[j]).forEach(([k, v]) => {
-              v && formData.append(`experimentPublications[${i}].authors[${j}].${k}`, v.toString());
+              v && formData.append(`publications[${i}].authors[${j}].${k}`, v.toString());
             });
           }
         } else {
-          value && formData.append(`experimentPublications[${i}].${key}`, value.toString());
+          value && formData.append(`publications[${i}].${key}`, value.toString());
         }
       });
     }
 
     for (const id of experimentAttachments.map((attachment) => attachment.id.toString())) {
-      formData.append('experimentAttachmentIds[]', id);
+      formData.append('attachmentIds[]', id);
     }
     for (const file of newExperimentAttachments) {
-      formData.append('experimentAttachmentFiles[]', file);
+      formData.append('attachmentFiles[]', file);
     }
 
     return api.post('/experiments/save', formData, {

@@ -68,7 +68,7 @@ export default function AddExperiment() {
     title && formData.append('title', title);
     leadInstitution && formData.append('leadInstitution', leadInstitution);
     mission && formData.append('missionId', mission.id.toString());
-    experimentObjectives && formData.append('experimentObjective', experimentObjectives);
+    experimentObjectives && formData.append('experimentObjectives', experimentObjectives);
     activity && formData.append('activityId', activity.id.toString());
 
     // Scientific Research
@@ -78,7 +78,7 @@ export default function AddExperiment() {
 
     // Industry
     spacecraft && formData.append('spacecraft', spacecraft);
-    subsystem && formData.append('subsystem', subsystem.id.toString());
+    subsystem && formData.append('subsystemId', subsystem.id.toString());
     payload && formData.append('payload', payload);
 
     // Human Spaceflight
@@ -88,7 +88,7 @@ export default function AddExperiment() {
 
     for (const i in peopleState.data) {
       Object.entries(peopleState.data[i].data).forEach(([key, value]) => {
-        formData.append(`experimentPersonRequests[${i}].${key}`, value?.toString() || '');
+        formData.append(`personRequests[${i}].${key}`, value?.toString() || '');
       });
     }
 
@@ -97,17 +97,17 @@ export default function AddExperiment() {
         if (key === 'authors') {
           for (const j in value as Author[]) {
             Object.entries(value[j]).forEach(([k, v]) => {
-              v && formData.append(`experimentPublications[${i}].authors[${j}].${k}`, v?.toString() || '');
+              v && formData.append(`publications[${i}].authors[${j}].${k}`, v?.toString() || '');
             });
           }
         } else {
-          value && formData.append(`experimentPublications[${i}].${key}`, value?.toString() || '');
+          value && formData.append(`publications[${i}].${key}`, value?.toString() || '');
         }
       });
     }
 
     for (const attachment of experimentAttachments) {
-      formData.append('experimentAttachmentFiles[]', attachment);
+      formData.append('attachmentFiles[]', attachment);
     }
 
     return api.post('/experiments/save', formData, {
