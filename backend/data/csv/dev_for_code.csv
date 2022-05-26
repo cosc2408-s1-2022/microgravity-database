@@ -907,7 +907,7 @@ id,code,name
 390103,390103,"Economics, business and management curriculum and pedagogy"
 390104,390104,"English and literacy curriculum and pedagogy (excl. LOTE, ESL and TESOL)"
 390105,390105,Environmental education curriculum and pedagogy
-390106,390106,Geography education curriculum and pedagogy
+390106,390106,Geography educationï¿½curriculumï¿½andï¿½pedagogy
 390107,390107,"Humanities and social sciences curriculum and pedagogy (excl. economics, business and management)"
 390108,390108,"LOTE, ESL and TESOL curriculum and pedagogy"
 390109,390109,Mathematics and numeracy curriculum and pedagogy
@@ -979,7 +979,7 @@ id,code,name
 400406,400406,Powder and particle technology
 400407,400407,Process control and simulation 
 400408,400408,Reaction engineering (excl. nuclear reactions)
-400409,400409,Separation technologies
+400409,400409,Separationï¿½technologies
 400410,400410,Wastewater treatment processes
 400411,400411,Water treatment processes
 400499,400499,Chemical engineering not elsewhere classified
@@ -1435,11 +1435,11 @@ id,code,name
 450204,450204,"Aboriginal and Torres Strait Islander technical, further, continuing and community education"
 450205,450205,Aboriginal and Torres Strait Islander higher education
 450206,450206,Aboriginal and Torres Strait Islander language education
-450207,450207,Aboriginal and Torres Strait Islander men’s education
+450207,450207,Aboriginal and Torres Strait Islander menï¿½s education
 450208,450208,Aboriginal and Torres Strait Islander primary education
 450209,450209,Aboriginal and Torres Strait Islander secondary education
 450210,450210,Aboriginal and Torres Strait Islander student engagement and teaching
-450211,450211,Aboriginal and Torres Strait Islander women’s education
+450211,450211,Aboriginal and Torres Strait Islander womenï¿½s education
 450212,450212,Cultural responsiveness and working with Aboriginal and Torres Strait Islander communities education
 450213,450213,"Embedding Aboriginal and Torres Strait Islander knowledges, histories, culture, country, perspectives and ethics in education"
 450299,450299,Aboriginal and Torres Strait Islander education not elsewhere classified
@@ -1462,7 +1462,7 @@ id,code,name
 450409,450409,Aboriginal and Torres Strait Islander health services
 450410,450410,Aboriginal and Torres Strait Islander lifecourse
 450411,450411,Aboriginal and Torres Strait Islander medicine and treatments
-450412,450412,Aboriginal and Torres Strait Islander men’s health and wellbeing
+450412,450412,Aboriginal and Torres Strait Islander menï¿½s health and wellbeing
 450413,450413,Aboriginal and Torres Strait Islander midwifery and paediatrics
 450414,450414,Aboriginal and Torres Strait Islander mothers and babies health and wellbeing
 450415,450415,Aboriginal and Torres Strait Islander nursing
@@ -1579,7 +1579,7 @@ id,code,name
 451099,451099,Te hauora me te oranga o te M?ori k?ore an? kia whakar?p?hia i w?hi k? (M?ori health and wellbeing not elsewhere classified)
 451101,451101,Te mahi kaute o te M?ori (M?ori accounting)
 451102,451102,Te m?tauranga tikanga M?ori (M?ori anthropology)
-451103,451103,Te hoahoanga whare o te M?ori (M?ori architecture)  
+451103,451103,Te hoahoanga whare o te M?ori (M?ori architecture) ï¿½
 451104,451104,Ng? mahi tauhokohoko o te M?ori (M?ori commerce)
 451105,451105,"Te whanaketanga ?-hapori, ?-rohe o te M?ori (M?ori community and regional development)"
 451106,451106,Te rangahau kei r? hapori o te M?ori (M?ori community-based research)
@@ -1649,11 +1649,11 @@ id,code,name
 451406,451406,"Pacific Peoples technical, further, continuing and community education"
 451407,451407,Pacific Peoples higher education
 451408,451408,Pacific Peoples language education
-451409,451409,Pacific Peoples men’s education
+451409,451409,Pacific Peoples menï¿½s education
 451410,451410,Pacific Peoples primary education
 451411,451411,Pacific Peoples secondary education
 451412,451412,Pacific Peoples student engagement and teaching
-451413,451413,Pacific Peoples women’s education
+451413,451413,Pacific Peoples womenï¿½s education
 451499,451499,Pacific Peoples education not elsewhere classified
 451501,451501,Pacific Peoples agriculture and forestry
 451502,451502,Pacific Peoples earth sciences 
