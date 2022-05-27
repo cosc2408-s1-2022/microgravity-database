@@ -58,8 +58,6 @@ export default function AddMission() {
     });
   });
 
-  console.log(moment(launchDate).format('YYYY-MM-DD') || 'BRUH');
-
   const [isCaptchaComplete, setIsCaptchaComplete] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

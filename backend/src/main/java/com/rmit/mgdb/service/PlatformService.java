@@ -18,6 +18,10 @@ public class PlatformService {
         this.platformRepository = platformRepository;
     }
 
+    public void savePlatform(Platform platform) {
+        platformRepository.saveAndFlush(platform);
+    }
+
     public List<Platform> getAllPlatforms() {
         return platformRepository.findAll();
     }

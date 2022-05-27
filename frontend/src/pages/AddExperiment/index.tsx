@@ -29,6 +29,7 @@ import Captcha from '../../components/Captcha';
 import PublicationsForm from '../../components/PublicationsForm';
 import AutocompleteSelector from '../../components/AutocompleteSelector';
 import moment from 'moment';
+import CodeSelector from '../../components/CodeSelector';
 
 export default function AddExperiment() {
   const navigate = useNavigate();
@@ -271,7 +272,7 @@ export default function AddExperiment() {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <AutocompleteSelector<ForCode>
+                      {/* <AutocompleteSelector<ForCode>
                         name='forCodeId'
                         label='Field of Research (FoR)'
                         value={forCode}
@@ -281,10 +282,19 @@ export default function AddExperiment() {
                         queryFn={() => api.get('/forCodes')}
                         matchFn={(option) => `${option.code} ${option.name}`}
                         equalityFn={(option, value) => option.id === value.id}
+                      /> */}
+                      <CodeSelector<ForCode>
+                        name='forCodeId'
+                        label='Field of Research (FoR)'
+                        value={forCode}
+                        dispatch={setForCode}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllForCodes'
+                        queryFn={() => api.get('/forCodes')}
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <AutocompleteSelector<SeoCode>
+                      {/* <AutocompleteSelector<SeoCode>
                         name='seoCodeId'
                         label='Socio-Economic Objective (SEO)'
                         value={seoCode}
@@ -294,6 +304,15 @@ export default function AddExperiment() {
                         queryFn={() => api.get('/seoCodes')}
                         matchFn={(option) => `${option.code} ${option.name}`}
                         equalityFn={(option, value) => option.id === value.id}
+                      /> */}
+                      <CodeSelector<SeoCode>
+                        name='seoCodeId'
+                        label='Socio-Economic Objective (SEO)'
+                        value={seoCode}
+                        dispatch={setSeoCode}
+                        errors={experimentError?.response?.data}
+                        queryKey='getAllSeoCodes'
+                        queryFn={() => api.get('/seoCodes')}
                       />
                     </Grid>
                   </Grid>

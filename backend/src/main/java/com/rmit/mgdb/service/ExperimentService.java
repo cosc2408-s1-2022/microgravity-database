@@ -41,6 +41,7 @@ public class ExperimentService {
     private final MissionService missionService;
     private final PersonService personService;
     private final RoleService roleService;
+    private final PlatformService platformService;
     private final ExperimentPersonService experimentPersonService;
     private final ExperimentPublicationService experimentPublicationService;
     private final ExperimentAttachmentService experimentAttachmentService;
@@ -57,6 +58,7 @@ public class ExperimentService {
                              ExperimentRepository experimentRepository,
                              MissionService missionService, PersonService personService,
                              RoleService roleService,
+                             PlatformService platformService,
                              ExperimentPersonService experimentPersonService,
                              ExperimentPublicationService experimentPublicationService,
                              ExperimentAttachmentService experimentAttachmentService,
@@ -70,6 +72,7 @@ public class ExperimentService {
         this.missionService = missionService;
         this.personService = personService;
         this.roleService = roleService;
+        this.platformService = platformService;
         this.experimentPersonService = experimentPersonService;
         this.experimentPublicationService = experimentPublicationService;
         this.experimentAttachmentService = experimentAttachmentService;
@@ -103,8 +106,9 @@ public class ExperimentService {
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
         Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
+        Platform platform = mission.getPlatform();
         experiment.setMission(mission);
-        experiment.setPlatform(mission.getPlatform());
+        experiment.setPlatform(platform);
         experiment.setExperimentObjectives(experimentRequest.getExperimentObjectives());
         experiment.setActivity(activityService.getActivityById(experimentRequest.getActivityId()));
 
@@ -112,6 +116,13 @@ public class ExperimentService {
             experiment.setToa(toaService.getToaById(experimentRequest.getToaId()));
             experiment.setForCode(forCodeService.getForCodeById(experimentRequest.getForCodeId()));
             experiment.setSeoCode(seoCodeService.getSeoCodeById(experimentRequest.getSeoCodeId()));
+
+            List<ForCode> platformForCodes = platform.getForCodes();
+            if (!platformForCodes.contains(experiment.getForCode())) {
+                platformForCodes.add(experiment.getForCode());
+                platform.setForCodes(platformForCodes);
+                platformService.savePlatform(platform);
+            }
         } else if (experiment.getActivity().getName().equals(Activities.INDUSTRY.string)) {
             experiment.setSpacecraft(experimentRequest.getSpacecraft());
             Long subsystemId = experimentRequest.getSubsystemId();

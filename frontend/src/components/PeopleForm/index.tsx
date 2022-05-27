@@ -48,8 +48,6 @@ export default function PeopleForm({ state, dispatch, errors }: PeopleFormProps)
     if (isRolesSuccess && rolesData) setRoles(rolesData.data);
   }, [isRolesSuccess, rolesData]);
 
-  console.log(errors);
-
   return (
     <Paper sx={{ width: '100%', border: '1px #c4c4c4 solid' }} variant='outlined'>
       <Box display='flex' alignItems='center'>
