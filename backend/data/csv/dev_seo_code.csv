@@ -1,989 +1,989 @@
 ﻿id,code,name
-10,10,ANIMAL PRODUCTION AND ANIMAL PRIMARY PRODUCTS
-11,11,COMMERCIAL SERVICES AND TOURISM
-12,12,CONSTRUCTION
-13,13,CULTURE AND SOCIETY
-14,14,DEFENCE
-15,15,ECONOMIC FRAMEWORK
-16,16,EDUCATION AND TRAINING
-17,17,ENERGY
-18,18,ENVIRONMENTAL MANAGEMENT
-19,19,"ENVIRONMENTAL POLICY, CLIMATE CHANGE AND NATURAL HAZARDS"
-20,20,HEALTH
-21,21,INDIGENOUS
-22,22,INFORMATION AND COMMUNICATION SERVICES
-23,23,"LAW, POLITICS AND COMMUNITY SERVICES"
-24,24,MANUFACTURING
-25,25,MINERAL RESOURCES (EXCL. ENERGY RESOURCES)
-26,26,PLANT PRODUCTION AND PLANT PRIMARY PRODUCTS
-27,27,TRANSPORT
-28,28,EXPANDING KNOWLEDGE
-1001,1001,Environmentally sustainable animal production
-1002,1002,Fisheries - aquaculture
-1003,1003,Fisheries - wild caught
-1004,1004,Livestock raising
-1005,1005,"Pasture, browse and fodder crops"
-1006,1006,Primary products from animals
-1099,1099,Other animal production
-1099,1099,Other animal production and animal primary products
-1101,1101,Environmentally sustainable commercial services and tourism
-1102,1102,Financial services
-1103,1103,"Property, business support services and trade"
-1104,1104,Tourism services
-1105,1105,Water and waste services
-1199,1199,Other commercial services and tourism
-1201,1201,Building management and services
-1202,1202,Construction design
-1203,1203,Construction materials performance and processes
-1204,1204,Construction planning
-1205,1205,Construction processes
-1206,1206,Environmentally sustainable construction activities
-1299,1299,Other construction
-1301,1301,Arts
-1302,1302,Communication
-1303,1303,Ethics
-1304,1304,Heritage
-1305,1305,Religion
-1306,1306,"Sport, exercise and recreation"
-1307,1307,Understanding past societies
-1399,1399,Other culture and society
-1401,1401,Defence
-1501,1501,International trade policy
-1502,1502,Macroeconomics
-1503,1503,Management and productivity
-1504,1504,Measurement standards and calibration services
-1505,1505,Microeconomics
-1599,1599,Other economic framework
-1601,1601,Learner and learning
-1602,1602,Schools and learning environments
-1603,1603,Teaching and curriculum
-1699,1699,Other education and training
-1701,1701,Energy efficiency
-1702,1702,Energy exploration
-1703,1703,"Energy storage, distribution and supply"
-1704,1704,Energy transformation
-1705,1705,Environmentally sustainable energy activities
-1706,1706,Mining and extraction of energy resources
-1707,1707,Processing of energy sources
-1708,1708,Renewable energy
-1799,1799,Other energy
-1801,1801,"Air quality, atmosphere and weather"
-1802,1802,Coastal and estuarine systems and management
-1803,1803,"Fresh, ground and surface water systems and management"
-1804,1804,Management of Antarctic and Southern Ocean environments
-1805,1805,Marine systems and management
-1806,1806,Terrestrial systems and management
-1899,1899,Other environmental management 
-1901,1901,Adaptation to climate change
-1902,1902,"Environmental policy, legislation and standards"
-1903,1903,Mitigation of climate change
-1904,1904,Natural hazards
-1905,1905,Understanding climate change
-1999,1999,"Other environmental policy, climate change and natural hazards"
-2001,2001,Clinical health
-2002,2002,Evaluation of health and support services
-2003,2003,Provision of health and support services
-2004,2004,Public health (excl. specific population health)
-2005,2005,Specific population health (excl. Indigenous health)
-2099,2099,Other health
-2101,2101,Aboriginal and Torres Strait Islander community services
-2102,2102,Aboriginal and Torres Strait Islander education
-2103,2103,Aboriginal and Torres Strait Islander health
-2104,2104,Aboriginal and Torres Strait Islander heritage and culture
-2105,2105,Ngā ratonga hapori Māori (Māori community services)
-2106,2106,Mātauranga Māori (Māori education)
-2107,2107,Te hauora (hauora Māori) (Māori health)
-2108,2108,Te tuku ihotanga me te ahurea Māori (Māori heritage and culture)
-2109,2109,Pacific Peoples community services
-2110,2110,Pacific Peoples education
-2111,2111,Pacific Peoples health
-2112,2112,Pacific Peoples heritage and culture
-2199,2199,Other Indigenous
-2201,2201,"Communication technologies, systems and services"
-2202,2202,Environmentally sustainable information and communication services
-2203,2203,Information services
-2204,2204,"Information systems, technologies and services"
-2205,2205,Media services
-2299,2299,Other information and communication services
-2301,2301,Community services
-2302,2302,Government and politics
-2303,2303,International relations
-2304,2304,Justice and the law
-2305,2305,Work and labour market
-2399,2399,"Other law, politics and community services"
-2401,2401,Agricultural chemicals
-2402,2402,Basic metal products
-2403,2403,"Ceramics, glass and industrial mineral products"
-2404,2404,"Computer, electronic and communication equipment"
-2405,2405,Dairy products
-2406,2406,Environmentally sustainable manufacturing activities
-2407,2407,Fabricated metal products
-2408,2408,Human pharmaceutical products
-2409,2409,Industrial chemicals and related products
-2410,2410,Instrumentation
-2411,2411,"Leather products, fibre processing and textiles"
-2412,2412,Machinery and equipment
-2413,2413,Processed food products and beverages (excl. dairy products)
-2414,2414,"Processed non-food agriculture products (excl. wood, paper and fibre)"
-2415,2415,Transport equipment
-2416,2416,Veterinary pharmaceutical products
-2417,2417,"Wood, wood products and paper"
-2499,2499,Other manufacturing
-2501,2501,Environmentally sustainable mineral resource activities
-2502,2502,First stage treatment of minerals
-2503,2503,Mineral exploration
-2504,2504,Primary mining and extraction of minerals
-2599,2599,Other mineral resources (excl. energy resources)
-2601,2601,Environmentally sustainable plant production
-2602,2602,Forestry
-2603,2603,Grains and seeds
-2604,2604,Harvesting and packaging of plant products
-2605,2605,Horticultural crops
-2606,2606,Industrial crops
-2699,2699,Other plant production and plant primary products
-2701,2701,Aerospace transport
-2702,2702,Environmentally sustainable transport activities
-2703,2703,Ground transport
-2704,2704,Water transport
-2799,2799,Other transport
-2801,2801,Expanding knowledge
-100101,100101,Management of gaseous waste from animal production (excl. greenhouse gases)
-100102,100102,Management of liquid waste from animal production (excl. water)
-100103,100103,Management of solid waste from animal production
-100104,100104,Management of water consumption by animal production
-100199,100199,Environmentally sustainable animal production not elsewhere classified
-100201,100201,Aquaculture crustaceans (excl. rock lobster and prawns)
-100202,100202,Aquaculture fin fish (excl. tuna)
-100203,100203,Aquaculture molluscs (excl. oysters)
-100204,100204,Aquaculture oysters
-100205,100205,Aquaculture prawns
-100206,100206,Aquaculture rock lobster
-100207,100207,Aquaculture tuna
-100299,100299,Fisheries - aquaculture not elsewhere classified
-100301,100301,Fisheries - recreational freshwater
-100302,100302,Fisheries - recreational marine 
-100303,100303,Wild caught crustaceans (excl. rock lobster and prawns)
-100304,100304,Wild caught edible molluscs
-100305,100305,Wild caught fin fish (excl. tuna)
-100306,100306,Wild caught prawns
-100307,100307,Wild caught rock lobster
-100308,100308,Wild caught tuna
-100399,100399,Fisheries - wild caught not elsewhere classified
-100401,100401,Beef cattle
-100402,100402,Dairy cattle
-100403,100403,Deer
-100404,100404,"Game livestock (e.g. kangaroos, wallabies, camels, buffaloes)"
-100405,100405,Goats
-100406,100406,Horses
-100407,100407,Insects
-100408,100408,"Minor livestock (e.g. alpacas, ostriches, crocodiles, farmed rabbits)"
-100409,100409,Non-cattle dairy
-100410,100410,Pigs
-100411,100411,Poultry
-100412,100412,Sheep for meat
-100413,100413,Sheep for wool
-100499,100499,Livestock raising not elsewhere classified
-100501,100501,Browse crops
-100502,100502,Lucerne
-100503,100503,Native and residual pastures
-100504,100504,Non-cereal crops (non-cereal crops for hay/silage/green feed)
-100505,100505,Sown pastures (excl. lucerne)
-100599,100599,"Pasture, browse and fodder crops not elsewhere classified"
-100601,100601,Eggs
-100602,100602,Honey
-100603,100603,Pearls
-100604,100604,Raw wool
-100605,100605,Unprocessed or minimally processed fish
-100606,100606,Unprocessed or minimally processed milk
-100699,100699,Primary products from animals not elsewhere classified
-109901,109901,Animal adaptation to climate change 
-109902,109902,Animal welfare
-109903,109903,Fish product traceability and quality assurance
-109904,109904,Livestock product traceability and quality assurance
-109999,109999,Other animal production and animal primary products not elsewhere classified
-110101,110101,Management of gaseous waste from commercial services and tourism (excl. greenhouse gases)
-110102,110102,Management of liquid waste from commercial services and tourism (excl. water)
-110103,110103,Management of solid waste from commercial services and tourism
-110104,110104,Management of water consumption by commercial services and tourism
-110199,110199,Environmentally sustainable commercial services and tourism not elsewhere classified
-110201,110201,Finance services
-110202,110202,Investment services (excl. superannuation)
-110203,110203,Superannuation and insurance services
-110299,110299,Financial services not elsewhere classified
-110301,110301,Administration and business support services
-110302,110302,"Professional, scientific and technical services"
-110303,110303,Property services (incl. security)
-110304,110304,Wholesale and retail trade
-110399,110399,"Property, business support services and trade not elsewhere classified"
-110401,110401,Economic issues in tourism
-110402,110402,Socio-cultural issues in tourism
-110403,110403,Tourism infrastructure development
-110499,110499,Tourism services not elsewhere classified
-110501,110501,Waste management services
-110502,110502,Waste recycling services
-110503,110503,Water recycling services (incl. sewage and greywater)
-110504,110504,Water services and utilities
-110599,110599,Water and waste services not elsewhere classified
-119901,119901,Hospitality services
-119902,119902,Recreational services
-119999,119999,Other commercial services and tourism not elsewhere classified
-120101,120101,Civil building management and services
-120102,120102,Commercial building management and services
-120103,120103,Industrial building management and services
-120104,120104,Institutional building management and services
-120105,120105,Residential building management and services
-120199,120199,Building management and services not elsewhere classified
-120201,120201,Civil construction design
-120202,120202,Commercial construction design
-120203,120203,Industrial construction design
-120204,120204,Institutional construction design
-120205,120205,Residential construction design
-120299,120299,Construction design not elsewhere classified
-120301,120301,Cement and concrete materials
-120302,120302,Glass materials
-120303,120303,Metals 
-120304,120304,Polymeric materials and paints
-120305,120305,"Stone, ceramics and clay materials"
-120306,120306,Timber materials
-120399,120399,Construction materials performance and processes not elsewhere classified
-120401,120401,Civil construction planning
-120402,120402,Commercial construction planning
-120403,120403,Industrial construction planning
-120404,120404,Regional planning
-120405,120405,Residential construction planning
-120406,120406,Urban planning
-120499,120499,Construction planning not elsewhere classified
-120501,120501,Civil construction processes
-120502,120502,Commercial construction processes
-120503,120503,Industrial construction processes
-120504,120504,Institutional construction processes
-120505,120505,Residential construction processes
-120599,120599,Construction processes not elsewhere classified
-120601,120601,Management of gaseous waste from construction activities (excl. greenhouse gases)
-120602,120602,Management of liquid waste from construction activities (excl. water)
-120603,120603,Management of solid waste from construction activities
-120604,120604,Management of water consumption by construction activities
-120699,120699,Environmentally sustainable construction activities not elsewhere classified
-129901,129901,Adaptation to climate change in construction
-129999,129999,Other construction not elsewhere classified
-130101,130101,Design
-130102,130102,Music
-130103,130103,The creative arts 
-130104,130104,The performing arts 
-130199,130199,Arts not elsewhere classified
-130201,130201,Communication across languages and culture
-130202,130202,Languages and linguistics
-130203,130203,Literature
-130204,130204,The media
-130205,130205,Visual communication
-130299,130299,Communication not elsewhere classified
-130301,130301,Bioethics
-130302,130302,Business ethics
-130303,130303,Environmental ethics
-130304,130304,Social ethics
-130305,130305,Technological ethics
-130306,130306,Workplace and organisational ethics (excl. business ethics)
-130399,130399,Ethics not elsewhere classified
-130401,130401,Assessment of heritage value
-130402,130402,Conserving collections and movable cultural heritage
-130403,130403,Conserving intangible cultural heritage
-130404,130404,Conserving natural heritage
-130405,130405,Conserving the historic environment
-130499,130499,Heritage not elsewhere classified
-130501,130501,Religion and society
-130502,130502,Religious philosophies and belief systems
-130503,130503,Religious rituals and traditions (excl. structures)
-130504,130504,Religious structures
-130599,130599,Religion not elsewhere classified
-130601,130601,Exercise
-130602,130602,Organised sports
-130603,130603,Recreation and leisure activities (excl. sport and exercise)
-130699,130699,"Sport, exercise and recreation not elsewhere classified"
-130701,130701,Understanding Africa’s past
-130702,130702,Understanding Asia’s past
-130703,130703,Understanding Australia’s past
-130704,130704,Understanding Europe’s past
-130705,130705,Understanding New Zealand’s past
-130706,130706,Understanding the past of the Americas
-130799,130799,Understanding past societies not elsewhere classified
-139999,139999,Other culture and society not elsewhere classified
-140101,140101,Air
-140102,140102,"Command, control and communications"
-140103,140103,Cyber and electronic security and warfare
-140104,140104,Emerging defence technologies
-140105,140105,"Intelligence, surveillance and space"
-140106,140106,Land
-140107,140107,Logistics
-140108,140108,Maritime
-140109,140109,National security
-140110,140110,Personnel
-140199,140199,Defence not elsewhere classified
-150101,150101,International agreements on trade
-150102,150102,Trade assistance and protection
-150103,150103,Trade policy
-150199,150199,International trade policy not elsewhere classified
-150201,150201,Balance of payments
-150202,150202,Demography
-150203,150203,Economic growth
-150204,150204,Exchange rates
-150205,150205,Fiscal policy
-150206,150206,Income distribution
-150207,150207,Macro labour market issues
-150208,150208,Monetary policy
-150209,150209,Savings and investments
-150210,150210,Taxation
-150299,150299,Macroeconomics not elsewhere classified
-150301,150301,Industrial relations
-150302,150302,Management
-150303,150303,Marketing
-150304,150304,Productivity (excl. public sector)
-150305,150305,Public sector productivity
-150306,150306,Technological and organisational innovation
-150399,150399,Management and productivity not elsewhere classified
-150401,150401,Agricultural and environmental standards and calibrations
-150402,150402,Defence standards and calibrations
-150403,150403,Manufacturing standards and calibrations
-150404,150404,Service industries standards and calibrations
-150499,150499,Measurement standards and calibration services not elsewhere classified
-150501,150501,Consumption
-150502,150502,Human capital issues
-150503,150503,Industrial organisations
-150504,150504,Industry costs and structure
-150505,150505,Industry policy
-150506,150506,Market-based mechanisms
-150507,150507,Micro labour market issues
-150508,150508,Microeconomic effects of taxation
-150509,150509,"Preference, behaviour and welfare"
-150510,150510,Production
-150511,150511,Supply and demand
-150599,150599,Microeconomics not elsewhere classified
-159901,159901,Carbon and emissions trading
-159902,159902,Ecological economics
-159999,159999,Other economic framework not elsewhere classified
-160101,160101,Early childhood education
-160102,160102,Higher education
-160103,160103,Primary education
-160104,160104,Professional development and adult education
-160105,160105,Secondary education
-160199,160199,Learner and learning not elsewhere classified
-160201,160201,Equity and access to education
-160202,160202,Gender aspects in education
-160203,160203,Inclusive education
-160204,160204,"Management, resources and leadership"
-160205,160205,Policies and development
-160206,160206,Workforce transition and employment
-160299,160299,Schools and learning environments not elsewhere classified
-160301,160301,"Assessment, development and evaluation of curriculum"
-160302,160302,Pedagogy
-160303,160303,Teacher and instructor development
-160304,160304,Teaching and instruction technologies
-160399,160399,Teaching and curriculum not elsewhere classified
-169999,169999,Other education and training not elsewhere classified
-170101,170101,Commercial energy efficiency
-170102,170102,Industrial energy efficiency
-170103,170103,Residential energy efficiency
-170104,170104,Transport energy efficiency
-170199,170199,Energy efficiency not elsewhere classified
-170201,170201,Coal exploration
-170202,170202,Geothermal exploration
-170203,170203,Oil and gas exploration
-170204,170204,Oil shale and tar sands exploration
-170205,170205,Uranium exploration
-170299,170299,Energy exploration not elsewhere classified
-170301,170301,Battery storage
-170302,170302,Carbon capture and storage
-170303,170303,Energy services and utilities
-170304,170304,Energy storage (excl. hydrogen and batteries)
-170305,170305,Energy systems and analysis
-170306,170306,Energy transmission and distribution (excl. hydrogen)
-170307,170307,Hydrogen distribution
-170308,170308,Hydrogen storage
-170309,170309,Smart grids
-170399,170399,"Energy storage, distribution and supply not elsewhere classified"
-170401,170401,Fuel cells (excl. solid oxide)
-170402,170402,Hydrogen-based energy systems
-170403,170403,Nuclear energy
-170404,170404,Solid oxide fuel cells
-170405,170405,Transformation of coal into electricity
-170406,170406,Transformation of coal into fuels
-170407,170407,Transformation of electricity and material feedstocks into fuels
-170408,170408,Transformation of gas into electricity
-170409,170409,Transformation of gas into fuels
-170499,170499,Energy transformation not elsewhere classified
-170501,170501,Management of gaseous waste from energy activities (excl. greenhouse gases)
-170502,170502,Management of liquid waste from energy activities (excl. water)
-170503,170503,Management of solid waste from energy activities
-170504,170504,Management of water consumption by energy activities
-170599,170599,Environmentally sustainable energy activities not elsewhere classified
-170601,170601,Coal mining and extraction
-170602,170602,Geothermal energy extraction
-170603,170603,Oil and gas extraction
-170604,170604,Oil shale and tar sands mining and extraction
-170605,170605,Uranium mining and extraction
-170699,170699,Mining and extraction of energy resources not elsewhere classified
-170701,170701,Biomass processing
-170702,170702,Hydrogen production from fossil fuels
-170703,170703,Hydrogen production from nuclear energy
-170704,170704,Hydrogen production from renewable energy
-170705,170705,Oil and gas processing
-170706,170706,Preparation of black coal
-170707,170707,Preparation of brown coal (lignite)
-170708,170708,Preparation of oil shale and tar sands
-170709,170709,Preparation of uranium
-170799,170799,Processing of energy sources not elsewhere classified
-170801,170801,Biofuel energy
-170802,170802,Geothermal energy
-170803,170803,Hydro-electric energy
-170804,170804,Solar-photovoltaic energy
-170805,170805,Solar-thermal energy
-170806,170806,Tidal energy
-170807,170807,Wave energy
-170808,170808,Wind energy
-170899,170899,Renewable energy not elsewhere classified
-179999,179999,Other energy not elsewhere classified
-180101,180101,Air quality
-180102,180102,Atmospheric composition (incl. greenhouse gas inventory)
-180103,180103,Atmospheric processes and dynamics
-180104,180104,Weather
-180199,180199,"Air quality, atmosphere and weather not elsewhere classified"
-180201,180201,Assessment and management of coastal and estuarine ecosystems
-180202,180202,Coastal erosion
-180203,180203,Coastal or estuarine biodiversity
-180204,180204,"Control of pests, diseases and exotic species in coastal and estuarine environments "
-180205,180205,Measurement and assessment of estuarine water quality 
-180206,180206,Rehabilitation or conservation of coastal or estuarine environments
-180299,180299,Coastal and estuarine systems and management not elsewhere classified
-180301,180301,Assessment and management of freshwater ecosystems
-180302,180302,"Control of pests, diseases and exotic species in fresh, ground and surface water "
-180303,180303,"Fresh, ground and surface water biodiversity"
-180304,180304,Freshwater assimilative capacity
-180305,180305,"Ground water quantification, allocation and impact of depletion "
-180306,180306,Measurement and assessment of freshwater quality (incl. physical and chemical conditions of water) 
-180307,180307,"Rehabilitation or conservation of fresh, ground and surface water environments"
-180308,180308,"Surface water quantification, allocation and impact of depletion"
-180399,180399,"Fresh, ground and surface water systems and management not elsewhere classified"
-180401,180401,Antarctic and Southern Ocean ice dynamics
-180402,180402,Antarctic and Southern Ocean oceanic processes
-180403,180403,Assessment and management of Antarctic and Southern Ocean ecosystems
-180404,180404,Biodiversity in Antarctic and Southern Ocean environments
-180405,180405,"Control of pests, diseases and exotic species in Antarctic and Southern Ocean environments"
-180406,180406,Protection and conservation of Antarctic and Southern Ocean environments
-180407,180407,Water quality in Antarctic and Southern Ocean environments
-180499,180499,Management of Antarctic and Southern Ocean environments not elsewhere classified
-180501,180501,Assessment and management of benthic marine ecosystems
-180502,180502,Assessment and management of pelagic marine ecosystems
-180503,180503,"Control of pests, diseases and exotic species in marine environments "
-180504,180504,Marine biodiversity
-180505,180505,Measurement and assessment of marine water quality and condition
-180506,180506,Oceanic processes (excl. in the Antarctic and Southern Ocean)
-180507,180507,Rehabilitation or conservation of marine environments
-180599,180599,Marine systems and management not elsewhere classified
-180601,180601,Assessment and management of terrestrial ecosystems
-180602,180602,"Control of pests, diseases and exotic species in terrestrial environments "
-180603,180603,"Evaluation, allocation, and impacts of land use "
-180604,180604,Rehabilitation or conservation of terrestrial environments
-180605,180605,Soils
-180606,180606,Terrestrial biodiversity
-180607,180607,Terrestrial erosion 
-180699,180699,Terrestrial systems and management not elsewhere classified
-189999,189999,Other environmental management not elsewhere classified
-190101,190101,Climate change adaptation measures (excl. ecosystem)
-190102,190102,Ecosystem adaptation to climate change
-190103,190103,Social impacts of climate change and variability 
-190199,190199,Adaptation to climate change not elsewhere classified
-190201,190201,"Consumption patterns, population issues and the environment"
-190202,190202,Eco-verification (excl. environmental lifecycle assessment)
-190203,190203,Environmental education and awareness
-190204,190204,Environmental lifecycle assessment
-190205,190205,Environmental protection frameworks (incl. economic incentives)
-190206,190206,Institutional arrangements
-190207,190207,Land policy
-190208,190208,Rights to environmental and natural resources (excl. water allocation)
-190209,190209,Sustainability indicators
-190210,190210,Trade and environment 
-190211,190211,Water policy (incl. water allocation)
-190299,190299,"Environmental policy, legislation and standards not elsewhere classified"
-190301,190301,Climate change mitigation strategies
-190302,190302,Management of greenhouse gas emissions from animal production
-190303,190303,Management of greenhouse gas emissions from commercial services and tourism
-190304,190304,Management of greenhouse gas emissions from construction activities
-190305,190305,Management of greenhouse gas emissions from electricity generation
-190306,190306,Management of greenhouse gas emissions from energy activities
-190307,190307,Management of greenhouse gas emissions from information and communication services
-190308,190308,Management of greenhouse gas emissions from manufacturing activities
-190309,190309,Management of greenhouse gas emissions from mineral resources activities
-190310,190310,Management of greenhouse gas emissions from plant production
-190311,190311,Management of greenhouse gas emissions from transport activities
-190399,190399,Mitigation of climate change not elsewhere classified
-190401,190401,"Climatological hazards (e.g. extreme temperatures, drought and wildfires)"
-190402,190402,Extraterrestrial hazards (e.g. meteorites)
-190403,190403,"Geological hazards (e.g. earthquakes, landslides and volcanic activity)"
-190404,190404,Hydrological hazards (e.g. avalanches and floods)
-190405,190405,Meteorological hazards (e.g. cyclones and storms)
-190499,190499,Natural hazards not elsewhere classified
-190501,190501,Climate change models
-190502,190502,Climate variability (excl. social impacts)
-190503,190503,Effects of climate change on Antarctic and sub-Antarctic environments (excl. social impacts)
-190504,190504,Effects of climate change on Australia (excl. social impacts)
-190505,190505,Effects of climate change on New Zealand (excl. social impacts) 
-190506,190506,Effects of climate change on the South Pacific (excl. Australia and New Zealand) (excl. social impacts)
-190507,190507,"Global effects of climate change (excl. Australia, New Zealand, Antarctica and the South Pacific) (excl. social impacts)"
-190508,190508,Understanding the impact of natural hazards caused by climate change
-190599,190599,Understanding climate change not elsewhere classified
-199999,199999,"Other environmental policy, climate change and natural hazards not elsewhere classified"
-200101,200101,Diagnosis of human diseases and conditions
-200102,200102,Efficacy of medications
-200103,200103,Human pain management
-200104,200104,Prevention of human diseases and conditions
-200105,200105,Treatment of human diseases and conditions
-200199,200199,Clinical health not elsewhere classified
-200201,200201,Determinants of health
-200202,200202,Evaluation of health outcomes
-200203,200203,Health education and promotion
-200204,200204,Health inequalities
-200205,200205,Health policy evaluation
-200206,200206,Health system performance (incl. effectiveness of programs)
-200207,200207,Social structure and health
-200208,200208,Telehealth
-200299,200299,Evaluation of health and support services not elsewhere classified
-200301,200301,Allied health therapies (excl. mental health services)
-200302,200302,Community health care
-200303,200303,Health surveillance
-200304,200304,Inpatient hospital care
-200305,200305,Mental health services
-200306,200306,Midwifery
-200307,200307,Nursing
-200308,200308,Outpatient care
-200309,200309,Palliative care
-200310,200310,Primary care
-200311,200311,"Urgent and critical care, and emergency medicine"
-200399,200399,Provision of health and support services not elsewhere classified
-200401,200401,Behaviour and health
-200402,200402,Dental health
-200403,200403,Disability and functional capacity
-200404,200404,Disease distribution and transmission (incl. surveillance and response)
-200405,200405,Food safety
-200406,200406,Health protection and disaster response
-200407,200407,Health status (incl. wellbeing)
-200408,200408,Injury prevention and control
-200409,200409,Mental health
-200410,200410,Nutrition
-200411,200411,Overweight and obesity
-200412,200412,Preventive medicine 
-200413,200413,Substance abuse
-200499,200499,Public health (excl. specific population health) not elsewhere classified
-200501,200501,Adolescent health
-200502,200502,Health related to ageing
-200503,200503,Health related to specific ethnic groups
-200504,200504,Men's health
-200505,200505,Migrant health
-200506,200506,Neonatal and child health
-200507,200507,Occupational health
-200508,200508,Rural and remote area health
-200509,200509,Women's and maternal health
-200599,200599,Specific population health (excl. Indigenous health) not elsewhere classified
-209999,209999,Other health not elsewhere classified
-210101,210101,Aboriginal and Torres Strait Islander community service programs
-210102,210102,Aboriginal and Torres Strait Islander development and wellbeing
-210199,210199,Aboriginal and Torres Strait Islander community services not elsewhere classified
-210201,210201,Aboriginal and Torres Strait Islander education engagement and attendance outcomes
-210202,210202,Aboriginal and Torres Strait Islander education system performance
-210203,210203,Aboriginal and Torres Strait Islander literacy and numeracy outcomes
-210299,210299,Aboriginal and Torres Strait Islander education not elsewhere classified
-210301,210301,Aboriginal and Torres Strait Islander determinants of health
-210302,210302,Aboriginal and Torres Strait Islander health status and outcomes
-210303,210303,Aboriginal and Torres Strait Islander health system performance
-210399,210399,Aboriginal and Torres Strait Islander health not elsewhere classified
-210401,210401,Aboriginal and Torres Strait Islander artefacts
-210402,210402,Aboriginal and Torres Strait Islander connection to land and environment
-210403,210403,Aboriginal and Torres Strait Islander customary practices
-210404,210404,Aboriginal and Torres Strait Islander knowledge
-210405,210405,Aboriginal and Torres Strait Islander places of significance
-210406,210406,Aboriginal and Torres Strait Islander tradition
-210407,210407,Conserving Aboriginal and Torres Strait Islander heritage and culture
-210499,210499,Aboriginal and Torres Strait Islander heritage and culture not elsewhere classified
-210501,210501,Ngā hōtaka ratonga hapori Māori (Māori community service programs)
-210502,210502,Te whanaketanga me te oranga o te Māori (Māori development and wellbeing)
-210599,210599,Ngā ratonga hapori o te Māori kāore anō kia whakarōpūtia i wāhi kē (Māori community services not elsewhere classified)
-210601,210601,Te whai wāhi o te Māori ki te mātauranga me te taetae atu ki te kura (Māori education engagement and attendance outcomes)
-210602,210602,Te whakatutukitanga o te pūnaha mātauranga Māori (Māori education system performance)
-210603,210603,Ngā putanga reo matatini me te pāngarau o te Māori (Māori literacy and numeracy outcomes)
-210699,210699,Te mātauranga Māori kāore kāore anō kia whakarōpūtia i wāhi kē (Māori education not elsewhere classified)
-210701,210701,Ngā tokoingoa hauora (determinants of Māori health)
-210702,210702,Te tūnga me ngā putanga hauora (Māori health status and outcomes)
-210703,210703,Te whakatutukinga o te pūnaha hauora (Māori health system performance)
-210799,210799,Te hauora kāore anō kia whakarōpūtia i wāhi kē (Māori health not elsewhere classified)
-210801,210801,Āhuatanga Māori (te tuku ihotanga Māori) (Māori tradition)
-210802,210802,Te whāomoomo i te tuku ihotanga me te ahurea Māori (conserving Māori heritage and culture)
-210803,210803,Mōhiotanga Māori (Māori knowledge)
-210804,210804,Ngā taonga (Māori artefacts)
-210805,210805,Ngā tikanga Māori (Māori customary practices) 
-210806,210806,Ngā wāhi taonga (Māori places of significance)
-210899,210899,Te tuku ihotanga me te ahurea Māori kāore anō kia whakarōpūhia i wāhi kē (Māori heritage and culture not elsewhere classified)
-210901,210901,Pacific Peoples community service programs
-210902,210902,Pacific Peoples development and wellbeing
-210999,210999,Pacific Peoples community services not elsewhere classified
-211001,211001,Pacific Peoples education engagement and attendance
-211002,211002,Pacific Peoples education system performance
-211003,211003,Pacific Peoples literacy and numeracy outcomes
-211099,211099,Pacific Peoples education not elsewhere classified
-211101,211101,Pacific Peoples determinants of health
-211102,211102,Pacific Peoples health status and outcomes
-211103,211103,Pacific Peoples health system performance
-211199,211199,Pacific Peoples health not elsewhere classified
-211201,211201,Conserving Pacific Peoples heritage and culture
-211202,211202,Pacific Peoples connection to land and environment
-211299,211299,Pacific Peoples heritage and culture not elsewhere classified
-219999,219999,Other Indigenous not elsewhere classified
-220101,220101,E-infrastructures
-220102,220102,Internet protocols (ip)
-220103,220103,Mobile technologies and communications
-220104,220104,Network security
-220105,220105,Network systems and services
-220106,220106,"Satellite technologies, networks and services"
-220107,220107,"Wireless technologies, networks and services"
-220199,220199,"Communication technologies, systems and services not elsewhere classified"
-220201,220201,Management of solid waste from information and communication services
-220202,220202,Management of water consumption by information and communication services
-220299,220299,Environmentally sustainable information and communication services not elsewhere classified
-220301,220301,Digital humanities
-220302,220302,Electronic information storage and retrieval services
-220303,220303,Library and archival services
-220304,220304,Museum and gallery collections
-220305,220305,News collection services
-220306,220306,Open access
-220399,220399,Information services not elsewhere classified
-220401,220401,Application software packages
-220402,220402,Applied computing
-220403,220403,Artificial intelligence
-220404,220404,Computer systems
-220405,220405,Cybersecurity
-220406,220406,Graphics
-220407,220407,Human-computer interaction
-220408,220408,Information systems
-220499,220499,"Information systems, technologies and services not elsewhere classified"
-220501,220501,"Animation, video games and computer generated imagery services"
-220502,220502,"Internet, digital and social media"
-220503,220503,Publishing and print services
-220504,220504,"Radio, television, film and video services"
-220599,220599,Media services not elsewhere classified
-229999,229999,Other information and communication services not elsewhere classified
-230101,230101,Ability and disability
-230102,230102,Ageing and older people
-230103,230103,Carers' support
-230104,230104,Children's services and childcare
-230105,230105,Citizenship and national identity
-230106,230106,Employment services
-230107,230107,Families and family services
-230108,230108,Gender and sexualities
-230109,230109,Homelessness and housing services
-230110,230110,Migrant and refugee settlement services
-230111,230111,Multicultural services
-230112,230112,Social class and inequalities
-230113,230113,"Structure, delivery and resourcing"
-230114,230114,Violence and abuse services
-230115,230115,Youth services
-230199,230199,Community services not elsewhere classified
-230201,230201,Civics and citizenship
-230202,230202,Electoral systems
-230203,230203,Political systems
-230204,230204,Public services policy advice and analysis
-230299,230299,Government and politics not elsewhere classified
-230301,230301,Defence and security policy
-230302,230302,International aid and development
-230303,230303,International organisations
-230304,230304,International political economy (excl. international trade)
-230305,230305,Peace and conflict
-230399,230399,International relations not elsewhere classified
-230401,230401,Civil justice
-230402,230402,Crime prevention
-230403,230403,Criminal justice
-230404,230404,Law enforcement
-230405,230405,Law reform
-230406,230406,Legal processes
-230407,230407,"Legislation, civil and criminal codes"
-230408,230408,Rehabilitation and correctional services
-230499,230499,Justice and the law not elsewhere classified
-230501,230501,Employment patterns and change
-230502,230502,Professions and professionalisation
-230503,230503,Remuneration
-230504,230504,Unpaid work and volunteering
-230505,230505,Work and family responsibilities
-230506,230506,Workplace safety
-230599,230599,Work and labour market not elsewhere classified
-239999,239999,"Other law, politics and community services not elsewhere classified"
-240101,240101,Animal protection chemicals
-240102,240102,Chemical fertilisers
-240103,240103,Crop and pasture protection chemicals
-240199,240199,Agricultural chemicals not elsewhere classified
-240201,240201,Basic aluminium products
-240202,240202,Basic copper products
-240203,240203,Basic iron and steel products
-240204,240204,Basic precious metal products
-240205,240205,Basic zinc products
-240299,240299,Basic metal products not elsewhere classified
-240301,240301,Cement products and concrete materials
-240302,240302,Ceramics
-240303,240303,Clay products
-240304,240304,Composite materials
-240305,240305,Plaster and plaster products
-240306,240306,Structural glass and glass products
-240399,240399,"Ceramics, glass and industrial mineral products not elsewhere classified"
-240401,240401,Computer and electronic office equipment (excl. communication equipment)
-240402,240402,Consumer electronic equipment (excl. communication equipment)
-240403,240403,Integrated circuits and devices
-240404,240404,Integrated systems
-240405,240405,Network infrastructure equipment
-240406,240406,Processor modules
-240407,240407,Robotics
-240408,240408,Satellite navigation equipment
-240409,240409,Telemetry equipment
-240410,240410,Voice and data equipment
-240499,240499,"Computer, electronic and communication equipment not elsewhere classified"
-240501,240501,Butter and milk-derived fats and oils (excl. cream)
-240502,240502,Casein
-240503,240503,Cheese
-240504,240504,"Processed milk and cream (incl. powder, evaporated and condensed)"
-240505,240505,Whey
-240599,240599,Dairy products not elsewhere classified
-240601,240601,"Development of recyclable or biodegradable componentry, packaging or materials "
-240602,240602,Management of gaseous waste from manufacturing activities (excl. greenhouse gases)
-240603,240603,Management of liquid waste from manufacturing activities (excl. water)
-240604,240604,Management of solid waste from manufacturing activities
-240605,240605,Management of water consumption by manufacturing activities
-240699,240699,Environmentally sustainable manufacturing activities not elsewhere classified
-240701,240701,Coated metal and metal-coated products
-240702,240702,Machined metal products
-240703,240703,Metal castings
-240704,240704,Semi-finished metal products
-240705,240705,Sheet metal products
-240706,240706,Structural metal products
-240799,240799,Fabricated metal products not elsewhere classified
-240801,240801,Human biological preventatives 
-240802,240802,Human diagnostics
-240803,240803,Human pharmaceutical treatments 
-240899,240899,Human pharmaceutical products not elsewhere classified
-240901,240901,"Antimicrobials, antifungals and biocides"
-240902,240902,Bioplastics
-240903,240903,Cosmetics
-240904,240904,Fine chemicals
-240905,240905,Industrial gases
-240906,240906,Inorganic industrial chemicals
-240907,240907,Lubricants
-240908,240908,"Organic industrial chemicals (excl. resins, rubber and plastics)"
-240909,240909,Paints
-240910,240910,Plastics
-240911,240911,Resins
-240912,240912,Rubber
-240913,240913,Soaps
-240999,240999,Industrial chemicals and related products not elsewhere classified
-241001,241001,Industrial instruments
-241002,241002,Medical instruments
-241003,241003,Scientific instruments
-241099,241099,Instrumentation not elsewhere classified
-241101,241101,Clothing
-241102,241102,Cotton ginning
-241103,241103,"Natural fibres, yarns and fabrics"
-241104,241104,Non-fabric textiles (e.g. felt)
-241105,241105,"Skins, leather and leather products"
-241106,241106,"Synthetic fibres, yarns and fabrics"
-241107,241107,Wool scouring and top making
-241199,241199,"Leather products, fibre processing and textiles not elsewhere classified"
-241201,241201,3D printers and printing
-241202,241202,Autonomous and robotic systems
-241203,241203,Electrical machinery and equipment (incl. appliances)
-241204,241204,Industrial machinery and equipment
-241205,241205,Medical machinery and equipment 
-241299,241299,Machinery and equipment not elsewhere classified
-241301,241301,Alcoholic beverages
-241302,241302,Bakery products
-241303,241303,Carcass meat (incl. fish and seafood)
-241304,241304,Flour mill and cereal food
-241305,241305,Insects
-241306,241306,Non-alcoholic beverages (excl. fruit juices and non-dairy milk)
-241307,241307,Non-dairy milk
-241308,241308,Nutraceuticals and functional foods
-241309,241309,Oils and fats (incl. margarines)
-241310,241310,Processed fish and seafood products
-241311,241311,Processed fruit and vegetable products (incl. juices)
-241312,241312,Processed meat products
-241313,241313,"Sugar, sweeteners and confectionery products"
-241399,241399,Processed food products and beverages (excl. dairy products) not elsewhere classified
-241401,241401,Essential oils 
-241402,241402,Organic fertilisers
-241403,241403,Plant extracts 
-241404,241404,Prepared animal feed
-241499,241499,"Processed non-food agricultural products (excl. wood, paper and fibre) not elsewhere classified"
-241501,241501,Aerospace equipment
-241502,241502,Automotive equipment
-241503,241503,Nautical equipment
-241504,241504,Rail equipment
-241599,241599,Transport equipment not elsewhere classified
-241601,241601,Veterinary biological preventatives 
-241602,241602,Veterinary diagnostics
-241603,241603,Veterinary pharmaceutical treatments 
-241699,241699,Veterinary pharmaceutical products not elsewhere classified
-241701,241701,Paper products and pulp 
-241702,241702,Printing and publishing processes
-241703,241703,Reconstituted timber products 
-241704,241704,Wood products 
-241705,241705,Wood sawing and veneer
-241799,241799,"Wood, wood products and paper not elsewhere classified"
-249999,249999,Other manufacturing not elsewhere classified
-250101,250101,Management of gaseous waste from mineral resource activities (excl. greenhouse gases)
-250102,250102,Management of liquid waste from mineral resource activities (excl. water)
-250103,250103,Management of solid waste from mineral resource activities
-250104,250104,Management of water consumption by mineral resource activities
-250199,250199,Environmentally sustainable mineral resource activities not elsewhere classified
-250201,250201,Alumina production
-250202,250202,Beneficiation of bauxite and aluminium ores (excl. alumina production)
-250203,250203,Beneficiation or dressing of iron ores
-250204,250204,Beneficiation or dressing of non-metallic minerals (incl. diamonds)
-250205,250205,Concentrating processes of base metal ores (excl. aluminium and iron ores)
-250206,250206,Production of unrefined precious metal ingots and concentrates
-250299,250299,First stage treatment of minerals not elsewhere classified
-250301,250301,Aluminium ore exploration
-250302,250302,Copper ore exploration
-250303,250303,Diamond exploration
-250304,250304,Iron ore exploration
-250305,250305,Precious (noble) metal ore exploration
-250306,250306,Stone and clay exploration
-250307,250307,"Titanium minerals, zircon, and rare earth metal ore (e.g. monazite) exploration"
-250308,250308,Zinc ore exploration
-250399,250399,Mineral exploration not elsewhere classified
-250401,250401,Mining and extraction of aluminium ores
-250402,250402,Mining and extraction of copper ores
-250403,250403,Mining and extraction of diamonds
-250404,250404,Mining and extraction of iron ores
-250405,250405,Mining and extraction of precious (noble) metal ores
-250406,250406,Mining and extraction of stone and clay
-250407,250407,"Mining and extraction of titanium minerals, zircon, and rare earth metal ores (e.g. monazite)"
-250408,250408,Mining and extraction of zinc ores
-250499,250499,Primary mining and extraction of minerals not elsewhere classified
-259999,259999,Other mineral resources (excl. energy resources) not elsewhere classified
-260101,260101,Management of gaseous waste from plant production (excl. greenhouse gases)
-260102,260102,Management of liquid waste from plant production (excl. water)
-260103,260103,Management of solid waste from plant production
-260104,260104,Management of water consumption by plant production
-260199,260199,Environmentally sustainable plant production not elsewhere classified
-260201,260201,Hardwood plantations
-260202,260202,Harvesting and transport of forest products
-260203,260203,Integration of farm and forestry
-260204,260204,Native forests
-260205,260205,Softwood plantations
-260299,260299,Forestry not elsewhere classified
-260301,260301,Barley
-260302,260302,Canola
-260303,260303,Grain legumes
-260304,260304,Linseed
-260305,260305,Lupins
-260306,260306,Maize
-260307,260307,Oats
-260308,260308,Rice
-260309,260309,Safflower seed
-260310,260310,Sorghum
-260311,260311,Soybeans
-260312,260312,Wheat
-260399,260399,Grains and seeds not elsewhere classified
-260401,260401,Cotton lint and cotton seed
-260402,260402,Fresh fruits and vegetables (post harvest)
-260403,260403,Sugar cane (cut for crushing)
-260404,260404,Unprocessed grains
-260405,260405,Unprocessed industrial crops (excl. sugar and cotton)
-260406,260406,Unprocessed seeds
-260499,260499,Harvesting and packaging of plant products not elsewhere classified
-260501,260501,Almonds
-260502,260502,Avocado
-260503,260503,Berry fruit (excl. kiwifruit)
-260504,260504,Citrus fruit
-260505,260505,Field grown vegetable crops
-260506,260506,Kiwifruit
-260507,260507,Macadamias
-260508,260508,Mushrooms and truffles
-260509,260509,Olives
-260510,260510,"Ornamentals, natives, flowers and nursery plants"
-260511,260511,"Pome fruit, pip fruit"
-260512,260512,Protected vegetable crops
-260513,260513,Stone fruit (excl. avocado)
-260514,260514,Table grapes
-260515,260515,Tree nuts (excl. almonds and macadamias)
-260516,260516,Tropical fruit
-260599,260599,Horticultural crops not elsewhere classified
-260601,260601,Cannabis
-260602,260602,Cotton
-260603,260603,Essential oil crops
-260604,260604,Hemp
-260605,260605,Hops
-260606,260606,Plant extract crops
-260607,260607,Sugar
-260608,260608,Wine grapes
-260699,260699,Industrial crops not elsewhere classified
-269901,269901,Climate adaptive plants
-269902,269902,Forest product traceability and quality assurance
-269903,269903,Plant product traceability and quality assurance (excl. forest products)
-269999,269999,Other plant production and plant primary products not elsewhere classified
-270101,270101,Air freight
-270102,270102,Air passenger transport
-270103,270103,Air safety and traffic management
-270104,270104,Air terminal infrastructure and management
-270105,270105,Autonomous air vehicles 
-270106,270106,Space transport
-270199,270199,Aerospace transport not elsewhere classified
-270201,270201,Management of gaseous waste from transport activities (excl. greenhouse gases)
-270202,270202,Management of liquid waste from transport activities (excl. water)
-270203,270203,Management of noise and vibration from transport activities
-270204,270204,Management of solid waste from transport activities
-270205,270205,Management of water consumption by transport activities
-270299,270299,Environmentally sustainable transport activities not elsewhere classified
-270301,270301,Active ground transport 
-270302,270302,Autonomous road vehicles
-270303,270303,Heavy rail infrastructure and networks
-270304,270304,Rail freight
-270305,270305,Rail passenger movements
-270306,270306,Rail safety
-270307,270307,Road freight
-270308,270308,Road infrastructure and networks
-270309,270309,Road passenger movements (excl. public transport)
-270310,270310,Road public transport
-270311,270311,Road safety
-270312,270312,Urban rail infrastructure and networks (incl. light and metro rail)
-270399,270399,Ground transport not elsewhere classified
-270401,270401,Autonomous water vehicles
-270402,270402,Coastal sea freight transport
-270403,270403,Domestic passenger water transport (e.g. ferries)
-270404,270404,International passenger water transport (e.g. passenger ships)
-270405,270405,"International sea freight transport (excl. live animals, food products and liquefied gas)"
-270406,270406,International sea transport of food products
-270407,270407,International sea transport of liquefied gas
-270408,270408,International sea transport of live animals
-270409,270409,Port infrastructure and management
-270410,270410,Water safety
-270499,270499,Water transport not elsewhere classified
-279901,279901,Intermodal materials handling
-279902,279902,Multimodal transport
-279903,279903,Pipeline transport
-279904,279904,Postal and package services (incl. courier services)
-279999,279999,Other transport not elsewhere classified
-280101,280101,"Expanding knowledge in the agricultural, food and veterinary sciences"
-280102,280102,Expanding knowledge in the biological sciences
-280103,280103,Expanding knowledge in the biomedical and clinical sciences
-280104,280104,Expanding knowledge in built environment and design
-280105,280105,Expanding knowledge in the chemical sciences
-280106,280106,"Expanding knowledge in commerce, management, tourism and services"
-280107,280107,Expanding knowledge in the earth sciences
-280108,280108,Expanding knowledge in economics
-280109,280109,Expanding knowledge in education
-280110,280110,Expanding knowledge in engineering
-280111,280111,Expanding knowledge in the environmental sciences
-280112,280112,Expanding knowledge in the health sciences
-280113,280113,"Expanding knowledge in history, heritage and archaeology"
-280114,280114,Expanding knowledge in Indigenous studies
-280115,280115,Expanding knowledge in the information and computing sciences
-280116,280116,"Expanding knowledge in language, communication and culture"
-280117,280117,Expanding knowledge in law and legal studies
-280118,280118,Expanding knowledge in the mathematical sciences
-280119,280119,Expanding knowledge in philosophy and religious studies
-280120,280120,Expanding knowledge in the physical sciences
-280121,280121,Expanding knowledge in psychology
-280122,280122,Expanding knowledge in creative arts and writing studies
-280123,280123,Expanding knowledge in human society
+1,10,ANIMAL PRODUCTION AND ANIMAL PRIMARY PRODUCTS
+2,11,COMMERCIAL SERVICES AND TOURISM
+3,12,CONSTRUCTION
+4,13,CULTURE AND SOCIETY
+5,14,DEFENCE
+6,15,ECONOMIC FRAMEWORK
+7,16,EDUCATION AND TRAINING
+8,17,ENERGY
+9,18,ENVIRONMENTAL MANAGEMENT
+10,19,"ENVIRONMENTAL POLICY, CLIMATE CHANGE AND NATURAL HAZARDS"
+11,20,HEALTH
+12,21,INDIGENOUS
+13,22,INFORMATION AND COMMUNICATION SERVICES
+14,23,"LAW, POLITICS AND COMMUNITY SERVICES"
+15,24,MANUFACTURING
+16,25,MINERAL RESOURCES (EXCL. ENERGY RESOURCES)
+17,26,PLANT PRODUCTION AND PLANT PRIMARY PRODUCTS
+18,27,TRANSPORT
+19,28,EXPANDING KNOWLEDGE
+20,1001,Environmentally sustainable animal production
+21,1002,Fisheries - aquaculture
+22,1003,Fisheries - wild caught
+23,1004,Livestock raising
+24,1005,"Pasture, browse and fodder crops"
+25,1006,Primary products from animals
+26,1099,Other animal production
+27,1099,Other animal production and animal primary products
+28,1101,Environmentally sustainable commercial services and tourism
+29,1102,Financial services
+30,1103,"Property, business support services and trade"
+31,1104,Tourism services
+32,1105,Water and waste services
+33,1199,Other commercial services and tourism
+34,1201,Building management and services
+35,1202,Construction design
+36,1203,Construction materials performance and processes
+37,1204,Construction planning
+38,1205,Construction processes
+39,1206,Environmentally sustainable construction activities
+40,1299,Other construction
+41,1301,Arts
+42,1302,Communication
+43,1303,Ethics
+44,1304,Heritage
+45,1305,Religion
+46,1306,"Sport, exercise and recreation"
+47,1307,Understanding past societies
+48,1399,Other culture and society
+49,1401,Defence
+50,1501,International trade policy
+51,1502,Macroeconomics
+52,1503,Management and productivity
+53,1504,Measurement standards and calibration services
+54,1505,Microeconomics
+55,1599,Other economic framework
+56,1601,Learner and learning
+57,1602,Schools and learning environments
+58,1603,Teaching and curriculum
+59,1699,Other education and training
+60,1701,Energy efficiency
+61,1702,Energy exploration
+62,1703,"Energy storage, distribution and supply"
+63,1704,Energy transformation
+64,1705,Environmentally sustainable energy activities
+65,1706,Mining and extraction of energy resources
+66,1707,Processing of energy sources
+67,1708,Renewable energy
+68,1799,Other energy
+69,1801,"Air quality, atmosphere and weather"
+70,1802,Coastal and estuarine systems and management
+71,1803,"Fresh, ground and surface water systems and management"
+72,1804,Management of Antarctic and Southern Ocean environments
+73,1805,Marine systems and management
+74,1806,Terrestrial systems and management
+75,1899,Other environmental management 
+76,1901,Adaptation to climate change
+77,1902,"Environmental policy, legislation and standards"
+78,1903,Mitigation of climate change
+79,1904,Natural hazards
+80,1905,Understanding climate change
+81,1999,"Other environmental policy, climate change and natural hazards"
+82,2001,Clinical health
+83,2002,Evaluation of health and support services
+84,2003,Provision of health and support services
+85,2004,Public health (excl. specific population health)
+86,2005,Specific population health (excl. Indigenous health)
+87,2099,Other health
+88,2101,Aboriginal and Torres Strait Islander community services
+89,2102,Aboriginal and Torres Strait Islander education
+90,2103,Aboriginal and Torres Strait Islander health
+91,2104,Aboriginal and Torres Strait Islander heritage and culture
+92,2105,Ngā ratonga hapori Māori (Māori community services)
+93,2106,Mātauranga Māori (Māori education)
+94,2107,Te hauora (hauora Māori) (Māori health)
+95,2108,Te tuku ihotanga me te ahurea Māori (Māori heritage and culture)
+96,2109,Pacific Peoples community services
+97,2110,Pacific Peoples education
+98,2111,Pacific Peoples health
+99,2112,Pacific Peoples heritage and culture
+100,2199,Other Indigenous
+101,2201,"Communication technologies, systems and services"
+102,2202,Environmentally sustainable information and communication services
+103,2203,Information services
+104,2204,"Information systems, technologies and services"
+105,2205,Media services
+106,2299,Other information and communication services
+107,2301,Community services
+108,2302,Government and politics
+109,2303,International relations
+110,2304,Justice and the law
+111,2305,Work and labour market
+112,2399,"Other law, politics and community services"
+113,2401,Agricultural chemicals
+114,2402,Basic metal products
+115,2403,"Ceramics, glass and industrial mineral products"
+116,2404,"Computer, electronic and communication equipment"
+117,2405,Dairy products
+118,2406,Environmentally sustainable manufacturing activities
+119,2407,Fabricated metal products
+120,2408,Human pharmaceutical products
+121,2409,Industrial chemicals and related products
+122,2410,Instrumentation
+123,2411,"Leather products, fibre processing and textiles"
+124,2412,Machinery and equipment
+125,2413,Processed food products and beverages (excl. dairy products)
+126,2414,"Processed non-food agriculture products (excl. wood, paper and fibre)"
+127,2415,Transport equipment
+128,2416,Veterinary pharmaceutical products
+129,2417,"Wood, wood products and paper"
+130,2499,Other manufacturing
+131,2501,Environmentally sustainable mineral resource activities
+132,2502,First stage treatment of minerals
+133,2503,Mineral exploration
+134,2504,Primary mining and extraction of minerals
+135,2599,Other mineral resources (excl. energy resources)
+136,2601,Environmentally sustainable plant production
+137,2602,Forestry
+138,2603,Grains and seeds
+139,2604,Harvesting and packaging of plant products
+140,2605,Horticultural crops
+141,2606,Industrial crops
+142,2699,Other plant production and plant primary products
+143,2701,Aerospace transport
+144,2702,Environmentally sustainable transport activities
+145,2703,Ground transport
+146,2704,Water transport
+147,2799,Other transport
+148,2801,Expanding knowledge
+149,100101,Management of gaseous waste from animal production (excl. greenhouse gases)
+150,100102,Management of liquid waste from animal production (excl. water)
+151,100103,Management of solid waste from animal production
+152,100104,Management of water consumption by animal production
+153,100199,Environmentally sustainable animal production not elsewhere classified
+154,100201,Aquaculture crustaceans (excl. rock lobster and prawns)
+155,100202,Aquaculture fin fish (excl. tuna)
+156,100203,Aquaculture molluscs (excl. oysters)
+157,100204,Aquaculture oysters
+158,100205,Aquaculture prawns
+159,100206,Aquaculture rock lobster
+160,100207,Aquaculture tuna
+161,100299,Fisheries - aquaculture not elsewhere classified
+162,100301,Fisheries - recreational freshwater
+163,100302,Fisheries - recreational marine 
+164,100303,Wild caught crustaceans (excl. rock lobster and prawns)
+165,100304,Wild caught edible molluscs
+166,100305,Wild caught fin fish (excl. tuna)
+167,100306,Wild caught prawns
+168,100307,Wild caught rock lobster
+169,100308,Wild caught tuna
+170,100399,Fisheries - wild caught not elsewhere classified
+171,100401,Beef cattle
+172,100402,Dairy cattle
+173,100403,Deer
+174,100404,"Game livestock (e.g. kangaroos, wallabies, camels, buffaloes)"
+175,100405,Goats
+176,100406,Horses
+177,100407,Insects
+178,100408,"Minor livestock (e.g. alpacas, ostriches, crocodiles, farmed rabbits)"
+179,100409,Non-cattle dairy
+180,100410,Pigs
+181,100411,Poultry
+182,100412,Sheep for meat
+183,100413,Sheep for wool
+184,100499,Livestock raising not elsewhere classified
+185,100501,Browse crops
+186,100502,Lucerne
+187,100503,Native and residual pastures
+188,100504,Non-cereal crops (non-cereal crops for hay/silage/green feed)
+189,100505,Sown pastures (excl. lucerne)
+190,100599,"Pasture, browse and fodder crops not elsewhere classified"
+191,100601,Eggs
+192,100602,Honey
+193,100603,Pearls
+194,100604,Raw wool
+195,100605,Unprocessed or minimally processed fish
+196,100606,Unprocessed or minimally processed milk
+197,100699,Primary products from animals not elsewhere classified
+198,109901,Animal adaptation to climate change 
+199,109902,Animal welfare
+200,109903,Fish product traceability and quality assurance
+201,109904,Livestock product traceability and quality assurance
+202,109999,Other animal production and animal primary products not elsewhere classified
+203,110101,Management of gaseous waste from commercial services and tourism (excl. greenhouse gases)
+204,110102,Management of liquid waste from commercial services and tourism (excl. water)
+205,110103,Management of solid waste from commercial services and tourism
+206,110104,Management of water consumption by commercial services and tourism
+207,110199,Environmentally sustainable commercial services and tourism not elsewhere classified
+208,110201,Finance services
+209,110202,Investment services (excl. superannuation)
+210,110203,Superannuation and insurance services
+211,110299,Financial services not elsewhere classified
+212,110301,Administration and business support services
+213,110302,"Professional, scientific and technical services"
+214,110303,Property services (incl. security)
+215,110304,Wholesale and retail trade
+216,110399,"Property, business support services and trade not elsewhere classified"
+217,110401,Economic issues in tourism
+218,110402,Socio-cultural issues in tourism
+219,110403,Tourism infrastructure development
+220,110499,Tourism services not elsewhere classified
+221,110501,Waste management services
+222,110502,Waste recycling services
+223,110503,Water recycling services (incl. sewage and greywater)
+224,110504,Water services and utilities
+225,110599,Water and waste services not elsewhere classified
+226,119901,Hospitality services
+227,119902,Recreational services
+228,119999,Other commercial services and tourism not elsewhere classified
+229,120101,Civil building management and services
+230,120102,Commercial building management and services
+231,120103,Industrial building management and services
+232,120104,Institutional building management and services
+233,120105,Residential building management and services
+234,120199,Building management and services not elsewhere classified
+235,120201,Civil construction design
+236,120202,Commercial construction design
+237,120203,Industrial construction design
+238,120204,Institutional construction design
+239,120205,Residential construction design
+240,120299,Construction design not elsewhere classified
+241,120301,Cement and concrete materials
+242,120302,Glass materials
+243,120303,Metals 
+244,120304,Polymeric materials and paints
+245,120305,"Stone, ceramics and clay materials"
+246,120306,Timber materials
+247,120399,Construction materials performance and processes not elsewhere classified
+248,120401,Civil construction planning
+249,120402,Commercial construction planning
+250,120403,Industrial construction planning
+251,120404,Regional planning
+252,120405,Residential construction planning
+253,120406,Urban planning
+254,120499,Construction planning not elsewhere classified
+255,120501,Civil construction processes
+256,120502,Commercial construction processes
+257,120503,Industrial construction processes
+258,120504,Institutional construction processes
+259,120505,Residential construction processes
+260,120599,Construction processes not elsewhere classified
+261,120601,Management of gaseous waste from construction activities (excl. greenhouse gases)
+262,120602,Management of liquid waste from construction activities (excl. water)
+263,120603,Management of solid waste from construction activities
+264,120604,Management of water consumption by construction activities
+265,120699,Environmentally sustainable construction activities not elsewhere classified
+266,129901,Adaptation to climate change in construction
+267,129999,Other construction not elsewhere classified
+268,130101,Design
+269,130102,Music
+270,130103,The creative arts 
+271,130104,The performing arts 
+272,130199,Arts not elsewhere classified
+273,130201,Communication across languages and culture
+274,130202,Languages and linguistics
+275,130203,Literature
+276,130204,The media
+277,130205,Visual communication
+278,130299,Communication not elsewhere classified
+279,130301,Bioethics
+280,130302,Business ethics
+281,130303,Environmental ethics
+282,130304,Social ethics
+283,130305,Technological ethics
+284,130306,Workplace and organisational ethics (excl. business ethics)
+285,130399,Ethics not elsewhere classified
+286,130401,Assessment of heritage value
+287,130402,Conserving collections and movable cultural heritage
+288,130403,Conserving intangible cultural heritage
+289,130404,Conserving natural heritage
+290,130405,Conserving the historic environment
+291,130499,Heritage not elsewhere classified
+292,130501,Religion and society
+293,130502,Religious philosophies and belief systems
+294,130503,Religious rituals and traditions (excl. structures)
+295,130504,Religious structures
+296,130599,Religion not elsewhere classified
+297,130601,Exercise
+298,130602,Organised sports
+299,130603,Recreation and leisure activities (excl. sport and exercise)
+300,130699,"Sport, exercise and recreation not elsewhere classified"
+301,130701,Understanding Africa’s past
+302,130702,Understanding Asia’s past
+303,130703,Understanding Australia’s past
+304,130704,Understanding Europe’s past
+305,130705,Understanding New Zealand’s past
+306,130706,Understanding the past of the Americas
+307,130799,Understanding past societies not elsewhere classified
+308,139999,Other culture and society not elsewhere classified
+309,140101,Air
+310,140102,"Command, control and communications"
+311,140103,Cyber and electronic security and warfare
+312,140104,Emerging defence technologies
+313,140105,"Intelligence, surveillance and space"
+314,140106,Land
+315,140107,Logistics
+316,140108,Maritime
+317,140109,National security
+318,140110,Personnel
+319,140199,Defence not elsewhere classified
+320,150101,International agreements on trade
+321,150102,Trade assistance and protection
+322,150103,Trade policy
+323,150199,International trade policy not elsewhere classified
+324,150201,Balance of payments
+325,150202,Demography
+326,150203,Economic growth
+327,150204,Exchange rates
+328,150205,Fiscal policy
+329,150206,Income distribution
+330,150207,Macro labour market issues
+331,150208,Monetary policy
+332,150209,Savings and investments
+333,150210,Taxation
+334,150299,Macroeconomics not elsewhere classified
+335,150301,Industrial relations
+336,150302,Management
+337,150303,Marketing
+338,150304,Productivity (excl. public sector)
+339,150305,Public sector productivity
+340,150306,Technological and organisational innovation
+341,150399,Management and productivity not elsewhere classified
+342,150401,Agricultural and environmental standards and calibrations
+343,150402,Defence standards and calibrations
+344,150403,Manufacturing standards and calibrations
+345,150404,Service industries standards and calibrations
+346,150499,Measurement standards and calibration services not elsewhere classified
+347,150501,Consumption
+348,150502,Human capital issues
+349,150503,Industrial organisations
+350,150504,Industry costs and structure
+351,150505,Industry policy
+352,150506,Market-based mechanisms
+353,150507,Micro labour market issues
+354,150508,Microeconomic effects of taxation
+355,150509,"Preference, behaviour and welfare"
+356,150510,Production
+357,150511,Supply and demand
+358,150599,Microeconomics not elsewhere classified
+359,159901,Carbon and emissions trading
+360,159902,Ecological economics
+361,159999,Other economic framework not elsewhere classified
+362,160101,Early childhood education
+363,160102,Higher education
+364,160103,Primary education
+365,160104,Professional development and adult education
+366,160105,Secondary education
+367,160199,Learner and learning not elsewhere classified
+368,160201,Equity and access to education
+369,160202,Gender aspects in education
+370,160203,Inclusive education
+371,160204,"Management, resources and leadership"
+372,160205,Policies and development
+373,160206,Workforce transition and employment
+374,160299,Schools and learning environments not elsewhere classified
+375,160301,"Assessment, development and evaluation of curriculum"
+376,160302,Pedagogy
+377,160303,Teacher and instructor development
+378,160304,Teaching and instruction technologies
+379,160399,Teaching and curriculum not elsewhere classified
+380,169999,Other education and training not elsewhere classified
+381,170101,Commercial energy efficiency
+382,170102,Industrial energy efficiency
+383,170103,Residential energy efficiency
+384,170104,Transport energy efficiency
+385,170199,Energy efficiency not elsewhere classified
+386,170201,Coal exploration
+387,170202,Geothermal exploration
+388,170203,Oil and gas exploration
+389,170204,Oil shale and tar sands exploration
+390,170205,Uranium exploration
+391,170299,Energy exploration not elsewhere classified
+392,170301,Battery storage
+393,170302,Carbon capture and storage
+394,170303,Energy services and utilities
+395,170304,Energy storage (excl. hydrogen and batteries)
+396,170305,Energy systems and analysis
+397,170306,Energy transmission and distribution (excl. hydrogen)
+398,170307,Hydrogen distribution
+399,170308,Hydrogen storage
+400,170309,Smart grids
+401,170399,"Energy storage, distribution and supply not elsewhere classified"
+402,170401,Fuel cells (excl. solid oxide)
+403,170402,Hydrogen-based energy systems
+404,170403,Nuclear energy
+405,170404,Solid oxide fuel cells
+406,170405,Transformation of coal into electricity
+407,170406,Transformation of coal into fuels
+408,170407,Transformation of electricity and material feedstocks into fuels
+409,170408,Transformation of gas into electricity
+410,170409,Transformation of gas into fuels
+411,170499,Energy transformation not elsewhere classified
+412,170501,Management of gaseous waste from energy activities (excl. greenhouse gases)
+413,170502,Management of liquid waste from energy activities (excl. water)
+414,170503,Management of solid waste from energy activities
+415,170504,Management of water consumption by energy activities
+416,170599,Environmentally sustainable energy activities not elsewhere classified
+417,170601,Coal mining and extraction
+418,170602,Geothermal energy extraction
+419,170603,Oil and gas extraction
+420,170604,Oil shale and tar sands mining and extraction
+421,170605,Uranium mining and extraction
+422,170699,Mining and extraction of energy resources not elsewhere classified
+423,170701,Biomass processing
+424,170702,Hydrogen production from fossil fuels
+425,170703,Hydrogen production from nuclear energy
+426,170704,Hydrogen production from renewable energy
+427,170705,Oil and gas processing
+428,170706,Preparation of black coal
+429,170707,Preparation of brown coal (lignite)
+430,170708,Preparation of oil shale and tar sands
+431,170709,Preparation of uranium
+432,170799,Processing of energy sources not elsewhere classified
+433,170801,Biofuel energy
+434,170802,Geothermal energy
+435,170803,Hydro-electric energy
+436,170804,Solar-photovoltaic energy
+437,170805,Solar-thermal energy
+438,170806,Tidal energy
+439,170807,Wave energy
+440,170808,Wind energy
+441,170899,Renewable energy not elsewhere classified
+442,179999,Other energy not elsewhere classified
+443,180101,Air quality
+444,180102,Atmospheric composition (incl. greenhouse gas inventory)
+445,180103,Atmospheric processes and dynamics
+446,180104,Weather
+447,180199,"Air quality, atmosphere and weather not elsewhere classified"
+448,180201,Assessment and management of coastal and estuarine ecosystems
+449,180202,Coastal erosion
+450,180203,Coastal or estuarine biodiversity
+451,180204,"Control of pests, diseases and exotic species in coastal and estuarine environments "
+452,180205,Measurement and assessment of estuarine water quality 
+453,180206,Rehabilitation or conservation of coastal or estuarine environments
+454,180299,Coastal and estuarine systems and management not elsewhere classified
+455,180301,Assessment and management of freshwater ecosystems
+456,180302,"Control of pests, diseases and exotic species in fresh, ground and surface water "
+457,180303,"Fresh, ground and surface water biodiversity"
+458,180304,Freshwater assimilative capacity
+459,180305,"Ground water quantification, allocation and impact of depletion "
+460,180306,Measurement and assessment of freshwater quality (incl. physical and chemical conditions of water) 
+461,180307,"Rehabilitation or conservation of fresh, ground and surface water environments"
+462,180308,"Surface water quantification, allocation and impact of depletion"
+463,180399,"Fresh, ground and surface water systems and management not elsewhere classified"
+464,180401,Antarctic and Southern Ocean ice dynamics
+465,180402,Antarctic and Southern Ocean oceanic processes
+466,180403,Assessment and management of Antarctic and Southern Ocean ecosystems
+467,180404,Biodiversity in Antarctic and Southern Ocean environments
+468,180405,"Control of pests, diseases and exotic species in Antarctic and Southern Ocean environments"
+469,180406,Protection and conservation of Antarctic and Southern Ocean environments
+470,180407,Water quality in Antarctic and Southern Ocean environments
+471,180499,Management of Antarctic and Southern Ocean environments not elsewhere classified
+472,180501,Assessment and management of benthic marine ecosystems
+473,180502,Assessment and management of pelagic marine ecosystems
+474,180503,"Control of pests, diseases and exotic species in marine environments "
+475,180504,Marine biodiversity
+476,180505,Measurement and assessment of marine water quality and condition
+477,180506,Oceanic processes (excl. in the Antarctic and Southern Ocean)
+478,180507,Rehabilitation or conservation of marine environments
+479,180599,Marine systems and management not elsewhere classified
+480,180601,Assessment and management of terrestrial ecosystems
+481,180602,"Control of pests, diseases and exotic species in terrestrial environments "
+482,180603,"Evaluation, allocation, and impacts of land use "
+483,180604,Rehabilitation or conservation of terrestrial environments
+484,180605,Soils
+485,180606,Terrestrial biodiversity
+486,180607,Terrestrial erosion 
+487,180699,Terrestrial systems and management not elsewhere classified
+488,189999,Other environmental management not elsewhere classified
+489,190101,Climate change adaptation measures (excl. ecosystem)
+490,190102,Ecosystem adaptation to climate change
+491,190103,Social impacts of climate change and variability 
+492,190199,Adaptation to climate change not elsewhere classified
+493,190201,"Consumption patterns, population issues and the environment"
+494,190202,Eco-verification (excl. environmental lifecycle assessment)
+495,190203,Environmental education and awareness
+496,190204,Environmental lifecycle assessment
+497,190205,Environmental protection frameworks (incl. economic incentives)
+498,190206,Institutional arrangements
+499,190207,Land policy
+500,190208,Rights to environmental and natural resources (excl. water allocation)
+501,190209,Sustainability indicators
+502,190210,Trade and environment 
+503,190211,Water policy (incl. water allocation)
+504,190299,"Environmental policy, legislation and standards not elsewhere classified"
+505,190301,Climate change mitigation strategies
+506,190302,Management of greenhouse gas emissions from animal production
+507,190303,Management of greenhouse gas emissions from commercial services and tourism
+508,190304,Management of greenhouse gas emissions from construction activities
+509,190305,Management of greenhouse gas emissions from electricity generation
+510,190306,Management of greenhouse gas emissions from energy activities
+511,190307,Management of greenhouse gas emissions from information and communication services
+512,190308,Management of greenhouse gas emissions from manufacturing activities
+513,190309,Management of greenhouse gas emissions from mineral resources activities
+514,190310,Management of greenhouse gas emissions from plant production
+515,190311,Management of greenhouse gas emissions from transport activities
+516,190399,Mitigation of climate change not elsewhere classified
+517,190401,"Climatological hazards (e.g. extreme temperatures, drought and wildfires)"
+518,190402,Extraterrestrial hazards (e.g. meteorites)
+519,190403,"Geological hazards (e.g. earthquakes, landslides and volcanic activity)"
+520,190404,Hydrological hazards (e.g. avalanches and floods)
+521,190405,Meteorological hazards (e.g. cyclones and storms)
+522,190499,Natural hazards not elsewhere classified
+523,190501,Climate change models
+524,190502,Climate variability (excl. social impacts)
+525,190503,Effects of climate change on Antarctic and sub-Antarctic environments (excl. social impacts)
+526,190504,Effects of climate change on Australia (excl. social impacts)
+527,190505,Effects of climate change on New Zealand (excl. social impacts) 
+528,190506,Effects of climate change on the South Pacific (excl. Australia and New Zealand) (excl. social impacts)
+529,190507,"Global effects of climate change (excl. Australia, New Zealand, Antarctica and the South Pacific) (excl. social impacts)"
+530,190508,Understanding the impact of natural hazards caused by climate change
+531,190599,Understanding climate change not elsewhere classified
+532,199999,"Other environmental policy, climate change and natural hazards not elsewhere classified"
+533,200101,Diagnosis of human diseases and conditions
+534,200102,Efficacy of medications
+535,200103,Human pain management
+536,200104,Prevention of human diseases and conditions
+537,200105,Treatment of human diseases and conditions
+538,200199,Clinical health not elsewhere classified
+539,200201,Determinants of health
+540,200202,Evaluation of health outcomes
+541,200203,Health education and promotion
+542,200204,Health inequalities
+543,200205,Health policy evaluation
+544,200206,Health system performance (incl. effectiveness of programs)
+545,200207,Social structure and health
+546,200208,Telehealth
+547,200299,Evaluation of health and support services not elsewhere classified
+548,200301,Allied health therapies (excl. mental health services)
+549,200302,Community health care
+550,200303,Health surveillance
+551,200304,Inpatient hospital care
+552,200305,Mental health services
+553,200306,Midwifery
+554,200307,Nursing
+555,200308,Outpatient care
+556,200309,Palliative care
+557,200310,Primary care
+558,200311,"Urgent and critical care, and emergency medicine"
+559,200399,Provision of health and support services not elsewhere classified
+560,200401,Behaviour and health
+561,200402,Dental health
+562,200403,Disability and functional capacity
+563,200404,Disease distribution and transmission (incl. surveillance and response)
+564,200405,Food safety
+565,200406,Health protection and disaster response
+566,200407,Health status (incl. wellbeing)
+567,200408,Injury prevention and control
+568,200409,Mental health
+569,200410,Nutrition
+570,200411,Overweight and obesity
+571,200412,Preventive medicine 
+572,200413,Substance abuse
+573,200499,Public health (excl. specific population health) not elsewhere classified
+574,200501,Adolescent health
+575,200502,Health related to ageing
+576,200503,Health related to specific ethnic groups
+577,200504,Men's health
+578,200505,Migrant health
+579,200506,Neonatal and child health
+580,200507,Occupational health
+581,200508,Rural and remote area health
+582,200509,Women's and maternal health
+583,200599,Specific population health (excl. Indigenous health) not elsewhere classified
+584,209999,Other health not elsewhere classified
+585,210101,Aboriginal and Torres Strait Islander community service programs
+586,210102,Aboriginal and Torres Strait Islander development and wellbeing
+587,210199,Aboriginal and Torres Strait Islander community services not elsewhere classified
+588,210201,Aboriginal and Torres Strait Islander education engagement and attendance outcomes
+589,210202,Aboriginal and Torres Strait Islander education system performance
+590,210203,Aboriginal and Torres Strait Islander literacy and numeracy outcomes
+591,210299,Aboriginal and Torres Strait Islander education not elsewhere classified
+592,210301,Aboriginal and Torres Strait Islander determinants of health
+593,210302,Aboriginal and Torres Strait Islander health status and outcomes
+594,210303,Aboriginal and Torres Strait Islander health system performance
+595,210399,Aboriginal and Torres Strait Islander health not elsewhere classified
+596,210401,Aboriginal and Torres Strait Islander artefacts
+597,210402,Aboriginal and Torres Strait Islander connection to land and environment
+598,210403,Aboriginal and Torres Strait Islander customary practices
+599,210404,Aboriginal and Torres Strait Islander knowledge
+600,210405,Aboriginal and Torres Strait Islander places of significance
+601,210406,Aboriginal and Torres Strait Islander tradition
+602,210407,Conserving Aboriginal and Torres Strait Islander heritage and culture
+603,210499,Aboriginal and Torres Strait Islander heritage and culture not elsewhere classified
+604,210501,Ngā hōtaka ratonga hapori Māori (Māori community service programs)
+605,210502,Te whanaketanga me te oranga o te Māori (Māori development and wellbeing)
+606,210599,Ngā ratonga hapori o te Māori kāore anō kia whakarōpūtia i wāhi kē (Māori community services not elsewhere classified)
+607,210601,Te whai wāhi o te Māori ki te mātauranga me te taetae atu ki te kura (Māori education engagement and attendance outcomes)
+608,210602,Te whakatutukitanga o te pūnaha mātauranga Māori (Māori education system performance)
+609,210603,Ngā putanga reo matatini me te pāngarau o te Māori (Māori literacy and numeracy outcomes)
+610,210699,Te mātauranga Māori kāore kāore anō kia whakarōpūtia i wāhi kē (Māori education not elsewhere classified)
+611,210701,Ngā tokoingoa hauora (determinants of Māori health)
+612,210702,Te tūnga me ngā putanga hauora (Māori health status and outcomes)
+613,210703,Te whakatutukinga o te pūnaha hauora (Māori health system performance)
+614,210799,Te hauora kāore anō kia whakarōpūtia i wāhi kē (Māori health not elsewhere classified)
+615,210801,Āhuatanga Māori (te tuku ihotanga Māori) (Māori tradition)
+616,210802,Te whāomoomo i te tuku ihotanga me te ahurea Māori (conserving Māori heritage and culture)
+617,210803,Mōhiotanga Māori (Māori knowledge)
+618,210804,Ngā taonga (Māori artefacts)
+619,210805,Ngā tikanga Māori (Māori customary practices) 
+620,210806,Ngā wāhi taonga (Māori places of significance)
+621,210899,Te tuku ihotanga me te ahurea Māori kāore anō kia whakarōpūhia i wāhi kē (Māori heritage and culture not elsewhere classified)
+622,210901,Pacific Peoples community service programs
+623,210902,Pacific Peoples development and wellbeing
+624,210999,Pacific Peoples community services not elsewhere classified
+625,211001,Pacific Peoples education engagement and attendance
+626,211002,Pacific Peoples education system performance
+627,211003,Pacific Peoples literacy and numeracy outcomes
+628,211099,Pacific Peoples education not elsewhere classified
+629,211101,Pacific Peoples determinants of health
+630,211102,Pacific Peoples health status and outcomes
+631,211103,Pacific Peoples health system performance
+632,211199,Pacific Peoples health not elsewhere classified
+633,211201,Conserving Pacific Peoples heritage and culture
+634,211202,Pacific Peoples connection to land and environment
+635,211299,Pacific Peoples heritage and culture not elsewhere classified
+636,219999,Other Indigenous not elsewhere classified
+637,220101,E-infrastructures
+638,220102,Internet protocols (ip)
+639,220103,Mobile technologies and communications
+640,220104,Network security
+641,220105,Network systems and services
+642,220106,"Satellite technologies, networks and services"
+643,220107,"Wireless technologies, networks and services"
+644,220199,"Communication technologies, systems and services not elsewhere classified"
+645,220201,Management of solid waste from information and communication services
+646,220202,Management of water consumption by information and communication services
+647,220299,Environmentally sustainable information and communication services not elsewhere classified
+648,220301,Digital humanities
+649,220302,Electronic information storage and retrieval services
+650,220303,Library and archival services
+651,220304,Museum and gallery collections
+652,220305,News collection services
+653,220306,Open access
+654,220399,Information services not elsewhere classified
+655,220401,Application software packages
+656,220402,Applied computing
+657,220403,Artificial intelligence
+658,220404,Computer systems
+659,220405,Cybersecurity
+660,220406,Graphics
+661,220407,Human-computer interaction
+662,220408,Information systems
+663,220499,"Information systems, technologies and services not elsewhere classified"
+664,220501,"Animation, video games and computer generated imagery services"
+665,220502,"Internet, digital and social media"
+666,220503,Publishing and print services
+667,220504,"Radio, television, film and video services"
+668,220599,Media services not elsewhere classified
+669,229999,Other information and communication services not elsewhere classified
+670,230101,Ability and disability
+671,230102,Ageing and older people
+672,230103,Carers' support
+673,230104,Children's services and childcare
+674,230105,Citizenship and national identity
+675,230106,Employment services
+676,230107,Families and family services
+677,230108,Gender and sexualities
+678,230109,Homelessness and housing services
+679,230110,Migrant and refugee settlement services
+680,230111,Multicultural services
+681,230112,Social class and inequalities
+682,230113,"Structure, delivery and resourcing"
+683,230114,Violence and abuse services
+684,230115,Youth services
+685,230199,Community services not elsewhere classified
+686,230201,Civics and citizenship
+687,230202,Electoral systems
+688,230203,Political systems
+689,230204,Public services policy advice and analysis
+690,230299,Government and politics not elsewhere classified
+691,230301,Defence and security policy
+692,230302,International aid and development
+693,230303,International organisations
+694,230304,International political economy (excl. international trade)
+695,230305,Peace and conflict
+696,230399,International relations not elsewhere classified
+697,230401,Civil justice
+698,230402,Crime prevention
+699,230403,Criminal justice
+700,230404,Law enforcement
+701,230405,Law reform
+702,230406,Legal processes
+703,230407,"Legislation, civil and criminal codes"
+704,230408,Rehabilitation and correctional services
+705,230499,Justice and the law not elsewhere classified
+706,230501,Employment patterns and change
+707,230502,Professions and professionalisation
+708,230503,Remuneration
+709,230504,Unpaid work and volunteering
+710,230505,Work and family responsibilities
+711,230506,Workplace safety
+712,230599,Work and labour market not elsewhere classified
+713,239999,"Other law, politics and community services not elsewhere classified"
+714,240101,Animal protection chemicals
+715,240102,Chemical fertilisers
+716,240103,Crop and pasture protection chemicals
+717,240199,Agricultural chemicals not elsewhere classified
+718,240201,Basic aluminium products
+719,240202,Basic copper products
+720,240203,Basic iron and steel products
+721,240204,Basic precious metal products
+722,240205,Basic zinc products
+723,240299,Basic metal products not elsewhere classified
+724,240301,Cement products and concrete materials
+725,240302,Ceramics
+726,240303,Clay products
+727,240304,Composite materials
+728,240305,Plaster and plaster products
+729,240306,Structural glass and glass products
+730,240399,"Ceramics, glass and industrial mineral products not elsewhere classified"
+731,240401,Computer and electronic office equipment (excl. communication equipment)
+732,240402,Consumer electronic equipment (excl. communication equipment)
+733,240403,Integrated circuits and devices
+734,240404,Integrated systems
+735,240405,Network infrastructure equipment
+736,240406,Processor modules
+737,240407,Robotics
+738,240408,Satellite navigation equipment
+739,240409,Telemetry equipment
+740,240410,Voice and data equipment
+741,240499,"Computer, electronic and communication equipment not elsewhere classified"
+742,240501,Butter and milk-derived fats and oils (excl. cream)
+743,240502,Casein
+744,240503,Cheese
+745,240504,"Processed milk and cream (incl. powder, evaporated and condensed)"
+746,240505,Whey
+747,240599,Dairy products not elsewhere classified
+748,240601,"Development of recyclable or biodegradable componentry, packaging or materials "
+749,240602,Management of gaseous waste from manufacturing activities (excl. greenhouse gases)
+750,240603,Management of liquid waste from manufacturing activities (excl. water)
+751,240604,Management of solid waste from manufacturing activities
+752,240605,Management of water consumption by manufacturing activities
+753,240699,Environmentally sustainable manufacturing activities not elsewhere classified
+754,240701,Coated metal and metal-coated products
+755,240702,Machined metal products
+756,240703,Metal castings
+757,240704,Semi-finished metal products
+758,240705,Sheet metal products
+759,240706,Structural metal products
+760,240799,Fabricated metal products not elsewhere classified
+761,240801,Human biological preventatives 
+762,240802,Human diagnostics
+763,240803,Human pharmaceutical treatments 
+764,240899,Human pharmaceutical products not elsewhere classified
+765,240901,"Antimicrobials, antifungals and biocides"
+766,240902,Bioplastics
+767,240903,Cosmetics
+768,240904,Fine chemicals
+769,240905,Industrial gases
+770,240906,Inorganic industrial chemicals
+771,240907,Lubricants
+772,240908,"Organic industrial chemicals (excl. resins, rubber and plastics)"
+773,240909,Paints
+774,240910,Plastics
+775,240911,Resins
+776,240912,Rubber
+777,240913,Soaps
+778,240999,Industrial chemicals and related products not elsewhere classified
+779,241001,Industrial instruments
+780,241002,Medical instruments
+781,241003,Scientific instruments
+782,241099,Instrumentation not elsewhere classified
+783,241101,Clothing
+784,241102,Cotton ginning
+785,241103,"Natural fibres, yarns and fabrics"
+786,241104,Non-fabric textiles (e.g. felt)
+787,241105,"Skins, leather and leather products"
+788,241106,"Synthetic fibres, yarns and fabrics"
+789,241107,Wool scouring and top making
+790,241199,"Leather products, fibre processing and textiles not elsewhere classified"
+791,241201,3D printers and printing
+792,241202,Autonomous and robotic systems
+793,241203,Electrical machinery and equipment (incl. appliances)
+794,241204,Industrial machinery and equipment
+795,241205,Medical machinery and equipment 
+796,241299,Machinery and equipment not elsewhere classified
+797,241301,Alcoholic beverages
+798,241302,Bakery products
+799,241303,Carcass meat (incl. fish and seafood)
+800,241304,Flour mill and cereal food
+801,241305,Insects
+802,241306,Non-alcoholic beverages (excl. fruit juices and non-dairy milk)
+803,241307,Non-dairy milk
+804,241308,Nutraceuticals and functional foods
+805,241309,Oils and fats (incl. margarines)
+806,241310,Processed fish and seafood products
+807,241311,Processed fruit and vegetable products (incl. juices)
+808,241312,Processed meat products
+809,241313,"Sugar, sweeteners and confectionery products"
+810,241399,Processed food products and beverages (excl. dairy products) not elsewhere classified
+811,241401,Essential oils 
+812,241402,Organic fertilisers
+813,241403,Plant extracts 
+814,241404,Prepared animal feed
+815,241499,"Processed non-food agricultural products (excl. wood, paper and fibre) not elsewhere classified"
+816,241501,Aerospace equipment
+817,241502,Automotive equipment
+818,241503,Nautical equipment
+819,241504,Rail equipment
+820,241599,Transport equipment not elsewhere classified
+821,241601,Veterinary biological preventatives 
+822,241602,Veterinary diagnostics
+823,241603,Veterinary pharmaceutical treatments 
+824,241699,Veterinary pharmaceutical products not elsewhere classified
+825,241701,Paper products and pulp 
+826,241702,Printing and publishing processes
+827,241703,Reconstituted timber products 
+828,241704,Wood products 
+829,241705,Wood sawing and veneer
+830,241799,"Wood, wood products and paper not elsewhere classified"
+831,249999,Other manufacturing not elsewhere classified
+832,250101,Management of gaseous waste from mineral resource activities (excl. greenhouse gases)
+833,250102,Management of liquid waste from mineral resource activities (excl. water)
+834,250103,Management of solid waste from mineral resource activities
+835,250104,Management of water consumption by mineral resource activities
+836,250199,Environmentally sustainable mineral resource activities not elsewhere classified
+837,250201,Alumina production
+838,250202,Beneficiation of bauxite and aluminium ores (excl. alumina production)
+839,250203,Beneficiation or dressing of iron ores
+840,250204,Beneficiation or dressing of non-metallic minerals (incl. diamonds)
+841,250205,Concentrating processes of base metal ores (excl. aluminium and iron ores)
+842,250206,Production of unrefined precious metal ingots and concentrates
+843,250299,First stage treatment of minerals not elsewhere classified
+844,250301,Aluminium ore exploration
+845,250302,Copper ore exploration
+846,250303,Diamond exploration
+847,250304,Iron ore exploration
+848,250305,Precious (noble) metal ore exploration
+849,250306,Stone and clay exploration
+850,250307,"Titanium minerals, zircon, and rare earth metal ore (e.g. monazite) exploration"
+851,250308,Zinc ore exploration
+852,250399,Mineral exploration not elsewhere classified
+853,250401,Mining and extraction of aluminium ores
+854,250402,Mining and extraction of copper ores
+855,250403,Mining and extraction of diamonds
+856,250404,Mining and extraction of iron ores
+857,250405,Mining and extraction of precious (noble) metal ores
+858,250406,Mining and extraction of stone and clay
+859,250407,"Mining and extraction of titanium minerals, zircon, and rare earth metal ores (e.g. monazite)"
+860,250408,Mining and extraction of zinc ores
+861,250499,Primary mining and extraction of minerals not elsewhere classified
+862,259999,Other mineral resources (excl. energy resources) not elsewhere classified
+863,260101,Management of gaseous waste from plant production (excl. greenhouse gases)
+864,260102,Management of liquid waste from plant production (excl. water)
+865,260103,Management of solid waste from plant production
+866,260104,Management of water consumption by plant production
+867,260199,Environmentally sustainable plant production not elsewhere classified
+868,260201,Hardwood plantations
+869,260202,Harvesting and transport of forest products
+870,260203,Integration of farm and forestry
+871,260204,Native forests
+872,260205,Softwood plantations
+873,260299,Forestry not elsewhere classified
+874,260301,Barley
+875,260302,Canola
+876,260303,Grain legumes
+877,260304,Linseed
+878,260305,Lupins
+879,260306,Maize
+880,260307,Oats
+881,260308,Rice
+882,260309,Safflower seed
+883,260310,Sorghum
+884,260311,Soybeans
+885,260312,Wheat
+886,260399,Grains and seeds not elsewhere classified
+887,260401,Cotton lint and cotton seed
+888,260402,Fresh fruits and vegetables (post harvest)
+889,260403,Sugar cane (cut for crushing)
+890,260404,Unprocessed grains
+891,260405,Unprocessed industrial crops (excl. sugar and cotton)
+892,260406,Unprocessed seeds
+893,260499,Harvesting and packaging of plant products not elsewhere classified
+894,260501,Almonds
+895,260502,Avocado
+896,260503,Berry fruit (excl. kiwifruit)
+897,260504,Citrus fruit
+898,260505,Field grown vegetable crops
+899,260506,Kiwifruit
+900,260507,Macadamias
+901,260508,Mushrooms and truffles
+902,260509,Olives
+903,260510,"Ornamentals, natives, flowers and nursery plants"
+904,260511,"Pome fruit, pip fruit"
+905,260512,Protected vegetable crops
+906,260513,Stone fruit (excl. avocado)
+907,260514,Table grapes
+908,260515,Tree nuts (excl. almonds and macadamias)
+909,260516,Tropical fruit
+910,260599,Horticultural crops not elsewhere classified
+911,260601,Cannabis
+912,260602,Cotton
+913,260603,Essential oil crops
+914,260604,Hemp
+915,260605,Hops
+916,260606,Plant extract crops
+917,260607,Sugar
+918,260608,Wine grapes
+919,260699,Industrial crops not elsewhere classified
+920,269901,Climate adaptive plants
+921,269902,Forest product traceability and quality assurance
+922,269903,Plant product traceability and quality assurance (excl. forest products)
+923,269999,Other plant production and plant primary products not elsewhere classified
+924,270101,Air freight
+925,270102,Air passenger transport
+926,270103,Air safety and traffic management
+927,270104,Air terminal infrastructure and management
+928,270105,Autonomous air vehicles 
+929,270106,Space transport
+930,270199,Aerospace transport not elsewhere classified
+931,270201,Management of gaseous waste from transport activities (excl. greenhouse gases)
+932,270202,Management of liquid waste from transport activities (excl. water)
+933,270203,Management of noise and vibration from transport activities
+934,270204,Management of solid waste from transport activities
+935,270205,Management of water consumption by transport activities
+936,270299,Environmentally sustainable transport activities not elsewhere classified
+937,270301,Active ground transport 
+938,270302,Autonomous road vehicles
+939,270303,Heavy rail infrastructure and networks
+940,270304,Rail freight
+941,270305,Rail passenger movements
+942,270306,Rail safety
+943,270307,Road freight
+944,270308,Road infrastructure and networks
+945,270309,Road passenger movements (excl. public transport)
+946,270310,Road public transport
+947,270311,Road safety
+948,270312,Urban rail infrastructure and networks (incl. light and metro rail)
+949,270399,Ground transport not elsewhere classified
+950,270401,Autonomous water vehicles
+951,270402,Coastal sea freight transport
+952,270403,Domestic passenger water transport (e.g. ferries)
+953,270404,International passenger water transport (e.g. passenger ships)
+954,270405,"International sea freight transport (excl. live animals, food products and liquefied gas)"
+955,270406,International sea transport of food products
+956,270407,International sea transport of liquefied gas
+957,270408,International sea transport of live animals
+958,270409,Port infrastructure and management
+959,270410,Water safety
+960,270499,Water transport not elsewhere classified
+961,279901,Intermodal materials handling
+962,279902,Multimodal transport
+963,279903,Pipeline transport
+964,279904,Postal and package services (incl. courier services)
+965,279999,Other transport not elsewhere classified
+966,280101,"Expanding knowledge in the agricultural, food and veterinary sciences"
+967,280102,Expanding knowledge in the biological sciences
+968,280103,Expanding knowledge in the biomedical and clinical sciences
+969,280104,Expanding knowledge in built environment and design
+970,280105,Expanding knowledge in the chemical sciences
+971,280106,"Expanding knowledge in commerce, management, tourism and services"
+972,280107,Expanding knowledge in the earth sciences
+973,280108,Expanding knowledge in economics
+974,280109,Expanding knowledge in education
+975,280110,Expanding knowledge in engineering
+976,280111,Expanding knowledge in the environmental sciences
+977,280112,Expanding knowledge in the health sciences
+978,280113,"Expanding knowledge in history, heritage and archaeology"
+979,280114,Expanding knowledge in Indigenous studies
+980,280115,Expanding knowledge in the information and computing sciences
+981,280116,"Expanding knowledge in language, communication and culture"
+982,280117,Expanding knowledge in law and legal studies
+983,280118,Expanding knowledge in the mathematical sciences
+984,280119,Expanding knowledge in philosophy and religious studies
+985,280120,Expanding knowledge in the physical sciences
+986,280121,Expanding knowledge in psychology
+987,280122,Expanding knowledge in creative arts and writing studies
+988,280123,Expanding knowledge in human society
