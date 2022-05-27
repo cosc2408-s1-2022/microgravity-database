@@ -2,9 +2,9 @@ package com.rmit.mgdb.service;
 
 import com.rmit.mgdb.exception.NotFoundException;
 import com.rmit.mgdb.model.Mission;
-import com.rmit.mgdb.payload.AddMissionRequest;
 import com.rmit.mgdb.payload.MissionPayload;
 import com.rmit.mgdb.payload.ResultsResponse;
+import com.rmit.mgdb.payload.SaveMissionRequest;
 import com.rmit.mgdb.repository.MissionRepository;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -57,7 +57,7 @@ public class MissionService {
         return new MissionPayload(getMissionById(id));
     }
 
-    public Mission saveMission(AddMissionRequest missionRequest) {
+    public Mission saveMission(SaveMissionRequest missionRequest) {
         Mission mission = new Mission();
         Long id = missionRequest.getId();
         if (id != null) {

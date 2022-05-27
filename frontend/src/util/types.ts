@@ -1,7 +1,5 @@
 // File to contain application wide type definitions.
 
-export type UserAuth = string | null;
-
 export type User = {
   id: number;
   username: string;
@@ -15,35 +13,6 @@ export enum UserRole {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
-export type Role = {
-  id: number;
-  name: string;
-};
-
-export enum Platforms {
-  SPACE_STATION = 'spaceStation',
-  SPACE_SHUTTLE = 'spaceShuttle',
-  RETRIEVABLE_CAPSULE = 'retrievableCapsule',
-  SOUNDING_ROCKET = 'soundingRocket',
-  PARABOLIC_FLIGHT = 'parabolicFlight',
-  GROUND_BASED_FACILITY = 'groundBasedFacility',
-}
-
-export enum ResultType {
-  EXPERIMENT = 'experiment',
-  MISSION = 'mission',
-  FOR_CODE = 'forCode',
-  SEO_CODE = 'seoCode',
-}
-
-export const isResultType = (resultType: string | undefined) => {
-  return resultType ? (Object.values(ResultType) as string[]).includes(resultType) : false;
-};
-
-export const isPlatform = (platform: string | undefined) => {
-  return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
-};
-
 export type AuthenticationResponse = {
   // On success.
   jwt: string;
@@ -55,36 +24,73 @@ export type AuthenticationResponse = {
   password: string;
 };
 
-export type Experiment = {
-  id: number;
-  title: string;
-  toa: Toa;
-  leadInstitution: string;
-  principalInvestigator: string;
-  experimentAim: string;
-  experimentObjective: string;
-  experimentPublications: ExperimentPublication[];
-  experimentAttachments: ExperimentAttachment[];
-  deleted: boolean;
-  approved: boolean;
-  mission: Mission;
-  platform: Platform;
-  forCode: ForCode;
-  seoCode: SeoCode;
-  people: ExperimentPerson[];
-  createdAt: Date;
-  updatedAt?: Date;
-};
-
-export type Toa = {
+export type Role = {
   id: number;
   name: string;
 };
 
-export type ExperimentAttachment = {
+export type Code = {
   id: number;
-  mediaType: 'image/jpeg' | 'image/png' | 'application/pdf';
-  filename: string;
+  code: number;
+  name: string;
+  experiments: Experiment[];
+};
+
+export type ForCode = Code;
+
+export type SeoCode = Code;
+
+export type Activity = {
+  id: number;
+  name: 'Scientific Research' | 'Industry' | 'Human Spaceflight';
+};
+
+export type ExperimentAttributeField = {
+  id: number;
+  name: string;
+};
+
+export type Subsystem = ExperimentAttributeField;
+
+export type Area = ExperimentAttributeField;
+
+export type TestSubjectType = ExperimentAttributeField;
+
+export type Person = {
+  id: number;
+  firstName: string;
+  familyName: string;
+  city: string;
+  state: string;
+  country: string;
+  affiliation: string;
+  email?: string;
+  phone?: string;
+  role: Role;
+  approved: boolean;
+  deleted: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
+};
+
+export type Platform = {
+  id: number;
+  name: string;
+  forCodes: ForCode[];
+  seoCodes: SeoCode[];
+};
+
+export enum Platforms {
+  SPACE_STATION = 'spaceStation',
+  SPACE_SHUTTLE = 'spaceShuttle',
+  RETRIEVABLE_CAPSULE = 'retrievableCapsule',
+  SOUNDING_ROCKET = 'soundingRocket',
+  PARABOLIC_FLIGHT = 'parabolicFlight',
+  GROUND_BASED_FACILITY = 'groundBasedFacility',
+}
+
+export const isPlatform = (platform: string | undefined) => {
+  return platform ? (Object.values(Platforms) as string[]).includes(platform) : false;
 };
 
 export type Mission = {
@@ -95,9 +101,40 @@ export type Mission = {
   startDate?: Date;
   endDate?: Date;
   experimentCount: number;
-  deleted: boolean;
-  approved: boolean;
   experiments: Experiment[];
+  approved: boolean;
+  deleted: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
+};
+
+export type Toa = {
+  id: number;
+  name: string;
+};
+
+export type Experiment = {
+  id: number;
+  title: string;
+  leadInstitution: string;
+  mission: Mission;
+  platform: Platform;
+  experimentObjectives?: string;
+  people: ExperimentPerson[];
+  publications: Publication[];
+  attachments: Attachment[];
+  activity: Activity;
+  toa?: Toa;
+  forCode?: ForCode;
+  seoCode?: SeoCode;
+  subsystem?: Subsystem;
+  spacecraft?: string;
+  payload?: string;
+  testSubjectCount?: number;
+  area?: Area;
+  testSubjectType?: TestSubjectType;
+  approved: boolean;
+  deleted: boolean;
   createdAt: Date;
   updatedAt?: Date;
 };
@@ -124,37 +161,62 @@ export type ExperimentPersonRequestEntry = {
 
 export type PeopleReducerState = { uid: number; data: ExperimentPersonRequestEntry[] };
 
-export type Platform = {
-  id: number;
-  name: string;
-  forCodes: ForCode[];
-  seoCodes: SeoCode[];
+export type Publication = {
+  doi?: string;
+  authors: Author[];
+  yearPublished?: string;
+  title: string;
+  journal?: string;
+  volumeNumber?: string;
+  issueNumber?: string;
+  pagesUsed?: string;
+  journalDatabase?: string;
+  url?: string;
+  accessDate?: string;
 };
 
-export type Code = {
-  id: number;
-  code: number;
-  name: string;
-  experiments: Experiment[];
-};
-
-export type ForCode = Code;
-
-export type SeoCode = Code;
-
-export type Person = {
-  id: number;
+export type Author = {
   firstName: string;
-  familyName: string;
-  city: string;
-  state: string;
-  country: string;
-  affiliation: string;
-  role: Role;
-  deleted: boolean;
-  approved: boolean;
-  createdAt: Date;
-  updatedAt?: Date;
+  lastName: string;
+};
+
+export type PublicationAPIResponse = {
+  message: {
+    title: string;
+    'container-title': string;
+    volume: string;
+    issue: string;
+    DOI: string;
+    publisher: string;
+    URL: string;
+    page: string;
+    created: {
+      'date-time': string;
+    };
+    issued: {
+      'date-parts': string;
+    };
+    yearPublished: Date;
+    author: AuthorAPIResponse[];
+  };
+};
+
+export type AuthorAPIResponse = {
+  given: string;
+  family: string;
+};
+
+export type ExperimentPublicationEntry = {
+  id: number;
+  data: Publication;
+};
+
+export type PublicationsReducerState = { uid: number; data: ExperimentPublicationEntry[] };
+
+export type Attachment = {
+  id: number;
+  mediaType: 'image/jpeg' | 'image/png' | 'application/pdf';
+  filename: string;
 };
 
 export type Page<T> = {
@@ -172,6 +234,17 @@ export type ResultsResponse<T> = {
 };
 
 export type SearchResponse = ResultsResponse<Experiment | Mission | ForCode | SeoCode>;
+
+export enum ResultType {
+  EXPERIMENT = 'experiment',
+  MISSION = 'mission',
+  FOR_CODE = 'forCode',
+  SEO_CODE = 'seoCode',
+}
+
+export const isResultType = (resultType: string | undefined) => {
+  return resultType ? (Object.values(ResultType) as string[]).includes(resultType) : false;
+};
 
 export type SearchField = string | undefined;
 
@@ -205,54 +278,4 @@ export type CaptchaResponse = {
   challenge_ts?: string;
   hostname?: string;
   error_codes?: string[];
-};
-
-export type ExperimentPublication = {
-  doi?: string;
-  authors: ExperimentPublicationAuthor[];
-  yearPublished?: string;
-  title: string;
-  journal?: string;
-  volumeNumber?: string;
-  issueNumber?: string;
-  pagesUsed?: string;
-  journalDatabase?: string;
-  url?: string;
-  accessDate?: string;
-};
-
-export type ExperimentPublicationAuthor = {
-  firstName: string;
-  lastName: string;
-};
-
-export type ExperimentPublicationEntry = {
-  id: number;
-  data: ExperimentPublication;
-};
-
-export type ExperimentPublicationResponse = {
-  message: {
-    title: string;
-    'container-title': string;
-    volume: string;
-    issue: string;
-    DOI: string;
-    publisher: string;
-    URL: string;
-    page: string;
-    created: {
-      'date-time': string;
-    };
-    issued: {
-      'date-parts': string;
-    };
-    yearPublished: Date;
-    author: ExperimentPublicationsAuthorResponse[];
-  };
-};
-
-export type ExperimentPublicationsAuthorResponse = {
-  given: string;
-  family: string;
 };

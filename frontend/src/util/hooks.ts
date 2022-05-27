@@ -1,7 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { useState, useEffect, useReducer } from 'react';
 import { useQuery } from 'react-query';
-import { ExperimentPersonRequestEntry, PeopleReducerState, User } from '../util/types';
+import {
+  ExperimentPersonRequestEntry,
+  ExperimentPublicationEntry,
+  PeopleReducerState,
+  PublicationsReducerState,
+  User,
+} from '../util/types';
 import api from './api';
 
 export const useLoggedInUser = () => {
@@ -59,4 +65,38 @@ export const usePeopleReducer = (initialState: PeopleReducerState) => {
   };
 
   return useReducer(peopleReducer, initialState);
+};
+
+export const usePublicationsReducer = (initialState: PublicationsReducerState) => {
+  const publicationsReducer = (
+    state: { uid: number; data: ExperimentPublicationEntry[] },
+    action: { type: string; payload: ExperimentPublicationEntry },
+  ) => {
+    switch (action.type) {
+      case 'ADD': {
+        return { uid: state.uid + 1, data: [...state.data, action.payload] };
+      }
+      case 'REMOVE': {
+        return {
+          uid: state.uid,
+          data: state.data.filter((entry) => entry.id !== action.payload.id),
+        };
+      }
+      case 'MODIFY': {
+        return {
+          uid: state.uid,
+          data: state.data.map((entry) => {
+            if (entry.id === action.payload.id) return action.payload;
+
+            return entry;
+          }),
+        };
+      }
+      default: {
+        return state;
+      }
+    }
+  };
+
+  return useReducer(publicationsReducer, initialState);
 };

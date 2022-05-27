@@ -1,7 +1,7 @@
 package com.rmit.mgdb.service;
 
-import com.rmit.mgdb.model.ExperimentPublication;
-import com.rmit.mgdb.model.ExperimentPublicationAuthor;
+import com.rmit.mgdb.model.Author;
+import com.rmit.mgdb.model.Publication;
 import com.rmit.mgdb.repository.ExperimentPublicationAuthorRepository;
 import com.rmit.mgdb.repository.ExperimentPublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ public class ExperimentPublicationService {
         this.experimentPublicationAuthorRepository = experimentPublicationAuthorRepository;
     }
 
-    public ExperimentPublication saveExperimentPublication(ExperimentPublication experimentPublication) {
-        return experimentPublicationRepository.saveAndFlush(experimentPublication);
+    public Publication saveExperimentPublication(Publication publication) {
+        return experimentPublicationRepository.saveAndFlush(publication);
     }
 
-    public ExperimentPublicationAuthor saveExperimentPublicationAuthor(
-            ExperimentPublicationAuthor experimentPublicationAuthor) {
-        return experimentPublicationAuthorRepository.saveAndFlush(experimentPublicationAuthor);
+    public Author saveExperimentPublicationAuthor(
+            Author author) {
+        return experimentPublicationAuthorRepository.saveAndFlush(author);
     }
 
     @Transactional

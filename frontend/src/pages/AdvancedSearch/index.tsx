@@ -77,7 +77,7 @@ export default function AdvancedSearchPage() {
           <ExperimentResult
             key={item.id}
             id={item.id.toString()}
-            objective={item.experimentObjective}
+            objective={item.experimentObjectives}
             title={item.title}
             people={item.people}
             mission={item.mission}
@@ -133,7 +133,15 @@ export default function AdvancedSearchPage() {
             {resultsElement}
             {pages > 1 ? (
               <Grid item my={2}>
-                <Pagination count={pages} page={page} onChange={handlePageChange} />
+                <Pagination
+                  count={pages}
+                  variant='outlined'
+                  shape='rounded'
+                  color='secondary'
+                  siblingCount={0}
+                  page={page}
+                  onChange={handlePageChange}
+                />
               </Grid>
             ) : null}
           </Grid>

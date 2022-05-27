@@ -19,7 +19,6 @@ import java.util.List;
 @Indexed
 public class Experiment {
 
-    // TODO Deduce value constraints e.g., @NotBlank/@NotNull for required fields, @Pattern for regex.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,36 +28,6 @@ public class Experiment {
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String leadInstitution;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
-    private String experimentAim;
-
-    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
-    @Length(max = 1023)
-    private String experimentObjective;
-
-    @OneToMany(mappedBy = "experiment")
-    private List<ExperimentAttachment> experimentAttachments;
-
-    @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL)
-    private List<ExperimentPublication> experimentPublications;
-
-    @GenericField
-    private boolean deleted;
-
-    @GenericField
-    private boolean approved;
-
-    private Date createdAt;
-
-    private Date updatedAt;
-
-    @IndexedEmbedded
-    @ManyToOne
-    @JoinColumn(name = "toa_id")
-    @NotNull
-    private Toa toa;
 
     @ManyToOne
     @JoinColumn(name = "mission_id")
@@ -72,21 +41,75 @@ public class Experiment {
     @NotNull
     private Platform platform;
 
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
+    private String experimentObjectives;
+
+    @OneToMany(mappedBy = "experiment")
+    @IndexedEmbedded
+    private List<ExperimentPerson> people;
+
+    @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL)
+    private List<Publication> publications;
+
+    @OneToMany(mappedBy = "experiment")
+    private List<Attachment> attachments;
+
+    @ManyToOne
+    @JoinColumn(name = "activity_id")
+    @IndexedEmbedded
+    @NotNull
+    private Activity activity;
+
+    @ManyToOne
+    @JoinColumn(name = "toa_id")
+    @IndexedEmbedded
+    private Toa toa;
+
     @ManyToOne
     @JoinColumn(name = "for_code_id")
     @IndexedEmbedded
-    @NotNull
     private ForCode forCode;
 
     @ManyToOne
     @JoinColumn(name = "seo_code_id")
     @IndexedEmbedded
-    @NotNull
     private SeoCode seoCode;
 
-    @OneToMany(mappedBy = "experiment")
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
+    private String spacecraft;
+
+    @ManyToOne
+    @JoinColumn(name = "subsystem_id")
     @IndexedEmbedded
-    private List<ExperimentPerson> people;
+    private Subsystem subsystem;
+
+    @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @Length(max = 1023)
+    private String payload;
+
+    private Long testSubjectCount;
+
+    @ManyToOne
+    @JoinColumn(name = "area_id")
+    @IndexedEmbedded
+    private Area area;
+
+    @ManyToOne
+    @JoinColumn(name = "test_subject_type_id")
+    @IndexedEmbedded
+    private TestSubjectType testSubjectType;
+
+    @GenericField
+    private boolean approved;
+
+    @GenericField
+    private boolean deleted;
+
+    private Date createdAt;
+
+    private Date updatedAt;
 
     /**
      * Saves the timestamp of creation.

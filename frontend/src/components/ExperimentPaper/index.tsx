@@ -20,7 +20,7 @@ export default function ExperimentPaper({ experiment }: ExperimentPaperProps) {
       href={`/experiment/${experiment.id}`}
     >
       <Typography variant='h6'>{experiment.title}</Typography>
-      <Typography variant='body1'>{`TOA: ${experiment.toa.name}`}</Typography>
+      <Typography variant='body1'>{`Activity: ${experiment.activity.name}`}</Typography>
       <Typography variant='body1'>{`Institution: ${experiment.leadInstitution}`}</Typography>
     </Paper>
   );
