@@ -2,6 +2,7 @@ package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Indexed
 public class Subsystem {
 
@@ -26,20 +28,8 @@ public class Subsystem {
     @JsonIgnore
     private List<Experiment> experiments;
 
-    public enum Subsystems {
-        POWER("Power"),
-        THERMAL("Thermal"),
-        COMMUNICATIONS("Communications"),
-        DATA("Data"),
-        PROPULSION("Propulsion"),
-        ATTITUDE_DETERMINATION("Attitude Determination"),
-        MECHANICAL("Mechanical");
-
-        public final String string;
-
-        Subsystems(String string) {
-            this.string = string;
-        }
+    public Subsystem(String name) {
+        this.name = name;
     }
 
 }

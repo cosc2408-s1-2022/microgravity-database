@@ -2,6 +2,7 @@ package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Indexed
 public class Role {
 
@@ -26,5 +28,9 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ExperimentPerson> experimentPeople;
+
+    public Role(String name) {
+        this.name = name;
+    }
 
 }

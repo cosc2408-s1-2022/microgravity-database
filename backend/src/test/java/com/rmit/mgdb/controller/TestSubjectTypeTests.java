@@ -1,8 +1,8 @@
 package com.rmit.mgdb.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rmit.mgdb.model.Activity;
-import com.rmit.mgdb.repository.ActivityRepository;
+import com.rmit.mgdb.model.TestSubjectType;
+import com.rmit.mgdb.repository.TestSubjectTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,46 +23,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class ActivityControllerTests {
+public class TestSubjectTypeTests {
 
     @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
-    ActivityRepository activityRepository;
+    TestSubjectTypeRepository testSubjectTypeRepository;
 
     @BeforeEach
     void setUp() {
-        activityRepository.deleteAll();
-        activityRepository.saveAll(new ArrayList<>(Arrays.asList(
-                new Activity("Scientific Research"),
-                new Activity("Industry"),
-                new Activity("Human Spaceflight"))));
+        testSubjectTypeRepository.deleteAll();
+        testSubjectTypeRepository.saveAll(new ArrayList<>(Arrays.asList(
+                new TestSubjectType("Mission Astronaut"),
+                new TestSubjectType("Trainee Astronaut"),
+                new TestSubjectType("Researchers"))));
     }
 
     @Test
     void testGetAll1() throws Exception {
-        mockMvc.perform(get("/api/activities"))
+        mockMvc.perform(get("/api/testSubjectTypes"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     void testGetAll2() throws Exception {
-        mockMvc.perform(get("/api/activities"))
+        mockMvc.perform(get("/api/testSubjectTypes"))
                .andExpect(jsonPath("$").isArray())
-               .andExpect(jsonPath("$").value(hasSize(3)))
-               .andExpect(jsonPath("$[0].name").value("Scientific Research"))
-               .andExpect(jsonPath("$[1].name").value("Industry"))
-               .andExpect(jsonPath("$[2].name").value("Human Spaceflight"));
+               .andExpect(jsonPath("$", hasSize(3)))
+               .andExpect(jsonPath("$[0].name").value("Mission Astronaut"))
+               .andExpect(jsonPath("$[1].name").value("Trainee Astronaut"))
+               .andExpect(jsonPath("$[2].name").value("Researchers"));
     }
 
     @Test
     void testGetAll3() throws Exception {
-        String responseString = mockMvc.perform(get("/api/activities")).andReturn().getResponse().getContentAsString();
-        Activity[] response = objectMapper.readValue(responseString, Activity[].class);
+        String responseString =
+                mockMvc.perform(get("/api/testSubjectTypes")).andReturn().getResponse().getContentAsString();
+        TestSubjectType[] response = objectMapper.readValue(responseString, TestSubjectType[].class);
         assertEquals(3, response.length);
+        assertEquals("Mission Astronaut", response[0].getName());
+        assertEquals("Trainee Astronaut", response[1].getName());
+        assertEquals("Researchers", response[2].getName());
     }
 
 }

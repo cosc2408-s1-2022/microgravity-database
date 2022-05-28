@@ -2,6 +2,7 @@ package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Indexed
 public class Area {
 
@@ -26,18 +28,8 @@ public class Area {
     @JsonIgnore
     private List<Experiment> experiments;
 
-    public enum Areas {
-        FOOD_SCIENCE("Food Science"),
-        PHYSIOLOGY("Physiology"),
-        SPACE_MEDICINE("Space Medicine"),
-        WEARABLES("Wearables"),
-        SPACESUITS("Space Suits");
-
-        public final String string;
-
-        Areas(String string) {
-            this.string = string;
-        }
+    public Area(String name) {
+        this.name = name;
     }
 
 }

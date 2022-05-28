@@ -28,8 +28,7 @@ public class Activity {
     @JsonIgnore
     private List<Experiment> experiments;
 
-    public Activity(Long id, String name) {
-        this.id = id;
+    public Activity(String name) {
         this.name = name;
     }
 

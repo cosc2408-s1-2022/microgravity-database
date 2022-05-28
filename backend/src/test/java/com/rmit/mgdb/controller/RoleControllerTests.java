@@ -1,8 +1,8 @@
 package com.rmit.mgdb.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rmit.mgdb.model.Activity;
-import com.rmit.mgdb.repository.ActivityRepository;
+import com.rmit.mgdb.model.Role;
+import com.rmit.mgdb.repository.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,46 +23,49 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class ActivityControllerTests {
+public class RoleControllerTests {
 
     @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
-    ActivityRepository activityRepository;
+    RoleRepository roleRepository;
 
     @BeforeEach
-    void setUp() {
-        activityRepository.deleteAll();
-        activityRepository.saveAll(new ArrayList<>(Arrays.asList(
-                new Activity("Scientific Research"),
-                new Activity("Industry"),
-                new Activity("Human Spaceflight"))));
+    public void setUp() {
+        roleRepository.deleteAll();
+        roleRepository.saveAll(new ArrayList<>(Arrays.asList(
+                new Role("Principal Investigator"),
+                new Role("Researcher"),
+                new Role("Flight Engineer"))));
     }
 
     @Test
     void testGetAll1() throws Exception {
-        mockMvc.perform(get("/api/activities"))
+        mockMvc.perform(get("/api/roles"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     void testGetAll2() throws Exception {
-        mockMvc.perform(get("/api/activities"))
+        mockMvc.perform(get("/api/roles"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(3)))
-               .andExpect(jsonPath("$[0].name").value("Scientific Research"))
-               .andExpect(jsonPath("$[1].name").value("Industry"))
-               .andExpect(jsonPath("$[2].name").value("Human Spaceflight"));
+               .andExpect(jsonPath("$[0].name").value("Principal Investigator"))
+               .andExpect(jsonPath("$[1].name").value("Researcher"))
+               .andExpect(jsonPath("$[2].name").value("Flight Engineer"));
     }
 
     @Test
     void testGetAll3() throws Exception {
-        String responseString = mockMvc.perform(get("/api/activities")).andReturn().getResponse().getContentAsString();
-        Activity[] response = objectMapper.readValue(responseString, Activity[].class);
-        assertEquals(3, response.length);
+        String content = mockMvc.perform(get("/api/roles")).andReturn().getResponse().getContentAsString();
+        Role[] roles = objectMapper.readValue(content, Role[].class);
+        assertEquals(3, roles.length);
+        assertEquals("Principal Investigator", roles[0].getName());
+        assertEquals("Researcher", roles[1].getName());
+        assertEquals("Flight Engineer", roles[2].getName());
     }
 
 }
