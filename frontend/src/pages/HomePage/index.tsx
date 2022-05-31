@@ -1,5 +1,5 @@
 import PrimarySearch from '../../components/PrimarySearch';
-import Logo from '../../asd-logo-navbar.svg';
+import Logo from '../../logo-navbar.svg';
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { Platforms } from '../../util/types';
 import lodash from 'lodash';

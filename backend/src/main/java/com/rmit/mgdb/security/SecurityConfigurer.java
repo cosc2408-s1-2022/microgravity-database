@@ -120,6 +120,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 //  .anyRequest().authenticated();
 
                 // FIXME Development.
+                .antMatchers("/api/users/authenticated").authenticated()
                 .anyRequest().permitAll();
 
         // Configure the JWT authentication filter to run before processing every HTTP request.
