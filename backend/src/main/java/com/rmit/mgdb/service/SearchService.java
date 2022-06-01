@@ -251,9 +251,7 @@ public class SearchService {
         } else {
             try {
                 DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                        .appendPattern("yyyy")
-                        .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-                        .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                        .appendPattern("yyyy-MM-dd")
                         .toFormatter();
                 return Optional.of(LocalDate.parse(paramValue, formatter));
             } catch (DateTimeParseException e) {

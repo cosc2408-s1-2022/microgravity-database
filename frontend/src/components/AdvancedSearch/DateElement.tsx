@@ -1,8 +1,8 @@
 import { GridProps, TextField } from '@mui/material';
 import { SearchField } from '../../util/types';
 import React from 'react';
-import moment, { Moment } from 'moment';
-import { DatePicker } from '@mui/x-date-pickers';
+import { Moment } from 'moment';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 export default function DateElement(
   props: GridProps & {
@@ -17,21 +17,21 @@ export default function DateElement(
   const handleDateChange = (date: Moment | null) => {
     let newDate: string | undefined = undefined;
     if (date) {
-      newDate = date.year().toString();
+      newDate = date.format('YYYY-MM-DD');
     }
     props.callback(newDate);
   };
 
   return (
-    <DatePicker
+    <DesktopDatePicker
       disabled={props.disabled}
-      views={['year']}
+      views={['year', 'month', 'day']}
       label={props.label}
       value={props.value || null}
       minDate={props.min}
-      maxDate={props.max || moment()}
+      maxDate={props.max}
       onChange={(e: Moment | null) => handleDateChange(e)}
-      renderInput={(params) => <TextField size='small' margin='normal' fullWidth {...params} color='secondary' />}
+      renderInput={(params) => <TextField size='small' margin='normal' color='secondary' fullWidth {...params} />}
     />
   );
 }

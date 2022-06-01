@@ -28,7 +28,7 @@ export default function AdvancedSearchPage() {
   const location = useLocation();
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION, page: page };
+  const searchState: SearchState = { resultType: ResultType.MISSION, platform: Platforms.SPACE_STATION, page: page };
   const params = new URLSearchParams(location.search);
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 

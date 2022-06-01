@@ -24,7 +24,7 @@ export default function NavBar() {
   const { user: loggedInUser, isLoading: isLoggedInUserLoading, isError: isLoggedInUserError } = useLoggedInUser();
   const logout = () => {
     localStorage.removeItem('authToken');
-    navigate('/');
+    navigate(0);
   };
 
   const theme = useTheme();
@@ -59,14 +59,14 @@ export default function NavBar() {
                 {!location.pathname.includes('/search/advanced') ? (
                   matches ? (
                     <Button
-                      href='/search/advanced'
+                      href='/search/advanced?resultType=mission'
                       variant='contained'
                       sx={{ ml: 1, minWidth: 'auto', whiteSpace: 'nowrap', height: '2.5rem' }}
                     >
                       Advanced Search
                     </Button>
                   ) : !['/login', '/register', '/register/basic'].includes(location.pathname) ? (
-                    <Button href='/search/advanced' variant='contained' sx={{ ml: 1 }}>
+                    <Button href='/search/advanced?resultType=mission' variant='contained' sx={{ ml: 1 }}>
                       <ManageSearchRounded />
                     </Button>
                   ) : undefined

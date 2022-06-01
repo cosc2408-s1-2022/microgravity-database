@@ -20,5 +20,18 @@ code {
 }
 
 #homepage-logo {
-  height: 15rem;
+  width: 100%;
+}
+
+.platform-logo {
+  width: 45%;
+}
+
+.platform-logo:not(:hover) {
+  transition: transform 0.5s ease-in-out;
+}
+
+.platform-logo:hover {
+  transform: rotate(30deg);
+  transition: transform 0.5s ease-in-out;
 }

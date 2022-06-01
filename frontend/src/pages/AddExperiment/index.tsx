@@ -151,7 +151,7 @@ export default function AddExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate('/home');
+      navigate(-1);
     }
   }, [isExperimentSuccess, navigate]);
 

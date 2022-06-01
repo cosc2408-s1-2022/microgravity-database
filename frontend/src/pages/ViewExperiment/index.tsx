@@ -171,7 +171,7 @@ export default function ViewExperiment() {
                       {experiment?.people.map((person, i) => (
                         <Grid item xs={4} key={i}>
                           <Typography variant={'body1'} fontWeight='bold'>
-                            {`${person.person.firstName.at(0)}. ${person.person.familyName}`}
+                            {`${person.person.firstName} ${person.person.familyName}`}
                           </Typography>
                           <Typography variant={'body2'}>{`${person.role.name}`}</Typography>
                           <Typography variant={'body2'}>{`${person.person.affiliation}`}</Typography>

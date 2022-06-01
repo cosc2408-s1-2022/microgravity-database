@@ -35,6 +35,7 @@ export default function Experiments() {
   };
   const handleSizeChange = (e: SelectChangeEvent<string | number>) => {
     setSize(e.target.value as number);
+    setPage(undefined);
   };
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setSearchString(e.target.value);

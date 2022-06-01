@@ -67,7 +67,7 @@ export default function AddMission() {
   useEffect(() => {
     if (isMissionSuccess) {
       queryClient.invalidateQueries('getAllMissions');
-      navigate('/home');
+      navigate(-1);
     }
   }, [isMissionSuccess, navigate, queryClient]);
 
