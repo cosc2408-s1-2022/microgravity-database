@@ -12,9 +12,9 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
       padding={3}
       alignItems='baseline'
     >
-      <Grid container item direction='column' md={3}>
+      <Grid container item direction='column' xs={4}>
         <Grid item>
-          <Typography display={'inline'}>Mission:</Typography>
+          <Typography display={'inline'}>Mission: </Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
             {props.mission.name}
           </Typography>
@@ -30,7 +30,7 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
           ))}
         </Grid>
       </Grid>
-      <Grid item md>
+      <Grid item xs={8}>
         <Grid item>
           <Typography display={'inline'}>Experiment Title: </Typography>
           <Typography color='primary.dark' variant='body1' fontSize={16} display={'inline'}>
@@ -39,18 +39,8 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
         </Grid>
         <Grid item>
           <Typography display={'inline'}>Experiment Objective: </Typography>
-          <Typography
-            display={'inline'}
-            color={'primary.dark'}
-            variant={'body1'}
-            // whiteSpace='nowrap'
-            // textOverflow='ellipsis'
-            // sx={{ overflow: 'hidden' }}
-            py={1}
-          >
-            {props.objective
-              ? (props.objective.substring(0, props.objective.indexOf('.')) || props.objective).concat('...')
-              : 'Not specified'}
+          <Typography id='text-overflow-ellipsis' display={'inline'} color={'primary.dark'} variant={'body1'}>
+            {props.objective || 'Not specified'}
           </Typography>
         </Grid>
       </Grid>

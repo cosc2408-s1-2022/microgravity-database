@@ -30,6 +30,10 @@ public class CustomLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer 
                .tokenizer(WhitespaceTokenizerFactory.class)
                .tokenFilter(LowerCaseFilterFactory.class)
                .tokenFilter(SnowballPorterFilterFactory.class).param("language", "English");
+
+        context.normalizer("english").custom()
+               .tokenFilter(LowerCaseFilterFactory.class)
+               .tokenFilter(SnowballPorterFilterFactory.class).param("language", "English");
     }
 
 }

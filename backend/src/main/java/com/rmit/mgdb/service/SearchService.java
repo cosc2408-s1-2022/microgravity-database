@@ -5,6 +5,7 @@ import com.rmit.mgdb.model.*;
 import com.rmit.mgdb.payload.ResultsResponse;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoField;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -133,7 +133,7 @@ public class SearchService {
                                                                         .matching(platformParam));
 
                                                            // Must match string if present.
-                                                           if (!stringParam.isEmpty()) {
+                                                           if (!stringParam.isBlank()) {
                                                                b.must(s -> s.match()
                                                                             .fields(resultTypeParam.searchFields)
                                                                             .matching(stringParam));
@@ -179,9 +179,19 @@ public class SearchService {
                                                        .toPredicate();
 
         // Perform search.
-        SearchResult<?> result = searchSession.search(resultTypeParam.associatedClass)
-                                              .where(searchPredicate)
-                                              .fetch(page * size, size);
+        SearchResult<?> result;
+        if (stringParam.isBlank()) {
+            result = searchSession.search(resultTypeParam.associatedClass)
+                                  .where(searchPredicate)
+                                  .sort(s -> s.field(resultTypeParam.sortField)
+                                              .order(resultTypeParam == ResultType.MISSION ? SortOrder.DESC :
+                                                     SortOrder.ASC))
+                                  .fetch(page * size, size);
+        } else {
+            result = searchSession.search(resultTypeParam.associatedClass)
+                                  .where(searchPredicate)
+                                  .fetch(page * size, size);
+        }
 
         long totalHitCount = result.total().hitCount();
         return new ResultsResponse<>(
@@ -229,7 +239,7 @@ public class SearchService {
      */
     private int extractIntegerParam(Map<String, String> params, String paramKey, int defaultValue) {
         String paramValue = params.get(paramKey);
-        if (paramValue == null || paramValue.isEmpty()) {
+        if (paramValue == null || paramValue.isBlank()) {
             return defaultValue;
         } else {
             try {
@@ -246,7 +256,7 @@ public class SearchService {
      */
     private Optional<LocalDate> extractDateParam(Map<String, String> params, String paramKey) {
         String paramValue = params.get(paramKey);
-        if (paramValue == null || paramValue.isEmpty()) {
+        if (paramValue == null || paramValue.isBlank()) {
             return Optional.empty();
         } else {
             try {
@@ -289,21 +299,25 @@ public class SearchService {
      * Possible search result types.
      */
     public enum ResultType {
-        EXPERIMENT("experiment", Experiment.class, EXPERIMENT_SEARCH_FIELDS, EXPERIMENT_PLATFORM_SEARCH_FIELD),
-        MISSION("mission", Mission.class, MISSION_SEARCH_FIELDS, MISSION_PLATFORM_SEARCH_FIELD),
-        FOR_CODE("forCode", ForCode.class, FOR_CODE_SEARCH_FIELDS, FOR_CODE_PLATFORM_SEARCH_FIELD),
-        SEO_CODE("seoCode", SeoCode.class, SEO_CODE_SEARCH_FIELDS, SEO_CODE_PLATFORM_SEARCH_FIELD);
+        EXPERIMENT("experiment", Experiment.class, EXPERIMENT_SEARCH_FIELDS, EXPERIMENT_SORT_FIELD,
+                   EXPERIMENT_PLATFORM_SEARCH_FIELD),
+        MISSION("mission", Mission.class, MISSION_SEARCH_FIELDS, MISSION_SORT_FIELD, MISSION_PLATFORM_SEARCH_FIELD),
+        FOR_CODE("forCode", ForCode.class, FOR_CODE_SEARCH_FIELDS, FOR_CODE_SORT_FIELD, FOR_CODE_PLATFORM_SEARCH_FIELD),
+        SEO_CODE("seoCode", SeoCode.class, SEO_CODE_SEARCH_FIELDS, SEO_CODE_SORT_FIELD, SEO_CODE_PLATFORM_SEARCH_FIELD);
         // TODO Additional result types as necessary.
 
         public final String string;
         public final Class<?> associatedClass;
         public final String[] searchFields;
+        public final String sortField;
         public final String platformSearchField;
 
-        ResultType(String string, Class<?> associatedClass, String[] searchFields, String platformSearchField) {
+        ResultType(String string, Class<?> associatedClass, String[] searchFields, String sortField,
+                   String platformSearchField) {
             this.string = string;
             this.associatedClass = associatedClass;
             this.searchFields = searchFields;
+            this.sortField = sortField;
             this.platformSearchField = platformSearchField;
         }
 

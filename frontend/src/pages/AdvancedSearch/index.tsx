@@ -96,6 +96,8 @@ export default function AdvancedSearchPage() {
             startDate={item.startDate}
             endDate={item.endDate}
             launchDate={item.launchDate}
+            experimentCount={item.experimentCount}
+            platform={item.platform}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );

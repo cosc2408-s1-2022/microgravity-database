@@ -271,6 +271,8 @@ export type MissionResultsProps = {
   launchDate: Date;
   startDate?: Date;
   endDate?: Date;
+  experimentCount: number;
+  platform: Platform;
 };
 
 export type CaptchaResponse = {

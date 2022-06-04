@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class Mission {
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
     private String name;
 
-    @GenericField
+    @GenericField(sortable = Sortable.YES)
     private LocalDate launchDate;
 
     @GenericField
