@@ -7,7 +7,17 @@ interface SeoCodeResultProps extends LinkProps {
 
 export default function SeoCodeResult({ seoCode, ...rest }: SeoCodeResultProps) {
   return (
-    <Grid {...rest} container item component={Link} href={`/seoCode/${seoCode.id}`} padding={3} alignItems='baseline'>
+    <Grid
+      {...rest}
+      container
+      item
+      component={Link}
+      href={`/seoCode/${seoCode.id}`}
+      padding={3}
+      alignItems='baseline'
+      target='_blank'
+      rel='noreferrer noopener'
+    >
       <Box display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
         <Box>
           <Typography display={'inline'}>Code: </Typography>

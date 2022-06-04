@@ -4,7 +4,6 @@ import { MissionResultsProps } from '../../../util/types';
 import lodash from 'lodash';
 
 export default function MissionResult(props: GridProps & MissionResultsProps) {
-  console.log(props);
   return (
     <Grid
       container
@@ -14,6 +13,8 @@ export default function MissionResult(props: GridProps & MissionResultsProps) {
       bgcolor={props.bgcolor}
       padding={3}
       alignItems='baseline'
+      target='_blank'
+      rel='noreferrer noopener'
     >
       <Grid item xs={6} display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
         <Box>

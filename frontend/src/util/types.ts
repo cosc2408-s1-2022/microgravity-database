@@ -100,7 +100,6 @@ export type Mission = {
   launchDate: Date;
   startDate?: Date;
   endDate?: Date;
-  experimentCount: number;
   experiments: Experiment[];
   approved: boolean;
   deleted: boolean;

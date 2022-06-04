@@ -45,11 +45,12 @@ public class MissionService {
     }
 
     public List<MissionPayload> getAllMissions() {
-        return missionRepository.findAll().stream().map(MissionPayload::new).collect(Collectors.toList());
+        return missionRepository.findAllByApprovedAndDeletedNot(true, true).stream()
+                                .map(MissionPayload::new).collect(Collectors.toList());
     }
 
     public Mission getMissionById(Long id) {
-        return missionRepository.findById(id)
+        return missionRepository.findByIdAndApprovedAndDeletedNot(id, true, true)
                                 .orElseThrow(() -> new NotFoundException("Mission could not be found.", id));
     }
 

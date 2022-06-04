@@ -6756,7 +6756,7 @@ INSERT INTO prod.experiment (id, approved, created_at, deleted, experiment_objec
 VALUES (5, true, '2022-05-18 00:00:00', false, 'To study bubble formation and heat transfer due to nucleate boiling in microgravity.
 - Deploy an autonomous payload into microgravity conditions
 - Induce nucleate boiling in a contained fluid
-- Observe formation rate and size of gas bubbles', 'RMIT University', null, null, null,
+- Observe formation rate and size of gas bubbles.', 'RMIT University', null, null, null,
         'Evaporation And Temperature Heat-flux Study over Time in Microgravity conditions', null, 1, null, 22, 1, 5, 19,
         null, null, 1);
 INSERT INTO prod.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload,
@@ -6769,7 +6769,7 @@ INSERT INTO prod.experiment (id, approved, created_at, deleted, experiment_objec
                              spacecraft, test_subject_count, title, updated_at, activity_id, area_id, for_code_id,
                              mission_id, platform_id, seo_code_id, subsystem_id, test_subject_type_id, toa_id)
 VALUES (7, true, '2022-05-18 00:00:00', false, 'In this experiment we aim to evaporate a drop under an electric field under microgravity.
-In this experiment, we are going to evaporate a sessile water droplet in an electric field under the conditions of micro-gravity ',
+In this experiment, we are going to evaporate a sessile water droplet in an electric field under the conditions of micro-gravity.',
         'RMIT University', null, null, null, 'Evaporation of droplets under electric field', null, 1, null, 22, 1, 5,
         19, null, null, 1);
 INSERT INTO prod.experiment (id, approved, created_at, deleted, experiment_objectives, lead_institution, payload,

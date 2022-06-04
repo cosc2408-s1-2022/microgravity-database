@@ -181,12 +181,27 @@ public class SearchService {
         // Perform search.
         SearchResult<?> result;
         if (stringParam.isBlank()) {
-            result = searchSession.search(resultTypeParam.associatedClass)
-                                  .where(searchPredicate)
-                                  .sort(s -> s.field(resultTypeParam.sortField)
-                                              .order(resultTypeParam == ResultType.MISSION ? SortOrder.DESC :
-                                                     SortOrder.ASC))
-                                  .fetch(page * size, size);
+            if (resultTypeParam == ResultType.MISSION) {
+                SearchResult<Mission> missionResult = searchSession.search(Mission.class)
+                                                                   .where(searchPredicate)
+                                                                   .sort(s -> s.field(resultTypeParam.sortField)
+                                                                               .order(SortOrder.DESC))
+                                                                   .fetch(page * size, size);
+
+                missionResult.hits().forEach(mission -> mission.setExperiments(mission.getExperiments()
+                                                                                      .stream()
+                                                                                      .filter(e -> e.isApproved() &&
+                                                                                                   !e.isDeleted())
+                                                                                      .toList()));
+
+                result = missionResult;
+            } else {
+                result = searchSession.search(resultTypeParam.associatedClass)
+                                      .where(searchPredicate)
+                                      .sort(s -> s.field(resultTypeParam.sortField)
+                                                  .order(SortOrder.ASC))
+                                      .fetch(page * size, size);
+            }
         } else {
             result = searchSession.search(resultTypeParam.associatedClass)
                                   .where(searchPredicate)

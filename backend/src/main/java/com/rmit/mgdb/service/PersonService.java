@@ -36,11 +36,11 @@ public class PersonService {
     }
 
     public List<Person> getAllPeople() {
-        return personRepository.findAll();
+        return personRepository.findAllByApprovedAndDeletedNot(true, true);
     }
 
     public Person getPersonById(Long id) {
-        return personRepository.findById(id)
+        return personRepository.findByIdAndApprovedAndDeletedNot(id, true, true)
                                .orElseThrow(() -> new NotFoundException("Person could not be found.", id));
     }
 

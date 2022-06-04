@@ -11,6 +11,8 @@ export default function ExperimentResult(props: GridProps & ExperimentResultsPro
       bgcolor={props.bgcolor}
       padding={3}
       alignItems='baseline'
+      target='_blank'
+      rel='noreferrer noopener'
     >
       <Grid container item direction='column' xs={4}>
         <Grid item>
