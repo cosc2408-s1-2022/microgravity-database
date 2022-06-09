@@ -43,14 +43,14 @@ public class ToaControllerTests {
     }
 
     @Test
-    public void testGetAllToas1() throws Exception {
+    public void givenToasExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/toas"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void testGetAllToas2() throws Exception {
+    public void givenToasExist_whenRequested_returnToasAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/toas"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$", hasSize(4)))
@@ -61,7 +61,7 @@ public class ToaControllerTests {
     }
 
     @Test
-    public void testGetAllToas3() throws Exception {
+    public void givenToasExist_whenRequested_returnToasMappableToJavaClass() throws Exception {
         String content = mockMvc.perform(get("/api/toas"))
                                 .andReturn().getResponse().getContentAsString();
         Toa[] toas = objectMapper.readValue(content, Toa[].class);

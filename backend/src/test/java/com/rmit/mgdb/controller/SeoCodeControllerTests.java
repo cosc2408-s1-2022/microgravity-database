@@ -43,14 +43,14 @@ public class SeoCodeControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenSeoCodesExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/seoCodes"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenSeoCodesExist_whenRequested_returnSeoCodesAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/seoCodes"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(3)))
@@ -63,7 +63,7 @@ public class SeoCodeControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenSeoCodesExist_whenRequested_returnSeoCodesMappableToJavaClass() throws Exception {
         String content = mockMvc.perform(get("/api/seoCodes")).andReturn().getResponse().getContentAsString();
         SeoCode[] seoCodes = objectMapper.readValue(content, SeoCode[].class);
         assertEquals(3, seoCodes.length);

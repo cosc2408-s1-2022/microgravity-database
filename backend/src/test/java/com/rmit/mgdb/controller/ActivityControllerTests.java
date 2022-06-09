@@ -42,14 +42,14 @@ class ActivityControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenActivitiesExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/activities"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenActivitiesExist_whenRequested_returnActivitiesAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/activities"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(3)))
@@ -59,7 +59,7 @@ class ActivityControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenActivitiesExist_whenRequested_returnActivitiesMappableToJavaClass() throws Exception {
         String responseString = mockMvc.perform(get("/api/activities")).andReturn().getResponse().getContentAsString();
         Activity[] response = objectMapper.readValue(responseString, Activity[].class);
         assertEquals(3, response.length);

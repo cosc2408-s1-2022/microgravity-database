@@ -45,14 +45,14 @@ public class PlatformControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenPlatformsExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/platforms"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenPlatformsExist_whenRequested_returnPlatformsAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/platforms"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(6)))
@@ -65,7 +65,7 @@ public class PlatformControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenPlatformsExist_whenRequested_returnPlatformsMappableToJavaClass() throws Exception {
         String content = mockMvc.perform(get("/api/platforms")).andReturn().getResponse().getContentAsString();
         Platform[] platforms = objectMapper.readValue(content, Platform[].class);
         assertEquals(platforms.length, 6);

@@ -42,14 +42,14 @@ public class TestSubjectTypeTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenTestSubjectTypesExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/testSubjectTypes"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenTestSubjectTypesExist_whenRequested_returnTestSubjectTypesAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/testSubjectTypes"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$", hasSize(3)))
@@ -59,7 +59,7 @@ public class TestSubjectTypeTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenTestSubjectTypesExist_whenRequested_returnTestSubjectTypesMappableToJavaClass() throws Exception {
         String responseString =
                 mockMvc.perform(get("/api/testSubjectTypes")).andReturn().getResponse().getContentAsString();
         TestSubjectType[] response = objectMapper.readValue(responseString, TestSubjectType[].class);

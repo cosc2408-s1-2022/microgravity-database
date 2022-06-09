@@ -44,14 +44,14 @@ class AreaControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenAreasExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/areas"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenAreasExist_whenRequested_returnAreasAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/areas"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$", hasSize(5)))
@@ -63,7 +63,7 @@ class AreaControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenAreasExist_whenRequested_returnAreasMappableToJavaClass() throws Exception {
         String responseString = mockMvc.perform(get("/api/areas")).andReturn().getResponse().getContentAsString();
         Area[] response = objectMapper.readValue(responseString, Area[].class);
         assertEquals(5, response.length);

@@ -42,14 +42,14 @@ public class ForCodeControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenForCodesExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/forCodes"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenForCodesExist_whenRequested_returnForCodesAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/forCodes"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(3)))
@@ -62,7 +62,7 @@ public class ForCodeControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenForCodesExist_whenRequested_returnForCodesMappableToJavaClass() throws Exception {
         String content = mockMvc.perform(get("/api/forCodes")).andReturn().getResponse().getContentAsString();
         ForCode[] forCodes = objectMapper.readValue(content, ForCode[].class);
         assertEquals(3, forCodes.length);

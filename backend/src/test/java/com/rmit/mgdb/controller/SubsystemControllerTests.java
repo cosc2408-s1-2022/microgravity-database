@@ -46,14 +46,14 @@ public class SubsystemControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenSubsystemsExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/subsystems"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenSubsystemsExist_whenRequested_returnSubsystemsAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/subsystems"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$", hasSize(7)))
@@ -67,7 +67,7 @@ public class SubsystemControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenSubsystemsExist_whenRequested_returnSubsystemsMappableToJavaClass() throws Exception {
         String responseString = mockMvc.perform(get("/api/subsystems")).andReturn().getResponse().getContentAsString();
         Subsystem[] response = objectMapper.readValue(responseString, Subsystem[].class);
         assertEquals(7, response.length);

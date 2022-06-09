@@ -42,14 +42,14 @@ public class RoleControllerTests {
     }
 
     @Test
-    void testGetAll1() throws Exception {
+    void givenRolesExist_whenRequested_returnStatusOkAndResponseAsJson() throws Exception {
         mockMvc.perform(get("/api/roles"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void testGetAll2() throws Exception {
+    void givenRolesExist_whenRequested_returnRolesAsJsonArray() throws Exception {
         mockMvc.perform(get("/api/roles"))
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").value(hasSize(3)))
@@ -59,7 +59,7 @@ public class RoleControllerTests {
     }
 
     @Test
-    void testGetAll3() throws Exception {
+    void givenRolesExist_whenRequested_returnRolesMappableToJavaClass() throws Exception {
         String content = mockMvc.perform(get("/api/roles")).andReturn().getResponse().getContentAsString();
         Role[] roles = objectMapper.readValue(content, Role[].class);
         assertEquals(3, roles.length);
