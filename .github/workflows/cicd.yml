@@ -1,7 +1,7 @@
 name: CI/CD
 
 env:
-  SSH_SERVER_HOSTNAME: spacedb
+  SSH_SERVER_USERNAME: spacedb
   SSH_SERVER_IP_ADDRESS: 131.170.250.223
 
 on:
@@ -100,11 +100,11 @@ jobs:
         run: >
           scp 
           -i ./identity -o StrictHostKeyChecking=no ./docker-compose.yml
-          "${{ env.SSH_SERVER_HOSTNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}:/home/${{ env.SSH_SERVER_HOSTNAME }}/docker-compose.yml"
+          "${{ env.SSH_SERVER_USERNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}:/home/${{ env.SSH_SERVER_USERNAME }}/docker-compose.yml"
       - name: Login, pull and deploy containers
         run: >
           ssh 
-          -i ./identity "${{ env.SSH_SERVER_HOSTNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}" 
+          -i ./identity "${{ env.SSH_SERVER_USERNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}" 
           "sudo service docker start;
           echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | 
           sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin; 
