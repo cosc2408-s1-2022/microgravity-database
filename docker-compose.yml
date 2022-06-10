@@ -1,22 +1,22 @@
 version: "3.8"
 services:
   db:
-    container_name: mgdb_prod
     image: mysql:8.0.29
+    container_name: mgdb_prod
     environment:
       MYSQL_DATABASE: prod
       MYSQL_ROOT_PASSWORD: password
   backend:
+    image: microgravitydatabase/backend:latest
     container_name: mgdb_backend
-    build: ./backend
     restart: always
     ports:
       - 8080:8080
     depends_on:
       - db
   frontend:
+    image: microgravitydatabase/frontend:latest
     container_name: mgdb_frontend
-    build: ./frontend
     ports:
       - 80:3000
     depends_on:
