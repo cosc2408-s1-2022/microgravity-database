@@ -3,6 +3,7 @@ package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Indexed
 public class Platform {
 
@@ -43,5 +45,9 @@ public class Platform {
                joinColumns = @JoinColumn(name = "seo_code_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id"))
     private List<SeoCode> seoCodes;
+
+    public Platform(String name) {
+        this.name = name;
+    }
 
 }

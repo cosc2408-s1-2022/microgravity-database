@@ -2,6 +2,7 @@ package com.rmit.mgdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Indexed
 public class ForCode {
 
@@ -38,5 +40,10 @@ public class ForCode {
     @IndexedEmbedded
     @JsonIgnore
     private List<Platform> platforms;
+
+    public ForCode(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
 }
