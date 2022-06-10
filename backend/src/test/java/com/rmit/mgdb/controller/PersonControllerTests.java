@@ -109,10 +109,13 @@ public class PersonControllerTests {
     void givenPeoplePresent_whenRequested_thenReturnPeople() throws Exception {
         Person person1 = setUpPerson();
         person1.setFirstName("testFirstName1");
+        person1.setApproved(true);
         Person person2 = setUpPerson();
         person2.setFirstName("testFirstName2");
+        person2.setApproved(true);
         Person person3 = setUpPerson();
         person3.setFirstName("testFirstName3");
+        person3.setApproved(true);
 
         personRepository.save(person1);
         personRepository.save(person2);

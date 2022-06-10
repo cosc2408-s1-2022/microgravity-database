@@ -89,7 +89,7 @@ public class SearchService {
                                                .fields(fields)
                                                .matching(stringParam)
 
-                                  )
+                                        )
                                   .fetch(page * size, size);
         }
 

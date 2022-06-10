@@ -14,8 +14,8 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
 
     Page<Mission> findMissionsBy(Pageable pageable);
 
-    List<Mission> findAllByApprovedAndDeletedNot(boolean approved, boolean deleted);
+    List<Mission> findAllByApprovedAndDeleted(boolean approved, boolean deleted);
 
-    Optional<Mission> findByIdAndApprovedAndDeletedNot(Long id, boolean approved, boolean deleted);
+    Optional<Mission> findByIdAndApprovedAndDeleted(Long id, boolean approved, boolean deleted);
 
 }

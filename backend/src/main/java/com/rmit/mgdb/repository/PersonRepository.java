@@ -14,8 +14,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Page<Person> findPeopleBy(Pageable pageable);
 
-    List<Person> findAllByApprovedAndDeletedNot(boolean approved, boolean deleted);
+    List<Person> findAllByApprovedAndDeleted(boolean approved, boolean deleted);
 
-    Optional<Person> findByIdAndApprovedAndDeletedNot(Long id, boolean approved, boolean deleted);
+    Optional<Person> findByIdAndApprovedAndDeleted(Long id, boolean approved, boolean deleted);
 
 }

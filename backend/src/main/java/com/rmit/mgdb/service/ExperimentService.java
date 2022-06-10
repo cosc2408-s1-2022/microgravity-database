@@ -105,7 +105,7 @@ public class ExperimentService {
         }
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
-        Mission mission = missionService.getMissionById(experimentRequest.getMissionId());
+        Mission mission = missionService.getValidMissionById(experimentRequest.getMissionId());
         Platform platform = mission.getPlatform();
         experiment.setMission(mission);
         experiment.setPlatform(platform);
@@ -142,7 +142,7 @@ public class ExperimentService {
         SaveExperimentPersonRequest[] personRequests = experimentRequest.getPersonRequests();
         if (personRequests != null && personRequests.length > 0) {
             experiment.setPeople(Arrays.stream(personRequests).map(personRequest -> {
-                Person person = personService.getPersonById(personRequest.getPersonId());
+                Person person = personService.getValidPersonById(personRequest.getPersonId());
                 Role role = roleService.getRoleById(personRequest.getRoleId());
                 return experimentPersonService.addExperimentPerson(experiment, person, role);
             }).toList());

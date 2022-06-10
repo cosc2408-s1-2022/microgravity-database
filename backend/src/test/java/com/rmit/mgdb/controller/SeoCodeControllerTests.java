@@ -39,7 +39,7 @@ public class SeoCodeControllerTests {
                 new SeoCode("10", "Animal Production And Animal Primary Products"),
                 new SeoCode("11", "Commercial Services And Tourism"),
                 new SeoCode("12", "Construction")
-        )));
+                                                               )));
     }
 
     @Test

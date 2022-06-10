@@ -96,6 +96,7 @@ public class ExperimentControllerTests {
         Mission mission = new Mission();
         mission.setName("test");
         mission.setPlatform(platform);
+        mission.setApproved(true);
         missionRepository.save(mission);
 
         Experiment experiment = new Experiment();

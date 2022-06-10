@@ -45,12 +45,17 @@ public class MissionService {
     }
 
     public List<MissionPayload> getAllMissions() {
-        return missionRepository.findAllByApprovedAndDeletedNot(true, true).stream()
+        return missionRepository.findAllByApprovedAndDeleted(true, false).stream()
                                 .map(MissionPayload::new).collect(Collectors.toList());
     }
 
     public Mission getMissionById(Long id) {
-        return missionRepository.findByIdAndApprovedAndDeletedNot(id, true, true)
+        return missionRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException("Mission could not be found.", id));
+    }
+
+    public Mission getValidMissionById(Long id) {
+        return missionRepository.findByIdAndApprovedAndDeleted(id, true, false)
                                 .orElseThrow(() -> new NotFoundException("Mission could not be found.", id));
     }
 
@@ -62,11 +67,11 @@ public class MissionService {
         Mission mission = new Mission();
         Long id = missionRequest.getId();
         if (id != null) {
-            Mission existingExperiment = getMissionById(id);
+            Mission existingMission = getMissionById(id);
             mission.setId(id);
-            mission.setApproved(existingExperiment.isApproved());
-            mission.setDeleted(existingExperiment.isDeleted());
-            mission.setCreatedAt(existingExperiment.getCreatedAt());
+            mission.setApproved(existingMission.isApproved());
+            mission.setDeleted(existingMission.isDeleted());
+            mission.setCreatedAt(existingMission.getCreatedAt());
         }
         mission.setName(missionRequest.getName());
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()

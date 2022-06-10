@@ -121,10 +121,13 @@ public class MissionControllerTests {
     void givenMissionsPresent_whenRequested_thenReturnMissions() throws Exception {
         Mission mission1 = setUpMission();
         mission1.setName("test1");
+        mission1.setApproved(true);
         Mission mission2 = setUpMission();
         mission2.setName("test2");
+        mission2.setApproved(true);
         Mission mission3 = setUpMission();
         mission3.setName("test3");
+        mission3.setApproved(true);
 
         missionRepository.save(mission1);
         missionRepository.save(mission2);
@@ -194,7 +197,7 @@ public class MissionControllerTests {
     void givenMission_whenApprove_thenSetMissionApproved() throws Exception {
         Mission mission = setUpMission();
 
-        missionRepository.save(mission);
+        missionRepository.saveAndFlush(mission);
 
         mockMvc.perform(post(String.format("/api/missions/%d/approve", mission.getId())))
                .andExpect(status().isOk());
