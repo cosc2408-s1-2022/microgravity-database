@@ -6,9 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Page<Person> findPeopleBy(Pageable pageable);
+
+    List<Person> findAllByApprovedAndDeletedNot(boolean approved, boolean deleted);
+
+    Optional<Person> findByIdAndApprovedAndDeletedNot(Long id, boolean approved, boolean deleted);
 
 }

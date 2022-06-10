@@ -38,6 +38,8 @@ public class SearchFieldConstants {
 
     public static final String EXPERIMENT_PLATFORM_SEARCH_FIELD = "platform.name";
 
+    public static final String EXPERIMENT_SORT_FIELD = "title_sort";
+
     public static final String[] MISSION_SEARCH_FIELDS = {
             "name",
             "launchDateString",
@@ -47,6 +49,8 @@ public class SearchFieldConstants {
 
     public static final String MISSION_PLATFORM_SEARCH_FIELD = "platform.name";
 
+    public static final String MISSION_SORT_FIELD = "launchDate";
+
     public static final String[] FOR_CODE_SEARCH_FIELDS = {
             "code",
             "name"
@@ -54,12 +58,16 @@ public class SearchFieldConstants {
 
     public static final String FOR_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
 
+    public static final String FOR_CODE_SORT_FIELD = "name_sort";
+
     public static final String[] SEO_CODE_SEARCH_FIELDS = {
             "code",
             "name"
     };
 
     public static final String SEO_CODE_PLATFORM_SEARCH_FIELD = "platforms.name";
+
+    public static final String SEO_CODE_SORT_FIELD = "name_sort";
 
     public static final String DATE_RANGE_FIELDS = "launchDate";
 

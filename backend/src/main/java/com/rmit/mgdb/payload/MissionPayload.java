@@ -19,7 +19,6 @@ public class MissionPayload {
     private LocalDate launchDate;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Long experimentCount;
 
     @JsonIgnoreProperties({"forCodes", "seoCodes"})
     private Platform platform;
@@ -33,7 +32,6 @@ public class MissionPayload {
         this.launchDate = mission.getLaunchDate();
         this.startDate = mission.getStartDate();
         this.endDate = mission.getEndDate();
-        this.experimentCount = mission.getExperimentCount();
         this.platform = mission.getPlatform();
         this.experiments = mission.getExperiments().stream().filter(e -> e.isApproved() && !e.isDeleted()).toList();
     }

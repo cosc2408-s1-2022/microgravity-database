@@ -617,22 +617,25 @@ export default function EditExperiment() {
               <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                 <Captcha onComplete={setIsCaptchaComplete} />
               </Grid>
+              <Grid item xs={12} display='flex' justifyContent='center'>
+                <Box display='flex' alignItems='center' mt={3} width='100%'>
+                  <LoadingButton
+                    sx={{ mr: 2 }}
+                    disabled={!isCaptchaComplete}
+                    loading={isExperimentLoading}
+                    onClick={handleSubmit}
+                    fullWidth
+                    variant='contained'
+                    color='secondary'
+                  >
+                    Save Changes
+                  </LoadingButton>
+                  <Button fullWidth sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
+                    Cancel
+                  </Button>
+                </Box>
+              </Grid>
             </Grid>
-            <Box display='flex' alignItems='center' mt={3}>
-              <LoadingButton
-                sx={{ mr: 2 }}
-                disabled={!isCaptchaComplete}
-                loading={isExperimentLoading}
-                onClick={handleSubmit}
-                variant='contained'
-                color='secondary'
-              >
-                Save Changes
-              </LoadingButton>
-              <Button sx={{ backgroundColor: 'gray' }} variant='contained' onClick={() => navigate(-1)}>
-                Cancel
-              </Button>
-            </Box>
           </Box>
           <MessageSnackbar open={isExperimentError} message='Failed to save experiment.' severity='error' />
         </Box>

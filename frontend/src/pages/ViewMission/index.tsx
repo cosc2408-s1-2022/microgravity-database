@@ -68,7 +68,7 @@ export default function ViewMission() {
         }}
       >
         <Typography variant='h5' fontWeight='bold' sx={{ pr: 1 }}>
-          Experiments
+          Experiments (Total {mission?.experiments?.length})
         </Typography>
         {mission?.experiments && mission?.experiments.length > 0 ? (
           mission.experiments.map((e) => <ExperimentPaper experiment={e} key={e.id} />)

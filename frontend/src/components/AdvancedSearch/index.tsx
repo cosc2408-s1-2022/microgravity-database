@@ -41,7 +41,7 @@ export default function AdvancedSearch({ searchState, ...gridProps }: AdvSearchP
 
   const handleReset = () => {
     handleSearchStringChange('');
-    handleResultTypeChange(ResultType.EXPERIMENT);
+    handleResultTypeChange(ResultType.MISSION);
     handlePlatformChange(Platforms.SPACE_STATION);
     setStartDate('');
     setEndDate('');
@@ -85,6 +85,7 @@ export default function AdvancedSearch({ searchState, ...gridProps }: AdvSearchP
             disabled={resultType !== ResultType.MISSION}
             label='Start Date'
             value={startDate}
+            max={endDate ? moment(endDate) : undefined}
             callback={setStartDate}
           />
 

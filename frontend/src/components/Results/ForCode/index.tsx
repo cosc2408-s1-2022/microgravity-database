@@ -7,10 +7,20 @@ interface ForCodeResultProps extends LinkProps {
 
 export default function ForCodeResult({ forCode, ...rest }: ForCodeResultProps) {
   return (
-    <Grid {...rest} container item component={Link} href={`/forCode/${forCode.id}`} padding={3} alignItems='baseline'>
+    <Grid
+      {...rest}
+      container
+      item
+      component={Link}
+      href={`/forCode/${forCode.id}`}
+      padding={3}
+      alignItems='baseline'
+      target='_blank'
+      rel='noreferrer noopener'
+    >
       <Box display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
         <Box>
-          <Typography display={'inline'}>Fields of Research Classification (FoR): </Typography>
+          <Typography display={'inline'}>Code: </Typography>
           <Typography color='primary.dark' variant='body1' display={'inline'}>
             {forCode.code}
           </Typography>

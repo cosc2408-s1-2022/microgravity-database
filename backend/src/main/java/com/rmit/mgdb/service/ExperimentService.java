@@ -168,7 +168,7 @@ public class ExperimentService {
             attachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
                 String originalFileName = Objects.requireNonNull(file.getOriginalFilename());
                 String fileExtension = FilenameUtils.getExtension(originalFileName);
-                if (originalFileName.isEmpty() || fileExtension.isEmpty())
+                if (originalFileName.isBlank() || fileExtension.isBlank())
                     throw new InvalidExperimentAttachmentException("Could not acquire filename or extension.",
                                                                    originalFileName);
                 if (file.isEmpty())

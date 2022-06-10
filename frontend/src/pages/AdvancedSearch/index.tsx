@@ -28,7 +28,7 @@ export default function AdvancedSearchPage() {
   const location = useLocation();
   const [page, setPage] = useState(1);
 
-  const searchState: SearchState = { resultType: ResultType.EXPERIMENT, platform: Platforms.SPACE_STATION, page: page };
+  const searchState: SearchState = { resultType: ResultType.MISSION, platform: Platforms.SPACE_STATION, page: page };
   const params = new URLSearchParams(location.search);
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 
@@ -87,6 +87,8 @@ export default function AdvancedSearchPage() {
       });
     } else if (searchState.resultType === ResultType.MISSION) {
       results = data.data.results as Mission[];
+      console.log(results);
+
       resultsElement = results.map((item: Mission, index) => {
         return (
           <MissionResult
@@ -96,6 +98,8 @@ export default function AdvancedSearchPage() {
             startDate={item.startDate}
             endDate={item.endDate}
             launchDate={item.launchDate}
+            experimentCount={item.experiments.length}
+            platform={item.platform}
             bgcolor={index % 2 === 0 ? '#F0F0F0' : '#FFFFFF'}
           />
         );

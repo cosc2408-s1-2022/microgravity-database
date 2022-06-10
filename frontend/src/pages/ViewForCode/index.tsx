@@ -42,7 +42,7 @@ export default function ViewForCode() {
             </Typography>
             <Box display='inline-flex' alignItems='center'>
               <Typography variant='h6' sx={{ pr: 1 }}>
-                Field of Research Classification
+                Code
               </Typography>
             </Box>
             <Box display='inline-flex' alignItems='center'>

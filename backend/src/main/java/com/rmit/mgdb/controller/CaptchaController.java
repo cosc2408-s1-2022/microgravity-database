@@ -29,7 +29,7 @@ public class CaptchaController {
     public ResponseEntity<?> verifyCaptcha(@RequestParam("response") String response) {
         String secret = env.getProperty("recaptcha.secret");
         String url = "https://www.google.com/recaptcha/api/siteverify?secret=" + secret;
-        if (!response.isEmpty())
+        if (!response.isBlank())
             url += "&response=" + response;
 
         RestTemplate restTemplate = restTemplateBuilder.build();

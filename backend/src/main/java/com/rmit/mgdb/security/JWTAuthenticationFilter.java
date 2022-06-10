@@ -52,7 +52,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         // Validate token structure.
         if (authorizationHeader != null && authorizationHeader.startsWith(JWT_SCHEME)) {
             jwt = authorizationHeader.substring(JWT_SCHEME.length() + 1);
-            username = tokenProvider.extractUsername(jwt);
+            try {
+                username = tokenProvider.extractUsername(jwt);
+            } catch (Exception ignored) {
+            }
         }
 
         // Validate token claims.

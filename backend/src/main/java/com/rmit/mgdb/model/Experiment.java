@@ -2,10 +2,8 @@ package com.rmit.mgdb.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -24,6 +22,7 @@ public class Experiment {
     private Long id;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")
+    @KeywordField(name = "title_sort", normalizer = "english", sortable = Sortable.YES)
     private String title;
 
     @FullTextField(analyzer = "index_analyzer", searchAnalyzer = "search_analyzer")

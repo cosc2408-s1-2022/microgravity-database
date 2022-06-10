@@ -42,7 +42,7 @@ export default function ViewSeoCode() {
             </Typography>
             <Box display='inline-flex' alignItems='center'>
               <Typography variant='h6' sx={{ pr: 1 }}>
-                Socio-Economic Objective Classification
+                Code
               </Typography>
             </Box>
             <Box display='inline-flex' alignItems='center'>

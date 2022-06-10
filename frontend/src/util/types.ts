@@ -100,7 +100,6 @@ export type Mission = {
   launchDate: Date;
   startDate?: Date;
   endDate?: Date;
-  experimentCount: number;
   experiments: Experiment[];
   approved: boolean;
   deleted: boolean;
@@ -271,6 +270,8 @@ export type MissionResultsProps = {
   launchDate: Date;
   startDate?: Date;
   endDate?: Date;
+  experimentCount: number;
+  platform: Platform;
 };
 
 export type CaptchaResponse = {
