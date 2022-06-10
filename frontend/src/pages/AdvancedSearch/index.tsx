@@ -33,7 +33,6 @@ export default function AdvancedSearchPage() {
   let results: Experiment[] | Mission[] | ForCode[] | SeoCode[];
 
   // Validate URL params
-  // TODO: Validate date (startDate < endDate)
   params.forEach((value: string | undefined, key: string) => {
     const isValidKey = key === 'string' || key === 'startDate' || key === 'endDate';
     const isValidPlatform = key === 'platform' && isPlatform(value);
@@ -87,7 +86,6 @@ export default function AdvancedSearchPage() {
       });
     } else if (searchState.resultType === ResultType.MISSION) {
       results = data.data.results as Mission[];
-      console.log(results);
 
       resultsElement = results.map((item: Mission, index) => {
         return (

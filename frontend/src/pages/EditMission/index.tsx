@@ -1,15 +1,14 @@
-import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
 import { AxiosResponse, AxiosError } from 'axios';
 import lodash from 'lodash';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-query';
+import { useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../../components/AuthWrapper';
+import AutocompleteSelector from '../../components/AutocompleteSelector';
 import Captcha from '../../components/Captcha';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
@@ -29,16 +28,6 @@ export default function EditMission() {
       },
     });
   }
-
-  const [platforms, setPlatforms] = useState<Platform[]>();
-  const {
-    data: platformsData,
-    isSuccess: isPlatformsSuccess,
-    isLoading: isPlatformsLoading,
-  } = useQuery<AxiosResponse<Platform[]>, AxiosError>('getAllPlatforms', () => api.get('/platforms'));
-  useEffect(() => {
-    if (isPlatformsSuccess && platformsData) setPlatforms(platformsData.data);
-  }, [isPlatformsSuccess, platformsData]);
 
   const [name, setName] = useState<string>(mission.name);
   const [launchDate, setLaunchDate] = useState<Date | null>(mission.launchDate);
@@ -98,7 +87,7 @@ export default function EditMission() {
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Typography variant='h3' sx={{ mt: 1, mb: 3 }}>
-                Add Mission
+                Edit Mission
               </Typography>
             </Box>
             <Box component='form' noValidate onSubmit={handleSubmit}>
@@ -191,53 +180,16 @@ export default function EditMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Autocomplete
-                    disablePortal
-                    openText='Platform'
-                    options={platforms || []}
-                    getOptionLabel={(option) => lodash.startCase(option.name)}
-                    fullWidth
-                    loading={isPlatformsLoading}
+                  <AutocompleteSelector<Platform>
+                    name='platformId'
+                    label='Platform'
                     value={platform}
-                    onChange={(_event, value) => {
-                      if (missionError?.response?.data !== undefined) {
-                        missionError.response.data.platformId = '';
-                      }
-                      setPlatform(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        size='small'
-                        color='secondary'
-                        fullWidth
-                        error={isMissionError && !!missionError?.response?.data?.platformId}
-                        helperText={missionError?.response?.data?.platformId}
-                        label='Platform'
-                      />
-                    )}
-                    renderOption={(props, option, { inputValue }) => {
-                      const startCaseValue = lodash.startCase(option.name);
-                      const matches = match(startCaseValue, inputValue);
-                      const parts = parse(startCaseValue, matches);
-                      return (
-                        <li {...props}>
-                          <div>
-                            {parts.map((part, index) => (
-                              <span
-                                key={index}
-                                style={{
-                                  fontWeight: part.highlight ? 700 : 400,
-                                }}
-                              >
-                                {part.text}
-                              </span>
-                            ))}
-                          </div>
-                        </li>
-                      );
-                    }}
-                    noOptionsText='No such platforms found.'
+                    dispatch={setPlatform}
+                    errors={missionError?.response?.data}
+                    queryKey='getAllPlatforms'
+                    queryFn={() => api.get('/platforms')}
+                    matchFn={(option) => lodash.startCase(option.name)}
+                    equalityFn={(option, value) => option.id === value.id}
                   />
                 </Grid>
                 <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>

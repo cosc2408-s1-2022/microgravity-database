@@ -4,7 +4,6 @@ import parse from 'autosuggest-highlight/parse';
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Activity, Area, Subsystem, TestSubjectType } from '../../util/types';
 
 type AutocompleteSelectorProps<T> = {
   name: string;
@@ -19,7 +18,7 @@ type AutocompleteSelectorProps<T> = {
   noOptionsComponent?: React.ReactNode;
 };
 
-export default function AutocompleteSelector<T extends Activity | Subsystem | Area | TestSubjectType>({
+export default function AutocompleteSelector<T>({
   name,
   label,
   value,

@@ -1,5 +1,5 @@
 import { PersonRounded, ShieldRounded } from '@mui/icons-material';
-import { Box, Button, Grid, Pagination, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Box, Grid, Pagination, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import api from '../../../util/api';
 import { ResultsResponse, User, UserRole } from '../../../util/types';
 import CenteredNoneFound from '../../CenteredNoneFound';
+import LoadingButton from '../../LoadingButton';
 import MessageSnackbar from '../../MessageSnackbar';
 
 type ViewUsersProps = {
@@ -161,23 +162,29 @@ export default function ViewUsers({ page, size, searchString, loggedInUser, onPa
           onChange={onPageChange}
         />
       </Grid>
-      <Grid item xs={12}>
-        <Button
-          sx={{ mt: 2, mr: 1 }}
-          variant='contained'
-          onClick={handleSaveChanges}
-          disabled={isSaveUsersLoading || changedUsers.length === 0}
-        >
-          Save Changes
-        </Button>
-        <Button
-          sx={{ mt: 2, backgroundColor: 'gray' }}
-          variant='contained'
-          onClick={handleDiscardChanges}
-          disabled={isSaveUsersLoading || changedUsers.length === 0}
-        >
-          Cancel
-        </Button>
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box display='flex' alignItems='center' mt={3} width='50%'>
+          <LoadingButton
+            fullWidth
+            sx={{ mt: 2, mr: 1 }}
+            variant='contained'
+            onClick={handleSaveChanges}
+            disabled={changedUsers.length === 0}
+            loading={isSaveUsersLoading}
+          >
+            Save Changes
+          </LoadingButton>
+          <LoadingButton
+            fullWidth
+            sx={{ mt: 2, backgroundColor: 'gray' }}
+            variant='contained'
+            onClick={handleDiscardChanges}
+            disabled={changedUsers.length === 0}
+            loading={isSaveUsersLoading}
+          >
+            Cancel
+          </LoadingButton>
+        </Box>
       </Grid>
       <MessageSnackbar open={isUsersError} message='Could not load users. Please try again.' severity='error' />
       <MessageSnackbar open={isSaveUsersSuccess} message='Your changes are saved.' severity='success' />

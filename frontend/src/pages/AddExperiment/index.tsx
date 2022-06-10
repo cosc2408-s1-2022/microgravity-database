@@ -151,7 +151,7 @@ export default function AddExperiment() {
 
   useEffect(() => {
     if (isExperimentSuccess) {
-      navigate(-1);
+      navigate('/home');
     }
   }, [isExperimentSuccess, navigate]);
 
@@ -272,17 +272,6 @@ export default function AddExperiment() {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      {/* <AutocompleteSelector<ForCode>
-                        name='forCodeId'
-                        label='Field of Research (FoR)'
-                        value={forCode}
-                        dispatch={setForCode}
-                        errors={experimentError?.response?.data}
-                        queryKey='getAllForCodes'
-                        queryFn={() => api.get('/forCodes')}
-                        matchFn={(option) => `${option.code} ${option.name}`}
-                        equalityFn={(option, value) => option.id === value.id}
-                      /> */}
                       <CodeSelector<ForCode>
                         name='forCodeId'
                         label='Field of Research (FoR)'
@@ -294,17 +283,6 @@ export default function AddExperiment() {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      {/* <AutocompleteSelector<SeoCode>
-                        name='seoCodeId'
-                        label='Socio-Economic Objective (SEO)'
-                        value={seoCode}
-                        dispatch={setSeoCode}
-                        errors={experimentError?.response?.data}
-                        queryKey='getAllSeoCodes'
-                        queryFn={() => api.get('/seoCodes')}
-                        matchFn={(option) => `${option.code} ${option.name}`}
-                        equalityFn={(option, value) => option.id === value.id}
-                      /> */}
                       <CodeSelector<SeoCode>
                         name='seoCodeId'
                         label='Socio-Economic Objective (SEO)'

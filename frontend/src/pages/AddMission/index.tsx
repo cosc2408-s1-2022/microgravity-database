@@ -1,42 +1,30 @@
-import { Autocomplete, Box, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Container, Grid, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import LoadingButton from '../../components/LoadingButton';
 import api from '../../util/api';
 import moment from 'moment';
 import lodash from 'lodash';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
 import AuthWrapper from '../../components/AuthWrapper';
 import { Mission, Platform } from '../../util/types';
 import MessageSnackbar from '../../components/MessageSnackbar';
 import Captcha from '../../components/Captcha';
+import AutocompleteSelector from '../../components/AutocompleteSelector';
 
-// TODO Refactor into smaller sub-components.
 export default function AddMission() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  const [platforms, setPlatforms] = useState<Platform[]>();
-  const {
-    data: platformsData,
-    isSuccess: isPlatformsSuccess,
-    isLoading: isPlatformsLoading,
-  } = useQuery<AxiosResponse<Platform[]>, AxiosError>('getAllPlatforms', () => api.get('/platforms'));
-  useEffect(() => {
-    if (isPlatformsSuccess && platformsData) setPlatforms(platformsData.data);
-  }, [isPlatformsSuccess, platformsData]);
 
   const [name, setName] = useState<string>();
   const [launchDate, setLaunchDate] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [platform, setPlatform] = useState<Platform | null>();
+  const [platform, setPlatform] = useState<Platform | null>(null);
   const startDateError = launchDate && startDate && launchDate < startDate;
   const endDateError = startDate && endDate && endDate < startDate;
   const {
@@ -67,7 +55,7 @@ export default function AddMission() {
   useEffect(() => {
     if (isMissionSuccess) {
       queryClient.invalidateQueries('getAllMissions');
-      navigate(-1);
+      navigate('/home');
     }
   }, [isMissionSuccess, navigate, queryClient]);
 
@@ -181,52 +169,16 @@ export default function AddMission() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Autocomplete
-                    disablePortal
-                    openText='Platform'
-                    options={platforms || []}
-                    getOptionLabel={(option) => lodash.startCase(option.name)}
-                    fullWidth
-                    loading={isPlatformsLoading}
-                    onChange={(_event, value) => {
-                      if (missionError?.response?.data !== undefined) {
-                        missionError.response.data.platformId = '';
-                      }
-                      setPlatform(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        size='small'
-                        color='secondary'
-                        fullWidth
-                        error={isMissionError && !!missionError?.response?.data?.platformId}
-                        helperText={missionError?.response?.data?.platformId}
-                        label='Platform'
-                      />
-                    )}
-                    renderOption={(props, option, { inputValue }) => {
-                      const startCaseValue = lodash.startCase(option.name);
-                      const matches = match(startCaseValue, inputValue);
-                      const parts = parse(startCaseValue, matches);
-                      return (
-                        <li {...props}>
-                          <div>
-                            {parts.map((part, index) => (
-                              <span
-                                key={index}
-                                style={{
-                                  fontWeight: part.highlight ? 700 : 400,
-                                }}
-                              >
-                                {part.text}
-                              </span>
-                            ))}
-                          </div>
-                        </li>
-                      );
-                    }}
-                    noOptionsText='No such platforms found.'
+                  <AutocompleteSelector<Platform>
+                    name='platformId'
+                    label='Platform'
+                    value={platform}
+                    dispatch={setPlatform}
+                    errors={missionError?.response?.data}
+                    queryKey='getAllPlatforms'
+                    queryFn={() => api.get('/platforms')}
+                    matchFn={(option) => lodash.startCase(option.name)}
+                    equalityFn={(option, value) => option.id === value.id}
                   />
                 </Grid>
                 <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>

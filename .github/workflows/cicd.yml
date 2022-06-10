@@ -9,10 +9,10 @@ env:
 on:
   push:
     branches:
-      - "main"
+      - "develop"
   pull_request:
     branches:
-      - "main"
+      - "develop"
 
 jobs:
   test_backend:
@@ -135,8 +135,8 @@ jobs:
           "sudo service docker start;
           echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | 
           sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin; 
-          sudo docker stop mgdb_backend mgdb_frontend mgdb_prod; 
-          sudo docker rm mgdb_backend mgdb_frontend mgdb_prod; 
+          sudo docker stop mgdb_backend mgdb_frontend; 
+          sudo docker rm mgdb_backend mgdb_frontend; 
           sudo docker image rm ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BACKEND_IMAGE_REPOSITORY }} ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.FRONTEND_IMAGE_REPOSITORY }}; 
           sudo docker-compose up --detach"
     needs: [push_backend, push_frontend]

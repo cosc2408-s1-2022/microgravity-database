@@ -50,7 +50,7 @@ export default function AddPerson() {
   useEffect(() => {
     if (isSuccess) {
       queryClient.invalidateQueries('getAllPeople');
-      navigate(-1);
+      navigate('/home');
     }
   }, [isSuccess, navigate, queryClient]);
 
