@@ -73,6 +73,7 @@ export default function PeopleForm({ state, dispatch, errors }: PeopleFormProps)
                 disablePortal
                 openText='Person'
                 options={people || []}
+                value={people?.find((p) => p.id === entry.data.personId) || null}
                 getOptionLabel={(option) => `${option.firstName} ${option.familyName} (${option.affiliation})`}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 fullWidth

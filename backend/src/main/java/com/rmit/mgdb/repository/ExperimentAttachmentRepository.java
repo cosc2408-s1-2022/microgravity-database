@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExperimentAttachmentRepository extends JpaRepository<Attachment, Long> {
-
-    void deleteAllByExperiment_Id(Long id);
-
 }

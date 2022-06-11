@@ -29,7 +29,7 @@ public class ExperimentAttachmentService {
     }
 
     @Transactional
-    public void deleteAllByExperimentId(Long id) {
-        experimentAttachmentRepository.deleteAllByExperiment_Id(id);
+    public void removeAttachmentById(Long id) {
+        experimentAttachmentRepository.deleteById(id);
     }
 }
