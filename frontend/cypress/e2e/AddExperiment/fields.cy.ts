@@ -1,4 +1,4 @@
-describe('Loads Add Experiment page', () => {
+describe('Loads AddExperiment page', () => {
   beforeEach(() => {
     cy.visit('http://131.170.250.223/login');
     cy.get('#\\:r0\\:').type('c');
