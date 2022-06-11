@@ -93,15 +93,14 @@ public class ExperimentService {
     public Experiment saveExperiment(SaveExperimentRequest experimentRequest) {
         Experiment experiment = new Experiment();
         Long id = experimentRequest.getId();
+        Experiment existingExperiment = null;
         if (id != null) {
-            Experiment existingExperiment = getExperimentById(id);
+            existingExperiment = getExperimentById(id);
             experiment.setId(id);
+            experiment.setAttachments(existingExperiment.getAttachments());
             experiment.setApproved(existingExperiment.isApproved());
             experiment.setDeleted(existingExperiment.isDeleted());
             experiment.setCreatedAt(existingExperiment.getCreatedAt());
-            experimentPersonService.removeAllExperimentPeople(id);
-            experimentPublicationService.removeAllExperimentPublications(id);
-            experimentAttachmentService.deleteAllByExperimentId(id);
         }
         experiment.setTitle(experimentRequest.getTitle());
         experiment.setLeadInstitution(experimentRequest.getLeadInstitution());
@@ -136,9 +135,10 @@ public class ExperimentService {
             experiment.setTestSubjectType(
                     testSubjectTypeService.getTestSubjectTypeById(experimentRequest.getTestSubjectTypeId()));
         }
-
         experimentRepository.saveAndFlush(experiment);
 
+        if (existingExperiment != null)
+            experimentPersonService.removeAllExperimentPeople(id);
         SaveExperimentPersonRequest[] personRequests = experimentRequest.getPersonRequests();
         if (personRequests != null && personRequests.length > 0) {
             experiment.setPeople(Arrays.stream(personRequests).map(personRequest -> {
@@ -148,6 +148,8 @@ public class ExperimentService {
             }).toList());
         }
 
+        if (existingExperiment != null)
+            experimentPublicationService.removeAllExperimentPublications(id);
         Publication[] publications = experimentRequest.getPublications();
         if (publications != null && publications.length > 0) {
             experiment.setPublications(Arrays.stream(publications).map(publication -> {
@@ -163,6 +165,27 @@ public class ExperimentService {
         }
 
         List<Attachment> attachments = new ArrayList<>();
+        List<Long> experimentAttachmentIds =
+                experimentRequest.getAttachmentIds() != null ? Arrays.asList(experimentRequest.getAttachmentIds()) :
+                null;
+        List<Attachment> existingAttachments = existingExperiment != null ? existingExperiment.getAttachments() : null;
+        if (experimentAttachmentIds != null && experimentAttachmentIds.size() > 0) {
+            if (existingAttachments != null && existingAttachments.size() > 0) {
+                existingAttachments.forEach(attachment -> {
+                    if (!experimentAttachmentIds.contains(attachment.getId())) {
+                        experimentAttachmentService.removeAttachmentById(attachment.getId());
+                        Path path = Paths.get(attachment.getMediaType().equals(MediaType.APPLICATION_PDF_VALUE) ?
+                                              "documents" : "images", attachment.getFilename());
+                        try {
+                            Files.deleteIfExists(path);
+                        } catch (IOException ignored) {
+                        }
+                    }
+                });
+            }
+            attachments.addAll(Arrays.stream(experimentRequest.getAttachmentIds())
+                                     .map(experimentAttachmentService::findById).toList());
+        }
         MultipartFile[] experimentAttachmentFiles = experimentRequest.getAttachmentFiles();
         if (experimentAttachmentFiles != null && experimentAttachmentFiles.length > 0) {
             attachments.addAll(Arrays.stream(experimentAttachmentFiles).map(file -> {
@@ -193,13 +216,8 @@ public class ExperimentService {
                 return attachment;
             }).toList());
         }
-
-        Long[] experimentAttachmentIds = experimentRequest.getAttachmentIds();
-        if (experimentAttachmentIds != null && experimentAttachmentIds.length > 0) {
-            attachments.addAll(Arrays.stream(experimentRequest.getAttachmentIds())
-                                     .map(experimentAttachmentService::findById).toList());
-        }
         experiment.setAttachments(attachments);
+
 
         searchSession.massIndexer().start();
         return experiment;
