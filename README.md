@@ -171,7 +171,7 @@ Once registered, the user can log in through the form available when the user cl
 
 When logged in as an admin, users are able to manage incoming requests for records inserted into the database. The admin is able to approve, modify, or reject these requests upon reviewing their content. 
 
-The admin also has the ability to grant users admin privileges.
+Admin users may also appoint other users with admin privileges or demote an admin to a regular user through the user management utility on the dashboard.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
