@@ -20,7 +20,7 @@ public class App {
         // Clean the indices' folder from previous residuals.
         try {
             FileUtils.cleanDirectory(new File(Paths.get("data").resolve("indices").toString()));
-        } catch (IOException ignored) {
+        } catch (Exception ignored) {
             // If the directories do not exist.
         }
 
