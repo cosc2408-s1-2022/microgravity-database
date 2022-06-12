@@ -12,13 +12,17 @@ import java.nio.file.Paths;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class App {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         // Create the resources folders if they do not exist.
         File documents = Paths.get("documents").toFile();
         File images = Paths.get("images").toFile();
 
         // Clean the indices' folder from previous residuals.
-        FileUtils.cleanDirectory(new File(Paths.get("data").resolve("indices").toString()));
+        try {
+            FileUtils.cleanDirectory(new File(Paths.get("data").resolve("indices").toString()));
+        } catch (IOException ignored) {
+            // If the directories do not exist.
+        }
 
         if (!documents.exists() && !documents.mkdir() || !images.exists() && !images.mkdir()) {
             System.exit(1);
