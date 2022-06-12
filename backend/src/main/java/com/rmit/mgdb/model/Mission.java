@@ -36,7 +36,16 @@ public class Mission {
     private LocalDate endDate;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"mission", "platform", "forCode", "seoCode", "people"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"mission",
+                                   "platform",
+                                   "people",
+                                   "activity",
+                                   "toa",
+                                   "forCode",
+                                   "seoCode",
+                                   "subsystem",
+                                   "area",
+                                   "testSubjectType"}, allowSetters = true)
     private List<Experiment> experiments;
 
     @GenericField
