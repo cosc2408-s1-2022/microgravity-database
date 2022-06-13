@@ -1,0 +1,142 @@
+name: CI/CD
+
+env:
+  SSH_SERVER_USERNAME: spacedb
+  SSH_SERVER_IP_ADDRESS: 131.170.250.223
+  BACKEND_IMAGE_REPOSITORY: backend
+  FRONTEND_IMAGE_REPOSITORY: frontend
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  test_backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "adopt"
+          cache: maven
+      - name: Run Maven tests
+        run: mvn --batch-mode --update-snapshots verify
+  push_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:backend"
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BACKEND_IMAGE_REPOSITORY }}:latest
+          secrets: GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+    needs: [test_backend]
+  test_frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: ./frontend/yarn.lock
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run Yarn tests
+        run: yarn test
+  push_frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:frontend"
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.FRONTEND_IMAGE_REPOSITORY }}:latest
+          secrets: GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+    needs: [test_frontend]
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Create identity file
+        run: echo "${{ secrets.SSH_SERVER_KEY }}" >> identity; chmod 600 ./identity
+      - name: Create docker-compose.yml file
+        run: |
+          echo "version: '3.8'
+          services:
+            db:
+              image: mysql:8.0.29
+              container_name: mgdb_prod
+              environment:
+                MYSQL_DATABASE: prod
+                MYSQL_ROOT_PASSWORD: password
+            backend:
+              image: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BACKEND_IMAGE_REPOSITORY }}:latest
+              container_name: mgdb_backend
+              restart: always
+              ports:
+                - 8080:8080
+              depends_on:
+                - db
+            frontend:
+              image: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.FRONTEND_IMAGE_REPOSITORY }}:latest
+              container_name: mgdb_frontend
+              ports:
+                - 80:3000
+              depends_on:
+                - db" >> docker-compose.yml
+      - name: Copy docker-compose.yml to deployment server
+        run: >
+          scp 
+          -i ./identity -o StrictHostKeyChecking=no ./docker-compose.yml
+          "${{ env.SSH_SERVER_USERNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}:/home/${{ env.SSH_SERVER_USERNAME }}/docker-compose.yml"
+      - name: Login, pull and deploy containers
+        run: >
+          ssh 
+          -i ./identity "${{ env.SSH_SERVER_USERNAME }}@${{ env.SSH_SERVER_IP_ADDRESS }}" 
+          "sudo service docker start;
+          echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | 
+          sudo docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin; 
+          sudo docker stop mgdb_backend mgdb_frontend mgdb_prod; 
+          sudo docker rm mgdb_backend mgdb_frontend mgdb_prod; 
+          sudo docker image rm ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BACKEND_IMAGE_REPOSITORY }} ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.FRONTEND_IMAGE_REPOSITORY }}; 
+          sudo docker-compose up --detach"
+    needs: [push_backend, push_frontend]

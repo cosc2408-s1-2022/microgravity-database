@@ -1,0 +1,2208 @@
+id,code,name
+1,30,"Agricultural, Veterinary And Food Sciences"
+2,31,Biological Sciences
+3,32,Biomedical And Clinical Sciences
+4,33,Built Environment And Design
+5,34,Chemical Sciences
+6,35,"Commerce, Management, Tourism And Services"
+7,36,Creative Arts And Writing
+8,37,Earth Sciences
+9,38,Economics
+10,39,Education
+11,40,Engineering
+12,41,Environmental Sciences
+13,42,Health Sciences
+14,43,"History, Heritage And Archaeology"
+15,44,Human Society
+16,45,Indigenous Studies
+17,46,Information And Computing Sciences
+18,47,"Language, Communication And Culture"
+19,48,Law And Legal Studies
+20,49,Mathematical Sciences
+21,50,Philosophy And Religious Studies
+22,51,Physical Sciences
+23,52,Psychology
+24,3001,Agricultural Biotechnology
+25,3002,"Agriculture, Land And Farm Management"
+26,3003,Animal Production
+27,3004,Crop And Pasture Production
+28,3005,Fisheries Sciences
+29,3006,Food Sciences
+30,3007,Forestry Sciences
+31,3008,Horticultural Production
+32,3009,Veterinary Sciences
+33,3099,"Other Agricultural, Veterinary And Food Sciences"
+34,3101,Biochemistry And Cell Biology
+35,3102,Bioinformatics And Computational Biology
+36,3103,Ecology
+37,3104,Evolutionary Biology
+38,3105,Genetics
+39,3106,Industrial Biotechnology
+40,3107,Microbiology
+41,3108,Plant Biology
+42,3109,Zoology
+43,3199,Other Biological Sciences
+44,3201,Cardiovascular Medicine And Haematology
+45,3202,Clinical Sciences
+46,3203,Dentistry
+47,3204,Immunology
+48,3205,Medical Biochemistry And Metabolomics
+49,3206,Medical Biotechnology
+50,3207,Medical Microbiology
+51,3208,Medical Physiology
+52,3209,Neurosciences
+53,3210,Nutrition And Dietetics
+54,3211,Oncology And Carcinogenesis
+55,3212,Ophthalmology And Optometry
+56,3213,Paediatrics
+57,3214,Pharmacology And Pharmaceutical Sciences
+58,3215,Reproductive Medicine
+59,3299,Other Biomedical And Clinical Sciences
+60,3301,Architecture
+61,3302,Building
+62,3303,Design
+63,3304,Urban And Regional Planning
+64,3399,Other Built Environment And Design
+65,3401,Analytical Chemistry
+66,3402,Inorganic Chemistry
+67,3403,Macromolecular And Materials Chemistry
+68,3404,Medicinal And Biomolecular Chemistry
+69,3405,Organic Chemistry
+70,3406,Physical Chemistry
+71,3407,Theoretical And Computational Chemistry
+72,3499,Other Chemical Sciences
+73,3501,"Accounting, Auditing And Accountability"
+74,3502,"Banking, Finance And Investment"
+75,3503,Business Systems In Context
+76,3504,Commercial Services
+77,3505,Human Resources And Industrial Relations
+78,3506,Marketing
+79,3507,"Strategy, Management And Organisational Behaviour"
+80,3508,Tourism
+81,3509,"Transportation, Logistics And Supply Chains"
+82,3599,"Other Commerce, Management, Tourism And Services"
+83,3601,"Art History, Theory And Criticism"
+84,3602,Creative And Professional Writing
+85,3603,Music
+86,3604,Performing Arts
+87,3605,Screen And Digital Media
+88,3606,Visual Arts
+89,3699,Other Creative Arts And Writing
+90,3701,Atmospheric Sciences
+91,3702,Climate Change Science
+92,3703,Geochemistry
+93,3704,Geoinformatics
+94,3705,Geology
+95,3706,Geophysics
+96,3707,Hydrology
+97,3708,Oceanography
+98,3709,Physical Geography And Environmental Geoscience
+99,3799,Other Earth Sciences
+100,3801,Applied Economics
+101,3802,Econometrics
+102,3803,Economic Theory
+103,3899,Other Economics
+104,3901,Curriculum And Pedagogy
+105,3902,"Education Policy, Sociology And Philosophy"
+106,3903,Education Systems
+107,3904,Specialist Studies In Education
+108,3999,Other Education
+109,4001,Aerospace Engineering
+110,4002,Automotive Engineering
+111,4003,Biomedical Engineering
+112,4004,Chemical Engineering
+113,4005,Civil Engineering
+114,4006,Communications Engineering
+115,4007,"Control Engineering, Mechatronics And Robotics"
+116,4008,Electrical Engineering
+117,4009,"Electronics, Sensors And Digital Hardware"
+118,4010,Engineering Practice And Education
+119,4011,Environmental Engineering
+120,4012,Fluid Mechanics And Thermal Engineering
+121,4013,Geomatic Engineering
+122,4014,Manufacturing Engineering
+123,4015,Maritime Engineering
+124,4016,Materials Engineering
+125,4017,Mechanical Engineering
+126,4018,Nanotechnology
+127,4019,Resources Engineering And Extractive Metallurgy
+128,4099,Other Engineering
+129,4101,Climate Change Impacts And Adaptation
+130,4102,Ecological Applications
+131,4103,Environmental Biotechnology
+132,4104,Environmental Management
+133,4105,Pollution And Contamination
+134,4106,Soil Sciences
+135,4199,Other Environmental Sciences
+136,4201,Allied Health And Rehabilitation Science
+137,4202,Epidemiology
+138,4203,Health Services And Systems
+139,4204,Midwifery
+140,4205,Nursing
+141,4206,Public Health
+142,4207,Sports Science And Exercise
+143,4208,"Traditional, Complementary And Integrative Medicine"
+144,4299,Other Health Sciences
+145,4301,Archaeology
+146,4302,"Heritage, Archive And Museum Studies"
+147,4303,Historical Studies
+148,4399,"Other History, Heritage And Archaeology"
+149,4401,Anthropology
+150,4402,Criminology
+151,4403,Demography
+152,4404,Development Studies
+153,4405,Gender Studies
+154,4406,Human Geography
+155,4407,Policy And Administration
+156,4408,Political Science
+157,4409,Social Work
+158,4410,Sociology
+159,4499,Other Human Society
+160,4501,"Aboriginal And Torres Strait Islander Culture, Language And History"
+161,4502,Aboriginal And Torres Strait Islander Education
+162,4503,Aboriginal And Torres Strait Islander Environmental Knowledges And Management
+163,4504,Aboriginal And Torres Strait Islander Health And Wellbeing
+164,4505,"Aboriginal And Torres Strait Islander Peoples, Society And Community"
+165,4506,Aboriginal And Torres Strait Islander Sciences
+166,4507,"Te Ahurea, Reo Me Te Hītori O Te Māori (Māori Culture, Language And History)"
+167,4508,Mātauranga Māori (Māori Education)
+168,4509,Ngā Mātauranga Taiao O Te Māori (Māori Environmental Knowledges)
+169,4510,Te Hauora Me Te Oranga O Te Māori (Māori Health And Wellbeing)
+170,4511,"Ngā Tāngata, Te Porihanga Me Ngā Hapori O Te Māori (Māori Peoples, Society And Community)"
+171,4512,Ngā Pūtaiao Māori (Māori Sciences)
+172,4513,"Pacific Peoples Culture, Language And History"
+173,4514,Pacific Peoples Education
+174,4515,Pacific Peoples Environmental Knowledges
+175,4516,Pacific Peoples Health And Wellbeing
+176,4517,Pacific Peoples Sciences
+177,4517,Pacific Peoples Society And Community
+178,4518,Pacific Peoples Sciences
+179,4518,Pacific Peoples Society And Community
+180,4519,"Other Indigenous Data, Methodologies And Global Indigenous Studies"
+181,4599,Other Indigenous Studies
+182,4601,Applied Computing
+183,4602,Artificial Intelligence
+184,4603,Computer Vision And Multimedia Computation
+185,4604,Cybersecurity And Privacy
+186,4605,Data Management And Data Science
+187,4606,Distributed Computing And Systems Software
+188,4607,"Graphics, Augmented Reality And Games"
+189,4608,Human-Centred Computing
+190,4609,Information Systems
+191,4610,Library And Information Studies
+192,4610,Library And Information Studies
+193,4611,Machine Learning
+194,4612,Software Engineering
+195,4613,Theory Of Computation
+196,4699,Other Information And Computing Sciences
+197,4701,Communication And Media Studies
+198,4702,Cultural Studies
+199,4703,Language Studies
+200,4704,Linguistics
+201,4705,Literary Studies
+202,4799,"Other Language, Communication And Culture"
+203,4801,Commercial Law
+204,4802,Environmental And Resources Law
+205,4803,International And Comparative Law
+206,4804,Law
+207,4804,Law In Context
+208,4805,Legal Systems
+209,4806,Private Law And Civil Obligations
+210,4807,Public Law
+211,4899,Other Law And Legal Studies
+212,4901,Applied Mathematics
+213,4902,Mathematical Physics
+214,4903,Numerical And Computational Mathematics
+215,4904,Pure Mathematics
+216,4905,Statistics
+217,4999,Other Mathematical Sciences
+218,5001,Applied Ethics
+219,5002,History And Philosophy Of Specific Fields
+220,5003,Philosophy
+221,5004,Religious Studies
+222,5005,Theology
+223,5099,Other Philosophy And Religious Studies
+224,5101,Astronomical Sciences
+225,5102,"Atomic, Molecular And Optical Physics"
+226,5103,Classical Physics
+227,5104,Condensed Matter Physics
+228,5105,Medical And Biological Physics
+229,5106,Nuclear And Plasma Physics
+230,5107,Particle And High Energy Physics
+231,5108,Quantum Physics
+232,5109,Space Sciences
+233,5110,Synchrotrons And Accelerators
+234,5199,Other Physical Sciences
+235,5201,Applied And Developmental Psychology
+236,5202,Biological Psychology
+237,5203,Clinical And Health Psychology
+238,5204,Cognitive And Computational Psychology
+239,5205,Social And Personality Psychology
+240,5299,Other Psychology
+241,300101,Agricultural Biotechnology Diagnostics (Incl. Biosensors)
+242,300102,Agricultural Marine Biotechnology
+243,300103,Agricultural Molecular Engineering Of Nucleic Acids And Proteins
+244,300104,Genetically Modified Animals
+245,300105,Genetically Modified Field Crops And Pasture
+246,300106,Genetically Modified Horticulture Plants
+247,300107,Genetically Modified Trees
+248,300108,Livestock Cloning
+249,300109,Non-Genetically Modified Uses Of Biotechnology
+250,300110,Transgenesis
+251,300199,Agricultural Biotechnology Not Elsewhere Classified
+252,300201,Agricultural Hydrology
+253,300202,Agricultural Land Management
+254,300203,Agricultural Land Planning
+255,300204,Agricultural Management Of Nutrients
+256,300205,Agricultural Production Systems Simulation
+257,300206,Agricultural Spatial Analysis And Modelling
+258,300207,Agricultural Systems Analysis And Modelling
+259,300208,"Farm Management, Rural Management And Agribusiness"
+260,300209,Germplasm Management
+261,300210,Sustainable Agricultural Development
+262,300299,"Agriculture, Land And Farm Management Not Elsewhere Classified"
+263,300301,Animal Growth And Development
+264,300302,Animal Management
+265,300303,Animal Nutrition
+266,300304,Animal Protection (Incl. Pests And Pathogens)
+267,300305,Animal Reproduction And Breeding
+268,300306,Animal Welfare
+269,300307,Environmental Studies In Animal Production
+270,300399,Animal Production Not Elsewhere Classified
+271,300401,Agrochemicals And Biocides (Incl. Application)
+272,300402,Agro-Ecosystem Function And Prediction
+273,300403,Agronomy
+274,300404,Crop And Pasture Biochemistry And Physiology
+275,300405,Crop And Pasture Biomass And Bioproducts
+276,300406,Crop And Pasture Improvement (Incl. Selection And Breeding)
+277,300407,Crop And Pasture Nutrition
+278,300408,Crop And Pasture Post Harvest Technologies (Incl. Transportation And Storage)
+279,300409,"Crop And Pasture Protection (Incl. Pests, Diseases And Weeds)"
+280,300410,Crop And Pasture Waste Water Use
+281,300411,Fertilisers (Incl. Application)
+282,300412,Organic And Low Chemical Input Crop Production
+283,300413,Pollination Biology And Systems
+284,300499,Crop And Pasture Production Not Elsewhere Classified
+285,300501,Aquaculture
+286,300502,Aquaculture And Fisheries Stock Assessment
+287,300503,Fish Pests And Diseases
+288,300504,Fish Physiology And Genetics
+289,300505,Fisheries Management
+290,300506,Post-Harvest Fisheries Technologies (Incl. Transportation)
+291,300599,Fisheries Sciences Not Elsewhere Classified
+292,300601,Beverage Chemistry And Beverage Sensory Science
+293,300602,Food Chemistry And Food Sensory Science
+294,300603,Food Nutritional Balance
+295,300604,"Food Packaging, Preservation And Processing"
+296,300605,"Food Safety, Traceability, Certification And Authenticity"
+297,300606,Food Sustainability
+298,300607,Food Technology
+299,300699,Food Sciences Not Elsewhere Classified
+300,300701,Agroforestry
+301,300702,Forest Biodiversity
+302,300703,Forest Ecosystems
+303,300704,Forest Health And Pathology
+304,300705,Forestry Biomass And Bioproducts
+305,300706,Forestry Fire Management
+306,300707,Forestry Management And Environment
+307,300708,Forestry Product Quality Assessment
+308,300709,Tree Improvement (Incl. Selection And Breeding)
+309,300710,Tree Nutrition And Physiology
+310,300711,Wood Fibre Processing
+311,300712,Wood Processing
+312,300799,Forestry Sciences Not Elsewhere Classified
+313,300801,Field Organic And Low Chemical Input Horticulture
+314,300802,Horticultural Crop Growth And Development
+315,300803,Horticultural Crop Improvement (Incl. Selection And Breeding)
+316,300804,"Horticultural Crop Protection (Incl. Pests, Diseases And Weeds)"
+317,300805,Oenology And Viticulture
+318,300806,Post Harvest Horticultural Technologies (Incl. Transportation And Storage)
+319,300899,Horticultural Production Not Elsewhere Classified
+320,300901,Veterinary Anaesthesiology And Intensive Care
+321,300902,Veterinary Anatomy And Physiology
+322,300903,Veterinary Bacteriology
+323,300904,Veterinary Diagnosis And Diagnostics
+324,300905,Veterinary Epidemiology
+325,300906,Veterinary Immunology
+326,300907,Veterinary Medicine (Excl. Urology)
+327,300908,Veterinary Mycology
+328,300909,Veterinary Parasitology
+329,300910,Veterinary Pathology
+330,300911,Veterinary Pharmacology
+331,300912,Veterinary Surgery
+332,300913,Veterinary Urology
+333,300914,Veterinary Virology
+334,300999,Veterinary Sciences Not Elsewhere Classified
+335,309999,"Other Agricultural, Veterinary And Food Sciences Not Elsewhere Classified"
+336,310101,Analytical Biochemistry
+337,310102,"Cell Development, Proliferation And Death"
+338,310103,Cell Metabolism
+339,310104,Cell Neurochemistry
+340,310105,"Cellular Interactions (Incl. Adhesion, Matrix, Cell Wall)"
+341,310106,Enzymes
+342,310107,Glycobiology
+343,310108,Protein Trafficking
+344,310109,Proteomics And Intermolecular Interactions (Excl. Medical Proteomics)
+345,310110,Receptors And Membrane Biology
+346,310111,Signal Transduction
+347,310112,Structural Biology (Incl. Macromolecular Modelling)
+348,310113,Synthetic Biology
+349,310114,Systems Biology
+350,310199,Biochemistry And Cell Biology Not Elsewhere Classified
+351,310201,Bioinformatic Methods Development
+352,310202,Biological Network Analysis
+353,310203,Computational Ecology And Phylogenetics
+354,310204,Genomics And Transcriptomics
+355,310205,Proteomics And Metabolomics
+356,310206,Sequence Analysis
+357,310207,Statistical And Quantitative Genetics
+358,310208,Translational And Applied Bioinformatics
+359,310299,Bioinformatics And Computational Biology Not Elsewhere Classified
+360,310301,Behavioural Ecology
+361,310302,Community Ecology (Excl. Invasive Species Ecology)
+362,310303,Ecological Physiology
+363,310304,Freshwater Ecology
+364,310305,Marine And Estuarine Ecology (Incl. Marine Ichthyology)
+365,310306,Palaeoecology
+366,310307,Population Ecology
+367,310308,Terrestrial Ecology
+368,310399,Ecology Not Elsewhere Classified
+369,310401,Animal Systematics And Taxonomy
+370,310402,Biogeography And Phylogeography
+371,310403,Biological Adaptation
+372,310404,Evolution Of Developmental Systems
+373,310405,Evolutionary Ecology
+374,310406,Evolutionary Impacts Of Climate Change
+375,310407,Host-Parasite Interactions
+376,310408,Life Histories
+377,310409,Microbial Taxonomy
+378,310410,Phylogeny And Comparative Analysis
+379,310411,Plant And Fungus Systematics And Taxonomy
+380,310412,Speciation And Extinction
+381,310499,Evolutionary Biology Not Elsewhere Classified
+382,310501,Anthropological Genetics
+383,310502,Cell And Nuclear Division
+384,310503,Developmental Genetics (Incl. Sex Determination)
+385,310504,Epigenetics (Incl. Genome Methylation And Epigenomics)
+386,310505,Gene Expression (Incl. Microarray And Other Genome-Wide Approaches)
+387,310506,Gene Mapping
+388,310507,Genetic Immunology
+389,310508,Genome Structure And Regulation
+390,310509,Genomics
+391,310510,Molecular Evolution
+392,310511,Neurogenetics
+393,310599,Genetics Not Elsewhere Classified
+394,310601,Biocatalysis And Enzyme Technology
+395,310602,"Bioprocessing, Bioproduction And Bioproducts"
+396,310603,Fermentation
+397,310604,Industrial Biotechnology Diagnostics (Incl. Biosensors)
+398,310605,Industrial Microbiology (Incl. Biofeedstocks)
+399,310606,Industrial Molecular Engineering Of Nucleic Acids And Proteins
+400,310607,Nanobiotechnology
+401,310699,Industrial Biotechnology Not Elsewhere Classified
+402,310701,Bacteriology
+403,310702,Infectious Agents
+404,310703,Microbial Ecology
+405,310704,Microbial Genetics
+406,310705,Mycology
+407,310706,Virology
+408,310799,Microbiology Not Elsewhere Classified
+409,310801,Phycology (Incl. Marine Grasses)
+410,310802,Plant Biochemistry
+411,310803,Plant Cell And Molecular Biology
+412,310804,Plant Developmental And Reproductive Biology
+413,310805,Plant Pathology
+414,310806,Plant Physiology
+415,310899,Plant Biology Not Elsewhere Classified
+416,310901,Animal Behaviour
+417,310902,Animal Cell And Molecular Biology
+418,310903,Animal Developmental And Reproductive Biology
+419,310904,Animal Diet And Nutrition
+420,310905,Animal Immunology
+421,310906,Animal Neurobiology
+422,310907,Animal Physiological Ecology
+423,310908,Animal Physiology - Biophysics
+424,310909,Animal Physiology - Cell
+425,310910,Animal Physiology - Systems
+426,310911,Animal Structure And Function
+427,310912,Comparative Physiology
+428,310913,Invertebrate Biology
+429,310914,Vertebrate Biology
+430,310999,Zoology Not Elsewhere Classified
+431,319901,Forensic Biology
+432,319902,Global Change Biology
+433,319999,Other Biological Sciences Not Elsewhere Classified
+434,320101,Cardiology (Incl. Cardiovascular Diseases)
+435,320102,Haematology
+436,320103,Respiratory Diseases
+437,320199,Cardiovascular Medicine And Haematology Not Elsewhere Classified
+438,320201,Anaesthesiology
+439,320202,Clinical Chemistry (Incl. Diagnostics)
+440,320203,Clinical Microbiology
+441,320204,Clinimetrics
+442,320205,Dermatology
+443,320206,Diagnostic Radiography
+444,320207,Emergency Medicine
+445,320208,Endocrinology
+446,320209,Gastroenterology And Hepatology
+447,320210,Geriatrics And Gerontology
+448,320211,Infectious Diseases
+449,320212,Intensive Care
+450,320213,Medical Genetics (Excl. Cancer Genetics)
+451,320214,Nephrology And Urology
+452,320215,Nuclear Medicine
+453,320216,Orthopaedics
+454,320217,Otorhinolaryngology
+455,320218,Pain
+456,320219,Paramedicine
+457,320220,Pathology (Excl. Oral Pathology)
+458,320221,Psychiatry (Incl. Psychotherapy)
+459,320222,Radiology And Organ Imaging
+460,320223,Rheumatology And Arthritis
+461,320224,Rural Clinical Health
+462,320225,Sports Medicine
+463,320226,Surgery
+464,320227,Venereology
+465,320299,Clinical Sciences Not Elsewhere Classified
+466,320301,Craniofacial Biology
+467,320302,Dental Materials And Equipment
+468,320303,"Dental Therapeutics, Pharmacology And Toxicology "
+469,320304,Endodontics
+470,320305,Oral And Maxillofacial Surgery
+471,320306,Oral Implantology
+472,320307,Oral Medicine And Pathology
+473,320308,Orthodontics And Dentofacial Orthopaedics
+474,320309,Paedodontics
+475,320310,Periodontics
+476,320311,Prosthodontics
+477,320312,Special Needs Dentistry
+478,320399,Dentistry Not Elsewhere Classified
+479,320401,Allergy
+480,320402,"Applied Immunology (Incl. Antibody Engineering, Xenotransplantation And T-Cell Therapies)"
+481,320403,Autoimmunity
+482,320404,Cellular Immunology
+483,320405,Humoural Immunology And Immunochemistry
+484,320406,Immunogenetics (Incl. Genetic Immunology)
+485,320407,Innate Immunity
+486,320408,Transplantation Immunology
+487,320409,Tumour Immunology
+488,320499,Immunology Not Elsewhere Classified
+489,320501,Medical Biochemistry - Amino Acids And Metabolites
+490,320502,Medical Biochemistry - Carbohydrates
+491,320503,Medical Biochemistry - Inorganic Elements And Compounds
+492,320504,Medical Biochemistry - Lipids
+493,320505,Medical Biochemistry - Nucleic Acids
+494,320506,Medical Biochemistry - Proteins And Peptides (Incl. Medical Proteomics)
+495,320507,Metabolic Medicine
+496,320599,Medical Biochemistry And Metabolomics Not Elsewhere Classified
+497,320601,Gene And Molecular Therapy
+498,320602,Medical Biotechnology Diagnostics (Incl. Biosensors)
+499,320603,Medical Molecular Engineering Of Nucleic Acids And Proteins
+500,320604,Nanomedicine
+501,320605,"Nanotoxicology, Health And Safety"
+502,320606,Regenerative Medicine (Incl. Stem Cells)
+503,320699,Medical Biotechnology Not Elsewhere Classified
+504,320701,Medical Bacteriology
+505,320702,Medical Infection Agents (Incl. Prions)
+506,320703,Medical Mycology
+507,320704,Medical Parasitology
+508,320705,Medical Virology
+509,320799,Medical Microbiology Not Elsewhere Classified
+510,320801,Cell Physiology
+511,320802,Human Biophysics
+512,320803,Systems Physiology
+513,320899,Medical Physiology Not Elsewhere Classified
+514,320901,Autonomic Nervous System
+515,320902,Cellular Nervous System
+516,320903,Central Nervous System
+517,320904,Computational Neuroscience (Incl. Mathematical Neuroscience And Theoretical Neuroscience)
+518,320905,Neurology And Neuromuscular Diseases
+519,320906,Peripheral Nervous System
+520,320907,Sensory Systems
+521,320999,Neurosciences Not Elsewhere Classified
+522,321001,Clinical Nutrition
+523,321002,Food Properties (Incl. Characteristics And Health Benefits)
+524,321003,Nutrigenomics And Personalised Nutrition
+525,321004,Nutritional Science
+526,321005,Public Health Nutrition
+527,321006,Sport And Exercise Nutrition
+528,321099,Nutrition And Dietetics Not Elsewhere Classified
+529,321101,Cancer Cell Biology
+530,321102,Cancer Diagnosis
+531,321103,Cancer Genetics
+532,321104,Cancer Therapy (Excl. Chemotherapy And Radiation Therapy)
+533,321105,Chemotherapy
+534,321106,Haematological Tumours
+535,321107,Liquid Biopsies
+536,321108,Molecular Targets
+537,321109,Predictive And Prognostic Markers
+538,321110,Radiation Therapy
+539,321111,Solid Tumours
+540,321199,Oncology And Carcinogenesis Not Elsewhere Classified
+541,321201,Ophthalmology
+542,321202,Optical Technology
+543,321203,Optometry
+544,321204,Vision Science
+545,321299,Ophthalmology And Optometry Not Elsewhere Classified
+546,321301,Adolescent Health
+547,321302,Infant And Child Health
+548,321303,Neonatology
+549,321399,Paediatrics Not Elsewhere Classified
+550,321401,Basic Pharmacology
+551,321402,Clinical Pharmacology And Therapeutics
+552,321403,Clinical Pharmacy And Pharmacy Practice
+553,321404,Pharmaceutical Delivery Technologies
+554,321405,Pharmaceutical Sciences
+555,321406,Pharmacogenomics
+556,321407,Toxicology (Incl. Clinical Toxicology)
+557,321499,Pharmacology And Pharmaceutical Sciences Not Elsewhere Classified
+558,321501,Foetal Development And Medicine
+559,321502,Obstetrics And Gynaecology
+560,321503,Reproduction
+561,321599,Reproductive Medicine Not Elsewhere Classified
+562,329999,Other Biomedical And Clinical Sciences Not Elsewhere Classified
+563,330101,Architectural Computing And Visualisation Methods
+564,330102,Architectural Design
+565,330103,Architectural Heritage And Conservation
+566,330104,"Architectural History, Theory And Criticism"
+567,330105,Architectural Science And Technology
+568,330106,Architecture For Disaster Relief
+569,330107,Architecture Management
+570,330108,Interior Design
+571,330109,Landscape Architecture
+572,330110,Sustainable Architecture
+573,330199,Architecture Not Elsewhere Classified
+574,330201,Automation And Technology In Building And Construction
+575,330202,Building Construction Management And Project Planning
+576,330203,Building Industry Studies
+577,330204,Building Information Modelling And Management
+578,330205,Building Organisational Studies
+579,330206,"Building Science, Technologies And Systems"
+580,330207,Quantity Surveying
+581,330299,Building Not Elsewhere Classified
+582,330301,Data Visualisation And Computational (Incl. Parametric And Generative) Design
+583,330302,Design Anthropology
+584,330303,Design For Disaster Relief
+585,330304,"Design History, Theory And Criticism"
+586,330305,Design Management
+587,330306,Design Practice And Methods
+588,330307,Ergonomics Design
+589,330308,Fire Safety Design
+590,330309,Industrial And Product Design
+591,330310,Interaction And Experience Design
+592,330311,Models And Simulations Of Design
+593,330312,Service Design
+594,330313,Social Design
+595,330314,Sustainable Design
+596,330315,Textile And Fashion Design
+597,330316,Visual Communication Design (Incl. Graphic Design)
+598,330399,Design Not Elsewhere Classified
+599,330401,Community Planning
+600,330402,History And Theory Of The Built Environment (Excl. Architecture)
+601,330403,"Housing Markets, Development And Management"
+602,330404,Land Use And Environmental Planning
+603,330405,Public Participation And Community Engagement
+604,330406,Regional Analysis And Development
+605,330407,Regulatory Planning And Development Assessment
+606,330408,"Strategic, Metropolitan And Regional Planning"
+607,330409,Transport Planning
+608,330410,Urban Analysis And Development
+609,330411,Urban Design
+610,330412,Urban Informatics
+611,330413,Urban Planning And Health
+612,330499,Urban And Regional Planning Not Elsewhere Classified
+613,339999,Other Built Environment And Design Not Elsewhere Classified
+614,340101,Analytical Spectrometry
+615,340102,Bioassays
+616,340103,Electroanalytical Chemistry
+617,340104,Flow Analysis
+618,340105,Instrumental Methods (Excl. Immunological And Bioassay Methods)
+619,340106,Metabolomic Chemistry
+620,340107,"Quality Assurance, Chemometrics, Traceability And Metrological Chemistry"
+621,340108,Sensor Technology (Incl. Chemical Aspects)
+622,340109,Separation Science
+623,340199,Analytical Chemistry Not Elsewhere Classified
+624,340201,Bioinorganic Chemistry
+625,340202,Crystallography
+626,340203,F-Block Chemistry
+627,340204,Inorganic Green Chemistry
+628,340205,Main Group Metal Chemistry
+629,340206,Metal Cluster Chemistry
+630,340207,Metal Organic Frameworks
+631,340208,Non-Metal Chemistry
+632,340209,Organometallic Chemistry
+633,340210,Solid State Chemistry
+634,340211,Transition Metal Chemistry
+635,340299,Inorganic Chemistry Not Elsewhere Classified
+636,340301,Inorganic Materials (Incl. Nanomaterials)
+637,340302,Macromolecular Materials
+638,340303,Nanochemistry
+639,340304,Optical Properties Of Materials
+640,340305,Physical Properties Of Materials
+641,340306,Polymerisation Mechanisms
+642,340307,Structure And Dynamics Of Materials
+643,340308,Supramolecular Chemistry
+644,340309,Theory And Design Of Materials
+645,340399,Macromolecular And Materials Chemistry Not Elsewhere Classified
+646,340401,Biologically Active Molecules
+647,340402,Biomolecular Modelling And Design
+648,340403,Characterisation Of Biological Macromolecules
+649,340404,Cheminformatics And Quantitative Structure-Activity Relationships
+650,340405,Glycoconjugates
+651,340406,Molecular Medicine
+652,340407,Proteins And Peptides
+653,340499,Medicinal And Biomolecular Chemistry Not Elsewhere Classified
+654,340501,Free Radical Chemistry
+655,340502,Natural Products And Bioactive Compounds
+656,340503,Organic Chemical Synthesis
+657,340504,Organic Green Chemistry
+658,340505,Physical Organic Chemistry
+659,340599,Organic Chemistry Not Elsewhere Classified
+660,340601,Catalysis And Mechanisms Of Reactions
+661,340602,Chemical Thermodynamics And Energetics
+662,340603,Colloid And Surface Chemistry
+663,340604,Electrochemistry
+664,340605,Molecular Imaging (Incl. Electron Microscopy And Neutron Diffraction)
+665,340606,Photochemistry
+666,340607,Reaction Kinetics And Dynamics
+667,340608,Solution Chemistry
+668,340609,Transport Properties And Non-Equilibrium Processes
+669,340699,Physical Chemistry Not Elsewhere Classified
+670,340701,Computational Chemistry
+671,340702,Radiation And Matter
+672,340703,Statistical Mechanics In Chemistry
+673,340704,Theoretical Quantum Chemistry
+674,340799,Theoretical And Computational Chemistry Not Elsewhere Classified
+675,349901,Forensic Chemistry
+676,349999,Other Chemical Sciences Not Elsewhere Classified
+677,350101,Accounting Theory And Standards
+678,350102,Auditing And Accountability
+679,350103,Financial Accounting
+680,350104,International Accounting
+681,350105,Management Accounting
+682,350106,Not-For-Profit Accounting And Accountability
+683,350107,Sustainability Accounting And Reporting
+684,350108,Taxation Accounting
+685,350199,"Accounting, Auditing And Accountability Not Elsewhere Classified"
+686,350201,Environment And Climate Finance
+687,350202,Finance
+688,350203,Financial Econometrics
+689,350204,Financial Institutions (Incl. Banking)
+690,350205,Household Finance And Financial Literacy
+691,350206,Insurance Studies
+692,350207,International Finance
+693,350208,Investment And Risk Management
+694,350209,Not-For-Profit Finance And Risk
+695,350299,"Banking, Finance And Investment Not Elsewhere Classified"
+696,350301,Business Analytics
+697,350302,"Business Information Management (Incl. Records, Knowledge And Intelligence)"
+698,350303,Business Information Systems
+699,350304,Business Systems In Context
+700,350305,Forensic Intelligence
+701,350306,Forensic Science And Management
+702,350307,Technology Management
+703,350399,Business Systems In Context Not Elsewhere Classified
+704,350401,Food And Hospitality Services
+705,350402,Hospitality Management
+706,350403,Real Estate And Valuation Services
+707,350404,Retail
+708,350405,Sport And Leisure Management
+709,350499,Commercial Services Not Elsewhere Classified
+710,350501,Business And Labour History
+711,350502,Employment Equity And Diversity
+712,350503,Human Resources Management
+713,350504,Industrial And Employee Relations
+714,350505,Occupational And Workplace Health And Safety
+715,350506,Workforce Planning
+716,350507,Workplace Wellbeing And Quality Of Working Life
+717,350599,Human Resources And Industrial Relations Not Elsewhere Classified
+718,350601,Consumer Behaviour
+719,350602,Consumer-Oriented Product Or Service Development
+720,350603,Industrial Marketing
+721,350604,Marketing Communications
+722,350605,Marketing Management (Incl. Strategy And Customer Relations)
+723,350606,Marketing Research Methodology
+724,350607,Marketing Technology
+725,350608,Marketing Theory
+726,350609,Not-For-Profit Marketing
+727,350610,Pricing (Incl. Consumer Value Estimation)
+728,350611,Service Marketing
+729,350612,Social Marketing
+730,350699,Marketing Not Elsewhere Classified
+731,350701,Corporate Governance
+732,350702,Corporate Social Responsibility
+733,350703,Disaster And Emergency Management
+734,350704,Entrepreneurship
+735,350705,Innovation Management
+736,350706,International Business
+737,350707,Leadership
+738,350708,Not-For-Profit Business And Management
+739,350709,Organisation And Management Theory
+740,350710,Organisational Behaviour
+741,350711,Organisational Planning And Management
+742,350712,Production And Operations Management
+743,350713,Project Management
+744,350714,Public Sector Organisation And Management
+745,350715,Quality Management
+746,350716,Small Business Organisation And Management
+747,350717,Stakeholder Engagement
+748,350718,Strategy
+749,350799,"Strategy, Management And Organisational Behaviour Not Elsewhere Classified"
+750,350801,Impacts Of Tourism
+751,350802,Tourism Forecasting
+752,350803,Tourism Management
+753,350804,Tourism Marketing
+754,350805,Tourism Resource Appraisal
+755,350806,Tourist Behaviour And Visitor Experience
+756,350899,Tourism Not Elsewhere Classified
+757,350901,Air Transportation And Freight Services
+758,350902,Intelligent Mobility
+759,350903,Logistics
+760,350904,Maritime Transportation And Freight Services
+761,350905,Passenger Needs
+762,350906,Public Transport
+763,350907,Rail Transportation And Freight Services
+764,350908,Road Transportation And Freight Services
+765,350909,Supply Chains
+766,350999,"Transportation, Logistics And Supply Chains Not Elsewhere Classified"
+767,359999,"Other Commerce, Management, Tourism And Services Not Elsewhere Classified"
+768,360101,Art Criticism
+769,360102,Art History
+770,360103,Art Theory
+771,360104,Visual Cultures
+772,360199,"Art History, Theory And Criticism Not Elsewhere Classified"
+773,360201,Creative Writing (Incl. Scriptwriting)
+774,360202,Digital Writing
+775,360203,Professional Writing And Journalism Practice
+776,360204,Site-Based Writing
+777,360205,Technical Writing
+778,360299,Creative And Professional Writing Not Elsewhere Classified
+779,360301,Music Cognition
+780,360302,Music Composition And Improvisation
+781,360303,Music Education
+782,360304,Music Performance
+783,360305,Music Technology And Recording
+784,360306,Musicology And Ethnomusicology
+785,360399,Music Not Elsewhere Classified
+786,360401,Applied Theatre
+787,360402,Dance And Dance Studies
+788,360403,"Drama, Theatre And Performance Studies"
+789,360499,Performing Arts Not Elsewhere Classified
+790,360501,Cinema Studies
+791,360502,Computer Gaming And Animation
+792,360503,Digital And Electronic Media Art
+793,360504,Interactive Media
+794,360505,Screen Media
+795,360506,Visual Effects
+796,360599,Screen And Digital Media Not Elsewhere Classified
+797,360601,Crafts
+798,360602,Fine Arts
+799,360603,Performance Art
+800,360604,"Photography, Video And Lens-Based Practice"
+801,360699,Visual Arts Not Elsewhere Classified
+802,369999,Other Creative Arts And Writing Not Elsewhere Classified
+803,370101,Adverse Weather Events
+804,370102,Air Pollution Processes And Air Quality Measurement
+805,370103,Atmospheric Aerosols
+806,370104,"Atmospheric Composition, Chemistry And Processes"
+807,370105,Atmospheric Dynamics
+808,370106,Atmospheric Radiation
+809,370107,Cloud Physics
+810,370108,Meteorology
+811,370109,Tropospheric And Stratospheric Physics
+812,370199,Atmospheric Sciences Not Elsewhere Classified
+813,370201,Climate Change Processes
+814,370202,Climatology
+815,370203,Greenhouse Gas Inventories And Fluxes
+816,370299,Climate Change Science Not Elsewhere Classified
+817,370301,Exploration Geochemistry
+818,370302,Inorganic Geochemistry
+819,370303,Isotope Geochemistry
+820,370304,Organic Geochemistry
+821,370399,Geochemistry Not Elsewhere Classified
+822,370401,Computational Modelling And Simulation In Earth Sciences
+823,370402,Earth And Space Science Informatics
+824,370403,Geoscience Data Visualisation
+825,370499,Geoinformatics Not Elsewhere Classified
+826,370501,Biomineralisation
+827,370502,Geochronology
+828,370503,Igneous And Metamorphic Petrology
+829,370504,Marine Geoscience
+830,370505,Mineralogy And Crystallography
+831,370506,Palaeontology (Incl. Palynology)
+832,370507,Planetary Geology
+833,370508,Resource Geoscience
+834,370509,Sedimentology
+835,370510,"Stratigraphy (Incl. Biostratigraphy, Sequence Stratigraphy And Basin Analysis)"
+836,370511,Structural Geology And Tectonics
+837,370512,Volcanology
+838,370599,Geology Not Elsewhere Classified
+839,370601,Applied Geophysics
+840,370602,Electrical And Electromagnetic Methods In Geophysics
+841,370603,Geodesy
+842,370604,Geodynamics
+843,370605,Geothermics And Radiometrics
+844,370606,Gravimetrics
+845,370607,Magnetism And Palaeomagnetism
+846,370608,Petrophysics And Rock Mechanics
+847,370609,Seismology And Seismic Exploration
+848,370699,Geophysics Not Elsewhere Classified
+849,370701,Contaminant Hydrology
+850,370702,Ecohydrology
+851,370703,Groundwater Hydrology
+852,370704,Surface Water Hydrology
+853,370705,Urban Hydrology
+854,370799,Hydrology Not Elsewhere Classified
+855,370801,Biological Oceanography
+856,370802,Chemical Oceanography
+857,370803,Physical Oceanography
+858,370899,Oceanography Not Elsewhere Classified
+859,370901,Geomorphology And Earth Surface Processes
+860,370902,Glaciology
+861,370903,Natural Hazards
+862,370904,Palaeoclimatology
+863,370905,Quaternary Environments
+864,370906,Regolith And Landscape Evolution
+865,370999,Physical Geography And Environmental Geoscience Not Elsewhere Classified
+866,379901,Earth System Sciences
+867,379999,Other Earth Sciences Not Elsewhere Classified
+868,380101,Agricultural Economics
+869,380102,Behavioural Economics
+870,380103,Economic History
+871,380104,Economics Of Education
+872,380105,Environment And Resource Economics
+873,380106,Experimental Economics
+874,380107,Financial Economics
+875,380108,Health Economics
+876,380109,Industry Economics And Industrial Organisation
+877,380110,International Economics
+878,380111,Labour Economics
+879,380112,Macroeconomics (Incl. Monetary And Fiscal Theory)
+880,380113,Public Economics - Public Choice
+881,380114,Public Economics - Publicly Provided Goods
+882,380115,Public Economics - Taxation And Revenue
+883,380116,Tourism Economics
+884,380117,Transport Economics
+885,380118,Urban And Regional Economics
+886,380119,Welfare Economics
+887,380199,Applied Economics Not Elsewhere Classified
+888,380201,Cross-Sectional Analysis
+889,380202,Econometric And Statistical Methods
+890,380203,Economic Models And Forecasting
+891,380204,Panel Data Analysis
+892,380205,Time-Series Analysis
+893,380299,Econometrics Not Elsewhere Classified
+894,380301,History Of Economic Thought
+895,380302,Macroeconomic Theory
+896,380303,Mathematical Economics
+897,380304,Microeconomic Theory
+898,380399,Economic Theory Not Elsewhere Classified
+899,389901,Comparative Economic Systems
+900,389902,Ecological Economics
+901,389903,Heterodox Economics
+902,389999,Other Economics Not Elsewhere Classified
+903,390101,"Creative Arts, Media And Communication Curriculum And Pedagogy"
+904,390102,Curriculum And Pedagogy Theory And Development
+905,390103,"Economics, Business And Management Curriculum And Pedagogy"
+906,390104,"English And Literacy Curriculum And Pedagogy (Excl. Lote, Esl And Tesol)"
+907,390105,Environmental Education Curriculum And Pedagogy
+908,390106,Geography Education Curriculum And Pedagogy
+909,390107,"Humanities And Social Sciences Curriculum And Pedagogy (Excl. Economics, Business And Management)"
+910,390108,"Lote, Esl And Tesol Curriculum And Pedagogy"
+911,390109,Mathematics And Numeracy Curriculum And Pedagogy
+912,390110,"Medicine, Nursing And Health Curriculum And Pedagogy"
+913,390111,Physical Education And Development Curriculum And Pedagogy
+914,390112,Religion Curriculum And Pedagogy
+915,390113,"Science, Technology And Engineering Curriculum And Pedagogy"
+916,390114,Vocational Education And Training Curriculum And Pedagogy
+917,390115,Work Integrated Learning (Incl. Internships)
+918,390199,Curriculum And Pedagogy Not Elsewhere Classified
+919,390201,Education Policy
+920,390202,History And Philosophy Of Education
+921,390203,Sociology Of Education
+922,390299,"Education Policy, Sociology And Philosophy Not Elsewhere Classified"
+923,390301,Continuing And Community Education
+924,390302,Early Childhood Education
+925,390303,Higher Education
+926,390304,Primary Education
+927,390305,Professional Education And Training
+928,390306,Secondary Education
+929,390307,Teacher Education And Professional Development Of Educators
+930,390308,"Technical, Further And Workplace Education"
+931,390399,Education Systems Not Elsewhere Classified
+932,390401,Comparative And Cross-Cultural Education
+933,390402,Education Assessment And Evaluation
+934,390403,"Educational Administration, Management And Leadership"
+935,390404,Educational Counselling
+936,390405,Educational Technology And Computing
+937,390406,"Gender, Sexuality And Education"
+938,390407,Inclusive Education
+939,390408,Learning Analytics
+940,390409,Learning Sciences
+941,390410,"Multicultural Education (Excl. Aboriginal And Torres Strait Islander, Māori And Pacific Peoples)"
+942,390411,Special Education And Disability
+943,390412,Teacher And Student Wellbeing
+944,390499,Specialist Studies In Education Not Elsewhere Classified
+945,399999,Other Education Not Elsewhere Classified
+946,400101,Aerospace Materials
+947,400102,Aerospace Structures
+948,400103,Aircraft Performance And Flight Control Systems
+949,400104,Avionics
+950,400105,Flight Dynamics
+951,400106,Hypersonic Propulsion And Hypersonic Aerothermodynamics
+952,400107,"Satellite, Space Vehicle And Missile Design And Testing"
+953,400199,Aerospace Engineering Not Elsewhere Classified
+954,400201,Automotive Combustion And Fuel Engineering
+955,400202,Automotive Engineering Materials
+956,400203,Automotive Mechatronics And Autonomous Systems
+957,400204,Automotive Safety Engineering
+958,400205,Hybrid And Electric Vehicles And Powertrains
+959,400299,Automotive Engineering Not Elsewhere Classified
+960,400301,Biofabrication
+961,400302,Biomaterials
+962,400303,Biomechanical Engineering
+963,400304,Biomedical Imaging
+964,400305,Biomedical Instrumentation
+965,400306,Computational Physiology
+966,400307,Mechanobiology
+967,400308,Medical Devices
+968,400309,Neural Engineering
+969,400310,Rehabilitation Engineering
+970,400311,Tissue Engineering
+971,400399,Biomedical Engineering Not Elsewhere Classified
+972,400401,Carbon Capture Engineering (Excl. Sequestration)
+973,400402,Chemical And Thermal Processes In Energy And Combustion
+974,400403,Chemical Engineering Design
+975,400404,Electrochemical Energy Storage And Conversion
+976,400405,Food Engineering
+977,400406,Powder And Particle Technology
+978,400407,Process Control And Simulation
+979,400408,Reaction Engineering (Excl. Nuclear Reactions)
+980,400409,Separation Technologies
+981,400410,Wastewater Treatment Processes
+982,400411,Water Treatment Processes
+983,400499,Chemical Engineering Not Elsewhere Classified
+984,400501,Architectural Engineering
+985,400502,Civil Geotechnical Engineering
+986,400503,Complex Civil Systems
+987,400504,Construction Engineering
+988,400505,Construction Materials
+989,400506,Earthquake Engineering
+990,400507,Fire Safety Engineering
+991,400508,Infrastructure Engineering And Asset Management
+992,400509,Structural Dynamics
+993,400510,Structural Engineering
+994,400511,Timber Engineering
+995,400512,Transport Engineering
+996,400513,Water Resources Engineering
+997,400599,Civil Engineering Not Elsewhere Classified
+998,400601,Antennas And Propagation
+999,400602,Data Communications
+1000,400603,"Molecular, Biological, And Multi-Scale Communications"
+1001,400604,Network Engineering
+1002,400605,Optical Fibre Communication Systems And Technologies
+1003,400606,Satellite Communications
+1004,400607,Signal Processing
+1005,400608,Wireless Communication Systems And Technologies (Incl. Microwave And Millimetrewave)
+1006,400699,Communications Engineering Not Elsewhere Classified
+1007,400701,Assistive Robots And Technology
+1008,400702,Automation Engineering
+1009,400703,Autonomous Vehicle Systems
+1010,400704,Biomechatronics
+1011,400705,Control Engineering
+1012,400706,Field Robotics
+1013,400707,Manufacturing Robotics
+1014,400708,Mechatronics Hardware Design And Architecture
+1015,400709,Medical Robotics
+1016,400710,Micro-Manipulation
+1017,400711,"Simulation, Modelling, And Programming Of Mechatronics Systems"
+1018,400799,"Control Engineering, Mechatronics And Robotics Not Elsewhere Classified"
+1019,400801,Circuits And Systems
+1020,400802,Electrical Circuits And Systems
+1021,400803,"Electrical Energy Generation (Incl. Renewables, Excl. Photovoltaics)"
+1022,400804,Electrical Energy Storage
+1023,400805,"Electrical Energy Transmission, Networks And Systems"
+1024,400806,Electrical Machines And Drives
+1025,400807,Engineering Electromagnetics
+1026,400808,Photovoltaic Power Systems
+1027,400899,Electrical Engineering Not Elsewhere Classified
+1028,400901,Analog Electronics And Interfaces
+1029,400902,Digital Electronic Devices
+1030,400903,Digital Processor Architectures
+1031,400904,"Electronic Device And System Performance Evaluation, Testing And Simulation"
+1032,400905,Electronic Instrumentation
+1033,400906,Electronic Sensors
+1034,400907,Industrial Electronics
+1035,400908,Microelectronics
+1036,400909,"Photonic And Electro-Optical Devices, Sensors And Systems (Excl. Communications)"
+1037,400910,Photovoltaic Devices (Solar Cells)
+1038,400911,Power Electronics
+1039,400912,Quantum Engineering Systems (Incl. Computing And Communications)
+1040,400913,Radio Frequency Engineering
+1041,400999,"Electronics, Sensors And Digital Hardware Not Elsewhere Classified"
+1042,401001,Engineering Design
+1043,401002,Engineering Education
+1044,401003,Engineering Practice
+1045,401004,Humanitarian Engineering
+1046,401005,Risk Engineering
+1047,401006,Systems Engineering
+1048,401099,Engineering Practice And Education Not Elsewhere Classified
+1049,401101,Air Pollution Modelling And Control
+1050,401102,Environmentally Sustainable Engineering
+1051,401103,Global And Planetary Environmental Engineering
+1052,401104,Health And Ecological Risk Assessment
+1053,401105,Life Cycle Assessment And Industrial Ecology
+1054,401106,"Waste Management, Reduction, Reuse And Recycling"
+1055,401199,Environmental Engineering Not Elsewhere Classified
+1056,401201,Aerodynamics (Excl. Hypersonic Aerodynamics)
+1057,401202,Bio-Fluids
+1058,401203,Biomedical Fluid Mechanics
+1059,401204,"Computational Methods In Fluid Flow, Heat And Mass Transfer (Incl. Computational Fluid Dynamics) "
+1060,401205,"Experimental Methods In Fluid Flow, Heat And Mass Transfer "
+1061,401206,Fluid-Structure Interaction And Aeroacoustics
+1062,401207,Fundamental And Theoretical Fluid Dynamics
+1063,401208,Geophysical And Environmental Fluid Flows
+1064,401209,Hydrodynamics And Hydraulic Engineering
+1065,401210,Microfluidics And Nanofluidics
+1066,401211,Multiphysics Flows (Incl. Multiphase And Reacting Flows)
+1067,401212,Non-Newtonian Fluid Flows (Incl. Rheology)
+1068,401213,Turbulent Flows
+1069,401299,Fluid Mechanics And Thermal Engineering Not Elsewhere Classified
+1070,401301,Cartography And Digital Mapping
+1071,401302,Geospatial Information Systems And Geospatial Data Modelling
+1072,401303,Navigation And Position Fixing
+1073,401304,Photogrammetry And Remote Sensing
+1074,401305,Satellite-Based Positioning
+1075,401306,Surveying (Incl. Hydrographic Surveying)
+1076,401399,Geomatic Engineering Not Elsewhere Classified
+1077,401401,Additive Manufacturing
+1078,401402,Cad/Cam Systems
+1079,401403,Flexible Manufacturing Systems
+1080,401404,Industrial Engineering
+1081,401405,Machine Tools
+1082,401406,Machining
+1083,401407,Manufacturing Management
+1084,401408,Manufacturing Processes And Technologies (Excl. Textiles)
+1085,401409,Manufacturing Safety And Quality
+1086,401410,Microtechnology
+1087,401411,"Packaging, Storage And Transportation (Excl. Food And Agricultural Products)"
+1088,401412,Precision Engineering
+1089,401413,Textile Technology
+1090,401499,Manufacturing Engineering Not Elsewhere Classified
+1091,401501,Marine Engineering
+1092,401502,Naval Architecture
+1093,401503,Ocean Engineering
+1094,401504,Ship And Platform Structures (Incl. Maritime Hydrodynamics)
+1095,401505,Special Vehicles
+1096,401599,Maritime Engineering Not Elsewhere Classified
+1097,401601,Ceramics
+1098,401602,Composite And Hybrid Materials
+1099,401603,Compound Semiconductors
+1100,401604,Elemental Semiconductors
+1101,401605,Functional Materials
+1102,401606,Glass
+1103,401607,Metals And Alloy Materials
+1104,401608,Organic Semiconductors
+1105,401609,Polymers And Plastics
+1106,401610,"Timber, Pulp And Paper"
+1107,401611,Wearable Materials
+1108,401699,Materials Engineering Not Elsewhere Classified
+1109,401701,Acoustics And Noise Control (Excl. Architectural Acoustics)
+1110,401702,"Dynamics, Vibration And Vibration Control"
+1111,401703,"Energy Generation, Conversion And Storage (Excl. Chemical And Electrical)"
+1112,401704,Mechanical Engineering Asset Management
+1113,401705,Microelectromechanical Systems (Mems)
+1114,401706,Numerical Modelling And Mechanical Characterisation
+1115,401707,Solid Mechanics
+1116,401708,Tribology
+1117,401799,Mechanical Engineering Not Elsewhere Classified
+1118,401801,Micro- And Nanosystems
+1119,401802,Molecular And Organic Electronics
+1120,401803,Nanoelectromechanical Systems
+1121,401804,Nanoelectronics
+1122,401805,"Nanofabrication, Growth And Self Assembly"
+1123,401806,Nanomanufacturing
+1124,401807,Nanomaterials
+1125,401808,Nanometrology
+1126,401809,Nanophotonics
+1127,401810,Nanoscale Characterisation
+1128,401899,Nanotechnology Not Elsewhere Classified
+1129,401901,Electrometallurgy
+1130,401902,Geomechanics And Resources Geotechnical Engineering
+1131,401903,Hydrometallurgy
+1132,401904,Mineral Processing/Beneficiation
+1133,401905,Mining Engineering
+1134,401906,Nuclear Engineering (Incl. Fuel Enrichment And Waste Processing And Storage)
+1135,401907,Petroleum And Reservoir Engineering
+1136,401908,Pyrometallurgy
+1137,401999,Resources Engineering And Extractive Metallurgy Not Elsewhere Classified
+1138,409901,Agricultural Engineering
+1139,409902,Engineering Instrumentation
+1140,409903,Granular Mechanics
+1141,409999,Other Engineering Not Elsewhere Classified
+1142,410101,Carbon Sequestration Science
+1143,410102,Ecological Impacts Of Climate Change And Ecological Adaptation
+1144,410103,Human Impacts Of Climate Change And Human Adaptation
+1145,410199,Climate Change Impacts And Adaptation Not Elsewhere Classified
+1146,410201,Bioavailability And Ecotoxicology
+1147,410202,Biosecurity Science And Invasive Species Ecology
+1148,410203,Ecosystem Function
+1149,410204,Ecosystem Services (Incl. Pollination)
+1150,410205,Fire Ecology
+1151,410206,Landscape Ecology
+1152,410299,Ecological Applications Not Elsewhere Classified
+1153,410301,Biodiscovery
+1154,410302,Biological Control
+1155,410303,Bioremediation
+1156,410304,Environmental Biotechnology Diagnostics (Incl. Biosensors)
+1157,410305,Environmental Marine Biotechnology
+1158,410306,Environmental Nanotechnology And Nanometrology
+1159,410399,Environmental Biotechnology Not Elsewhere Classified
+1160,410401,Conservation And Biodiversity
+1161,410402,Environmental Assessment And Monitoring
+1162,410403,Environmental Education And Extension
+1163,410404,Environmental Management
+1164,410405,Environmental Rehabilitation And Restoration
+1165,410406,Natural Resource Management
+1166,410407,Wildlife And Habitat Management
+1167,410499,Environmental Management Not Elsewhere Classified
+1168,410501,Environmental Biogeochemistry
+1169,410502,Noise And Wave Pollution Processes And Measurement
+1170,410503,Groundwater Quality Processes And Contaminated Land Assessment
+1171,410504,Surface Water Quality Processes And Contaminated Sediment Assessment
+1172,410599,Pollution And Contamination Not Elsewhere Classified
+1173,410601,Land Capability And Soil Productivity
+1174,410602,Pedology And Pedometrics
+1175,410603,Soil Biology
+1176,410604,Soil Chemistry And Soil Carbon Sequestration (Excl. Carbon Sequestration Science)
+1177,410605,Soil Physics
+1178,410699,Soil Sciences Not Elsewhere Classified
+1179,419999,Other Environmental Sciences Not Elsewhere Classified
+1180,420101,Arts Therapy
+1181,420102,Audiology
+1182,420103,Music Therapy
+1183,420104,Occupational Therapy
+1184,420105,Orthoptics
+1185,420106,Physiotherapy
+1186,420107,Podiatry
+1187,420108,Prosthetics And Orthotics
+1188,420109,Rehabilitation
+1189,420110,Speech Pathology
+1190,420199,Allied Health And Rehabilitation Science Not Elsewhere Classified
+1191,420201,Behavioural Epidemiology
+1192,420202,Disease Surveillance
+1193,420203,Environmental Epidemiology
+1194,420204,Epidemiological Methods
+1195,420205,Epidemiological Modelling
+1196,420206,Forensic Epidemiology
+1197,420207,Major Global Burdens Of Disease
+1198,420208,Nutritional Epidemiology
+1199,420209,Occupational Epidemiology
+1200,420210,Social Epidemiology
+1201,420299,Epidemiology Not Elsewhere Classified
+1202,420301,Aged Health Care
+1203,420302,Digital Health
+1204,420303,Family Care
+1205,420304,General Practice
+1206,420305,Health And Community Services
+1207,420306,Health Care Administration
+1208,420307,Health Counselling
+1209,420308,Health Informatics And Information Systems
+1210,420309,Health Management
+1211,420310,Health Surveillance
+1212,420311,Health Systems
+1213,420312,Implementation Science And Evaluation
+1214,420313,Mental Health Services
+1215,420314,Multimorbidity
+1216,420315,One Health
+1217,420316,Palliative Care
+1218,420317,Patient Safety
+1219,420318,People With Disability
+1220,420319,Primary Health Care
+1221,420320,Residential Client Care
+1222,420321,Rural And Remote Health Services
+1223,420399,Health Services And Systems Not Elsewhere Classified
+1224,420401,Clinical Midwifery
+1225,420402,Models Of Care And Place Of Birth
+1226,420403,Psychosocial Aspects Of Childbirth And Perinatal Mental Health
+1227,420499,Midwifery Not Elsewhere Classified
+1228,420501,Acute Care
+1229,420502,Aged Care Nursing
+1230,420503,Community And Primary Care
+1231,420504,Mental Health Nursing
+1232,420505,Nursing Workforce
+1233,420506,Sub-Acute Care
+1234,420599,Nursing Not Elsewhere Classified
+1235,420601,Community Child Health
+1236,420602,Health Equity
+1237,420603,Health Promotion
+1238,420604,Injury Prevention
+1239,420605,Preventative Health Care
+1240,420606,Social Determinants Of Health
+1241,420699,Public Health Not Elsewhere Classified
+1242,420701,Biomechanics
+1243,420702,Exercise Physiology
+1244,420703,Motor Control
+1245,420799,Sports Science And Exercise Not Elsewhere Classified
+1246,420801,Chiropractic
+1247,420802,Naturopathy
+1248,420803,Traditional Chinese Medicine And Treatments
+1249,420899,"Traditional, Complementary And Integrative Medicine Not Elsewhere Classified"
+1250,429999,Other Health Sciences Not Elsewhere Classified
+1251,430101,Archaeological Science
+1252,430102,"Archaeology Of Asia, Africa And The Americas "
+1253,430103,Archaeology Of Australia (Excl. Aboriginal And Torres Strait Islander)
+1254,430104,"Archaeology Of Europe, The Mediterranean And The Levant"
+1255,430105,Archaeology Of New Zealand (Excl. Māori)
+1256,430106,Digital Archaeology
+1257,430107,Historical Archaeology (Incl. Industrial Archaeology)
+1258,430108,Maritime Archaeology
+1259,430199,Archaeology Not Elsewhere Classified
+1260,430201,"Archival, Repository And Related Studies"
+1261,430202,"Critical Heritage, Museum And Archive Studies"
+1262,430203,Cultural Heritage Management (Incl. World Heritage)
+1263,430204,Digital Heritage
+1264,430205,Heritage And Cultural Conservation
+1265,430206,Heritage Collections And Interpretations
+1266,430207,"Heritage Tourism, Visitor And Audience Studies"
+1267,430208,Intangible Heritage
+1268,430209,Materials Conservation
+1269,430299,"Heritage, Archive And Museum Studies Not Elsewhere Classified"
+1270,430301,Asian History
+1271,430302,Australian History
+1272,430303,Biography
+1273,430304,British History
+1274,430305,Classical Greek And Roman History
+1275,430306,Digital History
+1276,430307,Environmental History
+1277,430308,"European History (Excl. British, Classical Greek And Roman)"
+1278,430309,Gender History
+1279,430310,Global And World History
+1280,430311,Historical Studies Of Crime
+1281,430312,Histories Of Race
+1282,430313,"History Of Empires, Imperialism And Colonialism"
+1283,430314,History Of Religion
+1284,430315,History Of The Pacific
+1285,430316,International History
+1286,430317,Latin And South American History
+1287,430318,Middle Eastern And North African History
+1288,430319,Migration History
+1289,430320,New Zealand History
+1290,430321,North American History
+1291,430322,Sub-Saharan African History
+1292,430323,Transnational History
+1293,430399,Historical Studies Not Elsewhere Classified
+1294,439999,"Other History, Heritage And Archaeology Not Elsewhere Classified"
+1295,440101,Anthropology Of Development
+1296,440102,Anthropology Of Gender And Sexuality
+1297,440103,Biological (Physical) Anthropology
+1298,440104,Environmental Anthropology
+1299,440105,Linguistic Anthropology
+1300,440106,Medical Anthropology
+1301,440107,Social And Cultural Anthropology
+1302,440199,Anthropology Not Elsewhere Classified
+1303,440201,Causes And Prevention Of Crime
+1304,440202,"Correctional Theory, Offender Treatment And Rehabilitation"
+1305,440203,Courts And Sentencing
+1306,440204,Crime And Social Justice
+1307,440205,Criminological Theories
+1308,440206,Critical Approaches To Crime
+1309,440207,Cybercrime
+1310,440208,Environmental Crime
+1311,440209,Gender And Crime
+1312,440210,Organised Crime
+1313,440211,"Police Administration, Procedures And Practice "
+1314,440212,Private Policing And Security Services
+1315,440213,Race/Ethnicity And Crime
+1316,440214,Sociological Studies Of Crime
+1317,440215,State Crime
+1318,440216,"Technology, Crime And Surveillance"
+1319,440217,Terrorism
+1320,440218,Victims
+1321,440219,White Collar Crime
+1322,440299,Criminology Not Elsewhere Classified
+1323,440301,Family And Household Studies
+1324,440302,Fertility
+1325,440303,Migration
+1326,440304,Mortality
+1327,440305,Population Trends And Policies
+1328,440399,Demography Not Elsewhere Classified
+1329,440401,Development Cooperation
+1330,440402,"Humanitarian Disasters, Conflict And Peacebuilding"
+1331,440403,"Labour, Migration And Development "
+1332,440404,Political Economy And Social Change
+1333,440405,"Poverty, Inclusivity And Wellbeing "
+1334,440406,Rural Community Development
+1335,440407,Socio-Economic Development
+1336,440408,Urban Community Development
+1337,440499,Development Studies Not Elsewhere Classified
+1338,440501,Feminist And Queer Theory
+1339,440502,Feminist Methodologies
+1340,440503,Feminist Theory
+1341,440504,Gender Relations
+1342,440505,Intersectional Studies
+1343,440506,Sexualities
+1344,440507,Studies Of Men And Masculinities
+1345,440508,Transgender Studies
+1346,440509,Women'S Studies (Incl. Girls' Studies)
+1347,440599,Gender Studies Not Elsewhere Classified
+1348,440601,Cultural Geography
+1349,440602,Development Geography
+1350,440603,Economic Geography
+1351,440604,Environmental Geography
+1352,440605,Health Geography
+1353,440606,Political Geography
+1354,440607,Population Geography
+1355,440608,"Recreation, Leisure And Tourism Geography "
+1356,440609,Rural And Regional Geography
+1357,440610,Social Geography
+1358,440611,Transport Geography
+1359,440612,Urban Geography
+1360,440699,Human Geography Not Elsewhere Classified
+1361,440701,Communications And Media Policy
+1362,440702,Crime Policy
+1363,440703,Economic Development Policy
+1364,440704,Environment Policy
+1365,440705,"Gender, Policy And Administration"
+1366,440706,Health Policy
+1367,440707,Housing Policy
+1368,440708,Public Administration
+1369,440709,Public Policy
+1370,440710,"Research, Science And Technology Policy"
+1371,440711,Risk Policy
+1372,440712,Social Policy
+1373,440713,Tourism Policy
+1374,440714,Urban Policy
+1375,440799,Policy And Administration Not Elsewhere Classified
+1376,440801,Australian Government And Politics
+1377,440802,Citizenship
+1378,440803,Comparative Government And Politics
+1379,440804,Defence Studies
+1380,440805,Environmental Politics
+1381,440806,Gender And Politics
+1382,440807,Government And Politics Of Asia And The Pacific
+1383,440808,International Relations
+1384,440809,New Zealand Government And Politics
+1385,440810,Peace Studies
+1386,440811,Political Theory And Political Philosophy
+1387,440899,Political Science Not Elsewhere Classified
+1388,440901,Clinical Social Work Practice
+1389,440902,"Counselling, Wellbeing And Community Services"
+1390,440903,Social Program Evaluation
+1391,440999,Social Work Not Elsewhere Classified
+1392,441001,"Applied Sociology, Program Evaluation And Social Impact Assessment"
+1393,441002,Environmental Sociology
+1394,441003,Rural Sociology
+1395,441004,Social Change
+1396,441005,Social Theory
+1397,441006,Sociological Methodology And Research Methods
+1398,441007,Sociology And Social Studies Of Science And Technology
+1399,441008,Sociology Of Culture
+1400,441009,Sociology Of Family And Relationships
+1401,441010,Sociology Of Gender
+1402,441011,Sociology Of Health
+1403,441012,Sociology Of Inequalities
+1404,441013,"Sociology Of Migration, Ethnicity And Multiculturalism"
+1405,441014,Sociology Of Religion
+1406,441015,Sociology Of The Life Course
+1407,441016,Urban Sociology And Community Studies
+1408,441099,Sociology Not Elsewhere Classified
+1409,449901,Studies Of Asian Society
+1410,449999,Other Human Society Not Elsewhere Classified
+1411,450101,Aboriginal And Torres Strait Islander Archaeology
+1412,450102,Aboriginal And Torres Strait Islander Artefacts
+1413,450103,Aboriginal And Torres Strait Islander Cultural History
+1414,450104,Aboriginal And Torres Strait Islander Culture
+1415,450105,"Aboriginal And Torres Strait Islander Curatorial, Archives And Museum Studies"
+1416,450106,Aboriginal And Torres Strait Islander Ethics
+1417,450107,Aboriginal And Torres Strait Islander History
+1418,450108,Aboriginal And Torres Strait Islander Linguistics And Languages
+1419,450109,"Aboriginal And Torres Strait Islander Literature, Journalism And Professional Writing"
+1420,450110,"Aboriginal And Torres Strait Islander Media, Film, Animation And Photography"
+1421,450111,Aboriginal And Torres Strait Islander Music And Performing Arts
+1422,450112,Aboriginal And Torres Strait Islander Philosophy
+1423,450113,Aboriginal And Torres Strait Islander Religion And Religious Studies
+1424,450114,Aboriginal And Torres Strait Islander Repatriation
+1425,450115,Aboriginal And Torres Strait Islander Research Methods
+1426,450116,Aboriginal And Torres Strait Islander Visual Arts And Crafts
+1427,450117,"Aboriginal And Torres Strait Islander Ways Of Knowing, Being And Doing"
+1428,450118,Conservation Of Aboriginal And Torres Strait Islander Heritage
+1429,450199,"Aboriginal And Torres Strait Islander Culture, Language And History Not Elsewhere Classified"
+1430,450201,Aboriginal And Torres Strait Islander Curriculum And Pedagogy
+1431,450202,Aboriginal And Torres Strait Islander Early Childhood Education
+1432,450203,Aboriginal And Torres Strait Islander Educational Methods
+1433,450204,"Aboriginal And Torres Strait Islander Technical, Further, Continuing And Community Education"
+1434,450205,Aboriginal And Torres Strait Islander Higher Education
+1435,450206,Aboriginal And Torres Strait Islander Language Education
+1436,450207,Aboriginal And Torres Strait Islander Men’S Education
+1437,450208,Aboriginal And Torres Strait Islander Primary Education
+1438,450209,Aboriginal And Torres Strait Islander Secondary Education
+1439,450210,Aboriginal And Torres Strait Islander Student Engagement And Teaching
+1440,450211,Aboriginal And Torres Strait Islander Women’S Education
+1441,450212,Cultural Responsiveness And Working With Aboriginal And Torres Strait Islander Communities Education
+1442,450213,"Embedding Aboriginal And Torres Strait Islander Knowledges, Histories, Culture, Country, Perspectives And Ethics In Education"
+1443,450299,Aboriginal And Torres Strait Islander Education Not Elsewhere Classified
+1444,450301,Aboriginal And Torres Strait Islander Agriculture And Forestry
+1445,450302,Aboriginal And Torres Strait Islander Earth Sciences
+1446,450303,Aboriginal And Torres Strait Islander Environmental Conservation
+1447,450304,Aboriginal And Torres Strait Islander Environmental Knowledges
+1448,450305,Aboriginal And Torres Strait Islander Fisheries And Customary Fisheries
+1449,450306,Aboriginal And Torres Strait Islander Land And Water Management
+1450,450307,Aboriginal And Torres Strait Islander Marine Environment Science
+1451,450399,Aboriginal And Torres Strait Islander Environmental Knowledges And Management Not Elsewhere Classified
+1452,450401,Aboriginal And Torres Strait Islander And Disability
+1453,450402,Aboriginal And Torres Strait Islander Biomedical And Clinical Sciences
+1454,450403,Aboriginal And Torres Strait Islander Child Health And Wellbeing
+1455,450404,Aboriginal And Torres Strait Islander Cultural Determinants Of Health
+1456,450405,Aboriginal And Torres Strait Islander Diet And Nutrition
+1457,450406,Aboriginal And Torres Strait Islander Epidemiology
+1458,450407,Aboriginal And Torres Strait Islander Health Policy
+1459,450408,Aboriginal And Torres Strait Islander Health Promotion
+1460,450409,Aboriginal And Torres Strait Islander Health Services
+1461,450410,Aboriginal And Torres Strait Islander Lifecourse
+1462,450411,Aboriginal And Torres Strait Islander Medicine And Treatments
+1463,450412,Aboriginal And Torres Strait Islander Men’S Health And Wellbeing
+1464,450413,Aboriginal And Torres Strait Islander Midwifery And Paediatrics
+1465,450414,Aboriginal And Torres Strait Islander Mothers And Babies Health And Wellbeing
+1466,450415,Aboriginal And Torres Strait Islander Nursing
+1467,450416,Aboriginal And Torres Strait Islander Psychology
+1468,450417,Aboriginal And Torres Strait Islander Public Health And Wellbeing
+1469,450418,Aboriginal And Torres Strait Islander Remote Health
+1470,450419,Aboriginal And Torres Strait Islander Social Determinants Of Health
+1471,450420,"Aboriginal And Torres Strait Islander Social, Emotional, Cultural And Spiritual Wellbeing"
+1472,450421,Aboriginal And Torres Strait Islander Sport And Physical Activity
+1473,450422,Aboriginal And Torres Strait Islander Theory Of Change Models For Health
+1474,450423,Aboriginal And Torres Strait Islander Youth And Family Social And Emotional Wellbeing
+1475,450499,Aboriginal And Torres Strait Islander Health And Wellbeing Not Elsewhere Classified
+1476,450501,Aboriginal And Torres Strait Islander Accounting
+1477,450502,Aboriginal And Torres Strait Islander Anthropology
+1478,450503,Aboriginal And Torres Strait Islander Architecture
+1479,450504,Aboriginal And Torres Strait Islander Commerce
+1480,450505,Aboriginal And Torres Strait Islander Community And Regional Development
+1481,450506,Aboriginal And Torres Strait Islander Community Governance And Decision Making
+1482,450507,Aboriginal And Torres Strait Islander Community-Based Research
+1483,450508,Aboriginal And Torres Strait Islander Criminology
+1484,450509,Aboriginal And Torres Strait Islander Customary Law
+1485,450510,Aboriginal And Torres Strait Islander Design Practice And Management
+1486,450511,Aboriginal And Torres Strait Islander Economics
+1487,450512,Aboriginal And Torres Strait Islander Finance
+1488,450513,Aboriginal And Torres Strait Islander Human Geography And Demography
+1489,450514,Aboriginal And Torres Strait Islander Legislation
+1490,450515,Aboriginal And Torres Strait Islander Management
+1491,450516,Aboriginal And Torres Strait Islander Marketing
+1492,450517,Aboriginal And Torres Strait Islander Not-For-Profit Social Enterprises
+1493,450518,Aboriginal And Torres Strait Islander Peoples And The Law
+1494,450519,Aboriginal And Torres Strait Islander Perspectives
+1495,450520,Aboriginal And Torres Strait Islander Political Participation And Representation
+1496,450521,Aboriginal And Torres Strait Islander Politics
+1497,450522,Aboriginal And Torres Strait Islander Social Impact And Program Evaluation
+1498,450523,Aboriginal And Torres Strait Islander Social Work And Social Justice
+1499,450524,Aboriginal And Torres Strait Islander Sociological Studies
+1500,450525,Aboriginal And Torres Strait Islander Sociology
+1501,450526,Aboriginal And Torres Strait Islander Tourism
+1502,450527,Aboriginal And Torres Strait Islander Urban And Regional Planning
+1503,450599,"Aboriginal And Torres Strait Islander Peoples, Society And Community Not Elsewhere Classified"
+1504,450601,Aboriginal And Torres Strait Islander Astronomy And Cosmology
+1505,450602,Aboriginal And Torres Strait Islander Biological Sciences
+1506,450603,Aboriginal And Torres Strait Islander Computing Technology Use And Design
+1507,450604,Aboriginal And Torres Strait Islander Engineering
+1508,450605,Aboriginal And Torres Strait Islander Genomics
+1509,450606,Aboriginal And Torres Strait Islander Information And Knowledge Management Systems
+1510,450607,Aboriginal And Torres Strait Islander Innovation
+1511,450608,Aboriginal And Torres Strait Islander Knowledge Management Methods
+1512,450609,"Aboriginal And Torres Strait Islander Mathematical, Physical And Chemical Sciences (Excl. Astronomy And Cosmology)"
+1513,450699,Aboriginal And Torres Strait Islander Sciences Not Elsewhere Classified
+1514,450701,Te Whāomoomo I Te Tuku Ihotanga Māori (Conservation Of Māori Heritage)
+1515,450702,Te Mana Wahine (Female Status)
+1516,450703,Te Mana Tāne (Male Status)
+1517,450704,Te Mātai Whaipara Māori (Māori Archaeology)
+1518,450705,Ngā Taonga Māori Nō Mua (Māori Artefacts)
+1519,450706,Te Hītori Ahurea Māori (Māori Cultural History)
+1520,450707,Te Ahurea Māori (Māori Culture)
+1521,450708,"Ngā Mātai Kaitiaki, Pūranga Me Ngā Whare Tongarewa O Te Māori (Māori Curatorial, Archives And Museum Studies)"
+1522,450709,Ngā Matatika O Te Māori (Māori Ethics)
+1523,450710,Te Hītori Māori (Māori History)
+1524,450711,"Te Whenua, Ahurea Me Te Tuakiri O Te Māori (Māori Land, Culture And Identity)"
+1525,450712,Te Mātai I Te Reo Māori Me Te Reo Māori (Māori Linguistics And Languages)
+1526,450713,"Te Mātākōrero, Te Kawe Kōrero Me Te Tuhituhi Ngaio O Te Māori (Māori Literature, Journalism And Professional Writing)"
+1527,450714,"Ngā Arapāho, Ngā Kiriata, Te Hākoritanga Me Te Hopu Whakaahua O Te Māori (Māori Media, Film, Animation And Photography)"
+1528,450715,Te Puoro Me Ngā Mahi A Te Rēhia O Te Māori (Māori Music And Performing Arts)
+1529,450716,Te Rapunga Whakaaro O Te Māori (Māori Philosophy)
+1530,450717,Ngā Kaupapa Māori (Māori Projects)
+1531,450718,Te Whakapono Me Te Mātai Whakapono O Te Māori (Māori Religion And Religious Studies)
+1532,450719,Te Whakahoki Taonga A Te Māori Ki Te Kāinga (Māori Repatriation)
+1533,450720,Ngā Tikanga Rangahau O Te Māori (Māori Research Methods)
+1534,450721,Ngā Toi Ataata Ngā Mahi Ā-Rehe O Te Māori (Māori Visual Arts And Crafts)
+1535,450799,"Te Ahurea, Reo, Me Te Hītori O Te Māori Kāore Anō Kia Whakarōpūtia I Wāhi Kē (Māori Culture, Language And History Not Elsewhere Classified)"
+1536,450801,Ngā Kōhanga Reo (Māori Curriculum And Pedagogy)
+1537,450802,Te Whāriki - Te Mātauranga Kōhungahunga Māori (Māori Early Childhood Education)
+1538,450803,Ngā Tikanga Mātauranga O Te Māori (Māori Educational Methods)
+1539,450804,Te Mātauranga Kura Tuatoru Māori (Māori Higher Education)
+1540,450805,Te Mātauranga Reo Māori (Māori Language Education)
+1541,450806,Ngā Kura Kaupapa Māori (Māori Primary Education)
+1542,450807,Te Urupare Me Te Whai Wāhi Māori Ki Te Mātauranga (Māori Responsiveness And Engaged Education)
+1543,450808,Te Mātauranga Kura Tuarua Māori (Māori Secondary Education)
+1544,450809,Te Whai Wāhi Ākonga Me Ngā Mahi Whakaako O Te Māori (Māori Student Engagement And Teaching)
+1545,450810,"Tō Te Māori Mātauranga Hangarau, Mātauranga Atu Anō, Mātauranga Haere Tonu, Me Te Mātauranga Hapori (Māori Technical, Further, Continuing And Community Education)"
+1546,450811,Te Mātauranga Māori I Roto I Te Mātauranga (Mātauranga Māori In Education)
+1547,450899,Te Mātauranga Māori Kāore Anō Kia Whakarōpūtia I Wāhi Kē (Māori Education Not Elsewhere Classified)
+1548,450901,Te Ahuwhenua Me Ngā Mahi Ngahere O Te Māori (Māori Agriculture And Forestry)
+1549,450902,Ngā Pūtaiao-Ā-Nuku O Te Māori (Māori Earth Sciences)
+1550,450903,Te Whāomoomo Taiao O Te Māori (Māori Environmental Conservation)
+1551,450904,Ngā Mātauranga Taiao O Te Māori (Māori Environmental Knowledges)
+1552,450905,Te Ahumoana Me Te Ahumoana Tuku Iho O Te Māori (Māori Fisheries And Customary Fisheries)
+1553,450906,Te Whakahaere Whenua Me Te Wai O Te Māori (Māori Land And Water Management)
+1554,450907,Te Pūtaiao Taiao Moana O Te Māori (Māori Marine Environment Science)
+1555,450999,Ngā Mātauranga Taiao O Te Māori Kāore Anō Kia Whakarōpūtia I Wāhi Kē (Māori Environmental Knowledges Not Elsewhere Classified)
+1556,451001,Te Whaikaha Me Te Māori (Māori And Disability)
+1557,451002,"Ngā Pūtaiao Koiora-Hauora, Haumanu Hoki O Te Māori (Māori Biomedical And Clinical Sciences)"
+1558,451003,Ngā Tokoingoa Ahurea O Te Hauora O Te Māori (Māori Cultural Determinants Of Health)
+1559,451004,Te Horakai Me Ngā Kai O Te Māori (Māori Diet And Nutrition)
+1560,451005,Te Mātai Tahumaero O Te Māori (Māori Epidemiology)
+1561,451006,Ngā Kaupapahere Hauora O Te Māori (Māori Health Policy)
+1562,451007,Te Whakatairanga Hauora O Te Māori (Māori Health Promotion)
+1563,451008,Ngā Wāhanga Ora O Te Māori (Māori Life Course)
+1564,451009,Ngā Rongoā Me Ngā Whakamaimoa O Te Māori (Māori Medicine And Treatments)
+1565,451010,Ngā Kaiwhakawhānau Me Te Mātai Mate Tamariki O Te Māori (Māori Midwifery And Paediatrics)
+1566,451011,"Te Hauora Me Te Oranga Ā-Whaea, Ā-Pēpi O Te Māori (Māori Mothers And Babies Health And Wellbeing)"
+1567,451012,Te Mahi Tapuhi O Te Māori (Māori Nursing)
+1568,451013,Mātauranga Hinengaro Kaupapa Māori (Māori Psychology)
+1569,451014,Ngā Pūnaha Mātauranga Hinengaro O Te Māori (Māori Psychology Knowledge Systems)
+1570,451015,Te Hauora Me Te Oranga Tūmatanui O Te Māori (Māori Public Health And Wellbeing)
+1571,451016,Te Hauora Mamao O Te Māori (Māori Remote Health)
+1572,451017,"Te Oranga Ā-Pāpori, Ā-Hinengaro, Ā-Ahurea, Ā-Wairua O Te Māori (Māori Social, Cultural, Emotional And Spiritual Wellbeing)"
+1573,451018,Ngā Tokoingoa Pāpori O Te Hauora O Te Māori (Māori Social Determinants Of Health)
+1574,451019,Ngā Hākinakina Me Te Korikori Tinana O Te Māori (Māori Sport And Physical Activity)
+1575,451020,Te Ariā O Ngā Tauira Panoni Hauora O Te Māori (Māori Theory Of Change Models For Health)
+1576,451021,Ngā Taiohi Me Ngā Whānau Māori (Māori Youth And Family)
+1577,451099,Te Hauora Me Te Oranga O Te Māori Kāore Anō Kia Whakarōpūhia I Wāhi Kē (Māori Health And Wellbeing Not Elsewhere Classified)
+1578,451101,Te Mahi Kaute O Te Māori (Māori Accounting)
+1579,451102,Te Mātauranga Tikanga Māori (Māori Anthropology)
+1580,451103,Te Hoahoanga Whare O Te Māori (Māori Architecture)  
+1581,451104,Ngā Mahi Tauhokohoko O Te Māori (Māori Commerce)
+1582,451105,"Te Whanaketanga Ā-Hapori, Ā-Rohe O Te Māori (Māori Community And Regional Development)"
+1583,451106,Te Rangahau Kei Rō Hapori O Te Māori (Māori Community-Based Research)
+1584,451107,"Te Kāwana Ā-Hapori, Whakatau Take Hoki O Te Māori (Māori Community Governance And Decision Making)"
+1585,451108,Te Mātauranga Taihara Māori (Māori Criminology)
+1586,451109,Ngā Tikanga Māori (Māori Customary Law)
+1587,451110,Te Whakaharatau Me Te Whakahaere Hoahoa O Te Māori (Māori Design Practice And Management)
+1588,451111,Te Mātauranga Ōhanga O Te Māori (Māori Economics)
+1589,451112,Te Ahumoni Māori (Māori Finance)
+1590,451113,Te Mātauranga Matawhenua Ā-Iwi Me Te Tatauranga Ā-Iwi O Te Māori (Māori Human Geography And Demography)
+1591,451114,Te Ture Whenua (Māori Land Law)
+1592,451115,Te Ture Me Te Tika Māori (Māori Law And Justice)
+1593,451116,Ngā Ture Māori (Māori Legislation)
+1594,451117,Te Whakahaere O Te Māori (Māori Management)
+1595,451118,Te Whakamākete O Te Māori (Māori Marketing)
+1596,451119,Ngā Hinonga Pāpori Kaupapa Atawhai O Te Māori (Māori Not-For-Profit Social Enterprises)
+1597,451120,Ngā Iwi Māori Me Te Ture (Māori Peoples And The Law)
+1598,451121,Ngā Tirohanga Māori (Māori Perspectives)
+1599,451122,Te Whai Wāhi Me Te Whakakanohi Taha Tōrāngapū O Te Māori (Māori Political Participation And Representation)
+1600,451123,Ngā Mahi Tōrangapū Māori (Māori Politics)
+1601,451124,Ngā Ture Rawa Māori (Māori Resource Law)
+1602,451125,Te Pāpātanga Pāpori Me Te Aromātai Hōtaka O Te Māori (Māori Social Impact And Program Evaluation)
+1603,451126,Ngā Mahi Tauwhiro Me Te Tika Pāpori O Te Māori (Māori Social Work And Social Justice)
+1604,451127,Ngā Mātai Tikanga Ā-Iwi O Te Māori (Māori Sociological Studies)
+1605,451128,Te Mātauranga Pāpori O Te Māori (Māori Sociology)
+1606,451129,Te Mahi Tāpoi Māori (Māori Tourism)
+1607,451130,Te Tiriti O Waitangi (The Treaty Of Waitangi)
+1608,451131,"Te Whakamahere Ā-Tāone, Ā-Rohe O Te Māori (Māori Urban And Regional Planning)"
+1609,451199,"Ngā Tāngata, Te Porihanga Me Ngā Hapori O Te Māori Kāore Anō Kia Whakarōpūtia I Wāhi Kē (Māori Peoples, Society And Community Not Elsewhere Classified)"
+1610,451201,Te Mātai Arorangi Me Te Mātai Tuarangi O Te Māori (Māori Astronomy And Cosmology)
+1611,451202,Ngā Pūtaiao Koiora O Te Māori (Māori Biological Sciences)
+1612,451203,Te Whakamahi Me Te Hoahoa O Te Hangarau Rorohiko O Te Māori (Māori Computing Technology Use And Design)
+1613,451204,Te Mana Motuhake O Ngā Raraunga Māori (Māori Data Sovereignty)
+1614,451205,Te Mātauranga Pūkaha O Te Māori (Māori Engineering)
+1615,451206,Te Mātai Huingaira O Te Māori (Māori Genomics)
+1616,451207,Ngā Pūnaha Whakahaere Mōhiohio Me Te Mātauranga O Te Māori (Māori Information And Knowledge Management Systems)
+1617,451208,Te Wairua Auaha O Te Māori (Māori Innovation)
+1618,451209,Ngā Tikanga Whakahaere Mōhiotanga Māori (Māori Knowledge Management Methods)
+1619,451210,"Ngā Pūtaiao Pāngarau, Ōkiko, Matū Hoki - Hāunga Te Mātai Arorangi Me Te Mātai Tuarangi O Te Māori (Māori Mathematical, Physical And Chemical Sciences - Excl. Astronomy And Cosmology)"
+1620,451211,Te Tukatuka Reo Noa O Te Māori (Māori Natural Language Processing)
+1621,451299,Ngā Pūtaiao Māori Kāore Anō Kia Whakarōpūhia I Wāhi Kē (Māori Sciences Not Elsewhere Classified)
+1622,451301,Archaeology Of New Guinea And Pacific Islands (Excl. New Zealand)
+1623,451302,Conservation Of Pacific Peoples Heritage
+1624,451303,Pacific Peoples Artefacts
+1625,451304,Pacific Peoples Cultural History
+1626,451305,Pacific Peoples Culture
+1627,451306,"Pacific Peoples Curatorial, Archives And Museum Studies"
+1628,451307,Pacific Peoples Ethics
+1629,451308,Pacific Peoples History
+1630,451309,"Pacific Peoples Land, Culture And Identity"
+1631,451310,Pacific Peoples Linguistics And Languages
+1632,451311,"Pacific Peoples Literature, Journalism And Professional Writing"
+1633,451312,"Pacific Peoples Media, Film, Animation And Photography"
+1634,451313,Pacific Peoples Music And Performing Arts
+1635,451314,Pacific Peoples Philosophy
+1636,451315,Pacific Peoples Religion And Religious Studies
+1637,451316,Pacific Peoples Repatriation
+1638,451317,Pacific Peoples Research Methods
+1639,451318,Pacific Peoples Visual Arts And Crafts
+1640,451319,"Pacific Peoples Ways Of Knowing, Being And Doing"
+1641,451399,"Pacific Peoples Culture, Language And History Not Elsewhere Classified"
+1642,451401,Cultural Responsiveness And Working With Pacific Peoples Communities Education
+1643,451402,"Embedding Pacific Peoples Knowledges, Histories, Culture, Country, Perspectives And Ethics In Education"
+1644,451403,Pacific Peoples Curriculum And Pedagogy
+1645,451404,Pacific Peoples Early Childhood Education
+1646,451405,Pacific Peoples Educational Methods
+1647,451406,"Pacific Peoples Technical, Further, Continuing And Community Education"
+1648,451407,Pacific Peoples Higher Education
+1649,451408,Pacific Peoples Language Education
+1650,451409,Pacific Peoples Men’S Education
+1651,451410,Pacific Peoples Primary Education
+1652,451411,Pacific Peoples Secondary Education
+1653,451412,Pacific Peoples Student Engagement And Teaching
+1654,451413,Pacific Peoples Women’S Education
+1655,451499,Pacific Peoples Education Not Elsewhere Classified
+1656,451501,Pacific Peoples Agriculture And Forestry
+1657,451502,Pacific Peoples Earth Sciences
+1658,451503,Pacific Peoples Environmental Conservation
+1659,451504,Pacific Peoples Environmental Knowledges
+1660,451505,Pacific Peoples Fisheries And Customary Fisheries
+1661,451506,Pacific Peoples Land And Water Management
+1662,451507,Pacific Peoples Marine Environment Science
+1663,451599,Pacific Peoples Environmental Knowledges Not Elsewhere Classified
+1664,451601,Pacific Peoples And Disability
+1665,451602,Pacific Peoples Biomedical And Clinical Science
+1666,451603,Pacific Peoples Cultural Determinants Of Health
+1667,451604,Pacific Peoples Diet And Nutrition
+1668,451605,Pacific Peoples Epidemiology
+1669,451606,Pacific Peoples Health Policy
+1670,451607,Pacific Peoples Health Promotion
+1671,451608,Pacific Peoples Life Course
+1672,451609,Pacific Peoples Medicine And Treatments
+1673,451610,Pacific Peoples Midwifery And Paediatrics
+1674,451611,Pacific Peoples Mothers And Babies Health And Wellbeing
+1675,451612,Pacific Peoples Nursing
+1676,451613,Pacific Peoples Psychology
+1677,451614,Pacific Peoples Public Health And Wellbeing
+1678,451615,Pacific Peoples Remote Health
+1679,451616,Pacific Peoples Social Determinants Of Health
+1680,451617,"Pacific Peoples Social, Cultural, Emotional And Spiritual Wellbeing"
+1681,451618,Pacific Peoples Sport And Physical Activity
+1682,451619,Pacific Peoples Theory Of Change Models For Health
+1683,451620,Pacific Peoples Youth And Family
+1684,451699,Pacific Peoples Health And Wellbeing Not Elsewhere Classified
+1685,451701,Pacific Peoples Astronomy And Cosmology
+1686,451702,Pacific Peoples Biological Sciences
+1687,451703,Pacific Peoples Computing Technology Use And Design
+1688,451704,Pacific Peoples Engineering
+1689,451705,Pacific Peoples Genomics
+1690,451706,Pacific Peoples Information And Knowledge Management Systems
+1691,451707,Pacific Peoples Innovation
+1692,451708,Pacific Peoples Knowledge Management Methods
+1693,451709,"Pacific Peoples Mathematical, Physical And Chemical Sciences (Excl. Astronomy And Cosmology)"
+1694,451799,Pacific Peoples Sciences Not Elsewhere Classified
+1695,451801,Pacific Peoples And The Law
+1696,451802,Pacific Peoples Anthropology
+1697,451803,Pacific Peoples Architecture
+1698,451804,Pacific Peoples Commerce
+1699,451805,Pacific Peoples Community And Regional Development
+1700,451806,Pacific Peoples Community Governance And Decision Making
+1701,451807,Pacific Peoples Community-Based Research
+1702,451808,Pacific Peoples Criminology
+1703,451809,Pacific Peoples Customary Law
+1704,451810,Pacific Peoples Design Practice And Management
+1705,451811,Pacific Peoples Economics
+1706,451812,Pacific Peoples Finance
+1707,451813,Pacific Peoples Human Geography And Demography
+1708,451814,Pacific Peoples Legislation
+1709,451815,Pacific Peoples Management
+1710,451816,Pacific Peoples Marketing
+1711,451817,Pacific Peoples Not-For-Profit Social Enterprises
+1712,451818,Pacific Peoples Perspectives
+1713,451819,Pacific Peoples Political Participation And Representation
+1714,451820,Pacific Peoples Politics
+1715,451821,Pacific Peoples Social Impact And Program Evaluation
+1716,451822,Pacific Peoples Social Work And Social Justice
+1717,451823,Pacific Peoples Sociological Studies
+1718,451824,Pacific Peoples Sociology
+1719,451825,Pacific Peoples Tourism
+1720,451826,Pacific Peoples Urban And Regional Planning
+1721,451899,"Pacific Peoples, Society And Community Not Elsewhere Classified"
+1722,451901,"Global Indigenous Studies Culture, Language And History"
+1723,451902,Global Indigenous Studies Environmental Knowledges And Management
+1724,451903,Global Indigenous Studies Health And Wellbeing
+1725,451904,"Global Indigenous Studies Peoples, Society And Community"
+1726,451905,Global Indigenous Studies Sciences
+1727,451906,Indigenous Data And Data Technologies
+1728,451907,Indigenous Methodologies
+1729,451999,"Other Indigenous Data, Methodologies And Global Indigenous Studies Not Elsewhere Classified"
+1730,459999,Other Indigenous Studies Not Elsewhere Classified
+1731,460101,Applications In Arts And Humanities
+1732,460102,Applications In Health
+1733,460103,Applications In Life Sciences
+1734,460104,Applications In Physical Sciences
+1735,460105,Applications In Social Sciences And Education
+1736,460106,Spatial Data And Applications
+1737,460199,Applied Computing Not Elsewhere Classified
+1738,460201,Artificial Life And Complex Adaptive Systems
+1739,460202,Autonomous Agents And Multiagent Systems
+1740,460203,Evolutionary Computation
+1741,460204,Fuzzy Computation
+1742,460205,Intelligent Robotics
+1743,460206,Knowledge Representation And Reasoning
+1744,460207,Modelling And Simulation
+1745,460208,Natural Language Processing
+1746,460209,Planning And Decision Making
+1747,460210,Satisfiability And Optimisation
+1748,460211,Speech Production
+1749,460212,Speech Recognition
+1750,460299,Artificial Intelligence Not Elsewhere Classified
+1751,460301,Active Sensing
+1752,460302,Audio Processing
+1753,460303,Computational Imaging
+1754,460304,Computer Vision
+1755,460305,Image And Video Coding
+1756,460306,Image Processing
+1757,460307,Multimodal Analysis And Synthesis
+1758,460308,Pattern Recognition
+1759,460309,Video Processing
+1760,460399,Computer Vision And Multimedia Computation Not Elsewhere Classified
+1761,460401,Cryptography
+1762,460402,Data And Information Privacy
+1763,460403,Data Security And Protection
+1764,460404,Digital Forensics
+1765,460405,Hardware Security
+1766,460406,Software And Application Security
+1767,460407,System And Network Security
+1768,460499,Cybersecurity And Privacy Not Elsewhere Classified
+1769,460501,Data Engineering And Data Science
+1770,460502,Data Mining And Knowledge Discovery
+1771,460503,"Data Models, Storage And Indexing"
+1772,460504,Data Quality
+1773,460505,Database Systems
+1774,460506,"Graph, Social And Multimedia Data"
+1775,460507,Information Extraction And Fusion
+1776,460508,Information Retrieval And Web Search
+1777,460509,Query Processing And Optimisation
+1778,460510,Recommender Systems
+1779,460511,Stream And Sensor Data
+1780,460599,Data Management And Data Science Not Elsewhere Classified
+1781,460601,Cloud Computing
+1782,460602,Concurrent/Parallel Systems And Technologies
+1783,460603,Cyberphysical Systems And Internet Of Things
+1784,460604,Dependable Systems
+1785,460605,Distributed Systems And Algorithms
+1786,460606,Energy-Efficient Computing
+1787,460607,High Performance Computing
+1788,460608,Mobile Computing
+1789,460609,Networking And Communications
+1790,460610,Operating Systems
+1791,460611,Performance Evaluation
+1792,460612,Service Oriented Computing
+1793,460699,Distributed Computing And Systems Software Not Elsewhere Classified
+1794,460701,Computer Aided Design
+1795,460702,Computer Graphics
+1796,460703,Entertainment And Gaming
+1797,460704,Interactive Narrative
+1798,460705,Procedural Content Generation
+1799,460706,Serious Games
+1800,460707,Sound And Music Computing
+1801,460708,Virtual And Mixed Reality
+1802,460799,"Graphics, Augmented Reality And Games Not Elsewhere Classified"
+1803,460801,Accessible Computing
+1804,460802,Affective Computing
+1805,460803,Collaborative And Social Computing
+1806,460804,Computing Education
+1807,460805,"Fairness, Accountability, Transparency, Trust And Ethics Of Computer Systems"
+1808,460806,Human-Computer Interaction
+1809,460807,Information Visualisation
+1810,460808,Mixed Initiative And Human-In-The-Loop
+1811,460809,Pervasive Computing
+1812,460810,Social Robotics
+1813,460899,Human-Centred Computing Not Elsewhere Classified
+1814,460901,Business Process Management
+1815,460902,Decision Support And Group Support Systems
+1816,460903,"Information Modelling, Management And Ontologies"
+1817,460904,Information Security Management
+1818,460905,Information Systems Development Methodologies And Practice
+1819,460906,Information Systems Education
+1820,460907,Information Systems For Sustainable Development And The Public Good
+1821,460908,Information Systems Organisation And Management
+1822,460909,"Information Systems Philosophy, Research Methods And Theory"
+1823,460910,Information Systems User Experience Design And Development
+1824,460911,"Inter-Organisational, Extra-Organisational And Global Information Systems"
+1825,460912,Knowledge And Information Management
+1826,460999,Information Systems Not Elsewhere Classified
+1827,461001,Digital Curation And Preservation
+1828,461002,Human Information Behaviour
+1829,461003,Human Information Interaction And Retrieval
+1830,461004,"Information Governance, Policy And Ethics"
+1831,461005,Informetrics
+1832,461006,Library Studies
+1833,461007,Open Access
+1834,461008,Organisation Of Information And Knowledge Resources
+1835,461009,Recordkeeping Informatics
+1836,461010,Social And Community Informatics
+1837,461099,Library And Information Studies Not Elsewhere Classified
+1838,461101,Adversarial Machine Learning
+1839,461102,Context Learning
+1840,461103,Deep Learning
+1841,461104,Neural Networks
+1842,461105,Reinforcement Learning
+1843,461106,Semi- And Unsupervised Learning
+1844,461199,Machine Learning Not Elsewhere Classified
+1845,461201,Automated Software Engineering
+1846,461202,Empirical Software Engineering
+1847,461203,Formal Methods For Software
+1848,461204,Programming Languages
+1849,461205,Requirements Engineering
+1850,461206,Software Architecture
+1851,461207,"Software Quality, Processes And Metrics"
+1852,461208,"Software Testing, Verification And Validation"
+1853,461299,Software Engineering Not Elsewhere Classified
+1854,461301,"Coding, Information Theory And Compression"
+1855,461302,Computational Complexity And Computability
+1856,461303,Computational Logic And Formal Languages
+1857,461304,Concurrency Theory
+1858,461305,Data Structures And Algorithms
+1859,461306,Numerical Computation And Mathematical Software
+1860,461307,Quantum Computation
+1861,461399,Theory Of Computation Not Elsewhere Classified
+1862,469999,Other Information And Computing Sciences Not Elsewhere Classified
+1863,470101,Communication Studies
+1864,470102,Communication Technology And Digital Media Studies
+1865,470103,Environmental Communication
+1866,470104,International And Development Communication
+1867,470105,Journalism Studies
+1868,470106,Media Industry Studies
+1869,470107,Media Studies
+1870,470108,"Organisational, Interpersonal And Intercultural Communication"
+1871,470199,Communication And Media Studies Not Elsewhere Classified
+1872,470201,Arts And Cultural Policy
+1873,470202,Asian Cultural Studies
+1874,470203,Consumption And Everyday Life
+1875,470204,Cultural And Creative Industries
+1876,470205,"Cultural Studies Of Agriculture, Food And Wine"
+1877,470206,Cultural Studies Of Nation And Region
+1878,470207,Cultural Theory
+1879,470208,"Culture, Representation And Identity"
+1880,470209,Environment And Culture
+1881,470210,Globalisation And Culture
+1882,470211,Migrant Cultural Studies
+1883,470212,"Multicultural, Intercultural And Cross-Cultural Studies"
+1884,470213,Postcolonial Studies
+1885,470214,Screen And Media Culture
+1886,470299,Cultural Studies Not Elsewhere Classified
+1887,470301,African Languages
+1888,470302,Central And Eastern European Languages (Incl. Russian)
+1889,470303,Chinese Languages
+1890,470304,Comparative Language Studies
+1891,470305,Early English Languages
+1892,470306,English As A Second Language
+1893,470307,English Language
+1894,470308,French Language
+1895,470309,German Language
+1896,470310,Iberian Languages
+1897,470311,Indian Languages
+1898,470312,Indonesian Languages
+1899,470313,Italian Language
+1900,470314,Japanese Language
+1901,470315,Korean Language
+1902,470316,Latin And Classical Greek Languages
+1903,470317,Middle Eastern Languages
+1904,470318,Other Asian Languages (Excl. South-East Asian)
+1905,470319,Other European Languages
+1906,470320,South-East Asian Languages (Excl. Indonesian)
+1907,470321,Translation And Interpretation Studies
+1908,470399,Language Studies Not Elsewhere Classified
+1909,470401,Applied Linguistics And Educational Linguistics
+1910,470402,Child Language Acquisition
+1911,470403,Computational Linguistics
+1912,470404,Corpus Linguistics
+1913,470405,Discourse And Pragmatics
+1914,470406,"Historical, Comparative And Typological Linguistics"
+1915,470407,Language Documentation And Description
+1916,470408,Lexicography And Semantics
+1917,470409,"Linguistic Structures (Incl. Phonology, Morphology And Syntax)"
+1918,470410,Phonetics And Speech Science
+1919,470411,Sociolinguistics
+1920,470499,Linguistics Not Elsewhere Classified
+1921,470501,African Literature
+1922,470502,Australian Literature (Excl. Aboriginal And Torres Strait Islander Literature)
+1923,470503,Book History
+1924,470504,British And Irish Literature
+1925,470505,Central And Eastern European Literature (Incl. Russian)
+1926,470506,Children'S Literature
+1927,470507,Comparative And Transnational Literature
+1928,470508,Digital Literature
+1929,470509,Ecocriticism
+1930,470510,Indian Literature
+1931,470511,Indonesian Literature
+1932,470512,Korean Literature
+1933,470513,Latin And Classical Greek Literature
+1934,470514,Literary Theory
+1935,470515,Literature In Chinese
+1936,470516,Literature In French
+1937,470517,Literature In German
+1938,470518,Literature In Italian
+1939,470519,Literature In Japanese
+1940,470520,Literature In Spanish And Portuguese
+1941,470521,Middle Eastern Literature
+1942,470522,New Zealand Literature (Excl. Māori Literature)
+1943,470523,North American Literature
+1944,470524,Other Asian Literature (Excl. South-East Asian)
+1945,470525,Other European Literature
+1946,470526,Other Literatures In English
+1947,470527,Popular And Genre Literature
+1948,470528,Print Culture
+1949,470529,South-East Asian Literature (Excl. Indonesian)
+1950,470530,Stylistics And Textual Analysis
+1951,470531,Young Adult Literature
+1952,470599,Literary Studies Not Elsewhere Classified
+1953,479999,"Other Language, Communication And Culture Not Elsewhere Classified"
+1954,480101,"Banking, Finance And Securities Law"
+1955,480102,Commercial Law
+1956,480103,Corporations And Associations Law
+1957,480104,Labour Law
+1958,480105,Not-For-Profit Law
+1959,480106,Taxation Law
+1960,480199,Commercial Law Not Elsewhere Classified
+1961,480201,Animal Law
+1962,480202,Climate Change Law
+1963,480203,Environmental Law
+1964,480204,"Mining, Energy And Natural Resources Law"
+1965,480299,Environmental And Resources Law Not Elsewhere Classified
+1966,480301,Asian And Pacific Law
+1967,480302,Comparative Law
+1968,480303,Conflict Of Laws (Incl. Private International Law)
+1969,480304,European Union Law
+1970,480305,International Arbitration
+1971,480306,International Criminal Law
+1972,480307,International Humanitarian And Human Rights Law
+1973,480308,International Trade And Investment Law
+1974,480309,Ocean Law And Governance
+1975,480310,Public International Law
+1976,480311,"Space, Maritime And Aviation Law"
+1977,480399,International And Comparative Law Not Elsewhere Classified
+1978,480401,Criminal Law
+1979,480402,Family Law
+1980,480403,Law And Humanities
+1981,480404,Law And Religion
+1982,480405,Law And Society And Socio-Legal Research
+1983,480406,Law Reform
+1984,480407,"Law, Gender And Sexuality (Incl. Feminist Legal Scholarship)"
+1985,480408,"Law, Science And Technology"
+1986,480409,Legal Education
+1987,480410,"Legal Theory, Jurisprudence And Legal Interpretation"
+1988,480411,Media And Communication Law
+1989,480412,Medical And Health Law
+1990,480413,"Race, Ethnicity And Law"
+1991,480414,Sports Law
+1992,480499,Law In Context Not Elsewhere Classified
+1993,480501,Access To Justice
+1994,480502,Civil Procedure
+1995,480503,Criminal Procedure
+1996,480504,Legal Institutions (Incl. Courts And Justice Systems)
+1997,480505,"Legal Practice, Lawyering And The Legal Profession"
+1998,480506,"Litigation, Adjudication And Dispute Resolution"
+1999,480507,Youth Justice
+2000,480599,Legal Systems Not Elsewhere Classified
+2001,480601,Contract Law
+2002,480602,Equity And Trusts Law
+2003,480603,Intellectual Property Law
+2004,480604,Property Law (Excl. Intellectual Property Law)
+2005,480605,Tort Law
+2006,480699,Private Law And Civil Obligations Not Elsewhere Classified
+2007,480701,Administrative Law
+2008,480702,Constitutional Law
+2009,480703,Domestic Human Rights Law
+2010,480704,"Migration, Asylum And Refugee Law"
+2011,480705,Military Law And Justice
+2012,480706,Privacy And Data Rights
+2013,480707,"Welfare, Insurance, Disability And Social Security Law"
+2014,480799,Public Law Not Elsewhere Classified
+2015,489999,Other Law And Legal Studies Not Elsewhere Classified
+2016,490101,Approximation Theory And Asymptotic Methods
+2017,490102,Biological Mathematics
+2018,490103,"Calculus Of Variations, Mathematical Aspects Of Systems Theory And Control Theory "
+2019,490104,Complex Systems
+2020,490105,Dynamical Systems In Applications
+2021,490106,Financial Mathematics
+2022,490107,Mathematical Methods And Special Functions
+2023,490108,Operations Research
+2024,490109,Theoretical And Applied Mechanics
+2025,490199,Applied Mathematics Not Elsewhere Classified
+2026,490201,Algebraic Structures In Mathematical Physics
+2027,490202,Integrable Systems (Classical And Quantum)
+2028,490203,"Mathematical Aspects Of Classical Mechanics, Quantum Mechanics And Quantum Information Theory"
+2029,490204,Mathematical Aspects Of General Relativity
+2030,490205,"Mathematical Aspects Of Quantum And Conformal Field Theory, Quantum Gravity And String Theory"
+2031,490206,"Statistical Mechanics, Physical Combinatorics And Mathematical Aspects Of Condensed Matter"
+2032,490299,Mathematical Physics Not Elsewhere Classified
+2033,490301,Experimental Mathematics
+2034,490302,Numerical Analysis
+2035,490303,Numerical Solution Of Differential And Integral Equations
+2036,490304,Optimisation
+2037,490399,Numerical And Computational Mathematics Not Elsewhere Classified
+2038,490401,Algebra And Number Theory
+2039,490402,Algebraic And Differential Geometry
+2040,490403,"Category Theory, K Theory, Homological Algebra "
+2041,490404,Combinatorics And Discrete Mathematics (Excl. Physical Combinatorics)
+2042,490405,Group Theory And Generalisations
+2043,490406,"Lie Groups, Harmonic And Fourier Analysis"
+2044,490407,"Mathematical Logic, Set Theory, Lattices And Universal Algebra"
+2045,490408,Operator Algebras And Functional Analysis
+2046,490409,"Ordinary Differential Equations, Difference Equations And Dynamical Systems"
+2047,490410,Partial Differential Equations
+2048,490411,Real And Complex Functions (Incl. Several Variables)
+2049,490412,Topology
+2050,490499,Pure Mathematics Not Elsewhere Classified
+2051,490501,Applied Statistics
+2052,490502,Biostatistics
+2053,490503,Computational Statistics
+2054,490504,"Forensic Evaluation, Inference And Statistics"
+2055,490505,Large And Complex Data Theory
+2056,490506,Probability Theory
+2057,490507,Spatial Statistics
+2058,490508,Statistical Data Science
+2059,490509,Statistical Theory
+2060,490510,Stochastic Analysis And Modelling
+2061,490511,Time Series And Spatial Modelling
+2062,490599,Statistics Not Elsewhere Classified
+2063,499999,Other Mathematical Sciences Not Elsewhere Classified
+2064,500101,Bioethics
+2065,500102,Business Ethics
+2066,500103,Ethical Use Of New Technology
+2067,500104,Human Rights And Justice Issues (Excl. Law)
+2068,500105,Legal Ethics
+2069,500106,Medical Ethics
+2070,500107,Professional Ethics
+2071,500199,Applied Ethics Not Elsewhere Classified
+2072,500201,History And Philosophy Of Engineering And Technology
+2073,500202,History And Philosophy Of Law And Justice
+2074,500203,History And Philosophy Of Medicine
+2075,500204,History And Philosophy Of Science
+2076,500205,History And Philosophy Of The Humanities
+2077,500206,History And Philosophy Of The Social Sciences
+2078,500207,History Of Ideas
+2079,500208,History Of Philosophy
+2080,500299,History And Philosophy Of Specific Fields Not Elsewhere Classified
+2081,500301,Aesthetics
+2082,500302,Critical Theory
+2083,500303,Decision Theory
+2084,500304,Environmental Philosophy
+2085,500305,Epistemology
+2086,500306,Ethical Theory
+2087,500307,Hermeneutics
+2088,500308,Logic
+2089,500309,Metaphysics
+2090,500310,Phenomenology
+2091,500311,Philosophical Psychology (Incl. Moral Psychology And Philosophy Of Action)
+2092,500312,Philosophy Of Cognition
+2093,500313,Philosophy Of Gender
+2094,500314,Philosophy Of Language
+2095,500315,Philosophy Of Mind (Excl. Cognition)
+2096,500316,Philosophy Of Religion
+2097,500317,Philosophy Of Science (Excl. History And Philosophy Of Specific Fields)
+2098,500318,Philosophy Of Specific Cultures (Incl. Comparative Philosophy)
+2099,500319,Poststructuralism
+2100,500320,Psychoanalytic Philosophy
+2101,500321,Social And Political Philosophy
+2102,500399,Philosophy Not Elsewhere Classified
+2103,500401,Christian Studies
+2104,500402,Comparative Religious Studies
+2105,500403,Islamic Studies
+2106,500404,Jewish Studies
+2107,500405,"Religion, Society And Culture"
+2108,500406,Studies In Eastern Religious Traditions
+2109,500407,"Studies In Religious Traditions (Excl. Eastern, Jewish, Christian And Islamic Traditions)"
+2110,500499,Religious Studies Not Elsewhere Classified
+2111,500501,Theology
+2112,500599,Theology Not Elsewhere Classified
+2113,509999,Other Philosophy And Religious Studies Not Elsewhere Classified
+2114,510101,Astrobiology
+2115,510102,Astronomical Instrumentation
+2116,510103,Cosmology And Extragalactic Astronomy
+2117,510104,Galactic Astronomy
+2118,510105,General Relativity And Gravitational Waves
+2119,510106,High Energy Astrophysics And Galactic Cosmic Rays
+2120,510107,Planetary Science (Excl. Solar System And Planetary Geology)
+2121,510108,Solar Physics
+2122,510109,Stellar Astronomy And Planetary Systems
+2123,510199,Astronomical Sciences Not Elsewhere Classified
+2124,510201,Atomic And Molecular Physics
+2125,510202,Lasers And Quantum Electronics
+2126,510203,Nonlinear Optics And Spectroscopy
+2127,510204,"Photonics, Optoelectronics And Optical Communications"
+2128,510205,Terahertz Physics
+2129,510299,"Atomic, Molecular And Optical Physics Not Elsewhere Classified "
+2130,510301,Acoustics And Acoustical Devices; Waves
+2131,510302,Classical And Physical Optics
+2132,510303,Electrostatics And Electrodynamics
+2133,510304,Thermodynamics And Statistical Physics
+2134,510399,Classical Physics Not Elsewhere Classified
+2135,510401,Condensed Matter Characterisation Technique Development
+2136,510402,Condensed Matter Imaging
+2137,510403,Condensed Matter Modelling And Density Functional Theory
+2138,510404,Electronic And Magnetic Properties Of Condensed Matter; Superconductivity
+2139,510405,Soft Condensed Matter
+2140,510406,Structural Properties Of Condensed Matter
+2141,510407,Surface Properties Of Condensed Matter
+2142,510499,Condensed Matter Physics Not Elsewhere Classified
+2143,510501,Biological Physics
+2144,510502,Medical Physics
+2145,510599,Medical And Biological Physics Not Elsewhere Classified
+2146,510601,Nuclear Physics
+2147,510602,Plasma Physics; Fusion Plasmas; Electrical Discharges
+2148,510699,Nuclear And Plasma Physics Not Elsewhere Classified
+2149,510701,Astroparticle Physics And Particle Cosmology
+2150,510702,Field Theory And String Theory
+2151,510703,Particle Physics
+2152,510799,Particle And High Energy Physics Not Elsewhere Classified
+2153,510801,Degenerate Quantum Gases And Atom Optics
+2154,510802,Foundations Of Quantum Mechanics
+2155,510803,"Quantum Information, Computation And Communication"
+2156,510804,Quantum Optics And Quantum Optomechanics
+2157,510805,Quantum Technologies
+2158,510899,Quantum Physics Not Elsewhere Classified
+2159,510901,Astrodynamics And Space Situational Awareness
+2160,510902,Heliophysics And Space Weather
+2161,510903,"Mesospheric, Thermospheric, Ionospheric And Magnetospheric Physics"
+2162,510904,Solar System Energetic Particles
+2163,510905,Solar System Planetary Science (Excl. Planetary Geology)
+2164,510906,Space Instrumentation
+2165,510999,Space Sciences Not Elsewhere Classified
+2166,511001,Accelerators
+2167,511002,Instruments And Techniques
+2168,511003,Synchrotrons
+2169,511099,Synchrotrons And Accelerators Not Elsewhere Classified
+2170,519901,Complex Physical Systems
+2171,519999,Other Physical Sciences Not Elsewhere Classified
+2172,520101,Child And Adolescent Development
+2173,520102,Educational Psychology
+2174,520103,Forensic Psychology
+2175,520104,Industrial And Organisational Psychology (Incl. Human Factors)
+2176,520105,"Psychological Methodology, Design And Analysis"
+2177,520106,Psychology Of Ageing
+2178,520107,Sport And Exercise Psychology
+2179,520108,"Testing, Assessment And Psychometrics"
+2180,520199,Applied And Developmental Psychology Not Elsewhere Classified
+2181,520201,Behavioural Genetics
+2182,520202,Behavioural Neuroscience
+2183,520203,Cognitive Neuroscience
+2184,520204,Evolutionary Psychological Studies
+2185,520205,Psychopharmacology
+2186,520206,Psychophysiology
+2187,520207,Social And Affective Neuroscience
+2188,520299,Biological Psychology Not Elsewhere Classified
+2189,520301,Clinical Neuropsychology
+2190,520302,Clinical Psychology
+2191,520303,Counselling Psychology
+2192,520304,Health Psychology
+2193,520399,Clinical And Health Psychology Not Elsewhere Classified
+2194,520401,Cognition
+2195,520402,Decision Making
+2196,520403,"Learning, Motivation And Emotion"
+2197,520404,Memory And Attention
+2198,520405,Psycholinguistics (Incl. Speech Production And Comprehension)
+2199,520406,"Sensory Processes, Perception And Performance"
+2200,520499,Cognitive And Computational Psychology Not Elsewhere Classified
+2201,520501,Community Psychology
+2202,520502,Gender Psychology
+2203,520503,Personality And Individual Differences
+2204,520504,Psychology Of Religion
+2205,520505,Social Psychology
+2206,520599,Social And Personality Psychology Not Elsewhere Classified
+2207,529999,Other Psychology Not Elsewhere Classified
