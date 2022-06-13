@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)

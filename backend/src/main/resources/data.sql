@@ -1,5 +1,5 @@
 INSERT INTO prod.user (id, created_at, password, role, updated_at, username)
-VALUES (1, '2022-04-29 03:18:51.646000', '$2a$10$GGAvjGnEHmjQ4cpFJj05hebLcMo3.eNuCCG3gNrV8If7oUHxR4kTq', 'ROLE_ADMIN',
+VALUES (1, '2022-04-29 03:18:51.646000', '$2a$10$JjED1wJeuMSp6AA4E1QT8OJ5TorN5Bx8QvTACXzE7nGgnnDOsfYbC', 'ROLE_ADMIN',
         null, 'admin');
 INSERT INTO prod.user (id, created_at, password, role, updated_at, username)
 VALUES (2, '2022-05-18 03:34:15.787000', '$2a$10$5DRoRsjh9cy4KiJB9M7mG.cyrdxlz8gX1aHbvVeqAn5rkbqjrEGfC', 'ROLE_USER',
