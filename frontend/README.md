@@ -50,3 +50,11 @@ You can learn more in
 the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# HOW TO RUN FRONT END TEST
+
+`yarn install`
+`yarn start`
+
+In the terminal : `.\node_modules\.bin\cypress open`
+Accept terms and conditions + Fire wall access and press `E2E Testing`
